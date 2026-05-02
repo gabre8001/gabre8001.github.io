@@ -1,0 +1,2564 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>우리람부탄</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="우리람부탄"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="우리람부탄"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta property="og:type" content="website"><meta property="og:title" content="우리람부탄"><meta property="og:url" content="https://gabre8001.github.io/"><meta property="og:site_name" content="우리람부탄"><meta property="og:locale" content="ko_KR"><meta property="og:image" content="https://gabre8001.github.io/img/og_image.png"><meta property="article:author" content="우리람부탄"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://gabre8001.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://gabre8001.github.io"},"headline":"우리람부탄","image":["https://gabre8001.github.io/img/og_image.png"],"author":{"@type":"Person","name":"우리람부탄"},"publisher":{"@type":"Organization","name":"우리람부탄","logo":{"@type":"ImageObject"}},"description":""}</script><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link data-pjax rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax rel="stylesheet" href="/css/default.css"><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">우리람부탄</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="검색" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-02-28T15:00:00.000Z" title="2022. 3. 1. 오전 12:00:00">2022-03-01</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T12:24:30.771Z" title="2026. 5. 2. 오후 9:24:30">2026-05-02</time>&nbsp;업데이트 됨</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/03/01/2022-02-29-rviz-urdf/">RVIZ</a></p><div class="content"><p>RVIZ와 URDF에 대해 알아본다.</p>
+<h1 id="RVIZ"><a href="#RVIZ" class="headerlink" title="RVIZ"></a>RVIZ</h1><ul>
+<li>ROS와 연동하여 사용하는 3D 시각화 툴.</li>
+<li>RVIZ 구동을 위해서는 아래와 같이 런치 파일 편집을 통해 ROS 실행을 하면 확인 가능하다.<ul>
+<li>pkg를 rviz로, type도 rviz로 생성한 노드를 통해 RVIZ를 실행한다.</li>
+<li>3D 시각화를 위해 필요한 파일이 urdf 파일이다.</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;launch&gt;</span><br><span class="line">    &lt;param name=&quot;robot_description&quot; textfile=&quot;$(find rviz_xycar)/urdf/pan_tilt.urdf&quot;/&gt;</span><br><span class="line">    &lt;param name=&quot;use_gui&quot; value=&quot;true&quot;/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- rviz display --&gt;</span><br><span class="line">    &lt;node name=&quot;rviz_visualizer&quot; pkg=&quot;rviz&quot; type=&quot;rviz&quot; required=&quot;true&quot; </span><br><span class="line">                args=&quot;-d $(find rviz_xycar)/rviz/xycar_3d.rviz&quot;/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;node name=&quot;robot_state_publisher&quot; pkg=&quot;robot_state_publisher&quot; </span><br><span class="line">                type=&quot;state_publisher&quot;/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;node name= &quot;move_joint&quot; pkg=&quot;rviz_xycar&quot; type= &quot;move_joint.py&quot; /&gt; </span><br><span class="line"></span><br><span class="line">&lt;/launch&gt;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="URDF"><a href="#URDF" class="headerlink" title="URDF"></a>URDF</h1><ul>
+<li><p>Unified Robot Description Format</p>
+</li>
+<li><p>로봇을 구현하는데 쓰이는 하나의 포맷으로 RVIZ에서 시각화를 통해 확인 할 수 있다.</p>
+</li>
+<li><p>좌표계</p>
+<ul>
+<li>위치나 크기를 표현하기 우해 데카르트 좌표계 x,y,z를 사용</li>
+<li>회전을 표현하기 위해 오일러 각도 roll, pitch, yaw를 사용</li>
+<li>사용 단위<ul>
+<li>길이: 미터 m</li>
+<li>각도: 라디안 radian</li>
+<li>질량: 킬로그램 kg</li>
+<li>속도: m&#x2F;s (병진&#x2F;직진운동)</li>
+<li>각속도: radian&#x2F;s (회전운동)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>형상 표현</p>
+<ul>
+<li>cylinder: 원통</li>
+<li>box: 상자</li>
+<li>sphere: 공</li>
+</ul>
+</li>
+<li><p>색상 표현</p>
+<ul>
+<li>RGB 3원색과 투과율 A를 0~1사이의 숫자로 정의함</li>
+</ul>
+</li>
+<li><p>기구의 표현</p>
+<ul>
+<li>base: 고정 부분(grounded)</li>
+<li>link: 관절에 연결되는 로봇 팔의 부분</li>
+<li>joint: 링크를 연결하는 부위로 보통 모터의 회전을 통해 움직임을 만듬</li>
+</ul>
+</li>
+</ul>
+<h3 id="좌표계"><a href="#좌표계" class="headerlink" title="좌표계"></a>좌표계</h3><ul>
+<li>위치나 크기를 표현하기 우해 데카르트 좌표계 x,y,z를 사용</li>
+<li>회전을 표현하기 위해 오일러 각도 roll, pitch, yaw를 사용</li>
+</ul>
+<h3 id="단위"><a href="#단위" class="headerlink" title="단위"></a>단위</h3><ul>
+<li>길이: 미터 m</li>
+<li>각도: 라디안 radian</li>
+<li>질량: 킬로그램 kg</li>
+<li>속도: m&#x2F;s (병진&#x2F;직진운동)</li>
+<li>각속도: radian&#x2F;s (회전운동)</li>
+</ul>
+<h3 id="형상-표현"><a href="#형상-표현" class="headerlink" title="형상 표현"></a>형상 표현</h3><ul>
+<li>cylinder: 원통</li>
+<li>box: 상자</li>
+<li>sphere: 공</li>
+</ul>
+<h3 id="색상-표현"><a href="#색상-표현" class="headerlink" title="색상 표현"></a>색상 표현</h3><ul>
+<li>RGB 3원색과 투과율 A를 0~1사이의 숫자로 정의함</li>
+</ul>
+<h3 id="기구의-표현"><a href="#기구의-표현" class="headerlink" title="기구의 표현"></a>기구의 표현</h3><ul>
+<li><p>base: 고정 부분(grounded)</p>
+</li>
+<li><p>link: 관절에 연결되는 로봇 팔의 부분</p>
+<ul>
+<li>visual: 시각화를 위해 형상과 위치를 정의<ul>
+<li>geometry: 형상 정의 원동, 상자, 공</li>
+<li>origin: 고정축을 기준으로 link 형상의 roll, pitch, yaw 위치를 라디안으로 나타내고 x,y,z 좌표 위치를 미터 단위로 지정</li>
+<li>material: 현상의 컬러값 지정</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>joint: 링크를 연결하는 부위로 보통 모터의 회전을 통해 움직임을 만듬</p>
+<ul>
+<li>parent: parent frame의 이름을 지정해서 child frame과 연결</li>
+<li>child: child frame의 이름을 지정해서 parent frame과 연결</li>
+<li>origin: 고정축을 기준으로 형상의 r,p,y 위치를 라디안으로 나타내고, x,y,z 좌표 위치를 미터 단위로 지정.</li>
+<li>joint는 parent의 origin, child는 joint의 origin을 고정축으로 정함</li>
+<li>limit: joint의 운동범위 제한값을 지정<ul>
+<li>lower: revolution type의 joint에서 최저 각을 지정</li>
+<li>upper: revolution type의 joint에서 최대 각을 지정</li>
+<li>effort: N 힘의 최대값을 지정</li>
+<li>velocity: radian&#x2F;s 최대 속도를 지정</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="joint의-동작-정의"><a href="#joint의-동작-정의" class="headerlink" title="joint의 동작 정의"></a>joint의 동작 정의</h3><ul>
+<li>fixed: 고정</li>
+<li>revolution: 작동 범위 제한</li>
+<li>continuous: 연속 회전</li>
+</ul>
+<h3 id="툴로-확인"><a href="#툴로-확인" class="headerlink" title="툴로 확인"></a>툴로 확인</h3><ul>
+<li>sudo apt install liburdfdom-tools 설치하고</li>
+<li>check_urdf pan_tilt.urdf 로 확인할 수 있음</li>
+<li>urdf_to_graphiz pan_tilt.urdf 다른 포멧으로 확인 가능</li>
+<li>rviz에서 구동을 확인하기 위해 아래 패키지를 설치해 준다.</li>
+<li>sudo apt install ros-melodic-joint-state-publisher-gui</li>
+<li>rviz 구동하기 위한 launch 파일에 아래를 추가해준다.</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;joint_state_publisher&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;joint_state_publisher&quot;</span> <span class="attr">type</span>=<span class="string">&quot;joint_state_publisher&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="예제-파일"><a href="#예제-파일" class="headerlink" title="예제 파일"></a>예제 파일</h3><ul>
+<li>아래는 urdf 예제 파일내용이다.<ul>
+<li>기본적으로 xml 형식을 가진다.</li>
+<li>root 태그는 robot이다. </li>
+<li>앞서 언급한 기구의 표현 부분을 확인하면서 차근차근 보면 감이 온다!</li>
+<li>간략하게 살펴보면 아래와 같다.</li>
+<li>base_link 라는 원판 모양 링크</li>
+<li>pan_joint 라는 조인트</li>
+<li>pan_link 라는 기둥 모양 링크</li>
+<li>tilt_joint 라는 조인트</li>
+<li>tilt_link 라는 기둥 모양 링크</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">robot</span> <span class="attr">name</span>=<span class="string">&quot;ex_urdf_pan_tilt&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">&quot;base_link&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">visual</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">cylinder</span> <span class="attr">length</span>=<span class="string">&quot;0.01&quot;</span> <span class="attr">radius</span>=<span class="string">&quot;0.2&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;0 0 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;yellow&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">color</span> <span class="attr">rgba</span>=<span class="string">&quot;1 1 0 1&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">material</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">visual</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">collision</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">cylinder</span> <span class="attr">length</span>=<span class="string">&quot;0.03&quot;</span> <span class="attr">radius</span>=<span class="string">&quot;0.2&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;0 0 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">collision</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">inertial</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">mass</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">inertia</span> <span class="attr">ixx</span>=<span class="string">&quot;1.0&quot;</span> <span class="attr">ixy</span>=<span class="string">&quot;0.0&quot;</span> <span class="attr">ixz</span>=<span class="string">&quot;0.0&quot;</span> <span class="attr">iyy</span>=<span class="string">&quot;1.0&quot;</span> <span class="attr">iyz</span>=<span class="string">&quot;0.0&quot;</span> <span class="attr">izz</span>=<span class="string">&quot;1.0&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">inertial</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;pan_joint&quot;</span> <span class="attr">type</span>=<span class="string">&quot;revolute&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">parent</span> <span class="attr">link</span>=<span class="string">&quot;base_link&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">child</span> <span class="attr">link</span>=<span class="string">&quot;pan_link&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">origin</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0.1&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">axis</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 1&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">limit</span> <span class="attr">effort</span>=<span class="string">&quot;300&quot;</span> <span class="attr">velocity</span>=<span class="string">&quot;0.1&quot;</span> <span class="attr">lower</span>=<span class="string">&quot;-3.14&quot;</span> <span class="attr">upper</span>=<span class="string">&quot;3.14&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dynamics</span> <span class="attr">damping</span>=<span class="string">&quot;50&quot;</span> <span class="attr">friction</span>=<span class="string">&quot;1&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">&quot;pan_link&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">visual</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">cylinder</span> <span class="attr">length</span>=<span class="string">&quot;0.4&quot;</span> <span class="attr">radius</span>=<span class="string">&quot;0.04&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;0 0 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0.09&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;red&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">color</span> <span class="attr">rgba</span>=<span class="string">&quot;0 0 1 1&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">material</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">visual</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">collision</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">cylinder</span> <span class="attr">length</span>=<span class="string">&quot;0.4&quot;</span> <span class="attr">radius</span>=<span class="string">&quot;0.06&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;0 0 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0.09&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">collision</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">inertial</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">mass</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">inertia</span> <span class="attr">ixx</span>=<span class="string">&quot;1.0&quot;</span> <span class="attr">ixy</span>=<span class="string">&quot;0.0&quot;</span> <span class="attr">ixz</span>=<span class="string">&quot;0.0&quot;</span> <span class="attr">iyy</span>=<span class="string">&quot;1.0&quot;</span> <span class="attr">iyz</span>=<span class="string">&quot;0.0&quot;</span> <span class="attr">izz</span>=<span class="string">&quot;1.0&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">inertial</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;tilt_joint&quot;</span> <span class="attr">type</span>=<span class="string">&quot;revolute&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">parent</span> <span class="attr">link</span>=<span class="string">&quot;pan_link&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">child</span> <span class="attr">link</span>=<span class="string">&quot;tilt_link&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">origin</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0.2&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">axis</span> <span class="attr">xyz</span>=<span class="string">&quot;0 1 0&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">limit</span> <span class="attr">effort</span>=<span class="string">&quot;300&quot;</span> <span class="attr">velocity</span>=<span class="string">&quot;0.1&quot;</span> <span class="attr">lower</span>=<span class="string">&quot;-4.71239&quot;</span> <span class="attr">upper</span>=<span class="string">&quot;-1.570796&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dynamics</span> <span class="attr">damping</span>=<span class="string">&quot;50&quot;</span> <span class="attr">friction</span>=<span class="string">&quot;1&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">&quot;tilt_link&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">visual</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">cylinder</span> <span class="attr">length</span>=<span class="string">&quot;0.4&quot;</span> <span class="attr">radius</span>=<span class="string">&quot;0.04&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;0 1.570796 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;green&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">color</span> <span class="attr">rgba</span>=<span class="string">&quot;1 0 0 1&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">material</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">visual</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">collision</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">cylinder</span> <span class="attr">length</span>=<span class="string">&quot;0.4&quot;</span> <span class="attr">radius</span>=<span class="string">&quot;0.06&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;0 1.570796 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">collision</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">inertial</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">mass</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">inertia</span> <span class="attr">ixx</span>=<span class="string">&quot;1.0&quot;</span> <span class="attr">ixy</span>=<span class="string">&quot;0.0&quot;</span> <span class="attr">ixz</span>=<span class="string">&quot;0.0&quot;</span> <span class="attr">iyy</span>=<span class="string">&quot;1.0&quot;</span> <span class="attr">iyz</span>=<span class="string">&quot;0.0&quot;</span> <span class="attr">izz</span>=<span class="string">&quot;1.0&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">inertial</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">robot</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-02-27T15:00:00.000Z" title="2022. 2. 28. 오전 12:00:00">2022-02-28</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T12:24:30.760Z" title="2026. 5. 2. 오후 9:24:30">2026-05-02</time>&nbsp;업데이트 됨</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/02/28/2022-02-28-ros-start/">ROS 기본</a></p><div class="content"><p>ROS 대해 알아본다.</p>
+<h3 id="ROS"><a href="#ROS" class="headerlink" title="ROS"></a>ROS</h3><ul>
+<li><p>Robot Operating System</p>
+<ul>
+<li>오픈소스 로보 운영체제</li>
+<li>소스 공개. 개방형 구조. 활발한 커뮤니티 활동</li>
+</ul>
+</li>
+<li><p>로봇 소프트웨어르 개발하는 데 필요한 소프트웨어의 집합체</p>
+<ul>
+<li>소프트웨어 프레임워크</li>
+</ul>
+</li>
+<li><p>메타 운영제체(Meta OS), 미들웨어(Middleware)</p>
+<ul>
+<li>소프트웨어 모듈 + 라이브러리 집합 + 도구 집합</li>
+</ul>
+</li>
+<li><p>각종 센서와 모터를 프로그래머가 편하게 사용할 수 있도록 지원</p>
+</li>
+<li><p>프로토타이핑 작업에 적합</p>
+</li>
+<li><p>실제 상용 제품에 사용되는 것은 의견이 나뉨</p>
+</li>
+<li><p>다양하 프로로그래미 언어를 지원 C++ Python</p>
+</li>
+<li><p>표준화된 ROS 인터페이스를 따르는 HW, SW를 편하게 엮을 수 있음</p>
+</li>
+<li><p>하드웨어 부품과 소프트웨어 부품으 조립하여 여러 응용 구성 가능</p>
+</li>
+<li><p>대규모 실행 시스템 및 프로세스에도 적용 가능</p>
+</li>
+<li><p>다양한 도구 제공</p>
+<ul>
+<li>RVIZ, RQT, Gazebo, …</li>
+<li>RVIZ 시각화 도구. 센서데이터를 비롯한 주변환경 변화르 시각화</li>
+<li>RQT Qt 기반의 GUI 응용 개발 도구. 노드연결 정보를 그래프로 표현. 사용자 상호작용을 UI를 갖춘 응용 개발에 이용</li>
+<li>GAZEBO 물리 엔진 기반의 3차원 시뮬레이터. 시뮬레이터 제작 및 모델링에 이용</li>
+</ul>
+</li>
+<li><p>다양한 OS 환경에서 통일된 방법으로 상호작용을 구현하는 것이 가능</p>
+<ul>
+<li>Linux, OS X, Windows, Rasbian, QNX, RTOS, Android, IOS 등</li>
+<li>표준화된 통신 프로토콜으 따르는 이기종간의 메시지 교환이 가능</li>
+</ul>
+</li>
+<li><p>ROS 버전</p>
+<ul>
+<li>ROS Melodic Morenia 2018</li>
+<li>ROS Linar Loggerhead 2017</li>
+<li>ROS Kinetic Kame 2016</li>
+<li>ROS Indigo Igloo 2014</li>
+</ul>
+</li>
+<li><p>ROS 통신</p>
+<ul>
+<li>토픽의 발행&#x2F;구동 (publish &amp; subscribe) 기반의 메시지 교환</li>
+<li>이기종간의 메시지 교환 가능</li>
+</ul>
+</li>
+<li><p>ROS 핵심 기능</p>
+<ul>
+<li>노드간 통신을 기반으로 전체 시스템을 구동시킴</li>
+<li>하드웨어 부품 또는 소프트웨어 모듈에 노드가 하나씩 할당됨</li>
+<li>네트워크를 통한 원격 연동도 가능</li>
+</ul>
+</li>
+<li><p>ROS 기본 용어</p>
+<ul>
+<li>마스터<ul>
+<li>서로 다른 노드들 사이의 통신을 총괄 관리</li>
+<li>ROS Core 라고 부름</li>
+</ul>
+</li>
+<li>노드 Node<ul>
+<li>실행가능한 최소 단위. 프로세스로 이해 가능</li>
+<li>ROS에서 발생하는 통신의 주체</li>
+<li>HW장치에 대해 하나씩의 노드, SW 모듈에 대해 하나씩의 노드</li>
+</ul>
+</li>
+<li>토픽 Topic<ul>
+<li>노드들이 관심을 가지고 있는 이야깃거리</li>
+<li>그 안에 들어있는 실제 데이터를 메시지라 부름</li>
+<li>센서데이터, 카메라 이미지, 액츄에이터 제어 명령 등…</li>
+</ul>
+</li>
+<li>발행자 Publishers<ul>
+<li>특정 토픽에 메시지를 담아 외부로 송신하는 노드</li>
+<li>센서, 카메라, 모터제어 알고리즘</li>
+</ul>
+</li>
+<li>구독자 Subscribers<ul>
+<li>특정 토픽에 담겨진 메시지를 수신하는 노드</li>
+<li>엑츄에이터 제어기, 데이터 시각화 도구</li>
+</ul>
+</li>
+<li>패키지 Packages<ul>
+<li>하나 이상의 노드와 노드의 실행을 위한 정보 등을 묶어 놓은 단위</li>
+<li>노드, 라이브러리, 데이터, 파라미터 등을 포함</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>ROS 노드간 통신 기본 과정</p>
+<ul>
+<li>통신이 이루어지기 전에 통신을 원하는 노드는 마스터에 의뢰</li>
+<li>연결해야 하는 노드의 정보(주소)를 얻어오고, 서로 접속 정보를 교환</li>
+<li>통신환경 구축이 완료 되면</li>
+<li>노드간 통신은 마스터를 거치지 않고 직접 이루어짐</li>
+</ul>
+</li>
+<li><p>ROS 노드간 통신의 두 가지 방식</p>
+<ul>
+<li>토픽 방식의 통신<ul>
+<li>일방적이고 지속적인 메시지 전송</li>
+<li>1:1 및 1:N, N:N 통신도 가능</li>
+</ul>
+</li>
+<li>서비스 방식의 통신<ul>
+<li>서버가 제공하는 서비스에 클라이언트가 요청을 보내고 응답을 받는 방식</li>
+<li>양방향 통신, 일회성 메시지 송수신</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>ROS 노드간 통신 시나리오</p>
+<ul>
+<li>마스터 시동 - 통신이 이루어지려면 ROS core가 실행되고 있어야 함. 마스터의 정보는 모든 노드가 알 수 있음</li>
+<li>구독자 노드 구동 - 특정 토픽에 발행 되는 메시지를 수신하기를 요청. 자신의 모든 정보를 마스터에게 알림</li>
+<li>발행자 노드 구동 - 특정 토픽 메기지를 발행하겠다는 의사 전달. 역시 자신의 모든 정보를 마스터에게 알림</li>
+<li>노드 정보 전달 - 마스터가 발행자 정보를 구독자에게 전달</li>
+<li>노드간 접속 요청 - 구독자 노드가 발행자 노드에  TCP ROS 접속을 요청</li>
+<li>노드간 접속 요청에 대한 응답 - 발행자 노드가 자신의 TCPROS URI(포트 정보 포함)를 전송하여 응답</li>
+<li>TCPROS 접속 - 발행자 노드와 구독자 노드 사이에 소켓 연결이 이루어짐</li>
+<li>메시지 전송 - 발행자 노드가 구독자 노드에게 메시지 전송(토픽)</li>
+<li>메시지 전송 반복 - 접속이 한번 이루어진 뒤에는 별도 절차 없이 지속적으로 메시지 송수신</li>
+</ul>
+</li>
+</ul>
+<h3 id="ROS-명령어"><a href="#ROS-명령어" class="headerlink" title="ROS 명령어"></a>ROS 명령어</h3><ul>
+<li>셸 명령어</li>
+</ul>
+<p>roscd | 지정한 ros 패키지 폴더로 이동<br>rosls | ros 패키지 파일 목록 확인<br>rosed | ros 패키지 파일 편집<br>roscp | ros 패키지 파일 복사</p>
+<ul>
+<li>실행 명령어</li>
+</ul>
+<p>roscore | master + rosout + parameter server<br>rosrun  | 패키지 노드 실행 rosrun [package name][node_name]<br>roslaunch | 패키지 노드를 여러 개 실행 rosluanch [package_name][file.launch]<br>rosclean  | ros 로그파일 검사 및 삭제</p>
+<ul>
+<li>ROS 정보 명령어</li>
+</ul>
+<p>rostopic  | 토픽 정보 확인 rostopic info &#x2F;imu<br>rosnode   | 노드 정보 확인 rosnode info node_name<br>rosparam  | 파라미터 정보 확인, 수정<br>rosbag    | 메세지 기록, 재생<br>rosmsg    | 메세지 정보 확인<br>rosversion| 패키지 및 배포 버전정보 확인<br>roswtf    | ros 시스템 검사</p>
+<ul>
+<li>ROS catkin 명령어</li>
+</ul>
+<p>catkin_create_pkg      | catkin 빌드 시스템으로 패키지 생성<br>catkin_make            | catkin 빌드 시스템으로 빌드<br>catkin_eclipse         | 패키지를 eclipse에서 사용할 수 있게 변경<br>catkin_prepare_release | changelog 정리 및 버전 태깅<br>catkin_init_workspace  | catkin 빌드 시스템의 작업 폴더 초기화<br>catkin_find            | 검색</p>
+<ul>
+<li>ROS package 명령어</li>
+</ul>
+<p>rospack        | 패키지와 관련된 정보 보기<br>rosinstall     | 추가 패키지 설치<br>rosdep         | 해당 패키지의 의존성 파일 설치<br>roslocate      | 패키지 정보 관련 명령어<br>rosmake        | 패키지 빌드(구 시스템에서 사용)<br>roscreate-pkg  | 패키지 자동 생성(구 시스템에서 사용)</p>
+<ul>
+<li>ROS에서 제공하는 쓸만한 도구<ul>
+<li>rqt_graph 노드와 토픽의 관계 정보를 그래프로 출력</li>
+<li>RVIZ ROS의 3차원 시각화 도구, 각종 데이터를 보기 좋게 인포그래픽 스타일로 표시</li>
+</ul>
+</li>
+</ul>
+<h3 id="ROS-설치"><a href="#ROS-설치" class="headerlink" title="ROS 설치"></a>ROS 설치</h3><p>링크 참조 <a target="_blank" rel="noopener" href="http://wiki.ros.org/melodic/Installation/Ubuntu">http://wiki.ros.org/melodic/Installation/Ubuntu</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ sudo sh -c &#x27;echo &quot;deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main&quot; &gt; /etc/apt/sources.list.d/ros-latest.list&#x27;</span><br><span class="line"></span><br><span class="line">$ cat /etc/apt/sources.list.d/ros-latest.list</span><br><span class="line"></span><br><span class="line">$ curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -</span><br><span class="line"></span><br><span class="line">$ sudo apt update</span><br><span class="line"></span><br><span class="line">$ sudo apt install ros-melodic-desktop-full</span><br><span class="line"></span><br><span class="line">$ echo &quot;source /opt/ros/melodic/setup.bash&quot; &gt;&gt; ~/.bashrc</span><br><span class="line">$ source ~/.bashrc</span><br><span class="line"></span><br><span class="line">$ sudo apt install python-rosdep python-rosinstall python-rosinstall-generator python-wstool build-essential</span><br><span class="line"></span><br><span class="line">$ roscore</span><br><span class="line"></span><br><span class="line">$ rosnode list</span><br></pre></td></tr></table></figure>
+
+<p>roscore 명령어를 통해 ros가 실행되는 것을 확인한다면 기본적인 설치는 완료~!</p>
+<h3 id="ROS-환경-설정"><a href="#ROS-환경-설정" class="headerlink" title="ROS 환경 설정"></a>ROS 환경 설정</h3><ul>
+<li>워크스페이스 생성</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ cd</span><br><span class="line">$ mkdir -p ~/xycar_ws/src</span><br><span class="line">$ cd xycar_ws</span><br><span class="line">$ catkin_make</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>catkin_make 명령을 통해 빌드 작업을 진행</p>
+</li>
+<li><p>환경변수 설정</p>
+</li>
+<li><p>.bashrc 파일 수정</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">alias cm=&#x27;cd ~/xycar_ws &amp;&amp; catkin_make&#x27;</span><br><span class="line">alias cs=&#x27;cd ~/xycar_ws/src&#x27;</span><br><span class="line">source /opt/ros/melodic/setup.bash</span><br><span class="line">source ~/xycar_ws/devel/setup.bash</span><br><span class="line">export ROS_MASTER=http://localhost:11311</span><br><span class="line">export ROS_HOSTNAME=localhost</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ printenv | grep ROS</span><br></pre></td></tr></table></figure>
+
+<h3 id="ROS-예제-프로그램-실행"><a href="#ROS-예제-프로그램-실행" class="headerlink" title="ROS 예제 프로그램 실행"></a>ROS 예제 프로그램 실행</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ roscore</span><br><span class="line"></span><br><span class="line">//다른 터미널에서</span><br><span class="line">$ rosrun turtlesim turtlesim_node</span><br><span class="line"></span><br><span class="line">//다른 터미널에서</span><br><span class="line">$ rosnode list</span><br><span class="line">$ rosrun turtlesim turtle_teleop_key</span><br><span class="line"></span><br><span class="line">//토픽 확인</span><br><span class="line">$ rostopic list</span><br><span class="line">$ rostopic echo /turtle1/cmd_vel</span><br><span class="line">$ rqt_graph</span><br><span class="line"></span><br><span class="line">$ rostopic list -v</span><br><span class="line">//토픽 메시지 타입</span><br><span class="line">$ rostopic type /turtle1/cmd_vel</span><br><span class="line">//메시지 구성 확인</span><br><span class="line">$ rosmsg show geometry_msgs/Twist</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://wiki.ros.org/">https://wiki.ros.org/</a> 에서 Twist 검색</p>
+<ul>
+<li>토픽 발행</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ rostopic pub -1 /turtle1/cmd_vel geometry_msgs/Twist -r 1 -- &#x27;[2.0, 0.0, 0.0]&#x27; &#x27;[0.0, 0.0, 1.8]&#x27;</span><br><span class="line"></span><br><span class="line">$ rostopic pub /turtle1/cmd_vel geometry_msgs/Twist -r 1 -- &#x27;[2.0, 0.0, 0.0]&#x27; &#x27;[0.0, 0.0, 1.8]&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="ROS-프로그래밍-기초"><a href="#ROS-프로그래밍-기초" class="headerlink" title="ROS 프로그래밍 기초"></a>ROS 프로그래밍 기초</h3><ul>
+<li>패키지 담을 디렉토리로 이동</li>
+<li>cd ~&#x2F;xycar_ws&#x2F;src</li>
+<li>패키지 새로 만들기</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ catkin_create_pkg 패키지이름 패키지의존성나열</span><br><span class="line">$ catkin_create_pkg my_pkg1 std_msgs rospy</span><br><span class="line">$ cm</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>패키지 확인</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ rospack find my_pkg1</span><br><span class="line">$ rospack depends1 my_pkg1</span><br><span class="line">$ roscd my_pkg1 //이동</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>토픽 확인</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ rostopic list</span><br><span class="line">$ rostopic type /turtle1/pose</span><br><span class="line">$ rosmsg show turtlesim/Pose</span><br><span class="line">$ rostopic echo /turtle1/pose</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>roslaunch<ul>
+<li>roslaunch my_pkg1 aaa.launch</li>
+<li>파일들은 패키지 안에 있어야 한다.</li>
+<li>include 파일은 다른 launch 파일 불러올 때</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">$ roslaunch my_pkg1 pub-sub.launch</span><br><span class="line">&lt;launch&gt;</span><br><span class="line">    &lt;node pkg=&quot;turtlesim&quot; type=&quot;turtlesim_node&quot; name=&quot;turtlesim_node&quot;/&gt;</span><br><span class="line">    &lt;node pkg=&quot;my_pkg1&quot; type=&quot;pub.py&quot; name=&quot;pub_node&quot;/&gt;</span><br><span class="line">    &lt;node pkg=&quot;my_pkg1&quot; type=&quot;sub.py&quot; name=&quot;sub_node&quot; output=&quot;screen&quot;/&gt;</span><br><span class="line">&lt;/launch&gt;</span><br><span class="line"></span><br><span class="line">&lt;launch&gt;</span><br><span class="line">    &lt;node pkg=&quot;turtlesim&quot; type=&quot;turtlesim_node&quot; name=&quot;turtlesim_node&quot;/&gt;</span><br><span class="line">    &lt;node pkg=&quot;my_pkg1&quot; type=&quot;pub_param.py&quot; name=&quot;node_param&quot;&gt;</span><br><span class="line">        &lt;param name=&quot;circle_size&quot; type=&quot;int&quot; value=&quot;2&quot;/&gt;</span><br><span class="line">    &lt;/node&gt;</span><br><span class="line">    &lt;node pkg=&quot;my_pkg1&quot; type=&quot;sub.py&quot; name=&quot;sub_node&quot; output=&quot;screen&quot;/&gt;</span><br><span class="line">&lt;/launch&gt;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>rospy.get_param(‘~age’) 이렇게 파라미터 가져옴</li>
+</ul>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-02-25T15:00:00.000Z" title="2022. 2. 26. 오전 12:00:00">2022-02-26</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T12:24:30.747Z" title="2026. 5. 2. 오후 9:24:30">2026-05-02</time>&nbsp;업데이트 됨</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/02/26/2022-02-26-bash-shell-start/">Bash</a></p><div class="content"><p>Bash와 shell script에 대해 알아본다.</p>
+<ul>
+<li>주의! 마크다운 문법과 쉘 문법의 유사함으로 잘못 표기된 내용이 있을 수 있음을 주의 바랍니다.</li>
+</ul>
+<h3 id="Bash-배경"><a href="#Bash-배경" class="headerlink" title="Bash 배경"></a>Bash 배경</h3><ul>
+<li><p>Shell 이란</p>
+<ul>
+<li>application을 실행시키는 도구</li>
+<li>shell 에서 내리는 명령어는 해석된 뒤에 자시 프로세스로 만들어져 실행됨</li>
+<li>Bourne shell &#x2F;bin&#x2F;sh 표준 셸 POSIX<ul>
+<li>Stephen R. Bourne이 작성 1977</li>
+<li>기본 유닉스 셸</li>
+<li>기능이 미약. 대부분의 기능이 외부 명령어로 대체</li>
+</ul>
+</li>
+<li>C shell &#x2F;bin&#x2F;csh<ul>
+<li>Berkly의 Bill Joy가 작성. BSD UNIX에 포팅</li>
+<li>C 언어와 비슷하 문법으로 C shell 이라 명명</li>
+<li>sh와 너무 달라 외면. 후에 개량형으로 TC sh 등장</li>
+</ul>
+</li>
+<li>Korn shell &#x2F;bin&#x2F;ksh<ul>
+<li>Bell Lab의 David Korn이 작성 1983</li>
+<li>csh 장점과 bourne shell 기능을 모두 포함</li>
+<li>vi prompt mode 지원</li>
+<li>다양한 변수형, 사칙 연산 기능 확장</li>
+<li>현대적인 상용 유닉스 기본셸</li>
+</ul>
+</li>
+<li>bash &#x2F;bin&#x2F;bash 가장 유명하 셸<ul>
+<li>Bourne again shell. born again sh</li>
+<li>GNU에서 발전시킨 개량판 1989</li>
+<li>현대적인 셸의 기능 대부분이 추가되어 Korn shell과 호환</li>
+<li>Korn shell을 벤치마킹</li>
+<li>build in cmd로 대체 &#x3D; 성능 향상</li>
+</ul>
+</li>
+<li>Zsh &#x2F;bin&#x2F;zsh<ul>
+<li>Paul Falstad 작성 1990</li>
+<li>Oh My ZSH! 등으로 커스터마이징 하느 경우 많음</li>
+<li>퍼포먼스 문제가 존재</li>
+<li>Mac OSX catalina 2019 bash에서 zsh 로 변경</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Special character</p>
+<ul>
+<li>‘ single quote</li>
+<li>“ double auite</li>
+<li>&#96; back quote, backtick, grave</li>
+<li>~ tilde</li>
+<li>() left, right parenthesis</li>
+<li>[] left, right (sqare) braket</li>
+<li>{} left, right (curly) braket</li>
+<li>&lt;&gt; left, right chevron</li>
+<li>? question mark</li>
+<li><ul>
+<li>hyphen, minus, dash</li>
+</ul>
+</li>
+<li>! exclamation mark</li>
+<li>@at sign</li>
+<li># hash, hashtag, pound</li>
+<li>$ dollar sign</li>
+<li>^ caret</li>
+<li>&amp; ampersand</li>
+<li>* asterisk</li>
+<li>\ back slash(leader key, escape)</li>
+<li>| vertical bar</li>
+<li>_ under score</li>
+</ul>
+</li>
+</ul>
+<h3 id="prompt-input-mode"><a href="#prompt-input-mode" class="headerlink" title="prompt: input mode"></a>prompt: input mode</h3><ul>
+<li><p>2가지 방식 입력기 지원</p>
+<ul>
+<li>emacs mode(default) set -o emacs bash 기본 모드</li>
+<li>vi mode set -o vi ksh과 호환을 위해</li>
+<li>모든 옵션 보기 set -o. set +o. shopt</li>
+<li>emacs editing mode 그림 추가!!</li>
+</ul>
+</li>
+<li><p>^R </p>
+</li>
+<li><p>alt + .</p>
+</li>
+<li><p>!:n-m</p>
+</li>
+</ul>
+<h3 id="bash-shell-작동원리"><a href="#bash-shell-작동원리" class="headerlink" title="bash shell 작동원리"></a>bash shell 작동원리</h3><ul>
+<li><p>셸에서 실행되는 UNIX 명령어는 sub-shell 이 생성되어 실행</p>
+</li>
+<li><p>서브셸이란 fork-exec로 만들어지는 child process 셸</p>
+</li>
+<li><p>부모 프로세스는 자식 프로세스의 exit code 를 읽어햐한다.</p>
+</li>
+<li><p>자식이 성공했는지 실패했는지 알수 있다. 0이면 성공 아니면 실패</p>
+</li>
+<li><p>zombie</p>
+<ul>
+<li>부모 프로세스가 종료된 자식 프로세스의 exit status르 처리하기 전의 상태</li>
+<li>자식 프로세스를 zombie process 혹은 defunct process 라고 부름</li>
+<li>모든 프로세스의 종료는 zombie 상태를 거쳐서 해소되기 때문에 프로세스가 종료되는 정상적인 과정중에 하나.</li>
+<li>좀비 프로세스가 생긴다는 건 부모 프로세스에 문제가 있다는 것!</li>
+</ul>
+</li>
+<li><p>echo $? 이전 명령어의 리턴값</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">touch qwer</span><br><span class="line">rm qwer</span><br><span class="line">echo $?</span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">rm qwer</span><br><span class="line">echo $?</span><br><span class="line">1</span><br><span class="line"></span><br><span class="line">rm -f qwer</span><br><span class="line">echo $?</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
+<ul>
+<li>rm --force 옵션에 대하 오래<ul>
+<li>UNIX command 특히 rm과 같으 optional하 기능에 --force 옵션이 존재하는 것은 child process로 작동할 때 exit code르 조작하기 위함.</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">cat Makefile</span><br><span class="line">all:</span><br><span class="line">  @echo &#x27;Clear temprary files&#x27;</span><br><span class="line">  rm *.tmp</span><br><span class="line">  @echo &#x27;All temporary files are deleted on current dir.&#x27;</span><br><span class="line"></span><br><span class="line">$ touch hello.tmp; ls</span><br><span class="line">Makefile hello.tmp</span><br><span class="line">$make</span><br><span class="line">Clear temporary files</span><br><span class="line">rm *.tmp</span><br><span class="line">All temporary files are deleted on current dir.</span><br><span class="line">$ ls</span><br><span class="line">Makefile</span><br><span class="line">$ make</span><br><span class="line">Clear temporary files</span><br><span class="line">rm *.tmp</span><br><span class="line">rm: cannot remove &#x27;*.tmp&#x27;: No such file or directory</span><br><span class="line">make: *** [Makefile:3: all] Error 1</span><br><span class="line"></span><br><span class="line">all:</span><br><span class="line">  @echo &#x27;Clear temprary files&#x27;</span><br><span class="line">  rm -f *.tmp</span><br><span class="line">  @echo &#x27;All temporary files are deleted on current dir.&#x27;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>make 외에 gradle이나 다른 빌드 툴도 동일한 기능으로 작동하느 것들이 많다.</p>
+</li>
+<li><p>프로세스의 main 함수의 리턴값 &#x3D;&#x3D; exit code</p>
+</li>
+<li><p>부모 프로세스가 자식 프로세스가 어떻게 종료되었는지 알수 있다.</p>
+</li>
+<li><p>shell script도 정상 작동이 아닌 경우 return 값을 0이 아닌 값을 줘야한다.</p>
+</li>
+<li><p>셸의 명령 기능을 조합하여 batch 처리를 목표로 한다.</p>
+<ul>
+<li>외부 명령어와 built-in 명령어르 조합</li>
+<li>그 외에 perl(정규표현식 사용 많을 때), python(c언어와의 연동을 생각하면), ruby와 같으 스크립트 언어 사용</li>
+</ul>
+</li>
+</ul>
+<h3 id="variable"><a href="#variable" class="headerlink" title="variable"></a>variable</h3><ul>
+<li>declareation<ul>
+<li>[set] name&#x3D;value 변수 선언&#x2F;변경</li>
+</ul>
+</li>
+<li>expression<ul>
+<li>${name} 중괄호 생략가능하지만 그냥 써라</li>
+</ul>
+</li>
+<li>removal<ul>
+<li>unset &lt;name&gt;</li>
+</ul>
+</li>
+<li>셸 프로그래밍 문법에서 공백(space)의 역할은 중요!</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ var1=&quot;Macallan&quot;</span><br><span class="line">$ echo $var1</span><br><span class="line">Macallan</span><br><span class="line"></span><br><span class="line">$ var1 = &quot;Tallicker&quot;</span><br><span class="line">오류 남. 공백 쓰지마</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>환경 변수<ul>
+<li>셸 변수에 상속 속성을 설정. folk 하는 경우 child process에 상속됨</li>
+<li>c언어 프로그램에서는 getenv()로 환경 변수르 읽을 수 있음</li>
+<li>새롭게 시작하는 child 프로세스에 설정을 넘겨주는 용도로 주로 사용</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MY_ENV_VAR=&quot;sunyzero&quot;; export MY_ENV_VAR</span><br><span class="line">export MY_ENV_VAR=&quot;sunyzero&quot; 이거 가장 좋다</span><br><span class="line">declare -x MY_ENV_VAR=&quot;sunyzero&quot;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>env 환경변수 확인 명령</li>
+<li>export EDITOR&#x3D;vim</li>
+<li>PATH 명령어 탐색 기능</li>
+<li>~&#x2F;.bashrc 에 PATH 선언을 하지마라. 여러번 import 하면 PATH가 엉망이 된다.</li>
+<li>pathmunge 셸함수를 사용해 PATH를 추가!</li>
+<li>shell variable scope은 process life-cycle과 같다</li>
+<li>permanency르 제공하려면<ul>
+<li>rc(run command, runtime config)나 profile에 변수의 값으 저장시켜야한다.</li>
+<li>.bashrc, .bash_profile이 그 역할을 함</li>
+</ul>
+</li>
+</ul>
+<h3 id="Involking-Type"><a href="#Involking-Type" class="headerlink" title="Involking Type"></a>Involking Type</h3><ul>
+<li><p>Authentication 과정에 따른 분류</p>
+<ul>
+<li>login shell, non-login shell</li>
+</ul>
+</li>
+<li><p>Command-execution 방식에 따른 분류</p>
+<ul>
+<li>interative shell, non-interactive shell</li>
+</ul>
+</li>
+<li><p>총 세가지 방식의 조합이 사용됨</p>
+<ul>
+<li>interactive login chell</li>
+<li>interactive non-login shell</li>
+<li>non-interactive shell</li>
+</ul>
+</li>
+<li><p>login shell</p>
+<ul>
+<li>import &#x2F;etc&#x2F;profile (if exist) global profile</li>
+<li>~&#x2F;.bash_profile, ~&#x2F;.bash_login, ~&#x2F;.profile 순으로 읽어옴<ul>
+<li>RH 계열은 .bash_profile debian 계열은 .profile 주로 사용</li>
+</ul>
+</li>
+<li>종료시 ~&#x2F;.bash_logout 을 실행 (if exist)</li>
+</ul>
+</li>
+<li><p>non-login shell</p>
+<ul>
+<li>import ~&#x2F;.bashrc (if exist)<ul>
+<li>일반적으로 ~&#x2F;.bash_profile 에 .bashrc를 import 하는 코드가 들어있음</li>
+</ul>
+</li>
+<li>non-login shell은 X window에서 실행된 terminal 애플리케이션이나 su로 열리는 셸<ul>
+<li>su - login shell</li>
+<li>su non-login shell</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>.bash_profile에 아래 내용 추가</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export TERM=xterm-256color</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>~&#x2F;.bashrc 혹은 debian 계열의 경우 ~&#x2F;.bash_aliases</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">alias enus=&quot;export LANG=en_US.UTF-8; export LANGUAGE=&quot;</span><br><span class="line">alias kokr=&quot;export LANG=ko_KR.UTF-8; export LANGUAGE=en:ko&quot;</span><br><span class="line">alias vi=vim</span><br><span class="line">alias man=&quot;LANG=en_US.utf8 man&quot;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>import, source<ul>
+<li>. 혹은 source 명령을 사용한다.</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ . ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>interactive, non-interative mode</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ cat hellobash.sh</span><br><span class="line">#!/bin/bash</span><br><span class="line">echo Hello bash</span><br><span class="line">echo $-</span><br><span class="line">$ chmod 755 ./hellobash.sh</span><br><span class="line"></span><br><span class="line">$ ./hellobash.sh</span><br><span class="line">Hello bash</span><br><span class="line">hB</span><br><span class="line"></span><br><span class="line">$ bash ./hellobash.sh</span><br><span class="line">Hello bash</span><br><span class="line">hB</span><br><span class="line"></span><br><span class="line">$ source ./hellobash.sh -&gt; interactive shell에서 실행을 의미</span><br><span class="line">Hello bash</span><br><span class="line">himBH</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>non-interative 에서 option을 변경하려면?<ul>
+<li>명령을 실행할 때 옵션을 주거나 script 안에 명령을 넣거나</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ bash -e ./hellobash.sh</span><br><span class="line">Hello bash</span><br><span class="line">ehB</span><br><span class="line"></span><br><span class="line">$ cat hellobash.sh</span><br><span class="line">#!/bin/bash</span><br><span class="line">set -o errexit</span><br><span class="line">echo Hello bash</span><br><span class="line">echo $-</span><br></pre></td></tr></table></figure>
+
+<h3 id="script-구조"><a href="#script-구조" class="headerlink" title="script 구조"></a>script 구조</h3><ul>
+<li>실행 셸 선언부 #!(셔뱅&#x2F;시뱅&#x2F;쉬뱅)으로 시작</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">#!/usr/bin/env bash</span><br><span class="line">#! /usr/bin/env LANG=en_US.UTF-8 bash</span><br><span class="line"># 실행 셸 선언 위 3개 중 하나 사용 가능</span><br><span class="line"># 아래는 스크립트 부분</span><br><span class="line">src_dir=$HOME</span><br><span class="line">echo -n &quot;Your home directory : &quot;</span><br><span class="line">echo $src_dir</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>execution 실행</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 옛날 bourne shell 로 실행 됨</span><br><span class="line">$ sh aaa.sh</span><br><span class="line">// import 가 되면서 자식 프로세스가 생성 되지 않음. 스크립트 실행 방법으로는 비적절</span><br><span class="line">$ . aaa.sh</span><br><span class="line">// bash가 파일을 읽어서 실행</span><br><span class="line">bash aaa.sh</span><br><span class="line">//바로 실행하기 때문에 파일에 권한이 있어야함</span><br><span class="line">./aaa.sh</span><br><span class="line">$</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>sh 와 bash는 다른 것</li>
+</ul>
+<h3 id="Variable"><a href="#Variable" class="headerlink" title="Variable"></a>Variable</h3><ul>
+<li>전역변수 기본값<ul>
+<li>자식 프로세스에 상속도 됨. 대부분 이거 씀</li>
+</ul>
+</li>
+<li>지역변수<ul>
+<li>local var_name[&#x3D;value]</li>
+</ul>
+</li>
+<li>변수에 공백이 있으면 single&#x2F;double quotation으로 묶어야 함</li>
+<li>quotation mark<ul>
+<li>double quotes 문자열으 표기, $ 괄호 등의 특수 문자를 해석</li>
+<li>single quotes 문자열으로 표기, 특수 문자르 그대로 표현</li>
+<li>back slash 문자의 특수한 기능으 제거하여 일반 문자로 인식시킴. 이스케이프 시킴.</li>
+<li>back quotes, backtick 명령어로 인식. 묶여지 문자열은 명령어로 인식. 변수에는 명령어의 결과값이 들어감. 이 문자가 잘 안보여 $()으로 대체</li>
+<li>둥근 따옴표 형식은 오류가 날 수 있음. 확인 필요</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">OS_RELEASE=/etc/os-release</span><br><span class="line">OS_REL_ID=`grep &#x27;^ID=&#x27; $OS_RELEASE | cut -d &#x27;=&#x27; -f 2 | tr -d &#x27;&quot;&#x27;` </span><br><span class="line">OS_REL_VER=`grep &#x27;^VERSION=&#x27; $OS_RELEASE | cut -d &#x27;=&#x27; -f 2`</span><br><span class="line">OS_KERNEL_VER=`uname -r`</span><br><span class="line">echo &quot;$OS_REL_ID $OS_REL_VER | $OS_KERNEL_VER&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Condition-조건문"><a href="#Condition-조건문" class="headerlink" title="Condition 조건문"></a>Condition 조건문</h3><ul>
+<li>if</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">if [ condition ] ; then ... fi</span><br><span class="line"># condition 앞과 뒤에 공백이 있어야 함</span><br><span class="line"># condition은 test 실행기로 대체 가능</span><br><span class="line">if [ &quot;구문&quot; [-a|-o] &quot;구문&quot; [-a|-o] ... ]; then</span><br><span class="line">  shell_command</span><br><span class="line">fi</span><br><span class="line">if [ &quot;구문&quot; [-a|-o] &quot;구문&quot; [-a|-o] ... ]; then shell_command; fi</span><br><span class="line">test &quot;구문&quot; [-a|-o] &quot;구문&quot; [-a|-o] ... </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">if [ $USER != &quot;root&quot; ]; then</span><br><span class="line">  echo &quot;!root&quot;</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">//좋다</span><br><span class="line">[ $USER != &quot;root&quot; ] &amp;&amp; echo &quot;not root&quot; </span><br><span class="line">//중간 </span><br><span class="line">test $USER != &quot;root&quot; &amp;&amp; echo &quot;not root&quot;</span><br><span class="line">//별로 외부 명령을 불러다 쓰는 경우로 성능 이슈</span><br><span class="line">/usr/bin/test $USER != &quot;root&quot; &amp;&amp; echo &quot;not root&quot;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>산술 연산자</p>
+<ul>
+<li>-eq equal</li>
+<li>-ne not equal</li>
+<li>-gt greater than</li>
+<li>-ge greater equal</li>
+<li>-lt less than </li>
+<li>-le less equal</li>
+</ul>
+</li>
+<li><p>문자열 연산자</p>
+<ul>
+<li>&#x3D;, =&#x3D; 같음 띄어쓰기르 안하면 할당 연산임</li>
+<li>!&#x3D; 다름</li>
+<li>-z A 문자열 A 길이가 zero면 참</li>
+<li>-n A 문자열 A 길이가 zero가 아니면 참</li>
+</ul>
+</li>
+<li><p>결합 연산자</p>
+<ul>
+<li>-a and</li>
+<li>-o or</li>
+</ul>
+</li>
+<li><p>단항 연산자</p>
+<ul>
+<li>!A A결과의 부정</li>
+</ul>
+</li>
+<li><p>파일 테스트</p>
+<ul>
+<li>-r 해당 file이 존재하고 읽기 가능하면 true</li>
+<li>-w 해당 file이 존재하고 쓰기 가능하면 true</li>
+<li>-x 해당 file이 존재하고 실행 가능하면 true</li>
+<li>-e 해당 file이 존재하면 true</li>
+<li>-f 해당 file이 존재하고 일반 파일이면 true</li>
+<li>-s 해당 file이 존재하고 용량이 zero 이상이면 true</li>
+<li>-d 해당 dir 이 존재하면 true</li>
+<li>-nt newer-than</li>
+<li>-ot older-than</li>
+<li>-ef exact-file 같은 inode 이며 true</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">$ test &quot;beer&quot; = &quot;whisky&quot;; echo $?</span><br><span class="line">$ [ &quot;beer&quot; = &quot;whisky&quot; ]; echo $?</span><br><span class="line">$ test &quot;beer&quot;=&quot;whisky&quot;; echo $?</span><br><span class="line">$ test &quot;beer&quot;= &quot;whisky&quot;; echo $?</span><br><span class="line"></span><br><span class="line">$ mynum=24</span><br><span class="line">$ test $mynum -ge 100 ; echo $?</span><br><span class="line">$ test $mynum -le 100 ; echo $?</span><br><span class="line">//아래와 같이 않씀 이건 파일로 저장</span><br><span class="line">$ test $mynum &gt; 100 ; echo $?</span><br><span class="line">//아래 처럼 사용해야 함</span><br><span class="line">$ test $mynum -lt 100 ; echo $?</span><br><span class="line"></span><br><span class="line">$ test -f ~/.bashrc ; echo $?</span><br><span class="line">$ [ -f ~/.bashrc ] ; echo $?</span><br><span class="line">$ test -f ~/.bashrc -a -d ~/.git ; echo $?</span><br><span class="line"></span><br><span class="line">if [ -z $var2 ]; then</span><br><span class="line">  var2가 선언되지 않았을 때 실행</span><br><span class="line">fi</span><br><span class="line">if [ &quot;x$&#123;var2&#125;&quot; = &quot;x&quot; ]; then</span><br><span class="line">  var2가 선언되지 않았을 때 실행</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>괄호 두개 사용 문법 ksh 에서 온 문법</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">str1=&quot;abc&quot;</span><br><span class="line">str2=&quot;aba&quot;</span><br><span class="line">if [[$str1 &gt; $str2 ]]; then ....</span><br><span class="line"></span><br><span class="line">str1=0x30</span><br><span class="line">str2=010</span><br><span class="line">if [[ $str1 -gt $str2 ]]; then ....</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>다중 분기</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if [ condition1 ]; then</span><br><span class="line"></span><br><span class="line">elif [ codition2 ]; then</span><br><span class="line"></span><br><span class="line">else</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>&#x2F;usr&#x2F;bin&#x2F;run-parts 파일 확인!</p>
+<ul>
+<li><p>short-circuit</p>
+<ul>
+<li>A &amp;&amp; B 앞이 참이며 뒤가 실행</li>
+<li>A || B</li>
+</ul>
+</li>
+<li><p>다중 상태 분기 case</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">case $test_variable in</span><br><span class="line">value1)</span><br><span class="line">  ...</span><br><span class="line">  ;;</span><br><span class="line">value2)</span><br><span class="line">  ...</span><br><span class="line">  ;;</span><br><span class="line">*)</span><br><span class="line">  default 값일때</span><br><span class="line">  ;;</span><br><span class="line">esac</span><br><span class="line"></span><br><span class="line">// 예제</span><br><span class="line">case $answer in</span><br><span class="line">  y*|Y*)</span><br><span class="line">    commands...</span><br><span class="line">    ;;</span><br><span class="line">  n*|N*)</span><br><span class="line">    commands...</span><br><span class="line">    ;;</span><br><span class="line">  *)</span><br><span class="line">    echo &quot;잘못된 입력입니다&quot;</span><br><span class="line">    ;;</span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
+
+<p>pathmunge 확인하자</p>
+<h3 id="loop-순환문-및-그-외"><a href="#loop-순환문-및-그-외" class="headerlink" title="loop 순환문 및 그 외"></a>loop 순환문 및 그 외</h3><ul>
+<li>while<ul>
+<li>test 구문이 true인 경우 loop</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">while [ test condition ]</span><br><span class="line">do</span><br><span class="line">  command..</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">while [ 1 ]; do</span><br><span class="line">  command...</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">// : null commandㄹ 부른다. 0 이거나 true르 의미</span><br><span class="line">while : ; do</span><br><span class="line">  command...</span><br><span class="line">done</span><br><span class="line">  </span><br><span class="line">while true ; do</span><br><span class="line">  command...</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">idx=10</span><br><span class="line">while [ $idx -ne 0 ]; do</span><br><span class="line">  echo &quot;idx = $idx&quot;</span><br><span class="line">  idx=`expr $ idx - 1`</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">idx=10</span><br><span class="line">while : ; do</span><br><span class="line">  echo &quot;idx = $idx&quot;</span><br><span class="line">  if [ $idx - eq 0 ]; then</span><br><span class="line">    break</span><br><span class="line">  fi</span><br><span class="line">  idx=`expr $ idx - 1`</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>foreach</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">for iterator in val1 val2 ...</span><br><span class="line">do</span><br><span class="line">  command...</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">for fname in * ; do</span><br><span class="line">  echo &quot;file : $fname&quot;</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">for names in aa bb cc ; do</span><br><span class="line">  echo &quot;Name : $names&quot;</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">for i in `seq 1 10`</span><br><span class="line">do</span><br><span class="line">  echo &quot;sequence : $i&quot;</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">for i in `seq 1 2 10`</span><br><span class="line">do</span><br><span class="line">  echo &quot;sequence : $i&quot;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li>until<ul>
+<li>test 구문이 false인 경우 loop 실행</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">until [ test condition ]</span><br><span class="line">do</span><br><span class="line">  commands...</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>select<ul>
+<li>메뉴 선택으 위한 기능(from ksh)</li>
+<li>잘 안써요</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select menu in [ lists ... ]</span><br><span class="line">do</span><br><span class="line">  title...</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
+<h3 id="Expression"><a href="#Expression" class="headerlink" title="Expression"></a>Expression</h3><ul>
+<li>변수 길이</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ myname=sunyzero</span><br><span class="line">$ echo $(#myname)</span><br><span class="line">8</span><br><span class="line">$ echo $(myname:2&#125;</span><br><span class="line">nyzero</span><br><span class="line">$ echo $&#123;myname:2:3&#125;</span><br><span class="line">nyz</span><br><span class="line">$ echo $&#123;myname:0:-2&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>2가지 지정 가능 타입</li>
+<li>정수형 integer</li>
+<li>배열. indexed array, associative array</li>
+<li>dictionary에 가까움 index는 키가 정수</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">$ ii=123</span><br><span class="line">$ echo $11</span><br><span class="line">123</span><br><span class="line"></span><br><span class="line">$ ((ii++))</span><br><span class="line">$ echo $ii</span><br><span class="line">124</span><br><span class="line">$ii=hello</span><br><span class="line">$ echo $ii</span><br><span class="line">hello</span><br><span class="line"></span><br><span class="line">// 숫자만 넣을 수 있다</span><br><span class="line">$ declare -i jj </span><br><span class="line">$ jj=234</span><br><span class="line">$ echo $jj</span><br><span class="line">234</span><br><span class="line"></span><br><span class="line">$ jj=hello</span><br><span class="line">$ echo $jj</span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">$ jj=256</span><br><span class="line">$ ((jj+=64))</span><br><span class="line">$ echo $jj</span><br><span class="line">320</span><br><span class="line"></span><br><span class="line">//수식 안에서 공백은 자유롭게 사용</span><br><span class="line">$ (( kk = (jj*2) ))</span><br><span class="line">$ echo $kk</span><br><span class="line">640</span><br><span class="line"></span><br><span class="line">// 계산 결과 치환은 $(()) 사용</span><br><span class="line">$ echo &quot;Value = $(( kk + jj ))&quot;</span><br><span class="line">Value = 960</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">$ declare -a arrayv=(&#x27;hello world&#x27; &quot;posix.1&quot; &quot;SUSv1&quot;)</span><br><span class="line"># echo $(#arrayv[@]&#125;</span><br><span class="line">3</span><br><span class="line">$ echo $&#123;arrayv[@]:1&#125;</span><br><span class="line">posix.1 SUSv1</span><br><span class="line">$ arrayv+=( &quot;SUSv2&quot;)//공백은 맘대로</span><br><span class="line">$ echo $(#arrayv[@])</span><br><span class="line">4</span><br><span class="line">$ echo $&#123;arrayv[@]&#125;</span><br><span class="line">hello world posix.1 SUSv1 SUSv2</span><br><span class="line">$ unset arrayv[1]</span><br><span class="line">$ echo $&#123;arrayv[@]&#125;</span><br><span class="line">hello world SUSv1 SUSv2</span><br><span class="line">$ echo $(#arrayv[@])</span><br><span class="line">3</span><br><span class="line">$ echo $&#123;!arrayv[@]&#125;</span><br><span class="line">0 2 3</span><br><span class="line">$ arrayv+=( &quot;SUSv3&quot; )</span><br><span class="line">$ echo $&#123;!arrayv[@]&#125; // 빈 index가 생김</span><br><span class="line">0 2 3 4</span><br><span class="line">$ echo $&#123;arrayv[@]&#125;</span><br><span class="line">hello world SUSv1 SUSv2 SUSv3</span><br><span class="line"></span><br><span class="line">$ for ii in $&#123;arrayv[@]&#125;; do echo &quot;=&gt;|$ii|&quot;; done</span><br><span class="line">이렇게 하면 띄어쓰기 기준으로 출력하기 때문에 IFS의 첫번째 문자르 구분자로 사용 아래와 같이 써줘야 한다.</span><br><span class="line">$ for ii in &quot;$&#123;array[@]&#125;&quot;; do echo &quot;=&gt;|$ii|&quot;; done</span><br><span class="line"></span><br><span class="line">$ for ii in $&#123;arrayv[*]&#125;; do echo &quot;=&gt;|$ii|&quot;; done</span><br><span class="line">이건 @똑같이 처리</span><br><span class="line">$ for ii in &quot;$&#123;arrayv[*]&#125;&quot;; do echo &quot;=&gt;|$ii|&quot;; done</span><br><span class="line">전체가 하나의 문자로 처리</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>IFS</li>
+<li>Internal Field Separator로 데이터 처리시 중요!!</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ echo -n &quot;$IFS&quot; | hexdump -C</span><br><span class="line">00000000 20 09 0a</span><br><span class="line">00000003</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//ifs를 , 로 설정</span><br><span class="line">$ IFS=&#x27;,&#x27;</span><br><span class="line">$ for ii in $&#123;arrayv[@]&#125;; do echo &quot;=&gt;|$ii|&quot;; done</span><br><span class="line">이렇게 해주면 구분자를 , 로 사용한다. 출려 결과가 바뀐다.</span><br><span class="line"></span><br><span class="line">$ for ii in &quot;$&#123;arrayv[*]&#125;&quot;; do echo &quot;=&gt;|$ii|&quot;; done</span><br><span class="line">, 를 구분자로 하는 한문장으로 출력 됨!</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//ifs를 널로 설정</span><br><span class="line">$ IFS=</span><br><span class="line">$ for ii in $&#123;arrayv[@]&#125;; do echo &quot;=&gt;|$ii|&quot;; done</span><br><span class="line">//널문자 기준으로 처리하기 때문에 대부분의 처리가 잘 됨</span><br><span class="line">$ IFS=$&#x27;\x20&#x27;$\x09&#x27;$&#x27;\x0a&#x27;</span><br><span class="line">// ifsㄹ 원래대로 돌려놓음</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>associative array</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ declare -A mem_spec=([bank=&quot;ddr4&quot; [vendor]=&quot;sec&quot; [capacity]=&quot;32&quot;</span><br><span class="line">$ echo $(mem_spec[@]&#125;</span><br><span class="line">ddr4 sec 32</span><br><span class="line">$ echo $&#123;mem_spec[vendor]&#125;</span><br><span class="line">sec</span><br><span class="line">$ echo $(!mem_spec[@]&#125;//키 값 출력</span><br><span class="line">bank vendor capacity</span><br><span class="line">$ mem_spec+=([clock speed]=3200)//공백문자 허용</span><br><span class="line">$ echo $(mem_spec[@]&#125;</span><br><span class="line">ddr4 sec 3200 32//순서 무시</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Special-Parameters"><a href="#Special-Parameters" class="headerlink" title="Special Parameters"></a>Special Parameters</h3><p>$$ | 현재 셸 프로세스의 PID $()로 묶이 서브셸로 실행될 경우 치환이 먼저 이뤄지므로 부모 프로세스의 PID가 나온다.<br>$! | 마지막으로 실행된 백그라운드 프로세스의 PID<br>$? | 최근 포그라운드 프로세스의 종료값 (zero&#x3D;true, otherwise&#x3D;false)<br>$_ | 이전 명령어의 마지막 인수 (!$)<br>$- | on 되어있는 실행 옵션<br>$# | 인수의 개수<br>$0, $1, $2, .. | 인수 리스트(argv)<br>$* | 명령에 전달된 인수 전체의 목록. double-quote으로 감싼 경우 IFS의 첫번째 문자르 구분자로 사용하여 1개의 문자열화<br>$@ | 전달 인수르 문자열의 배열로 표시</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">if [ $# -eq 0 ]; then</span><br><span class="line"> echo &quot;Usage: $0 &lt;quote string ...&gt;&quot;</span><br><span class="line"> exit 1</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">echo &quot;argv[0]: $0&quot;</span><br><span class="line">echo &quot;argv[1]: $1&quot;</span><br><span class="line"></span><br><span class="line">for arg_list in $*; do</span><br><span class="line">  echo &#x27;$* : param =&#x27; $arg_list</span><br><span class="line">done </span><br><span class="line"></span><br><span class="line">for arg_list in &quot;$*&quot;; do</span><br><span class="line">  echo &#x27;&quot;$*&quot; : param =&#x27; $arg_list</span><br><span class="line">done </span><br><span class="line"></span><br><span class="line">for arg_list in #@; do</span><br><span class="line">  echo &#x27;$@ : param =&#x27; $arg_list</span><br><span class="line">done </span><br><span class="line"></span><br><span class="line">for arg_list in &quot;$@&quot;; do</span><br><span class="line">  echo &#x27;&quot;$@&quot; : param =&#x27; $arg_list</span><br><span class="line">done </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">if [ $# -eq 0 ]; then</span><br><span class="line">  echo &quot;Usage: $0 &lt;backup dir&gt; [...]&quot;</span><br><span class="line">  exit 1</span><br><span class="line">if</span><br><span class="line"></span><br><span class="line">destdir=$1</span><br><span class="line">basename=$(basename $1)</span><br><span class="line">date_now=$(date +%Y%m%d-%H%M%S)</span><br><span class="line">#tarball=$&#123;basename&#125;_$&#123;date_now&#125;.tar.gz</span><br><span class="line">tarball=$&#123;basename&#125;_$&#123;date_now&#125;.tar.zst</span><br><span class="line">for tdir in &quot;$@&quot;;</span><br><span class="line">do</span><br><span class="line">  if [ ! -d &quot;$tdir&quot; ]; then</span><br><span class="line">    echo &quot;ENOENT: $tdir&quot;</span><br><span class="line">    exit 1</span><br><span class="line">done</span><br><span class="line">#tar cfa $tarball $* 2&gt; $&#123;basename&#125;_$&#123;date_now&#125;_stderr.log</span><br><span class="line">2&gt; $&#123;basename&#125;_$&#123;date_now&#125;_stderr.log tar c $* | zstd -T2 &gt; $tarball</span><br><span class="line">echo &quot;New tarball: $tarball&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="stdio"><a href="#stdio" class="headerlink" title="stdio"></a>stdio</h3><ul>
+<li><p>history</p>
+<ul>
+<li>C 언어로부터 유래</li>
+<li>추상화된 입출려 계층이 필요. 장치에 대해 투명성(transparency)을 제공</li>
+<li>block device나 character device는 모두 abstract stream(byte base)로 설계 가능</li>
+<li>유닉스 계열의 &#x2F;dev&#x2F;*를 오픈할 때 fd를 부여</li>
+</ul>
+</li>
+<li><p>stdio</p>
+<ul>
+<li>stdin standard input 0</li>
+<li>stdout standard out 1</li>
+<li>stderr standard error 2</li>
+<li>추상화된 장치이므로 논리적으로 연결, 해제 등이 가능</li>
+<li>기본적으로 연결된 stdin은 특정 파일에 연결시킬 수 있음</li>
+</ul>
+</li>
+<li><p>redirection</p>
+<ul>
+<li>&#x2F;&gt; 표준 출력을 파일로</li>
+<li>&#x2F;&gt;&#x2F;&gt; 표준 출력으 기존의 파일에 덧붙이거나 없으며 새 파일</li>
+<li>&#x2F;&lt; 표준 입력을 파일에서 입력</li>
+<li>&#x2F;&lt;&#x2F;&lt; 표준입력에 텍스트르 입력</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">car &gt;myff.log</span><br><span class="line">: &gt;myff.log</span><br><span class="line">&gt;myff.log</span><br></pre></td></tr></table></figure>
+
+<p>&lt;&amp;# | 표준 입력을 파일에서<br>#&gt;  | fd #번을 파일로<br>&amp;&gt;  | stdout, stderr을 파일로<br>&gt;&amp;# | 출력을 fd #으로<br>a | b | 리다이렉션파이프, a의 표준출력은 b의 표준입려으로 연결됨</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ ./redirection.sh &gt; redirection.txt</span><br><span class="line">+ Message : stderr</span><br><span class="line">$ ./redirection.sh 2&gt;&amp;1 | cat &gt; redirection.txt</span><br><span class="line">$ ./redirection.sh 2&gt;&amp;1 | tee redirection.txt</span><br><span class="line"></span><br><span class="line">$ sysctl -a | grep tcp</span><br><span class="line">blabla</span><br><span class="line">$ sysctl -a 2&gt;/dev/null | grep tcp</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>pipe redirection</li>
+</ul>
+<p>&gt;(cmd) | anonymous pipe로 만들어 cmd 명령에 보내어 출력 cmd 실행 결과는 임시 anonymous pipe인 &#x2F;dev&#x2F;fd&#x2F;60 으로 매핑된다.<br>&lt;(cmd) | cmd 명령 결과를 anonymous pipe로 보내어 읽어들인다. cmd 실행 결과는 임시 anonymous pipe인 &#x2F;dev&#x2F;fd&#x2F;63 으로 매핑된다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">while : ; do</span><br><span class="line">  sleep 1</span><br><span class="line">  echo &quot;$(date) STDOUT&quot;</span><br><span class="line">  echo &quot;$(data) STDERR&quot; &gt;&amp;2</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">#!/bin/bash</span><br><span class="line">PREFIX_STR=$1</span><br><span class="line">while read logline; do</span><br><span class="line">  echo &quot;$PREFIX_STR : $logline&quot; &gt;&gt; log_$&#123;PREFIX_STR).log</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">$ ./deamon.sh &gt; &gt;(./proclog.sh INFO) 2&gt; &gt;(./proclog.sh ERR) &amp;</span><br><span class="line"></span><br><span class="line">$ tail log_INFO.txt</span><br><span class="line">$ tail log_ERR.txt</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>HERE document redirection</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">command &lt;&lt;SYMBOL_NAME</span><br><span class="line">...</span><br><span class="line">SYMBOL_NAME</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>noclobber redirectiton</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ set -o noclobber</span><br><span class="line">$ scho &quot;linuxer&quot; &gt; hello.txt</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>code-block redirection</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;... &#125; &gt;file.txr</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>named PIPE<ul>
+<li>PIPE의 특징. 직렬 통신 제공, 가벼움</li>
+<li>UNIX는 전통적으로 2 종류의 PIPE를 지원함<ul>
+<li>named pipe: external interface가 있는 경우 &#x3D; 이름이 있다고 표현 mkfifo로 생성</li>
+<li>anonymous, unamed pipe: temporal한 경우 &#x3D; 이름이 없다고 표현 셸에서 vertical bar로 호출 pipe, popen 시스템콜로 생성</li>
+</ul>
+</li>
+<li>file 이란 무엇인가<ul>
+<li><a target="_blank" rel="noopener" href="https://sunyzero.tistory.com/260">https://sunyzero.tistory.com/260</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ mkfifo /tmp/myfifo_m1</span><br><span class="line">$ ls -l !$</span><br><span class="line">blabla</span><br><span class="line"></span><br><span class="line">$ ps -ef &gt; /temp/myfifo_m1</span><br><span class="line">blabla</span><br><span class="line"></span><br><span class="line">$ grep sbin /tmp/myfifo_m1</span><br><span class="line">blabla</span><br></pre></td></tr></table></figure>
+
+<h3 id="괄호-기능-총정리"><a href="#괄호-기능-총정리" class="headerlink" title="괄호 기능 총정리"></a>괄호 기능 총정리</h3><ul>
+<li>소괄호 parentheses</li>
+</ul>
+<p>$(string) | string 문자열을 명령어로 인식하여 sub-shell로 실행. 서브셸에서 선언 or 변경된 값은 서브셸 스코프에서만 유효. string 앞뒤 공백 허용<br>$((string)) | string 해당하는 문자열을 수치 연산을 인식. expr, let으로 대치 가능.(expr은 외부 명령으로 지양) string 앞뒤 공백 허용</p>
+<ul>
+<li>중괄호 braces</li>
+</ul>
+<p>{… , … , …} | brace expansion. a{1,2,3}b &#x3D; a1b a2b a3b<br>{ …; …; }     | 현대 셸에서 실행함. 공백, 마지막 세미콜론 생략시 에러 발생</p>
+<ul>
+<li><p>대괄호 brackets<br>[…] | 배열 변수의 인덱스<br>[ expression ] | 테스트 구문(expression 부분의 true, false를 테스트)</p>
+</li>
+<li><p>sub-shell 에서 PID, PPID 를 얻어야 하는 경우 변수가 치환되는 시점이 스크립특 해석되느 시점에 결정되기 때문에 오동작이 될 수 있다.</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">sum=0</span><br><span class="line">iter=0</span><br><span class="line">while [ $iter -le 100 ];</span><br><span class="line">do</span><br><span class="line">  (( sum = iter + sum ))</span><br><span class="line">  iter=$(($iter+1))//((iter=iter+1))</span><br><span class="line">  ---- bash 전용</span><br><span class="line">  let sum+=iter</span><br><span class="line">  let iter++</span><br><span class="line">  ---- fork-exec</span><br><span class="line">  sum=`expr $iter + $sum`</span><br><span class="line">  iter=`expr $iter + 1`</span><br><span class="line">  ----</span><br><span class="line">done</span><br><span class="line">echo $sum</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="integer"><a href="#integer" class="headerlink" title="integer"></a>integer</h3><ul>
+<li><p>64bit long integer &lt; after 2.05</p>
+</li>
+<li><p>floating point 인식 못함</p>
+</li>
+<li><p>let</p>
+<ul>
+<li>대부분의 정수 연산이 가능</li>
+<li>base#value 진수 변환 유리</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">let &quot;vone = 3, vtwo = 4&quot;</span><br><span class="line">let &quot; vthree = vone * vtwo + 1&quot;</span><br><span class="line">echo vthree = $vthree</span><br><span class="line">let &quot;vfour = vthree / 3&quot;</span><br><span class="line">echo vfour = $vfour</span><br><span class="line">(( $vone + $vthree + 10 &gt; 20 ))</span><br><span class="line">if [ $? = 0 ]; then</span><br><span class="line">  echo &quot;True (greater than 20)&quot;</span><br><span class="line">fi</span><br><span class="line">(( (vfive = ($vone + $vthree + 10)) &gt; 20 &amp;&amp; echo &quot;$vfive gt 20&quot;</span><br><span class="line"></span><br><span class="line">let &quot;ioct = 064&quot;//8진수</span><br><span class="line">let &quot;ihex = 0x64</span><br><span class="line">let :ibin = 2#10110111&quot;</span><br><span class="line">echo &quot;oct($ioct) hex($ihex) bin($ibin) base64($ib64)&quot;</span><br><span class="line"></span><br><span class="line"># C-style for loop</span><br><span class="line">for ((i=0, sum=0; i&lt;10000; i++))</span><br><span class="line">do</span><br><span class="line">  ((sum+=i))</span><br><span class="line">done</span><br><span class="line">echo $sum</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>braceexpand<ul>
+<li>set -o | grep brace 로 설정 확인</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">for iter in &#123;0..10&#125;; do; blabla; done</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>replacement, substitution<ul>
+<li><p>확장된 변수 치환법</p>
+<ul>
+<li>변수 값의 일부를 반환하는 기법. 위에서 설명함.</li>
+<li>문자열 연산. 일부 삭제. 길이 확인. 일부 치환</li>
+<li>변수명 검색</li>
+</ul>
+</li>
+<li><p>변수 할당</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>${varname:&#x3D;default} | varname이 null이면 default를 할달. 아니면 기존 값으로 치환<br>${varname:-default} | varname이 null이면 default를 반환. 할당 안함<br>${varname:+alternat} | varname이 nullㅇ 아니면 alternat르 반환. null이며 그대로. 할당 안함<br>${varname:?error} | varname이 null이면 에러 발생 후 error 메시지의 값을 화면에 출력. return code는 1</p>
+<ul>
+<li>prefix&#x2F;suffix removal</li>
+</ul>
+<p>${varname%pattern} | 후방 탐색으로 pattern과 매칭되는 varname의 값이 삭제됨 %는 non-greedy 매칭 %%는 greedy 매칭<br>${varname#pattern} | 전방 탐색으 pattern과 매칭되는 varname의 값이 삭제됨</p>
+<ul>
+<li>pattern replacement</li>
+</ul>
+<p>${varname&#x2F;pat[&#x2F;replace]}</p>
+<ul>
+<li><p>glob patterns</p>
+<ul>
+<li>그림 추가</li>
+<li>참고할만한 문서 <a target="_blank" rel="noopener" href="https://mywiki.wooledge.org/glob">https://mywiki.wooledge.org/glob</a></li>
+</ul>
+</li>
+<li><p>typeset, declare</p>
+<ul>
+<li>-a 배열변수 선언 -A는 associative array</li>
+<li>-f 함수르 선언. 보통 생략</li>
+<li>-F 선언된 함수명 표시</li>
+<li>-i 정수형 변수 선언</li>
+<li>-r 변수를 readonly</li>
+<li>-x 일반변수를 환경변수로 export</li>
+<li>-p name 생략시엔 변수목록을 표시. name이 주어지며 변수으 속성과 값을 출력</li>
+<li>+{aAfirx} 해당 변수의 속성을 해제</li>
+</ul>
+</li>
+<li><p>name</p>
+<ul>
+<li>${!varname*}, ${!varname@}</li>
+</ul>
+</li>
+</ul>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-02-23T15:00:00.000Z" title="2022. 2. 24. 오전 12:00:00">2022-02-24</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T12:24:30.719Z" title="2026. 5. 2. 오후 9:24:30">2026-05-02</time>&nbsp;업데이트 됨</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/02/24/2022-02-24-linux-admin/">Linux Admin</a></p><div class="content"><p>Linux Admin에 대하여</p>
+<ul>
+<li>주의! 마크다운 문법과 쉘 문법의 혼용으로 잘못된 표현이 있을 수 있음의 주의 바랍니다.</li>
+</ul>
+<h3 id="Linux-Package-System"><a href="#Linux-Package-System" class="headerlink" title="Linux Package System"></a>Linux Package System</h3><ul>
+<li>Redhat Package System(RPM)<ul>
+<li>rpm, yum, dnf</li>
+</ul>
+</li>
+<li>Debian Package System(DEB)<ul>
+<li>dpkg, apt-get, aptitude, apt</li>
+</ul>
+</li>
+<li>Package<ul>
+<li>시스템을 구성하는 파일의 묶음</li>
+<li>패키지 관리자에 의해서 읽혀지는 pre-built 파일들</li>
+<li>관리의 편리함을 제공한다.</li>
+</ul>
+</li>
+<li>dpkg file 구조<ul>
+<li>strace_4.5.20_2.3_amd64.deb</li>
+<li>{package name}_{version &amp; release}_{arch}.deb</li>
+</ul>
+</li>
+<li>dpkg<ul>
+<li>dpkg, dselect가 초기에 사용되었으나 dependency 해결과 검색이 어렵고 네트워크 설치 지원 못하여 apt가 등장</li>
+<li>dpkg -l {package name} 패키지 리스트 확인</li>
+<li>dpkg -s {package name} 패키지 상태 확인</li>
+<li>dpkg -S {file} 파일명으로 패키지 검색</li>
+<li>dpkg –audit 오류 확인</li>
+</ul>
+</li>
+</ul>
+<h3 id="apt"><a href="#apt" class="headerlink" title="apt"></a>apt</h3><ul>
+<li>advanced package tools<ul>
+<li>dpkg를 래핑한 front-end tool</li>
+<li>네트워크 설치 지원(mirror 탐색 가능)</li>
+<li>dependency 탐색 및 설치 가능</li>
+</ul>
+</li>
+<li>source list<ul>
+<li>apt가 package file 을 다운 받는 곳의 정보</li>
+<li>&#x2F;etc&#x2F;apt&#x2F;sources.list 직접 편집 권장 하지 않음</li>
+<li>&#x2F;etc&#x2F;apt&#x2F;sources.list.d 에 *.list 파일명으로 추가 권장</li>
+<li>apt edit-sources 명령어로 편집 가능</li>
+<li>deb [option1&#x3D;value1 option2&#x3D;value2] ury suite [component1] [component] […]</li>
+<li>deb-src [option1&#x3D;value1 option2&#x3D;value2] ury suite [component1] [component] […]</li>
+<li>uri: deb 패키지를 제공하는 사이트의 URI</li>
+<li>suite: distribution codename 디렉터리 이름 (&#x3D;&#x3D;dist. version)</li>
+<li>component: suite의 구성 요소 및 라이선스 종류별 분류<ul>
+<li>main(officially supported, free), restricted(restriced free license), universe(community-maintained, not official) etc.</li>
+</ul>
+</li>
+<li>sudo select-editor 명령을 이용해 시스템 에디터를 설정</li>
+<li>sudo apt edit-sources kakao.list 명령어 입력 후 아래 내용 입력 후 sudo apt update 입력하여 목록 갱신<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># kakao mirror : ubuntu 18.04 LTS</span><br><span class="line">deb http://mirror.kakao.com/ubuntu/ bionic main restricted universe</span><br><span class="line">deb http://mirror.kakao.com/ubuntu/ bionic-updates main restricted universe</span><br><span class="line">deb http://mirror.kakao.com/ubuntu/ bionic-security main restricted universe</span><br></pre></td></tr></table></figure></li>
+<li>apt list [options] [package pattern]<ul>
+<li>해당 버전에서 제공되는 패키지의 최신 목록 출력</li>
+<li>apt list –installed 설치된 패키지 리스트</li>
+<li>apt list –upgradable 업그레이드가 가능한 패키지 리스트</li>
+<li>apt list –all-versions 모든 버전의 패키지 리스트</li>
+<li>apt list bash* bash로 시작하는 패키지 리스트</li>
+</ul>
+</li>
+<li>apt search [-n] &lt;regex&gt;<ul>
+<li>패키지를 키워드로 검색. 키워드는 REGEX 로 입력</li>
+<li>apt search bash description에 bash가 들어간 경우까지 검색</li>
+<li>apt search -n bash 패키지 이름 중간에 bash가 있어도 검색</li>
+<li>apt search -n ‘^bash’ 패키지 이름 시작 부분에 bash가 있는 경우 검색</li>
+<li>apt-cache pkgnames name  패키지 이름으로만 검색</li>
+</ul>
+</li>
+<li>apt show &lt;package name&gt;[&#x3D;version]<ul>
+<li>패키지 정보 출력</li>
+<li>apt show bash bash 정보 출력</li>
+<li>apt list –all-versions bash 모든 버전 정보 출력</li>
+<li>apt show bash&#x3D;4.4.17-2ubuntu1 특정 버전 정보 출력</li>
+</ul>
+</li>
+<li>apt &lt;remove|purge|autoremove&gt; &lt;package&gt;[&#x3D;version]<ul>
+<li>apt remove 패키지만 삭제 (config file은 남겨둠)</li>
+<li>apt purge 패키지 삭제(config도 삭제)</li>
+<li>apt autoremove 의존성이 깨지거나 버전 관리로 인해 쓰이지 않는 패키지를 자동 제거</li>
+</ul>
+</li>
+<li>apt install 중 에러가 날 때<ul>
+<li>일반적으로 apt sources.list 설정에서 components에 universe를 빼먹는 경우 생긴다. 가장 좋은 방법은 universe를 추가하는 방법이지만 downgrade도 하는 방법을 알아두면 좋을거라</li>
+<li>apt list –all-versions 패키지 로 검색</li>
+<li>apt install curl libvurl3-gnutls&#x3D;7.47.0.1ubuntu2 로 해당 버전을 설치하여 다운그레이드</li>
+</ul>
+</li>
+<li>aptitude<ul>
+<li>TUI 방식의 apt</li>
+<li>ncurses based tool</li>
+<li>잘 안쓴다…</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Linux-Network-System"><a href="#Linux-Network-System" class="headerlink" title="Linux Network System"></a>Linux Network System</h3><ul>
+<li>네트워크 기본 용어<ul>
+<li>hostname: primary hostname, FQDN<ul>
+<li>abc.redhat.com 에서 given name + family name에 비유하면 redhat.com은 family name으로 domain address라 불리기도한다.</li>
+<li>domain을 제외한 호스트 이름 혹은 domain을 포함한 FQDN</li>
+<li>FQDN(Fully Qualified Domain Name) 도메인 내에서 유일하게 구별 가능한 이름. DNS server에서 정함</li>
+<li>도메인 주소는 체계적인 구조를 가짐 devel.fclinux.or.kr</li>
+<li>localhost는 항상 자기 자신을 의미하는 주소와 매핑되는 특별한 hostname. (IPv4&#x3D; 127.0.0.1, IPv6&#x3D; ::1)</li>
+</ul>
+</li>
+<li>TCP&#x2F;IP: IP address(ipv4, ipv6), subnet mask, gateway<ul>
+<li>IPv4 32bit 주소 체계. 8bit씩 끊어서 xxx.ooo.xxx.ooo</li>
+<li>IPv6 128bit 주소 체계. 무지 많다.</li>
+<li>IPv4-mapped IPv6 ::ffff:IPv4_addr</li>
+<li>dual stack IPv4와 IPv6를 혼용해서 사용하기 위한 설계. 대부분 OS 지원 (win xp 제외)</li>
+<li>A,B,C 클래스 뭐시기는 없어짐</li>
+<li>CIDR(Classless Inter-Domain Routing) IP클래스와 상관럾이 서브넷을 지정하여 자르는 것을 의미. 서브넷 마스크 비트 크기.</li>
+<li>public IP 공인주소(인터넷에서 유일한 주소), private IP(인터넷에 직접 연결되지 않은 주소)</li>
+</ul>
+</li>
+<li>NIC: Network Interface Card &#x3D;&#x3D; 랜카드</li>
+<li>Wired Network (Wired connection): 유선 네트워크(유선 연결)</li>
+<li>Wireless Network (Wireless connection): 무선 네트워크(무선 연결)</li>
+<li>LAN: Local Area Network</li>
+<li>WAN: Wide Area Network</li>
+<li>SELinux(Security Enhanced Linux) 커널 레벨에서의 중앙 집중식 보안 기능</li>
+<li>SELinux 보안 레벨<ul>
+<li>enforcing(강제): 보안설정에 걸리면 강제로 막음(많은 보안 지식필요)</li>
+<li>permissive(허가): 보안설정에 걸리면 허용하되 로그 출력(실습시 사용 권장)</li>
+<li>disable(비활성): SELinux 사용하지 않음</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Linux-Network-Configuration-Legacy"><a href="#Linux-Network-Configuration-Legacy" class="headerlink" title="Linux Network Configuration Legacy"></a>Linux Network Configuration Legacy</h3><ul>
+<li>Legacy방식과 NetworkManager 방식 있음<ul>
+<li>debian legacy config: &#x2F;etc&#x2F;network&#x2F;interfaces</li>
+<li>RedHat lagacy config: &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-*</li>
+<li>이제는 NetworkManager로 통일 됨</li>
+</ul>
+</li>
+<li>Debian Legacy<ul>
+<li>쓰지 마라. 혹은 legacy를 사용하는 커스텀 리눅스를 쓸 경우</li>
+<li>&#x2F;etc&#x2F;network&#x2F;interfaces 파일에 설정함</li>
+<li>이런저런 기능들이 있으나 안쓰인다. 이젠 NetworkManager 쓴다.</li>
+<li>&#x2F;etc&#x2F;init.d&#x2F;networking restart 이런 명령어 쓰지마라</li>
+<li>ifup, ifdown 이런거 쓰지마라</li>
+<li>&#x2F;etc&#x2F;default&#x2F;networking 설정 파일 쓰지마라</li>
+</ul>
+</li>
+</ul>
+<h3 id="Linux-NetworkManager"><a href="#Linux-NetworkManager" class="headerlink" title="Linux NetworkManager"></a>Linux NetworkManager</h3><ul>
+<li>NetworkManager는 deamon으로 작동하면서 network configureation을 수행하고, 자동으로 network connection을 관리(연결 감지, 해제, 재시도)를 수행한다. Dbus 기반으로 동적 상태를 감지할 수 있기 때문에 다른 애플리케이션이나 deamon들에게 네트워크 정보를 제공하거나, 관리를 위한 권한을 줄 수도 있다. 또한 명령어를 사용하여 systemd 기반의 다른 Linux distribution들에게도 동일한 방식의 경험을 제공할 수 있다. Ethernet, Wi-Fi, Mobile broadband 등 다양한 기능들에게 플랫폼을 제공하므로, 네트워크 연결 관리가 좀 더 쉬워진다.</li>
+<li>nmcli (Network Manager CLI tool) 네트워크 관련 대부분의 기능을 가지고 있다.<ul>
+<li>nmcli g[eneral] 현재 상태 알려줌</li>
+<li>nmcli n[etworking] 상태 조회</li>
+<li>nmcli n on&#x2F;off 네크워크 켜기&#x2F;끄기</li>
+<li>nmcli d[ev[ice]] 장치 조회</li>
+</ul>
+</li>
+<li>networks device naming<ul>
+<li>eth#[:n] eth0, eth1, eth0:0 등 으로 나타남. 옛날 표현 방식</li>
+<li>Consistent Network Device Naming(2009) <ul>
+<li>prefix en(ethernet), wl(wireless lan), ww(wireless wan)</li>
+<li>o&lt;index&gt; on-board device index number</li>
+<li>s&lt;slot&gt;[f&lt;function&gt;][d&lt;dev_id] hotplug slot index number</li>
+<li>x&lt;mac&gt; MAC address</li>
+<li>p&lt;bus&gt;s&lt;slot&gt;[f&lt;function&gt;][d&lt;dev_id] PCI geographical location</li>
+<li>p&lt;bus&gt;s&lt;slot&gt;[f&lt;function&gt;][d&lt;dev_id][..][c&lt;config&gt;][i&lt;interface&gt;] USB port number chain</li>
+<li>enp5s0 -&gt; ethernet &amp; pci number 0</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>nmcli &lt; g| n | r | c| d &gt;  general, networking, radio, connection, device</li>
+<li>nmcli c[connection] s[how]<ul>
+<li>nmcli c s ens33 소문자로 나오는건 설정된 값(offline 일때도 보임). 대문자는 할달된 값(online 일때만 보임)</li>
+<li>nmcli con down “connection name” connection 끊기 후 nmcli cs “connection name” 하면 IP4.* 이부분이 안나옴.</li>
+<li>nmcli con up “connection name” connection 연결 후 nmcli cs “connection name” 하면 IP4.* 이부분이 나옴.</li>
+</ul>
+</li>
+<li>nmcli 속성 변경<ul>
+<li>nmcli c modify “connection name” connection.id ens33 -&gt; connection id를 device name으로 변경</li>
+<li>nmcli c mod “c name” ipv4.method manual ipv4.address 192.168.xxx.xx&#x2F;24 ipv4.gateway 192.168.xxx.2 +ipv4.dns 8.8.8.8  ipv4.dns를 추가 아이피와 게이트웨이 변경</li>
+<li>nmcli c down “name” &amp;&amp; nmcli c up “name” 재시작을 한 후 nmcli c s “name” 으로 상태 확인</li>
+<li>nmcli c mod “name” +ipv4.address 192.168.xxx.xx&#x2F;24 virtual ip 추가</li>
+<li>nmcli c mod “name” -ipv4.address 192.168.xxx.xx&#x2F;24 ip 삭제</li>
+<li>nmcli c del “name” 기존 설정 삭제 후 nmcli d s 확인 해 본다</li>
+<li>nmcli c add con-name “connection name” ifname “interface(device) name” type ethernet ip4 192.168.xxx.xx&#x2F;24 디바이스 추가</li>
+<li>nmcli c mod “name” +ipv4.dns 8.8.8.8 DNS 추가</li>
+<li>nmcli c s “name” | egrep’(ipv4.addr|ipv4.gateway|ipv4.dns)’</li>
+<li>nmcli dev connect “device name” 디바이스 자체가 연결끊어짐 상태인 경우 액티브 상태로 설정</li>
+<li>connect 가 실패할 때 nmcli networking 으로 확인해보고 nmcli networking on 으로 켜줌</li>
+</ul>
+</li>
+</ul>
+<h3 id="Network-Tool"><a href="#Network-Tool" class="headerlink" title="Network Tool"></a>Network Tool</h3><ul>
+<li>netstat - obsolete program이지만 네트워크 상태를 확인 할 수 있다.</li>
+<li>ss (socket statistics)는 netstat 기능 + @ </li>
+<li>ss -n –numeric</li>
+<li>ss -a –all</li>
+<li>ss -l –listening</li>
+<li>ss -e –extened</li>
+<li>ss -o –options</li>
+<li>ss -m –memory 메모리 사용량 조회</li>
+<li>ss -p –processes 해당 프로세스 정보 조회(root 유저 권한 필요)</li>
+<li>ss -i –info 상세 정보 조회</li>
+<li>ss -s –summary 통계 정보 조회</li>
+<li>ss -4 –ipv4</li>
+<li>ss -6 –ipv6</li>
+<li>ss -t –tcp</li>
+<li>ss -u –udp</li>
+<li>ss -x –unix</li>
+<li>ss -f FAMILY – family&#x3D;FAMILY</li>
+<li>FILTER :&#x3D; [ state TCP-STATE ] [ EXPRESSION ]</li>
+</ul>
+<p>“TCP State Transition Diagram” “TCP&#x2F;IP Illustrated”<br>그림 추가</p>
+<ul>
+<li>Three-way handshaking TCP 접속을 만드는 과정</li>
+<li>Four-way handshaking TCP 접속을 해제하는 과정. 아주 드물게 동시에 접속이 해제되는 경우 3번만에 끝남. passive close 하는 측에서 문제가 생김(CLOSE_WAIT 60sec)</li>
+<li>ss state &lt;tcp state&gt; ss state established, ss -n6 state established</li>
+<li>close-wait, fin-wait-2는 심각한 문제(시한 폭탄 수준) close() 함수를 호출하지 않은 경우<ul>
+<li>ss -nt state close-wait state fin-wait-2</li>
+<li>watch -d -n 1 ss -nt state close-wait state fin-wait-2</li>
+</ul>
+</li>
+<li>address filter<ul>
+<li>&gt; gt(greater than), &lt; lt(less than), &gt;&#x3D; ge(greater than or equal), &lt;&#x3D; le(less than or equal), =&#x3D; eq(equal), !&#x3D; ne(not equal), and(and operator), or(or operator)</li>
+<li>ss -n dport &#x3D; :22 ss -n ‘dport &#x3D; :22’</li>
+<li>ss -n ‘src 192.168.xxx.xx’</li>
+<li>ss -n ‘src 192.168.xxx.xx and src 192.168.xxx.xx’</li>
+<li>ss -n ‘src 192.168.xxx.0&#x2F;24’</li>
+<li>ss -n ‘dport &#x3D; :ssh or sport &#x3D; :ssh’</li>
+<li>ss -n ‘( dport &#x3D; :ssh or sport &#x3D; :ssh ) and src 192.168.xxx.xx’ parenthesis 공백에 주의</li>
+<li>ss -nt ‘dst :22 or dst :80’</li>
+<li>ss -n ‘dport &gt; :8000’, ss -n ‘dport gt :8000’</li>
+<li>ss -n ‘dport &gt; :8000 and dport &lt; :20000’</li>
+<li>ss -nlt ‘sport le 1023’</li>
+</ul>
+</li>
+<li>lsof 열린 파일을 검색, fuser 유저가 연 파일 검색<ul>
+<li>특정 소켓 주소를 점유하고 있는 프로세스를 찾아내거나 할 때 사용</li>
+<li>프로세스를 추적하는 용도로 자주 쓰이는 명령어</li>
+</ul>
+</li>
+</ul>
+<h3 id="Querying"><a href="#Querying" class="headerlink" title="Querying"></a>Querying</h3><ul>
+<li><p>ping</p>
+<ul>
+<li>상대 호스트 응답확인(호스트 존재 여부 확인)</li>
+<li>ping [-c count] [-i interval] [-s size] [-t ttl] target</li>
+<li>마지막에 간략한 통계정보를 확인 할 수 있다. 표준편차 값이 너무 크면 문제가 있을 경우가 있음.</li>
+</ul>
+</li>
+<li><p>traceroute</p>
+<ul>
+<li>패킷 도달 경로를 확인</li>
+<li>traceroute -n 63.99.207.68</li>
+</ul>
+</li>
+<li><p>arp</p>
+<ul>
+<li>ARP(address resolution protocol) 테이블 조회 명령어</li>
+<li>IP(L3) 와 MAC(L2) 주소의 매칭 테이블</li>
+<li>arp -s &lt;MAC address&gt; &lt;IP address&gt; static arp address를 사용하는 명령어</li>
+<li>NIC 교체후 통신이 실패하는 경우? 보안을 위해 고정 ARP 테이블을 사용하는 경우에 발생. ARP table을 확인하여 NIC 정보 일치 여부 확인</li>
+</ul>
+</li>
+<li><p>resolver : name service</p>
+<ul>
+<li>IP address 혹은 hostname(FQDN, alias)를 해석</li>
+<li>nameserver를 의미</li>
+<li>&#x2F;etc&#x2F;resolv.conf 에 지정됨 &#x2F;etc&#x2F;nsswitch.conf에 해석기 및 우선 순위 지정. 수동 편집 지양.</li>
+<li>resolver client<ul>
+<li>nslookup -&gt; deprecated</li>
+<li>dig 최신 명령어 e.g. dig <a target="_blank" rel="noopener" href="http://www.naver.com/">www.naver.com</a>, dig @8.8.8.8 <a target="_blank" rel="noopener" href="http://www.naver.com/">www.naver.com</a></li>
+</ul>
+</li>
+<li>nameserver 유명 네임서버는 몇개 알아두자<ul>
+<li>1.1.1.1 Cloudflare DNS</li>
+<li>208.67.222.222, 208.67.200.200 CISCO openDNS</li>
+<li>8.8.8.8 google DNS</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>ethtool: query or control network driver and hardware settings</p>
+<ul>
+<li>간혹 시스템이 느려지는 경우는 duplex 문제일 가능성이 크다</li>
+<li>ethtool -s “name” speed 1000 duplex full 이렇게 수동 설정해줘. 다른 프로그램이 설정을 바꾸는 경우 발생할 수 있음.</li>
+<li>ethtool -s “name” speed duplex full autoneg off auto-negociation 설정 바꾸기</li>
+<li>ethtool -S “name” 장비 관련 통계 정보 조회</li>
+<li>ethtool -k &lt;dev&gt; show offloading CPU가 할일을 덜어주는 것</li>
+<li>ethtool -K &lt;dev&gt; &lt;param&gt; &lt;on|off&gt;</li>
+</ul>
+</li>
+</ul>
+<h3 id="Network-Tools"><a href="#Network-Tools" class="headerlink" title="Network Tools"></a>Network Tools</h3><ul>
+<li><p>ssh</p>
+<ul>
+<li>secure shell 통신 구간 암호화</li>
+<li>telnet 서비스는 안씀</li>
+<li>Linux는 openssh 사용</li>
+<li>sshd는 ssh deamon으로 ssh server를 의미</li>
+<li>ssh는 ssh client이며 cli 명령어로 사용됨</li>
+<li>windows에서는 putty, mobaXtrem 등 사용</li>
+</ul>
+</li>
+<li><p>sshd 서버 준비</p>
+<ul>
+<li>서버 설치 여부 확인 apt list openssh*, rpm -qa openssh-server</li>
+<li>서비스가 실행중인지 확인 systemctl status sshd</li>
+<li>22번 포트  확인 ss -nlt, ss -nltp<ul>
+<li>* 주소는 INADDR_ANY 0.0.0.0을 의미 모든 IP &amp; :::22</li>
+</ul>
+</li>
+<li>방화벽에 22번 포트가 허용되어 있는지 확인 - iptables -nL<ul>
+<li>ufw status&#x2F;enable&#x2F;disable&#x2F;-h 명령어로 방화벽 확인 ufw allow 22&#x2F;tcp, ufw allow http&#x2F;tcp</li>
+</ul>
+</li>
+<li>sshd 서비스 정지시 - systemctl start sshd</li>
+<li>부팅 시 자동실행 - systemctl enable sshd [–now]</li>
+</ul>
+</li>
+<li><p>ssh client</p>
+<ul>
+<li>ssh [-p port] [username@]&lt;host address&gt; UNIX like 운영체제에서 사용 명령어</li>
+<li>ssh 192.168.xxx.xx</li>
+<li>ssh <a href="mailto:&#108;&#x69;&#x6e;&#x75;&#x78;&#101;&#x72;&#64;&#x31;&#57;&#50;&#x2e;&#x31;&#54;&#56;&#x2e;&#120;&#x78;&#120;&#46;&#120;&#120;">&#108;&#x69;&#x6e;&#x75;&#x78;&#101;&#x72;&#64;&#x31;&#57;&#50;&#x2e;&#x31;&#54;&#56;&#x2e;&#120;&#x78;&#120;&#46;&#120;&#120;</a> </li>
+<li>ssh -p 20022 192.168.xxx.xx</li>
+<li>windows 계열은 putty, mobaXtrem 등을 사용</li>
+</ul>
+</li>
+<li><p>ssh-keygen</p>
+<ul>
+<li>ssh-keygen -N “”</li>
+<li>-N new passphrase 개인용에서는 암호를 쓰지 않지만, 기업에서는 꼭 “” 대신에 패스워드 사용</li>
+<li>key 위치는 ~&#x2F;.ssh</li>
+<li>ssh-copy-id <a href="mailto:&#x6c;&#105;&#110;&#x75;&#x78;&#101;&#x72;&#x40;&#49;&#57;&#50;&#46;&#x31;&#x36;&#x38;&#x2e;&#120;&#x78;&#x78;&#x2e;&#120;&#120;">&#x6c;&#105;&#110;&#x75;&#x78;&#101;&#x72;&#x40;&#49;&#57;&#50;&#46;&#x31;&#x36;&#x38;&#x2e;&#120;&#x78;&#x78;&#x2e;&#120;&#120;</a> 생성한 키를 상대편(remote)에 ~&#x2F;.ssh&#x2F;authorized_keys에 복사</li>
+<li>ssh -t <a href="mailto:&#108;&#x69;&#x6e;&#117;&#x78;&#101;&#114;&#64;&#x31;&#x39;&#x32;&#x2e;&#x31;&#54;&#56;&#46;&#x78;&#120;&#x78;&#x2e;&#x78;&#120;">&#108;&#x69;&#x6e;&#117;&#x78;&#101;&#114;&#64;&#x31;&#x39;&#x32;&#x2e;&#x31;&#54;&#56;&#46;&#x78;&#120;&#x78;&#x2e;&#x78;&#120;</a> w w라는 명령을 remote에서 실행하고 결과를 가져오는 방법</li>
+</ul>
+</li>
+<li><p>curl</p>
+<ul>
+<li>URL을 기반으로 통신하는 기능 제공</li>
+<li>libcurl 라이브러리 제공</li>
+<li>curl [options] &lt;URL&gt;</li>
+<li>curl -O URL 파일로 저장</li>
+<li>curl -o nate.html URL 지정한 파일명으로 저장</li>
+<li>curl -C - -O URL 파일 다운로드 -C는 continue 옵션</li>
+<li>curl v2.wttr.in&#x2F;Seoul</li>
+<li>curl <a target="_blank" rel="noopener" href="https://api.exchangeratesapi.io/latest?base=USD">https://api.exchangeratesapi.io/latest?base=USD</a></li>
+</ul>
+</li>
+<li><p>wget URL curl과 대부분 비슷하나 curl 이 더많은 기능가짐 파일 다운로드에 특화된 기능 존재 web site miirroring 기능 있음.</p>
+</li>
+<li><p>nc</p>
+<ul>
+<li>netcat</li>
+<li>network 기능이 가능한 cat</li>
+<li>server, client의 양쪽 기능이 가능. 간이서버 클라이언트로 사용. 바이너리 통신 가능.</li>
+<li>nc -k -l 5000</li>
+<li>echo Hello | nc 127.0.0.1 5000</li>
+<li>nc 127.0.0.1 5000</li>
+</ul>
+</li>
+</ul>
+<h3 id="Wireless-Network"><a href="#Wireless-Network" class="headerlink" title="Wireless Network"></a>Wireless Network</h3><ul>
+<li><p>NetworkManager 도입으로 wireless 부분도 통합됨.</p>
+</li>
+<li><p>wicd 쓰지마</p>
+<ul>
+<li>nmcli radio 무선 설정 확인</li>
+<li>nmcli r wifi [on|off]</li>
+<li>rfkill list  wifi가 block 되어있는지 확인 후 rfkill unblock 1 명령으로 unblock 할 수 있음.</li>
+<li>아니면 bios에서 막힌 경우가 있음. 랩탑에서 와이파이 끄는 기능 혹은 sleep 기능이 hardware block을 하기때문에 이런 부분 확인 필요.</li>
+<li>nmcli dev [list] 에서 type wifi 부분 확인 가능</li>
+<li>nmcli dev wifi 명령으로 접속 가능한 장치 리스트 확인 가능. nmcli dev wifi rescan 으로 다시 장치 스캔.</li>
+<li>nmcli dev wifi connect “ssid” password “pass” 명령어 입력 후. nmcli d 로 연결 확인</li>
+<li>nmcli d disconnect “device name”</li>
+</ul>
+</li>
+<li><p>WiFi hotspot</p>
+<ul>
+<li>nmcli c add type wifi ifname ‘*‘ con-name “hotspotname” autoconnect no ssid “ssid” 핫스팟 생성!</li>
+<li>nmcli c mod “hotspotname” 802-11-wireless.mode ap 802-11-wireless.band bg ipv4.method shared ipv4.address 192.168.100.1&#x2F;24(hotspot ip)</li>
+<li>nmcli c mod “hospotname” 802-11-wireless-security.key-mgmt wpa-psk 802-11-wireless-security.psk “password”</li>
+<li>nmcli c up “hostspotname” 핫스팟 시작</li>
+<li>nmcli c s 로 핫스팟 확인 가능</li>
+<li>nmcli -p c s “hotspotname” 핫스팟 정보 확인 가능</li>
+<li>nmcli c down “hotspotname” 핫스팟 종료</li>
+</ul>
+</li>
+<li><p>hostapd</p>
+<ul>
+<li>ap로 구동을 위한 기능 제공 deamon</li>
+<li>NetworkManager 보다 더 많은 기능을 사용하려면 hostapd를 사용</li>
+<li>5GHx AP 구동시 regulartory domain rule에 의해 region 설정시 일부 채널이 블록 되거나 passive로 작동 될 수 있다.</li>
+<li>이를 해결하기 위해 kernel module 수정이 필요하다.</li>
+</ul>
+</li>
+</ul>
+<h3 id="File-System"><a href="#File-System" class="headerlink" title="File System"></a>File System</h3><ul>
+<li><p>FS는 OS의 매우 큰 부분을 차지한다. read, wirte 작업을 수행</p>
+</li>
+<li><p>FS는 넓게 보면 데이터 베이스의 일종. 파일을 저장하는 데이터 베이스</p>
+</li>
+<li><p>종류</p>
+<ul>
+<li>ext4: 리눅스 고유 파일 시스템</li>
+<li>ext3, ext2: ext4의 이전 버전</li>
+<li>xfs: 실리콘 그래픽스의 저널링 파일 시스템(RHEL7부터 기본 파일시스템)</li>
+<li>zfs: 솔라리스의 기본 파일 시스템, CoW지원</li>
+<li>Btrfs: zfs와 비슷한 컨셉으로 개발된</li>
+<li>ntfs: 윈도우즈 NT 계열에서 사용하는 파일 시스템</li>
+<li>fat32: FAT 32비트 버전</li>
+<li>exfat: FAT 32비트 확장 버전</li>
+</ul>
+</li>
+<li><p>새로운 FS 만드는 법</p>
+<ul>
+<li>partitioning: fdisk, parted</li>
+<li>file system: mkfs, fsck or xfs_*</li>
+<li>mount: mount&#x2F;unmount. &#x2F;etc&#x2F;fstab</li>
+</ul>
+</li>
+<li><p>Partition</p>
+<ul>
+<li>physical&#x2F;logical 구획이 있다. 현대 OS는 logical partition을 선호</li>
+<li>logical portition을 사용하면 물리적 한계를 가진 디스크를 묶어서 보다 큰 용량의 파티션을 만들 수 있다. logical volume(LVM)</li>
+<li>physical disklabel type<ul>
+<li>DOS 방식: 2TB 제한, fdisk 사용</li>
+<li>GPT 방식: 무제한 용량, parted&#x2F;gparted for gdisk 사용</li>
+</ul>
+</li>
+<li>Dos partition 종류<ul>
+<li>primary partition(주 파티션) 하나의 디스크에 4개 까지 만들 수 있음</li>
+<li>extended partition(확장 파티션) 4개 이상 파티션이 필요할 때 primary partition 대신 1개 만들 수 있음. extended partition은 여러 개의 logical drive로 나눌 수 있음.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>fdisk</p>
+<ul>
+<li>fdisk -l 현재 FS 리스트를 출력. 요즘 lsblk 사용</li>
+<li>block device<ul>
+<li>저장 장치를 이르는 용어</li>
+<li>&#x2F;dev&#x2F;sd SCSI disk, serial type SATA, USB</li>
+<li>&#x2F;dev&#x2F;hd IDE disk</li>
+</ul>
+</li>
+<li>fdisk &#x2F;dev&#x2F;sda<ul>
+<li>a: 부트 활성 플래그를 지정</li>
+<li>d: 파티션 삭제</li>
+<li>l: 알려진 파티션 ID</li>
+<li>n: 새로운 파티션을 생성</li>
+<li>p: 현재 파티션 상태를 출력</li>
+<li>t: 파티션 ID(type)을 변경</li>
+<li>q: 변경된 상태를 저장하지 않고 종료</li>
+<li>w: 변경된 상태를 저장하고 종료</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Make File System</p>
+<ul>
+<li>저장 장치는 아주 커다란 종이로 비유하면 파티셔닝은 종이를 몇개로 자르는 작업이다.</li>
+<li>파티션 된 종이를 A4와 같은 규격화된 형태로 잘라서 분철하는 것과 유사.</li>
+<li>분철을 하면 권수와 페이지 번호가 만들어짐. 인덱싱 가능</li>
+<li>분철 방식, 밑줄, 칸의 간격 자물쇄 설치 등에 대한 세부 방식은 file system type에 따름 e.g. ext4, xfs ..</li>
+<li>ext4<ul>
+<li>저널링 지원</li>
+<li>1EB volume 지원</li>
+<li>연속된 파일의 접근 및 작은 파일들의 접근이 빠른 장점</li>
+<li>저성능 I&#x2F;O에서 효율이 높다(IoT 기기)</li>
+<li>삭제된 파일 복구 가능</li>
+</ul>
+</li>
+<li>XFS<ul>
+<li>저널링 기반 대용량 파일 시스템</li>
+<li>SGI 실리콘 그래픽스사에서 개발 IRIX 유닉스에서 사용. 후 오픈소스로 이전</li>
+<li>2000년 초반에 포팅되어 많은 기간동안 테스트됨. 대부분의 고성능 서버형 리눅스 배포판의 기본 파일 시스템으로 사용됨. Debian, RHEL7</li>
+<li>Online 상태(mounted)에서 확장이 가능</li>
+<li>대용량 파일 처리시 성능이 좋음</li>
+<li>kernel service(xfs*)가 관리</li>
+<li>삭제된 파일을 복구 할 수 없다.</li>
+<li>깨진 파일 시스템 복구를 위한 명령어로 xfs_repair를 제공</li>
+</ul>
+</li>
+<li>mkfs<ul>
+<li>make file system 명령어</li>
+<li>mkfs [-t fstype] [option] &lt;device&gt;</li>
+<li>lsblk 추가된 disk 확인 인식이 안되있으면</li>
+<li>ls &#x2F;sys&#x2F;class&#x2F;scsi_host&#x2F; | while read hostdev ; do echo “- - -“ &#x2F;sys&#x2F;class&#x2F;scsi_host&#x2F;$hostdev&#x2F;scan ; done 입력 후</li>
+<li>lsblk 로 블락디바이스 확인후 fdisk &#x2F;dev&#x2F;sdb 로 새로운 파티션 생성</li>
+<li>mkfs -t ext4 &#x2F;dev&#x2F;sdb2 혹은 mkfs.ext4 &#x2F;dev&#x2F;sdb2 파일 시스템 생성</li>
+</ul>
+</li>
+<li>fsck<ul>
+<li>fsck [-ARNV] [options] [-t fstypr] &lt;device&gt;</li>
+<li>file-system checking 일반적으로 offline 된 FS 체크</li>
+<li>fsck -y -t ext4 &#x2F;dev&#x2F;sdb2 혹은 fsck.ext4 -y &#x2F;dev&#x2F;sdb2 로 파일 시스템 체크</li>
+<li>echo $? 이전 명령어(fsck)의 main() 함수의 리턴값(RC: return code)을 확인하여 검사 결과 확인</li>
+</ul>
+</li>
+<li>스왑 공간<ul>
+<li>swap in&#x2F;out을 위해 RAM의 최대 2배까지 필요</li>
+<li>mkswap(스왑 공간 작성:포맷)<ul>
+<li>mkswap -L swapfs2 &#x2F;dev&#x2F;sdb1 스왑 파티션에 공간 작성</li>
+<li>dd if&#x3D;&#x2F;dev&#x2F;zero of&#x3D;.&#x2F;swapfile1 bs&#x3D;1024 count&#x3D;262144 입력후 mkswap .&#x2F;swapfile1 일반 파일을 스왑 공간으로 사용</li>
+</ul>
+</li>
+<li>swapon: 스왑 활성 사용<ul>
+<li>swapon &#x2F;dev&#x2F;sdb1, swapon .&#x2F;swapfile1, swapon -L swapfs2</li>
+<li>cat &#x2F;proc&#x2F;swaps 스왑 공간 확인</li>
+<li>grep swap &#x2F;etc&#x2F;fstab 등록된 스왑 공간 확인</li>
+</ul>
+</li>
+<li>swapoff: 스왑 비활성</li>
+<li>레이블이 한글로 설정될 경우 영문으로 다시 바꾸어 줘야함</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>mount</p>
+<ul>
+<li>파일 시스템의 탑재</li>
+<li>마운트는 root directory(&#x2F;)를 기점으로 시작</li>
+<li>mount: 마운트를 하는 명령<ul>
+<li>mount [-t fstype] [-o option] [device] &lt;directory&gt;</li>
+<li>마운트 해보기<ul>
+<li>mkfs -t ext4 &#x2F;dev&#x2F;sdb2</li>
+<li>mkdir &#x2F;media&#x2F;backup</li>
+<li>mount -t ext4 &#x2F;dev&#x2F;sdb2 &#x2F;media&#x2F;backup</li>
+<li>lsblk</li>
+</ul>
+</li>
+<li>mount -o ro &#x2F;dev&#x2F;sdb2 &#x2F;media&#x2F;backup readonly 옵션 적용</li>
+<li>mount -0 remount, ro &#x2F;dev&#x2F;sdb2 리마운트로 옵션 변경 적용 가능</li>
+</ul>
+</li>
+<li>umount: 언마운트를 하는 명령<ul>
+<li>umount &lt; directory | device &gt;</li>
+<li>umount &#x2F;media&#x2F;backup, umount &#x2F;dev&#x2F;sdb2 디렉토리 디바이스 모두 가능</li>
+<li>lsblk</li>
+</ul>
+</li>
+<li>findmnt: 마운트 리스트 확인</li>
+<li>ls &#x2F;dev&#x2F;disk, ls -l &#x2F;dev&#x2F;disk&#x2F;by-uuid</li>
+<li>USB memory mount<ul>
+<li>USB 메모리를 장착하면 lsblk에서 장치명이 인식된다.</li>
+<li>mount 명령으로 인식시키면 된다. FStype을 알고 있어야 된다.</li>
+<li>blkid &#x2F;dev&#x2F;sdc1</li>
+</ul>
+</li>
+<li>mount –bind &#x2F;usr&#x2F;src&#x2F;redhat&#x2F;RPMS &#x2F;var&#x2F;www&#x2F;thml&#x2F;rpms 디렉터리를 다른 위치의 디렉터리에 붙이는 기능</li>
+<li>Device is busy!<ul>
+<li>마운트한 파일시스템에서 프로세스가 실행중인 경우 발생</li>
+<li>fuser 로 해당 파일 시스템에서 구종 중인 프로세스를 체크&#x2F;종료</li>
+<li>fuser -c &#x2F;media&#x2F;cdrom 프로세스 체크</li>
+<li>fuser -ck &#x2F;media&#x2F;cdrom 프로세스 체크하여 종료</li>
+</ul>
+</li>
+<li>eject &#x2F;media&#x2F;cdrom</li>
+</ul>
+</li>
+<li><p>fstab</p>
+<ul>
+<li>filesystem table<ul>
+<li>&#x2F;etc&#x2F;fstab에 위치</li>
+<li>부팅시 파일 시스템을 자동 마운트 하기 위한 정보를 담고 있음</li>
+<li>mount 명령을 단축 시킬 수 있는 정보를 가짐</li>
+<li>UUID&#x3D;02a202b2-aee1 &#x2F;home xfs defaults 0 0</li>
+<li>device mountpoint fstype options dump,fsck</li>
+</ul>
+</li>
+<li>&#x2F;etc&#x2F;fstab의 1번 항목에 들어가는 방식<ul>
+<li>&#x2F;dev.sd* 실제 디바이스 장치로 설정하는 방식. 장치가 순서대로 연결되지 않을 경우 장치명이 바뀔 수 있다!!!</li>
+<li>LABEL&#x3D;name 레이블 이름으로 검색하여 장치를 찾아내는 방식</li>
+<li>UUID&#x3D;uuid UUID 값으로 검색해서 장치를 찾아내는 방식</li>
+</ul>
+</li>
+<li>4번 항목. 파일 시스템 주요 옵션 mount 옵션과 동일<ul>
+<li>defaults 기본값 사용 - 기본값에선 부팅시 자동으로 마운트 됨</li>
+<li>noauto 부팅시 자동으로 마운트 하지 않음</li>
+<li>rw 읽기&#x2F;쓰기 가능</li>
+<li>ro 읽기만 가능</li>
+<li>user 일반 유저도 마운트 가능</li>
+<li>nouser 일반 유저는 마운트 할 수 없음(슈퍼유저만 가능)</li>
+<li>noexec 실행 파일의 사용 금지</li>
+<li>relatime 특정 경우에만 atime 업데이트</li>
+<li>noatime atime 사용 안함</li>
+</ul>
+</li>
+<li>systemd를 사용하는 시스템의 fstab??</li>
+<li>e2label &lt;device&gt; [new-label] ext4 리눅스 파일 시스템의 레이블을 확인 및 편집</li>
+<li>tune2fs ext4 파일 시스템의 다양한 설정 조정<ul>
+<li>tune2fs -U &lt;clear|random|time|UUID_value&gt;</li>
+<li>uuidgen UUID 생성 유틸</li>
+</ul>
+</li>
+<li>xfs_admin XFS 파일 시스템의 레이블&#x2F;UUID 확인 및 편집</li>
+<li>findfs LABEL&#x3D;device 레이블을 검색</li>
+</ul>
+</li>
+<li><p>디렉터리 구조</p>
+<ul>
+<li>SUS 표준에 근거한 디렉토리 구조<ul>
+<li>&#x2F; root 디렉토리</li>
+<li>&#x2F;dev 장치 파일들</li>
+<li>&#x2F;tmp 임시 파일 저장용 디렉토리</li>
+<li>&#x2F;dev&#x2F;null 널 디바이스</li>
+<li>&#x2F;dev&#x2F;console 시스템 콘솔 장치</li>
+<li>&#x2F;boot 부팅을 위한 커널 관련 이미지</li>
+<li>&#x2F;bin 기본 실행 명령어 파일들</li>
+<li>&#x2F;sbin 수퍼유저용 시스템 관리용 명령어 파일들</li>
+<li>&#x2F;etc 시스템 설정 파일 및 관련 스크립트</li>
+<li>&#x2F;lib 시스템 라이브러리</li>
+<li>&#x2F;lib64 시스템 라이브러리 64bit 전용</li>
+<li>&#x2F;usr 응용 프로그램 관련 파일들<ul>
+<li>&#x2F;usr&#x2F;bin 응용 프로그램 실행 파일들</li>
+<li>&#x2F;usr&#x2F;sbin 관리자용 응용 프로그램 실행 파일</li>
+<li>&#x2F;usr&#x2F;lib 라이브러리</li>
+<li>&#x2F;usr&#x2F;lib64 라이브러리 64bit 전용</li>
+<li>&#x2F;usr&#x2F;include C 언어용 헤더 파일</li>
+<li>&#x2F;usr&#x2F;share 응용프로그램이 공유하는 파일</li>
+<li>&#x2F;usr&#x2F;src 소스코드 (커널, 패키지)</li>
+<li>&#x2F;usr&#x2F;local 패키지가 아닌 임의 설치되는 응용 프로그램 파일들</li>
+</ul>
+</li>
+<li>&#x2F;var 각종 잡다한 파일들이 존재<ul>
+<li>&#x2F;var&#x2F;log 로그 파일</li>
+</ul>
+</li>
+<li>&#x2F;media 마운트용 디렉토리 구버전은 &#x2F;mnt</li>
+<li>&#x2F;export &#x2F;o &#x2F;o1 외부 저장 장치 사용자들이 만들어서 사용</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="udiskctl"><a href="#udiskctl" class="headerlink" title="udiskctl"></a>udiskctl</h3><ul>
+<li><p>udisks2</p>
+<ul>
+<li>D-bus 기반의 block device manager</li>
+<li>daemon service 작동</li>
+<li>다양한 block device에 대한 관리 가능</li>
+<li>udisksctl CLI 제공. 일반 유저로 명령 가능!</li>
+<li>systemd unit - udisks2.service</li>
+<li>systemctl status udisks2 상태 확인하고 활성상태면 usb 꼽으면 바로 인식함</li>
+<li>lsblk 블럭디바이스 확인</li>
+<li>udisksctl mount –block-device &#x2F;dev&#x2F;sdc1 usb 마운트</li>
+<li>lsblk 블럭디바이스 확인</li>
+<li>udisksctl ㅕmount –block-device &#x2F;dev&#x2F;sdc1 usb 언마운트</li>
+<li>lsblk 블럭디바이스 확인</li>
+</ul>
+</li>
+<li><p>loopback device 설정</p>
+<ul>
+<li>파일을 device 처럼 mount 할 수 있다.</li>
+<li>udisksctl loop-setup –file ubuntu-16.04.7-server-amd64.iso 파일 마운트</li>
+<li>read only mount</li>
+<li>udisksctl umount -b &#x2F;dev&#x2F;loop0p1 언마운트</li>
+</ul>
+</li>
+<li><p>udisksctl dump 개별 장치 정보 확인 가능</p>
+</li>
+<li><p>udisksctl status 상태 확인</p>
+</li>
+</ul>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-02-22T15:00:00.000Z" title="2022. 2. 23. 오전 12:00:00">2022-02-23</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T12:24:30.706Z" title="2026. 5. 2. 오후 9:24:30">2026-05-02</time>&nbsp;업데이트 됨</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/02/23/2022-02-23-vim-editor/">VIM Editor</a></p><div class="content"><p>vim editor에 대하여</p>
+<ul>
+<li>포스트를 마크다운 문법과 본문의 쉘 문법이 섞여 정상적으로 나타나지 않을 수 있음을 주의바랍니다.</li>
+</ul>
+<h3 id="vim-시작"><a href="#vim-시작" class="headerlink" title="vim 시작"></a>vim 시작</h3><ul>
+<li>vim [filename] 으로 실행</li>
+<li>find . -name “*.txt” &#124; vim -</li>
+<li>vi의 작동모드는 일반모드(normal mode), 입력모드(insert mode), 명령행모드(command-line mode), 비주얼모드(visual mode)가 있음<ul>
+<li>normal mode에서 a,i,o 입력 -&gt; insert mode 반대는 ESC 입력</li>
+<li>normal mode에서 : 입력 -&gt; command mode 반대는 ESC, 실행</li>
+<li>노말모드에서 단축키로 실행</li>
+<li>a: append는 현재 커서 위치에서 한칸 뒤로 이동한 후 입력 모드로 전환 A는 행의 가장 마지막</li>
+<li>i: insert는 현재 커서 위치에서 입력 모드로 전환 I는 행의 맨 앞</li>
+<li>o: 커서 위치 아래에 행이 생기면서 입력모드로 전환</li>
+<li>!: force 명령으로 강제 시행을 의미</li>
+</ul>
+</li>
+<li>커서 이동<ul>
+<li>일반모드에서 화살표키 대신에 h(left), j(down), k(up), l(right) 을 이용하여 커서를 이동</li>
+<li>^: 행의 맨 앞으로 이동(caret)</li>
+<li>$: 행의 맨 끝으로 이동</li>
+<li>&lt;CTRL-B&gt;: page up backward</li>
+<li>&lt;CTRL-F&gt;: page down forward</li>
+<li>&lt;CTRL-U&gt;: 1&#x2F;2 page up upward</li>
+<li>&lt;CTRL-D&gt;: 1&#x2F;2 page down downward</li>
+<li>:# -&gt; #행으로 이동</li>
+<li>#gg: #행으로 이동 # 생략 시 맨위로 이동</li>
+<li>#G: #행으로 이동 # 생략 시 마지막으로 이동</li>
+</ul>
+</li>
+</ul>
+<h3 id="buffer-사용"><a href="#buffer-사용" class="headerlink" title="buffer 사용"></a>buffer 사용</h3><ul>
+<li>vi에서 삭제 &#x3D; 임시 버퍼에 잘라내기<ul>
+<li>x: 커서에 위치한 문자 삭제 &#x3D; delete키</li>
+<li>dd(:d): 현재 행을 삭제 (3dd는 세줄 삭제)</li>
+<li>D: 현재 컬럼 위치에서 현재행의 끝부분까지 삭제</li>
+<li>J: 아래 행을 현재 행의 끝에 붙임(아래 행의 앞부분 공백은 제거됨)</li>
+</ul>
+</li>
+<li>paste<ul>
+<li>p: 현재 행에 붙여 넣습니다.(put)(5p 는 5번 반복 붙여넣기)</li>
+<li>pu: 개행 문자가 포함된 경우에는 현재 행의 아래에 붙여 넣습니다.</li>
+<li>P: 현재 행의 위쪽에 붙입니다.(대문자)</li>
+</ul>
+</li>
+<li>copy<ul>
+<li>yy, :y, Y: 현재 행을 레지스터에 복사(yank)</li>
+</ul>
+</li>
+<li>u: (undo) 바로 이전에 행한 명령 한 개를 취소</li>
+<li>&lt;CTRL-R&gt;: (redo) 바로 이전에 취소했던 명령을 다시 실행</li>
+<li>.: 이전 명령어 반복</li>
+</ul>
+<h3 id="range"><a href="#range" class="headerlink" title="range"></a>range</h3><ul>
+<li>명령행 모드에서 범위를 지정해서 명령</li>
+<li>:20d - 20번 행을 삭제</li>
+<li>:10,25d - 10~25번 행을 삭제</li>
+<li>:10,$d - 10~마지막 행까지 삭제</li>
+<li>:&amp;y - 문서 전체를 복사. %는 1,$와 동일</li>
+<li>:.,+20y - 현재 행부터 아래로 스무행을 복사</li>
+<li>:-10,+5d - 현재 행부터 위로 10행, 아래로 5행, 총 열여섯 행을 삭제</li>
+<li>:40pu - 40번 행에 레지스터의 내용 붙여넣기</li>
+<li>범위 연산 meta character<ul>
+<li>.: 현재 행을 의미(relative path의 현재 디렉터리와 유사)</li>
+<li>$: 마지막 행을 의미 (REGEX의 $와 유사)</li>
+<li>+#: 현재 위치에서 #만큼 아래 행을 의미</li>
+<li>-#: 현재 위치에서 #만큼 위 행을 의미</li>
+<li>%: 문서(파일) 전체를 의미</li>
+</ul>
+</li>
+</ul>
+<h3 id="visual-mode"><a href="#visual-mode" class="headerlink" title="visual mode"></a>visual mode</h3><ul>
+<li>mouse의 drag 기능을 대신</li>
+<li>v: (소문자) 일반 비주얼 모드로 현재 커서 위치에서 블록을 지정</li>
+<li>V: (대문자) visual line mode로, 현재 커서가 위치한 행에서 행 단위로 블록을 지정</li>
+<li>&lt;CTRL-V&gt;: visual block mode, 열(column)단위로 블록을 지정(ctrl + q 로 사용하기도 함)</li>
+<li>column editing<ul>
+<li>특정 열에 문자열을 삽입&#x2F;교체하는 경우</li>
+<li>&lt;CTRL-V&gt;, 에디팅, ESC*2 하면 완료</li>
+<li>I: insert, A: append</li>
+<li>c: change</li>
+<li>~: switch case</li>
+</ul>
+</li>
+<li>gv: previous highlighted text 영역 불러오기</li>
+<li>o: hightlighted text 블록의 시작, 끝 이동</li>
+</ul>
+<h3 id="clipboard"><a href="#clipboard" class="headerlink" title="clipboard"></a>clipboard</h3><ul>
+<li>vi: vi 호환의 vim 이며 vim 종류 중에 가장 적은 기능을 가지고 있다. compact vim, tiny vim 이라 부름</li>
+<li>vim: 일반적인 vim을 의미. vi에 추가적인 기능과 플러그인 사용이 가능. enhanced vim이라 부름. 프로그래밍이 많이 사용됨.</li>
+<li>vimx: 가장 많은 기능을 가진 vim. vim + clipboard, X window clipboard 기능 포함.</li>
+<li>$ vim –version &#124; grep clipboard 명령어로 clipboard 기능이 포함되어있는지 알 수 있다.</li>
+<li>기능이 포함되어 있는 경우 아래 내용을 ~&#x2F;. vimrc 파일에 추가한다. X window에서 개발 할 경우 이 기능은 유용하다.</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">clipboard settings : Copy/Paste/Cut</span><br><span class="line">if has(&#x27;unnamedplus&#x27;)</span><br><span class="line">  set clipboard=unnamed, uunnamedplus</span><br><span class="line">endif</span><br></pre></td></tr></table></figure>
+
+<h3 id="vim-options"><a href="#vim-options" class="headerlink" title="vim options"></a>vim options</h3><ul>
+<li>~&#x2F;.vimrc 파일에 옵션 저장 가능<ul>
+<li>:set - 현재 옵션 설정을 보여줌</li>
+<li>:set all - 모든 옵션 설정을 보여줌(default 옵션까지 출력)</li>
+<li>:set [no]name - name에 해당하는 옵션을 on&#x2F;off 함</li>
+<li>:set name!  name옵션의 on.off를 toggle 함</li>
+<li>:set name&#x3D;value  name옵션에 value의 값을 할당</li>
+</ul>
+</li>
+<li>주로 사용하는 옵션<ul>
+<li>nu: (number) 화면에 행번호 표시. nu는 초보로 의심 받을 수 있음??</li>
+<li>rnu: (relativenu) 현재행을 기준으로 상하의 상대적 행번호 표시.</li>
+<li>ai: (autoindent) 자동 들여쓰기</li>
+<li>cindent: C언어 스타일의 들여쓰기</li>
+<li>ts&#x3D;value: (tabstop) 화면에 표시 될 탭 크기를 value로 지정</li>
+<li>sw&#x3D;value: (shiftwidth) 자동 블록 이동시 열의 너비</li>
+<li>fencs&#x3D;value: (fileencodings) 지원할 파일 인코딩 방식 리스트 e.g. set fencs&#x3D;ucs-bom,utf-8,korea</li>
+</ul>
+</li>
+<li>colorscheme<ul>
+<li>:coloscheme + ‘tab’ 으로 선택 가능</li>
+<li>jellybean 과 같은 커스텀 색도 별도 추가할 수 있음.</li>
+</ul>
+</li>
+</ul>
+<h3 id="vim-manual"><a href="#vim-manual" class="headerlink" title="vim manual"></a>vim manual</h3><ul>
+<li>:help word + &lt;CTRL-D&gt; word가 포함된 명령어를 볼 수 있음</li>
+<li>:help 뒤에 여러가지 모드를 추가해 설명을 확인 할 수 있음.<ul>
+<li>없음 - :help x 일반 모드</li>
+<li>i_ - :help i_CTRL-N 입력모드</li>
+<li>: - :help :w 명령행모드</li>
+<li>v_ - :help v_u 비주얼모드</li>
+<li>-  :help -r vim 실행인수</li>
+<li>&#39; - :help ‘tabstop’ 옵션</li>
+<li>c_ - :help c_CTRL-B 명령행 모드 특수키</li>
+</ul>
+</li>
+<li>help 모드에서 명령어<ul>
+<li>^] &lt;CTRL-]&gt;: jump to the definition of the keyword under the cusor</li>
+<li>^T &lt;CTRL-T&gt;: jump to older entry in the tag stack</li>
+<li>:tags: show the contents of the tag stack. The active entry is marked with a ‘&gt;’</li>
+<li>^W^W (&lt;CTRL-W&gt;*2): move cursor to window below&#x2F;right of the current one</li>
+</ul>
+</li>
+</ul>
+<h3 id="vim-error"><a href="#vim-error" class="headerlink" title="vim error"></a>vim error</h3><ul>
+<li>파일을 중복해서 오픈 한 경우: 오류 메세지 process ID에 still running이라고 써있을 경우 Q(quit), O(read only) 를 선택</li>
+<li>vim crash로 swapfile이 제거되지 못한 경우: 오류 메세지 process ID에 pid만 써있을 경우 R(recovery)을 선택</li>
+</ul>
+<h3 id="문자열-관련-기능"><a href="#문자열-관련-기능" class="headerlink" title="문자열 관련 기능"></a>문자열 관련 기능</h3><ul>
+<li>center, right, left</li>
+<li>문자 1개를 검색<ul>
+<li>fc: 문자 c를 전방 검색</li>
+<li>Fc: 문자 c를 후방 검색</li>
+<li>;: 최근 검색을 재검색</li>
+<li>,: 최근 검색을 반대방향으로 재검색</li>
+</ul>
+</li>
+<li>단어 검색<ul>
+<li>&#x2F;string: string을 전방탐색</li>
+<li>?string: string을 후방탐색</li>
+<li>*: 현재 커서에 위치한 단어를 전방탐색함</li>
+<li>#: 현재 커서에 위치한 단어를 후방탐색함</li>
+<li>n: 다음 탐색 결과를 찾음(전방탐색의 경우 전방으로, 후방탐색의 경우 후방으로 이동)</li>
+<li>N: n과 반대방향으로 다음 탐색</li>
+<li>%: 괄호의 짝을 찾아줌</li>
+<li>case-sensitive searching<ul>
+<li>\c 접두어를 추가할 경우 e.g. &#x2F;\cinter 로 실행하면 inter의 대소문자 무시 \C(대문자c)는 반대 기능</li>
+<li>:set ignorecase 는 ignorecase 활성화 반대는 :set noignorecase</li>
+</ul>
+</li>
+<li>&#x2F;[a-g]re: are, bre,cre ~ gre 를 모두 찾음. REGEX 문법을 따름.</li>
+<li>:nohls - :set nohls 검색 후 밝게 표시된 단어 옵션을 해제</li>
+<li>\M magic이라 불린다. 해석을 금지하는 접두어. \M[section] 이렇게 하면 REGEX로 해석을 안하고 그냥 문자열로 인식</li>
+</ul>
+</li>
+<li>문자열 교체<ul>
+<li>sed의 기능이 import 된 것. sed 문법과 동일</li>
+<li>:[range]s&#x2F;&lt;찾는 문자열&gt;&#x2F;&lt;교체할 문자열&gt;&#x2F;&lt;옵션&gt; separator로 slash가 주로 사용되지만 다른 문자를 사용해도 무방(예: 콤마)</li>
+<li>명령어 옵션<ul>
+<li>g: (global) 검색된 문자열 모두를 교체. 이 옵션 생략시 처음 1개만 교체</li>
+<li>i: (ignore case) 대소문자 무시</li>
+<li>c: (confirm) 교체 할 때마다 확인</li>
+<li>e: 교체 과정 중 에러 무시</li>
+</ul>
+</li>
+<li>찾으려는 문자열에 &#x2F;가 들어있을 경우 escape문자를 추가한다.<ul>
+<li>:%s&#x2F;/home/linux&#x2F;/home/unix&#x2F;g 를 아래 처럼 써도 무방하다.</li>
+<li>:%s,&#x2F;home&#x2F;linux,&#x2F;home&#x2F;unix,g</li>
+</ul>
+</li>
+<li>특수 문자의 교체<ul>
+<li>개행문자 DOS(CR+LF) UNIX(LF)</li>
+<li>CR 입력: ^V^M &lt;CTRL-V&gt; 대신 &lt;CTRL-Q&gt; 사용 가능</li>
+<li>:%s&#x2F;CR입력&#x2F;&#x2F;g 혹은 :%s&#x2F;\r&#x2F;&#x2F;g</li>
+<li>실전에서 :set ff&#x3D;dos 혹은 :set ff&#x3D;unix 로 설정 후 저장하는 방법 씀</li>
+</ul>
+</li>
+<li>ASCII를 코드값으로 입력<ul>
+<li>&lt;CTRL-V&gt; ###: ###에 10진수를 사용하여 ASCII 입력</li>
+<li>&lt;CTRL-V&gt; o###: ###에 8진수를 사용하여 ASCII 입력</li>
+<li>&lt;CTRL-V&gt; x###: ###에 16진수를 사용하여 ASCII 입력</li>
+<li>man ascii 로 아스키코드 확인 가능</li>
+</ul>
+</li>
+<li>숫자 증감: 숫자 위에서 &lt;CTRL-A&gt; 누르면 증가 &lt;CTRL-X&gt; 누르면 감소</li>
+</ul>
+</li>
+</ul>
+<h3 id="파일-관련-기능"><a href="#파일-관련-기능" class="headerlink" title="파일 관련 기능"></a>파일 관련 기능</h3><ul>
+<li>buffer: 파일을 편집하기 위한 임시 공간. 파일명 없이 vim을 실행하면 이름이 없는 buffer에 작업. :w myfile.txt 처럼 저장하면 buffer에 있는 내용이 저장이 됨</li>
+<li>register: 텍스트 일부를 저장하고 있는 임시 공간. dd 사용하면..</li>
+<li>vim에서 다른 파일을 편집하려고 할 때<ul>
+<li>:e [filename] 파일을 편집모드로 오픈한다. 파일이름을 생략하면 현재 파일을 다시 오픈한다.</li>
+<li>:e #[count] count번째 파일을 오픈한다. count가 생략되면 바로 인전 파일이다.</li>
+<li>:find filename 파일을 검색하여 오픈. 매칭결과가 여러개이면 에러메시지를 출력</li>
+<li>ctrl + ^ 명령어 단축키 “:e #”과 동일</li>
+</ul>
+</li>
+<li>한번에 여러개 열 수 있음<ul>
+<li>$vim file1 file2 file3</li>
+<li>:n입력하면 다음 파일 :N 입력하면 이전 파일</li>
+</ul>
+</li>
+<li>종료 기능<ul>
+<li>q[!] 현재 창 종료. !는 강제종료</li>
+<li>:qa[!] 모든 창 종료. 복수개의 창을 열었을 때 유용</li>
+<li>:wq 저장하면서 종료 :x 와 동일 요즘은 ZZ 사용</li>
+<li>:wqa 저장하면서 종료를 모든 창에 대해서</li>
+</ul>
+</li>
+<li>파일 저장<ul>
+<li>:w [filename] 파일이 지정되면 해당 파일에 쓰기를 지정(복사본) 사본을 만든 경우 편집중인 파일은 원래 파일</li>
+<li>sav file 현재 파일을 다른이름으로 저장. 편집중인 파일도 새로 저장된 파일로 교체</li>
+<li>:up 변경된 점이 있는 경우만 :w 명령어 실행</li>
+<li>:x up+quit 일반모드에서는 ZZ</li>
+<li>:10,50w history 10~50 번 행을 history라는 파일로 저장</li>
+<li>:.,+10w history 현재행에서 아래로 10번행을 history라는 파일로 저장</li>
+<li>:10,$w history 10~끝 까지 저장</li>
+<li>:%w history 전체를 history 파일로 저장, 즉 %는 있으나 없으나 결과가 같음</li>
+</ul>
+</li>
+<li>netrw: vim으로 디렉터리 열기(browsing)<ul>
+<li>:e . 하면 현재 디렉토리 열기 </li>
+<li>&lt;Enter&gt; 파일을 현재 창에 열기</li>
+<li>i 파일 표시 방법 변경(한줄, 파일정보도 함께, 와이드 형식, 트리방식)</li>
+<li>s 정렬 방식을 바꿈(이름순, 시간순, 크기순)</li>
+<li>o 커서 위치 파일을 수평 분할된 새 창으로 열기</li>
+<li>v 커서 위치 파일을 수직 분할된 새 창으로 열기</li>
+<li>p 커서 위치 파일을 미리보기 창으로 열기. 창닫기는 ctrl + w z나 :pclose</li>
+<li>t 새로운 탭으로 분할하여 열기</li>
+<li>- 상위 디렉터리로 이동</li>
+</ul>
+</li>
+<li>복수의 파일 다루기<ul>
+<li>split horizontal  CTRL-W s &#x2F; :sp [file] </li>
+<li>split virtical CTRL-W v &#x2F; :vs [file] </li>
+<li>창 이동<ul>
+<li>CTRL-W CTRL-방향키</li>
+<li>CTRL-W CTRL-W 현재 창에서 오른쪽 방향으로 이동</li>
+<li>CTRL-W CTRL-P 바로 이전에 이동한 창으로 이동</li>
+</ul>
+</li>
+<li>창 크기<ul>
+<li>CTRL-W &#x3D; 모든 창의 크기를 동일하게 조절</li>
+<li>CTRL-W [#]+ #크기만큼 크기를 키움. 숫자 생략시 1 키움</li>
+<li>CTRL-W [#]- #크기만큼 크기를 줄임. 숫자 생략시 1 줄임</li>
+</ul>
+</li>
+<li>split diff<ul>
+<li>vim -d file1 file2</li>
+<li>do, dp 로 바로 변경 사항 가져오기</li>
+</ul>
+</li>
+<li>tabpage<ul>
+<li>vim -p file1 file2 file3</li>
+<li>:[#]tabe[dit] file #번재 탭에 파일을 연다. #생략시 현재 탭 뒤에 생성. 번호는 0번부터</li>
+<li>:[#]tabnew file #번째 위치에 비어있는 탭 생성</li>
+<li>:[#]tabc[los] #번째 탭을 닫음. #생략시 현재 탭 닫음</li>
+<li>:[#]tabn[ext] [#]gt [#]&lt;CTRL-PageDown&gt; 다음 탭으로 이동, 일반모드의 gt와 동일</li>
+<li>:[#]tabp[revious] [#]gT [#]&lt;CTRL-PageUp&gt; 이전 탭으로 이동, 일반모드의 gT와 동일</li>
+<li>:tabm[ove] [#] #번째 탭으로 이동(0부터 시작) #생략시 가장 오른쪽으로 이동</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>buffers<ul>
+<li>아직 저장 전이면 이름없는 공간으로 버퍼라 부른다</li>
+<li>:file :buffer 명령어로 버퍼를 볼 수 있다.</li>
+<li>% 현재 편집 중인 버퍼</li>
+<li># 바로 이전에 열었던(혹은 열 예정인) 버퍼</li>
+<li>a 활성화된 버퍼. 창 분할 기능을 쓸 경우 여러 파일에 나타남</li>
+<li>+ 변경된 부분이 있는 버퍼</li>
+</ul>
+</li>
+<li>커서 아래 파일명을 인식하여 오픈하는 기능<ul>
+<li>파일 명에 커서를 가져다 놓고 gf(이동), </li>
+<li>C 언어 소스코드에 include 파일에 커서 놓고 gf 입력</li>
+<li>&lt;CTRL-W&gt; f 커서 위치 파일명을 분할된 창에 열어줌</li>
+<li>&lt;CTRL-W&gt; gf 커서 위치 파일명을 탭에 열어줌</li>
+<li>&lt;CTRL-^(6)&gt; 이전 파일로 되돌아가기</li>
+</ul>
+</li>
+</ul>
+<h3 id="파일-인코딩"><a href="#파일-인코딩" class="headerlink" title="파일 인코딩"></a>파일 인코딩</h3><ul>
+<li>fileencodings (fencs)<ul>
+<li>파일을 읽을 때 확인할 encoding list를 설정. .vimrc 에 list로 설정. 순서 중요</li>
+<li>set fencs&#x3D;value e.g. fencs&#x3D;usc-bom,utf-8,korea,latin-1</li>
+<li>BOM(Byte Order Mark) UCS(Universal coded Charater Set) 주로 생략하나, 관습적으로 옵션 설정시 앞부분에 넣어줌</li>
+<li>사용 가능 문자 셋 :help encoding-values<ul>
+<li>utf-8, utf8, usc-bom, korea(이건 별칭으로 유닉스에서는 euc-kr로 윈도에서는 cp949로 바뀜), euc-kr, cp949, japan, latin1, ansi(영문 아스키 방식)</li>
+</ul>
+</li>
+<li>:set fenc&#x3D;korea 로 하면 현재 사용 문자 인코딩을 설정하는 것</li>
+<li>linux to window 파일을 가져갈 때 UTF-8 을 지원하는 에디터가 아닐 경우 변환을 거쳐야함.<ul>
+<li>:set ff&#x3D;dos :set fenc&#x3D;korea :wq 명령어를 통해 변환 :sav newfilename.txt 로 다른이름 저장</li>
+</ul>
+</li>
+<li>window to linux 파일을 가져올 때 fencs가 잘 설정되어있으면 자동 변환됨. 이후 저장은 dos 형태로 되기 때문에<ul>
+<li>:set ff&#x3D;unix :set fenc&#x3D;utf8 :wq 명령어를 통해 리눅스에서 추후 사용시 편하도록 변환 :sav 로 다른 이름 저장</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="기타-편리한-기능"><a href="#기타-편리한-기능" class="headerlink" title="기타 편리한 기능"></a>기타 편리한 기능</h3><ul>
+<li><p>단어 경계 이동</p>
+<ul>
+<li>w, e 키를 이용해 이동 w는 단어의 앞에 멈춤. e는 단어 뒤에 멈춤</li>
+<li>0 0번째 열 이동</li>
+<li>^ 공백이 아닌 실제 내용이 있는 시작 열</li>
+<li>$ 마지막 열(행의 끝)</li>
+<li>b w와 비슷하나 진행 방향이 반대</li>
+<li>W, E, B 해봐라</li>
+</ul>
+</li>
+<li><p>괄호, 문단, 블록 단위 이동</p>
+<ul>
+<li>% 가장 가까운 괄호 짝으로 이동</li>
+<li>(, ) 문장 단위의 시작 위치, 끝 위치로 이동</li>
+<li>{, } 문단 단위의 시작 위치, 끝 위치로 이동</li>
+<li>[[,]] 블록 단위의 시작 위치, 끝 위치로 이동</li>
+</ul>
+</li>
+<li><p>abbreviation</p>
+<ul>
+<li>특정 단어 입력시 대체 입력하는 기능</li>
+<li>“내멜”을 입력하면 실제 이메일이 입력되는 기능</li>
+<li>ia는 insert mode 에서만 작동. ca는 command mode 에서만 작동</li>
+<li>ab 내맬 <a href="mailto:&#x61;&#98;&#99;&#100;&#x76;&#x76;&#x76;&#64;&#103;&#x6d;&#x61;&#105;&#108;&#46;&#99;&#111;&#109;">&#x61;&#98;&#99;&#100;&#x76;&#x76;&#x76;&#64;&#103;&#x6d;&#x61;&#105;&#108;&#46;&#99;&#111;&#109;</a></li>
+<li>ab projectsrc &#x2F;export&#x2F;2&#x2F;local&#x2F;pjr2&#x2F;mds&#x2F;src</li>
+<li>ia 시간0 &lt;C-R&gt;&#x3D;strftime(“%Y.%m.%d-%H:%M:%S”)&lt;CR&gt;</li>
+<li>ia tlrks1 &lt;C-R&gt;&#x3D;strftime(“%c”)&lt;CR&gt;</li>
+<li>ca 기능을 이용하면 한글상태 오타를 변환할 수 있다.<ul>
+<li>ca ㅈ w</li>
+<li>ca ㅈㅂ wq</li>
+<li>ca ㅌ x</li>
+<li>.vimrc 파일이 EUC-KR로 되어있으면 UTF-8 무서 편집시 작동하지 않을 수 있다. fenc&#x3D;euc-kr은 안됨!<table>
+<thead>
+<tr>
+<th>명령</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>:ab [lhs]</td>
+<td>현재 설정된 모든 약어 목록을 출력. lhs에 약어 지정시 해당 약어 정보만 출력</td>
+</tr>
+<tr>
+<td>:ab {lhs} {rhs}</td>
+<td>약어 lhs를 rhs 로 변환</td>
+</tr>
+<tr>
+<td>:unab {lhs}</td>
+<td>약어 lhs 해제</td>
+</tr>
+<tr>
+<td>:abclear</td>
+<td>설정된 모든 약어 해제</td>
+</tr>
+<tr>
+<td>:ia {lhs} {rhs}</td>
+<td>ab와 기능은 같지만 입력 모드에서만 작동</td>
+</tr>
+<tr>
+<td>:ca {lhs} {rhs}</td>
+<td>ab와 기능은 같지만 명령행 모드에서만 작동</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>key map</p>
+<ul>
+<li>nmap &lt;단축키&gt; &lt;명령&gt; normal mode 에서만 작동<ul>
+<li>nmap &lt;F2&gt; :up&lt;CR&gt;</li>
+</ul>
+</li>
+<li>imap &lt;단축키&gt; &lt;명령&gt; insert mode 에서만 작동<ul>
+<li>imap &lt;F4&gt; <a href="mailto:&#97;&#x62;&#99;&#x64;&#118;&#118;&#x76;&#x40;&#x67;&#109;&#97;&#x69;&#x6c;&#46;&#x63;&#111;&#109;">&#97;&#x62;&#99;&#x64;&#118;&#118;&#x76;&#x40;&#x67;&#109;&#97;&#x69;&#x6c;&#46;&#x63;&#111;&#109;</a></li>
+</ul>
+</li>
+<li>map &lt;단축키&gt; &lt;명령&gt; </li>
+<li>vmap, cmap 도 가능</li>
+<li>.vimrc에 nmap &lt;F3&gt; :tabnext&lt;Enter&gt; nmap &lt;F4&gt; gT 이렇게 적을 놓으면 됨</li>
+<li>autocmd 특정 상황에서 자동으로 실행할 명령<ul>
+<li>예시 *.c 파일을 열 때 자동으로 실행할 명령 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">autocmd BufRead, BufNewFile *.txt colo evening</span><br><span class="line">autocmd BufRead, BufNewFile *.java colo morning\|setlocal ts=2 sw=2</span><br><span class="line">au SwapExists * let v:sqapchoice = &#x27;o&#x27; 스왑파일이 존재할 경우 read only</span><br><span class="line">autocmd BufRead, BufNewFile */include/* colo slate\|setlocal ts=8 sw=8</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="For-Programmers"><a href="#For-Programmers" class="headerlink" title="For Programmers"></a>For Programmers</h3><ul>
+<li>re-indenting 들여쓰기 다시 하기<ul>
+<li>&#x3D;{motion} gg -&gt; &#x3D; -&gt; G</li>
+<li>visualmode + &#x3D; 비주얼모드로 라인 선택 후 &#x3D; 키 입력</li>
+</ul>
+</li>
+<li>tab vs whitespace<ul>
+<li>기존 작성된 탭을 4칸으로 전환하려면 :set et ts&#x3D;4 :ret</li>
+<li>공백 4칸을 탭문자로 변환 :set noet ts&#x3D;4 :ret!</li>
+</ul>
+</li>
+<li>자동 완성 기능<ul>
+<li>&lt;CTRL-N&gt;: 단어완성을 위해 현재 문서와 관련 파일을 전방 탐색 (include 같은거)</li>
+<li><a href="mailto:&#x61;&#x62;&#x63;&#100;&#x76;&#118;&#x40;&#103;&#x6d;&#x61;&#x69;&#x6c;&#x2e;&#x63;&#111;&#109;">&#x61;&#x62;&#x63;&#100;&#x76;&#118;&#x40;&#103;&#x6d;&#x61;&#x69;&#x6c;&#x2e;&#x63;&#111;&#109;</a> 같이 특수문자를 포함한 검색하려면 abc&lt;CTRL-N&gt;&lt;CTRL-X&gt;&lt;CTRL-N&gt;…. 사전 검색 모드로 추가 검색</li>
+</ul>
+</li>
+</ul>
+<h3 id="vim-bootstrap"><a href="#vim-bootstrap" class="headerlink" title="vim-bootstrap"></a>vim-bootstrap</h3><ul>
+<li>자동으로 vimrc를 만들어주는 곳<ul>
+<li><a target="_blank" rel="noopener" href="https://vim-bootstrap.com/">https://vim-bootstrap.com</a> 여기서 만든 파일을 약간 수정해서 사용하라</li>
+</ul>
+</li>
+</ul>
+<h3 id="vimrc"><a href="#vimrc" class="headerlink" title=".vimrc"></a>.vimrc</h3><ul>
+<li>지금까지 배운 설정을 아래와 같이 적용해 봄</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">set ai cindent hls</span><br><span class="line">set ts=4 sw=4</span><br><span class="line">set fencs=usc-bom,utf-8,korea,latin1</span><br><span class="line">&quot;colo desert</span><br><span class="line">colorscheme desert</span><br><span class="line"></span><br><span class="line">nmap &lt;F2&gt; :up&lt;CR&gt;</span><br><span class="line">nmap &lt;F3&gt; :tabprev&lt;Enter&gt;</span><br><span class="line">&quot;nmap &lt;F3&gt; :gt&lt;Enter&gt;</span><br><span class="line">nmap &lt;F3&gt; :tabnext&lt;Enter&gt;</span><br><span class="line">&quot;nmap &lt;F4&gt; :gT&lt;CR&gt;</span><br><span class="line"></span><br><span class="line">&quot;abbreviation</span><br><span class="line">ab 내맬 abcdvvv@gmail.com</span><br><span class="line">ia 시간0 \&lt;C-R\&gt;=strftime(&quot;%Y.%m.%d-%H:%M:%S&quot;)\&lt;CR\&gt;</span><br><span class="line">ia tlrks1 \&lt;C-R\&gt;=strftime(&quot;%c&quot;)\&lt;CR\&gt;</span><br><span class="line">ca ㅈ w</span><br><span class="line">ca ㅈㅂ wq</span><br><span class="line">ca ㅌ x</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">autocmd BufRead,BufNewFile *.txt colo evening</span><br><span class="line">&quot;autocmd BufRead, BufNewFile */include/* colo slate\|setlocal ts=8 sw=8</span><br><span class="line"></span><br><span class="line">set fencs=ucs-bom,utf8,korea,llatin1</span><br></pre></td></tr></table></figure>
+<h3 id="bash에서-alias-무시하고-실행하고-싶을-때-명령어-앞에-추가하면-됨"><a href="#bash에서-alias-무시하고-실행하고-싶을-때-명령어-앞에-추가하면-됨" class="headerlink" title="bash에서 alias 무시하고 실행하고 싶을 때 명령어 앞에 \ 추가하면 됨"></a>bash에서 alias 무시하고 실행하고 싶을 때 명령어 앞에 \ 추가하면 됨</h3></div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-02-21T15:00:00.000Z" title="2022. 2. 22. 오전 12:00:00">2022-02-22</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T12:24:30.690Z" title="2026. 5. 2. 오후 9:24:30">2026-05-02</time>&nbsp;업데이트 됨</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/02/22/2022-02-22-unix-command/">Unix Command</a></p><div class="content"><p>유닉스 명령어에 대하여</p>
+<ul>
+<li><p>명령행 완성 기능</p>
+<ul>
+<li>auto-completion</li>
+<li>Tab 키를 사용 혹은 더블탭 사용</li>
+</ul>
+</li>
+<li><p>i18n</p>
+<ul>
+<li>internationalization의 줄임말</li>
+<li>UTF-8이 기본문자세트로 사용된다.</li>
+<li>유닉스 명령은 LANG 환경변수 설정의 영향을 받음</li>
+<li>en_US 로케일을 사용하는 편이 좋다.</li>
+</ul>
+</li>
+<li><p>매뉴얼</p>
+<ul>
+<li>맨 페이지 - man 명령어를 통해 명령어 설명을 볼 수 있음</li>
+</ul>
+</li>
+</ul>
+<h3 id="File-관련-명령어"><a href="#File-관련-명령어" class="headerlink" title="File 관련 명령어"></a>File 관련 명령어</h3><ul>
+<li><p>pwd - print working directory</p>
+</li>
+<li><p>cd - change directory e.g. cd ~&#x2F;work 경로 생략시 홈 디렉토리로</p>
+</li>
+<li><p>절대 경로 - &#x2F;(root directory) 로 시작하는 경로 e.g. &#x2F;usr&#x2F;bin</p>
+</li>
+<li><p>상대 경로 - .(현재 디렉터리)로 시작하는 경로 e.g. .&#x2F;..&#x2F;..&#x2F;tmp ..&#x2F;..&#x2F;tmp</p>
+</li>
+<li><p>ls - list file</p>
+</li>
+<li><p>mkdir - make directory e.g. mkdir -p work&#x2F;testdir</p>
+</li>
+<li><p>rmdir - remove directory 이 명령의 경우 디렉토리가 비어있어야하기 때문에 rm -rf 사용</p>
+</li>
+<li><p>cp - copy e.g. cp ~&#x2F;.bashrc ~&#x2F;.bashrc_ex</p>
+</li>
+<li><p>mv - move, rename e.g. cp ~&#x2F;.bashrc_ex ~&#x2F;.old_bashrc</p>
+</li>
+<li><p>rm - remove e.g. cp ~&#x2F;.old_bashrc</p>
+</li>
+<li><p>chown, chgrp - change owner&#x2F;group - root 유저만 가능</p>
+</li>
+<li><p>chattr - change attribute 별로 안중요</p>
+</li>
+<li><p>stat [option] <file> - file meta data 출력</p>
+</li>
+<li><p>touch <file> - 파일의 메타 정보 업데이트. flie이 없을 경우 빈 파일 생성</p>
+</li>
+<li><p>find - 파일 찾기 및 특정 동작 수행</p>
+<ul>
+<li>find . -mtime -1 -size +1M</li>
+<li>find . -name ‘*k.dat’ -size +1M</li>
+<li>find . -name “*.tmp” -exec rm {} 끝에 ;가 있으면 각각 명령어 실행 +가 있으면 찾은 파일 한번에 실행</li>
+</ul>
+</li>
+<li><p>which - path에 존재하는 파일을 검색 </p>
+</li>
+<li><p>UNIX file mode</p>
+<ul>
+<li>file mode bit: 유닉스 파일 권한을 나타내는 3 + 9 bit 체계</li>
+<li>octal mode: 8진수로 표기되는 UNIX file mode</li>
+<li>rwxrwxzxrwx: 3칸씩 각각의 owner, group, others 로 나눈다</li>
+<li>rwxr-x— &#x3D;&#x3D; 750</li>
+<li>r &#x3D;&#x3D; 4 readable</li>
+<li>w &#x3D;&#x3D; 2 writable</li>
+<li>x &#x3D;&#x3D; 1 executable</li>
+<li>directory 인경우 400 인 경우 파일 내용 볼 수 있음</li>
+<li>파일생성시 기본값은 umask 022 를 뺀 755 가 됨</li>
+<li>권한 바꾸기 - chmod 664 testdir &#x2F; rw-rw-r– r은 목록에서 파일을 볼수 있고, x는 파일에 access할 수 있음.</li>
+<li>chmod -x hello &#x2F; chmod +x hello &#x2F; chmod u+x g&#x3D;rw ..</li>
+</ul>
+</li>
+<li><p>file meta data</p>
+<ul>
+<li>magic data: &#x2F;usr&#x2F;xhare&#x2F;file&#x2F;magic</li>
+<li>mtime: modification time - file의 data가 변경된 시간</li>
+<li>ctime: change time - file의 meta-data가 변경된 시간</li>
+</ul>
+</li>
+<li><p>stdio</p>
+<ul>
+<li>standard input output</li>
+<li>file channel: fild에 입출력하기 위한 통로, 표준화된 입출력 방식을 통하도록 하는 가상화 레이어</li>
+<li>fd: 파일 서술자 file descrobtor, 파일 채널에 붙이는 유일한 식별자. 프로세스에 종속</li>
+<li>0: stdin - standard input 표준입력</li>
+<li>1: stdout - standard output 표준출력</li>
+<li>2: stderr - standard error 표준에러</li>
+<li>표준 입출력(0,1,2)는 모든 프로세스에 예약됨. 프로세스가 파일을 열면 fd는 3 부터 매겨짐.</li>
+<li>같은 파일을 여러번 열면 하나의 파일에 fd가 여러개 생성되며 싱크 이슈가 있을 수 있다.</li>
+</ul>
+</li>
+</ul>
+<h3 id="pipe"><a href="#pipe" class="headerlink" title="pipe"></a>pipe</h3><ul>
+<li><p>프로세스 사이에 통신으로 사용</p>
+</li>
+<li><p>IPC(inter-process communication)의 일종, shell에서도 사용</p>
+</li>
+<li><p>anonymous pipe - temporary 프로세스 종료시 사라짐</p>
+<ul>
+<li>프로세스틀의 직렬 연결</li>
+<li>명령행에서 vertical bar &#124; 로 사용</li>
+<li>A &#124; B &#124; C - A의 출력이 B로 들어가고 C로 또 연결됨 e.g. find . &#124; wc -l find 의 출력이 wc의 입력과 연결된다.</li>
+</ul>
+</li>
+<li><p>named pipe - persistency</p>
+<ul>
+<li>FIFO pipe 라고 부르기도 함</li>
+<li>path + filename 이 있다. mkfifo 명령어</li>
+</ul>
+</li>
+<li><p>redirection</p>
+<ul>
+<li>방향재지정</li>
+<li>A &gt; B - A의 stdout 을 파일 B 로 연결 e.g. ls &gt; filelist.txt  strace ls 2&gt; strace.txt</li>
+<li>A &lt; B - A의 stdin 을 파일 B 로 연결 e.g. ls &lt; sort &lt; names.txt</li>
+<li>A &gt;&gt; B - 방향은 &gt; 과 같고, 추가하는 모드</li>
+</ul>
+</li>
+</ul>
+<h3 id="아카이브-압축"><a href="#아카이브-압축" class="headerlink" title="아카이브, 압축"></a>아카이브, 압축</h3><ul>
+<li>유닉스는 묶음과 압축이 분리되어있음</li>
+<li>아카이브 - 보관용 묶음 tar, cpio (BSD, SysV)</li>
+<li>tar [ctxv] [f archive-file] files…<ul>
+<li>c: 아카이브 </li>
+<li>t: 아카이브 테스트</li>
+<li>x: 아카이브로부터 파일을 풀어냄</li>
+<li>v: 상세한 정보 출력 쓰지마</li>
+<li>f archive-file 입출력할 아카이브 파일명</li>
+<li>–exclude file: 제외할 file</li>
+</ul>
+</li>
+<li>압축 - gzip, bzip2, xz, zstd, lz4 압축률 xz &gt; bzip2, zstd &gt; gzip &gt; lz4<ul>
+<li>xz: 느리지만 텍스트 압축에 강함. 소스코드 압축할 때 씀.</li>
+<li>zstd: 가장 좋음. 이거 써라. zip standard</li>
+<li>tar c &#x2F;etc&#x2F;*.conf &#124; gzip -c &gt; etc.tar.gz - gzip -cd etc.tar.gz &#124; tar x</li>
+<li>bzip, xz, zstd 사용법 gzip 과 같음</li>
+<li>verbose 옵션을 사용하지 마라. 성능에 영향을 줌.</li>
+<li>tar cfa bak_data.tar.zst .&#x2F;data .&#x2F;exp -&gt; tar c .&#x2F;data .&#x2F;exp &#124; zstd -T0 &gt; bak_data.tar.zst</li>
+<li>tar xfa bak_data.tar.zst -&gt; zstd -dcT0 &gt; bak_data.tar.zst &#124; tar x</li>
+</ul>
+</li>
+</ul>
+<h3 id="link"><a href="#link" class="headerlink" title="link"></a>link</h3><ul>
+<li><p>ln - make links</p>
+</li>
+<li><p>inode - 파일의 메타 정보 및 관리용 객체</p>
+<ul>
+<li>파일은 고유의 inode를 1개 가지고 있다.</li>
+<li>disk partition(or volume)내에서 유일한 식별자. 다른 볼륨이나 파티션에서는 의미 없음</li>
+<li>file meta data - 시간 관련 정보, 사이즈, 소유권, 권한 등등</li>
+</ul>
+</li>
+<li><p>하드 링크 - hard link - inode를 가리키는 링크</p>
+<ul>
+<li>같은 inode 를 가리키므로 동일 파티션 내에서만 생성 가능</li>
+<li>regular file 만 가능 directory, device file 등은 hard link를 생성 할 수 없음. 실체를 가진 파일</li>
+<li>ln <file name> <hardlink name></li>
+</ul>
+</li>
+<li><p>심볼릭 링크 - symbolic link - 특정 파일의 위치를 가리키는 기능을 하는 링크(바로가기)</p>
+<ul>
+<li>symlink 위치만 가리키므로 다른 파티션도 가능, 모든 종류의 file에 만들 수 있다.</li>
+<li>가리키는 대상의 UNIX file mode를 따라가므로 symlink 권한은 777이다. 크게 의미 없음</li>
+<li>ln -s <filename> <symlink name></li>
+</ul>
+</li>
+<li><p>readlink</p>
+<ul>
+<li>symlink가 여러 단계로 가리키는 파일이 있을 수 있다. 이 canonical path를 따라가는 기능</li>
+<li>readlink -f <symlink> - 마지막 링크를 제외한 모든 링크가 존재할 떼 성공</li>
+<li>readlink -e <symlink> - 모든 링크가 존재할 때 성공</li>
+</ul>
+</li>
+<li><p>사용 예</p>
+<ul>
+<li>매일 추천 음악 100에 해당하는 파일을 제공할 때, 매일 파일을 복사하지 않고 symlink가 가리키는 canonical path를 변경하며 사용한다.</li>
+<li>라이브러리 버전 관리도 유사하게 사용. &#x2F;usr&#x2F;lib 내부 확인해보자.</li>
+</ul>
+</li>
+<li><p>canonicalization</p>
+<ul>
+<li>canonical이란 컴퓨팅 환경에서 실체를 가지는 standard, official의 의미를 가진다.</li>
+<li>예를 들어 상대경로를 절대 경로로 바꾸어 주는 과정, localhost 주소를 127.0.0.1 로 바꾸는 것 등을 canonicalization 한다고 표현한다.</li>
+<li>symlink는 실체를 가리키는게 아니기 때문에 끝까지 따라가야 canonical path를 알수 있다.</li>
+</ul>
+</li>
+</ul>
+<h3 id="process"><a href="#process" class="headerlink" title="process"></a>process</h3><ul>
+<li><p>ps - process status</p>
+<ul>
+<li>pid: process ID</li>
+<li>TTY: terminal ID</li>
+<li>TIME: CPU 시간(누적 시간) &#x3D; CPU를 점유했던 시간의 누적값. 현실 시간이 아님</li>
+<li>CMD: command &#x3D; 프로세스 이름. argv[0]를 의미</li>
+</ul>
+</li>
+<li><p>ps -e: 시스템의 모든 프로세스 조회</p>
+</li>
+<li><p>ps -a: ??</p>
+</li>
+<li><p>ps -f: full-format</p>
+<ul>
+<li>UID: 해당 프로세스의 소유권자 ID. User ID</li>
+<li>PPID: 부모 프로세스 ID (parent pid)</li>
+<li>C: CPU 사용량 누적된 수치의 비율</li>
+<li>STIME: 프로세스를 시작한 시간(시:분)</li>
+</ul>
+</li>
+<li><p>ps -l: long-format</p>
+<ul>
+<li>F: 프로세스 플래그</li>
+<li>S: 상태 코드(state code)</li>
+<li>PRI: 실시간 우선순위(realtiem priority)</li>
+<li>NI: 나이스 우선 순위(nice) -20 ~ +19 음수일수록 우선 순위가 높다. 기본값은 0</li>
+<li>SZ: 사용되는 프로세스 코어 이미지의 메모리 크기 (KB)</li>
+</ul>
+</li>
+<li><p>ps axf -&gt; BSD style &#x2F; ps -e –forest -&gt; UNIX SysV style</p>
+</li>
+<li><p>명령어는 man ps으로 사용해 살펴보자.</p>
+</li>
+<li><p>process control</p>
+<ul>
+<li>kill- 프로세스에 시그널을 send 하는 기능. 시그널에 따라 프로세스를 제어.</li>
+<li>시그널 종류는 kill -l 통해 확인.<ul>
+<li>SIGHUP: Hang Up</li>
+<li>SIGINT: Interrupt <CTRL-C></li>
+<li>SIGQUIT: Quit &lt;CTRL-&gt;. core 발생</li>
+<li>SIGKILL: kill 강제로 죽임</li>
+<li>SIGSEGV: Segment violation. 메모리 침범으로 이상 종료</li>
+<li>SIGTERM: Terminate 종료 요청</li>
+<li>SIGTSTP: Temporary Stop <CTRL-z></li>
+</ul>
+</li>
+<li>kill 13011 - PID 13011 프로세스에 SIGTERM 시그널 보냄</li>
+<li>kill -QUIT 12012 - SIGQUIT 시그널 보냄</li>
+<li>kill -9 12013 - 9번 시그널(SIGKILL) 보냄 최후의 수단! SIGTERM을 기본적으로 시도</li>
+</ul>
+</li>
+<li><p>job control</p>
+<ul>
+<li>fore-ground processs - 현재 session에서 제어 터미널(controlling terminal)을 가진 프로세스</li>
+<li>back-ground process - 현재 session에서 제어 터미널(controlling terminal)을 잃어버린 프로세스</li>
+<li>CTRL-z<ul>
+<li>SIGTSTP( signal - temporary stop) 시그널을 fore-ground 프로세스에 전달</li>
+<li>프로세스를 잠시 정지시킴 &#x3D; 결과적으로 back-ground에 stpped 상태로 존재</li>
+</ul>
+</li>
+<li>session - 세션은 멀티유저 시스템에서 통신 객체(seat of remote)를 구별하기 위함.<ul>
+<li>세션은 제어 터미널(Controlling terminal)을 가질 수 있다.</li>
+<li>SID &#x3D;&#x3D; PID 가 같은 프로세스를 Session Leader 라 부른다. 세션 리더로부터 파생된 자식 프로세스는 모두 같은 세션을 가진다.</li>
+<li>세션에 속한 controlling terminal을 소유할 수 있다는 의미 &#x3D;&#x3D; fore-ground process</li>
+<li>로그아웃시 세션이 파괴되면서 세션에 속한 프로세스들은 모두 종료</li>
+</ul>
+</li>
+<li>controlling terminal<ul>
+<li>사용자의 제어를 받는 터미널 장치</li>
+<li>CUI에서 멀티 태스킹을 위한 제어 방법</li>
+<li>제어 터미널을 소유한 프로세스는 키보드 입력을 가진다. 이런 프로세스를 fore-ground process라 부른다.</li>
+<li>하나의 session에서 fore-ground process는 최대 1개</li>
+<li>제어 터미널 규격 TTY 필드 부분을 보면 두가지 방식<ul>
+<li>pts&#x2F;#: UNIX98 Pseudo terminal system - SUSv2</li>
+<li>tty#: console terminal</li>
+</ul>
+</li>
+<li>session에서 제어 터미널을 가지지 않는 경우 ps의 TTY 필드에 ? 로 나타난다.</li>
+</ul>
+</li>
+<li>process group<ul>
+<li>process group leader: processgroup ID &#x3D;&#x3D; PID</li>
+<li>프로세스 그룹 리더는 시그널 전파 기능을 가짐.</li>
+<li>kill 에서 음수의 PID 번호는 프로세스 그룹에 시그널을 전파하는 것.</li>
+</ul>
+</li>
+<li>deamon 이란??<ul>
+<li>Orphan process( and Session leader)</li>
+<li>stdio를 모두 &#x2F;dev&#x2F;null로 리다이렉션을 걸고</li>
+<li>control terminal 을 가지지 않는 프로세스. TTY 값 ?이다.</li>
+</ul>
+</li>
+<li>interrupt key<ul>
+<li><CTRL-C>: SIGINT(Interrupt Signal) 시그널을 fore-ground 프로세스에 전달. 프로세스 그룹 리더가 받을 경우 그룹에 속한 모든 프로세스에 시그널 전파 </li>
+<li>&lt;CTRL-&gt;: SIGQUIT(Quit Signal) 시그널을 fore-ground 프로세스에 전달. 동작 방식은 위와 같으나 core 발생</li>
+</ul>
+</li>
+<li>commands<ul>
+<li>jobs: stoped, back-ground process의 리스트 출력</li>
+<li>fg %#: 지정한 프로세스를 fore-ground로</li>
+<li>bg %#: 정지된 백그라운드 프로세스를 back-ground에서 running 상태로 변경</li>
+<li>command &amp;: command를 back-ground에서 running 상태로 실행</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-02-20T15:00:00.000Z" title="2022. 2. 21. 오전 12:00:00">2022-02-21</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T12:24:30.663Z" title="2026. 5. 2. 오후 9:24:30">2026-05-02</time>&nbsp;업데이트 됨</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/02/21/2022-02-21-linux1/">linux와 표준에 대하여</a></p><div class="content"><p>리눅스는 표준을 잘 지킨 사례라고 할 수 있다.</p>
+<h2 id="참고할-만한-문서"><a href="#참고할-만한-문서" class="headerlink" title="참고할 만한 문서"></a>참고할 만한 문서</h2><ul>
+<li>unix: <a target="_blank" rel="noopener" href="http://www.opengroup.org/">www.opengroup.org</a></li>
+<li>POSIX standard: <a target="_blank" rel="noopener" href="http://www.computer.org/">http://www.computer.org</a></li>
+<li>ISO&#x2F;IEC Standards: <a target="_blank" rel="noopener" href="http://www.iso.ch/">http://www.iso.ch</a></li>
+<li>linux: access.redhat.com</li>
+<li><a target="_blank" rel="noopener" href="http://www.linuxfoundation.org/">www.linuxfoundation.org</a></li>
+<li>성당과 시장 - Eric Raymond</li>
+<li>UNIX의 탄생 - Brian Kernighan</li>
+<li>F&#x2F;OSS cartoon - joone.net</li>
+<li>Revolution OS (2001) - <a target="_blank" rel="noopener" href="https://youtube.be/4ZHloJVhcRY">https://youtube.be/4ZHloJVhcRY</a></li>
+</ul>
+<h2 id="Multics"><a href="#Multics" class="headerlink" title="Multics"></a>Multics</h2><ul>
+<li>GE, Dell lab, MIT AI lab 의 multi-Access Computers 프로젝트의 산물</li>
+<li>목표: 운영체제의 복잡한 기능울 감추고 시분할, 페이지&#x2F;세그먼트 메모리 관리, 프로세스 관리, 파일 시스템, 주변장치 관리, 양방향 인터페이스 등등 다양한 기능을 실험하는 프로젝트</li>
+<li>프로젝트가 비대해지면서 망하지만 UNIX 개발의 시작이 됨</li>
+</ul>
+<h2 id="UNIX"><a href="#UNIX" class="headerlink" title="UNIX"></a>UNIX</h2><ul>
+<li>Ken Thompson, Ritchie이 게임을 위해 UNIX를 만듬</li>
+<li>UNIX가 성공하면서 DEC 운영체제가 밀려남</li>
+<li>당시 UNIX는 어셈블리어로 작성되어 새로운 CPU가 나오면 거의 새로 작성되어야 했다.</li>
+<li>Dennis Ritchie는 Brian Kernighan의 도움으로 B 언어를 개량한 C 언어를 개발(1973)</li>
+<li>UNIX가 C언어로 작성되면서 포팅이 쉬워짐</li>
+<li>C언어의 부흥으로 어셈블리어의 몰락을 가져옴</li>
+<li>UNIX는 분열하기 시작</li>
+<li>BSD UNIX가 탄생 (1975년) 했으나 구심점이 없었다.</li>
+<li>기능을 각자 알아서 추가하다 보니 호환성이 사라짐</li>
+<li>Sysv vs BSD 경쟁 - 명령어도 다름. 운영체제 버전이 다르면 호환이 안됨</li>
+<li>POSIX가 있어도 더 복잡해진 상황</li>
+<li>빌게이츠의 제안으로 SUS - Single UNIX Specification 유닉스 단일 표준안</li>
+</ul>
+<h2 id="C-Programming-Language"><a href="#C-Programming-Language" class="headerlink" title="C Programming Language"></a>C Programming Language</h2><ul>
+<li>The C Programming Language (TCPL, K&amp;R)</li>
+<li>고급언어이면서도 어셈블리어에 버금가는 성능</li>
+<li>낮은 추상화 지원 stdio, File 등</li>
+<li>저수준의 하드웨어 조작이 가능</li>
+<li>어셈블리어보다 쉬운 언어적 특성</li>
+<li>ANSI-C(C89): 1989년도 표준</li>
+<li>C99 - 1999년도 표준</li>
+<li>C11 : 2011년도 표준</li>
+</ul>
+<h2 id="POSIX"><a href="#POSIX" class="headerlink" title="POSIX"></a>POSIX</h2><ul>
+<li>Portable Oprating system Interface</li>
+<li>1988년 POSIX 초안 발표</li>
+<li>전기전자공학회(IEEE)의 주도로 system call 표준화 진행</li>
+<li>POSIX는 API의 문법과 작동에 대한 의미(semantic)만을 담고 있음. 느슨하게 작성됨.</li>
+<li>정부 조달의 최소기준</li>
+</ul>
+<h2 id="OSF"><a href="#OSF" class="headerlink" title="OSF"></a>OSF</h2><ul>
+<li>Open Software Foundation 등장</li>
+<li>대기업의 반독점을 목적으로 설립된 비영리 단체</li>
+<li>1990년 초반 BSD, SVR4, OSF&#x2F;1 등으로 파편화</li>
+</ul>
+<h2 id="X-Open"><a href="#X-Open" class="headerlink" title="X&#x2F;Open"></a>X&#x2F;Open</h2><ul>
+<li>XPG는 manual page의 시초</li>
+<li>유닉스 상표권을 소유하게 되나 나중에 Open Group에 넘김</li>
+<li>SUSv1: XPG 4.2 UNIX95</li>
+<li>SUSv2: UNIX98 500번</li>
+<li>SUSv3: SUS 2002 600번 v4는 700</li>
+</ul>
+<h2 id="유닉스-이후의-세계"><a href="#유닉스-이후의-세계" class="headerlink" title="유닉스 이후의 세계"></a>유닉스 이후의 세계</h2><ul>
+<li>GNU에서 토발즈가 만든 Linux kernel을 지원하기 시작</li>
+<li>Linux는 Monolithic kernel 방식</li>
+<li>Minix 에서 시작됨 1991 년 linux 발표 1992년 부터 빠른 발전</li>
+<li>GNU - Gnu is Not Unix</li>
+<li>GNU 컴파일러 GCC에 의해서 더욱 발전</li>
+<li>GPL 공개 라이선스를 따름</li>
+<li>BSD는 4.3 버전을 마지막으로 사라져감</li>
+<li>Max OSX 2001년 BSD 기반으로 만듬</li>
+<li>SUS이후 계승되어 표준 대부분을 만족함</li>
+</ul>
+<h2 id="Linux-배포판"><a href="#Linux-배포판" class="headerlink" title="Linux 배포판"></a>Linux 배포판</h2><ul>
+<li><p>배포판을 분류하는 기준</p>
+<ul>
+<li>deb 계열: Debian, Ubuntu, Mint 등</li>
+<li>rpm 계열: RHEL, CentOS 등</li>
+<li>RedHat 계열</li>
+<li>Debian 계열</li>
+</ul>
+</li>
+<li><p>CentOS를 사용하는 경우 EPEL을 사용하는 경우가 많다.</p>
+</li>
+<li><p>debian계열은 패키지 지원이 부족</p>
+</li>
+<li><p>Xfce 경량 데스크탑</p>
+</li>
+<li><p>센토스는 스타트업등 엔터프라이즈에서 사용</p>
+</li>
+<li><p>우분투 미려한 데스크탑 환경</p>
+</li>
+<li><p>페도라는 신기술 및 보안 개발에 사용</p>
+</li>
+<li><p>임베디드에도 리눅스 사용됨</p>
+</li>
+</ul>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-08-11T15:00:00.000Z" title="2021. 8. 12. 오전 12:00:00">2021-08-12</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T12:24:30.646Z" title="2026. 5. 2. 오후 9:24:30">2026-05-02</time>&nbsp;업데이트 됨</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/08/12/2021-08-12-bits-cpp-config/">bits/c++config.h 없다는 오류</a></p><div class="content"><p>fatal error: bits&#x2F;c++config.h 그런 파일 이나 디렉토리가 없습니다. 라고 오류가 나올 때 해결 법에 대해 알아본다.</p>
+<ul>
+<li>안드로이드 용 node.js를 컴파일 하려고 했더니 위와 같은 오류가 발생 했다. 아래 처럼 빌드를 위한 패키지를 설치해</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install gcc</span><br><span class="line"> </span><br><span class="line">sudo apt install g++</span><br><span class="line"> </span><br><span class="line">sudo apt install make</span><br><span class="line"> </span><br><span class="line">sudp apt install make-guile</span><br><span class="line"> </span><br><span class="line">sudo apt-get install build-essential</span><br><span class="line"> </span><br><span class="line">sudo apt-get install gcc-multilib g++-multilib</span><br></pre></td></tr></table></figure>
+
+<p>출처: <a target="_blank" rel="noopener" href="https://overface.tistory.com/409">https://overface.tistory.com/409</a></p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-07-21T15:00:00.000Z" title="2021. 7. 22. 오전 12:00:00">2021-07-22</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T12:24:30.632Z" title="2026. 5. 2. 오후 9:24:30">2026-05-02</time>&nbsp;업데이트 됨</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/07/22/2021-07-22-ci-cd-protect/">CI/CD 파이프라인을 보호하는 법</a></p><div class="content"><p>  CI&#x2F;CD 를 통해 반복 작업을 자동화하고 결과물의 품질을 일정 수준으로 유지할 수 있다. 이러한 이점때문에 인프라 구축에 많이 사용된다. 동시에 공격의 취약점으로 노출되기도 한다. CI&#x2F;CD 환경에서 보안 사례들을 살펴본다. 아래 사이트에서 발췌하였다.<br>  <a target="_blank" rel="noopener" href="https://www.itworld.co.kr/news/201624">https://www.itworld.co.kr/news/201624</a></p>
+<h3 id="CI-CD-환경에-기밀을-저장하지-않는다"><a href="#CI-CD-환경에-기밀을-저장하지-않는다" class="headerlink" title="CI&#x2F;CD 환경에 기밀을 저장하지 않는다."></a>CI&#x2F;CD 환경에 기밀을 저장하지 않는다.</h3><p>비공개 저장소에 대한 공격을 통해 정보가 유출 될 경우, 저장소에 기밀이 저장되어 있을 경우 추가적인 정보 유출이 일어날 수 있다. 추가적인 기밀 저장을 위해 별도의 계정이나 리소스에 인증을 위한 정보를 저장함으로 기밀 유출을 억제하도록 한다. </p>
+<h3 id="자동화된-풀-요청과-예약된-작업을-철저히-조사"><a href="#자동화된-풀-요청과-예약된-작업을-철저히-조사" class="headerlink" title="자동화된 풀 요청과 예약된 작업을 철저히 조사"></a>자동화된 풀 요청과 예약된 작업을 철저히 조사</h3><p>깃헙 액션을 이용해 자동으로 실행되는 작업들에 악의적인 의도가 들어 있을 수 있다. 깃헙 인프라를 이용해 암호화폐를 채굴하거나 악성 코드를 실행 할 수 있다. 깃헙 액션과 같은 기능은 그자체가 자동으로 실행하는 속성을 가지고 있기 때문에 사전에 작업 내용에 대해 확인 할 필요가 있다.</p>
+<h3 id="클라우드-네이티브-컨테이너를-강화하고-정기적으로-감사"><a href="#클라우드-네이티브-컨테이너를-강화하고-정기적으로-감사" class="headerlink" title="클라우드 네이티브 컨테이너를 강화하고 정기적으로 감사"></a>클라우드 네이티브 컨테이너를 강화하고 정기적으로 감사</h3><p>도커 기반 환경에 취약점이 있는지 확인하거나, 클라우드 네이트브 컨테이너 보안 솔루션에 투자한다. </p>
+<h3 id="심층-코드-스캔을-통합해-코드-품질-검사를-자동화"><a href="#심층-코드-스캔을-통합해-코드-품질-검사를-자동화" class="headerlink" title="심층 코드 스캔을 통합해 코드 품질 검사를 자동화"></a>심층 코드 스캔을 통합해 코드 품질 검사를 자동화</h3><p>코드 품질 문제, 보안 취약점, 메모리 누출이나 경합 조건과 같은 버그를 자동으로 찾는 도구를 사용하는 것은 CI&#x2F;CD 파이프라인을 시작부터 보호하는 방법이다. </p>
+<h3 id="CI-CD-도구-취약점-패치"><a href="#CI-CD-도구-취약점-패치" class="headerlink" title="CI&#x2F;CD 도구 취약점 패치"></a>CI&#x2F;CD 도구 취약점 패치</h3><h3 id="업데이트-무결성-검사"><a href="#업데이트-무결성-검사" class="headerlink" title="업데이트 무결성 검사"></a>업데이트 무결성 검사</h3><p>업데이트 자체를 변조하지 않았는지 무결성 검사를 통해 악성 업데이트를 내려 받지 않도록 한다.</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-07-19T15:00:00.000Z" title="2021. 7. 20. 오전 12:00:00">2021-07-20</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T12:24:30.618Z" title="2026. 5. 2. 오후 9:24:30">2026-05-02</time>&nbsp;업데이트 됨</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/07/20/2021-07-20-github-action/">Github Action</a></p><div class="content"><p>github action에 대해 알아보자. 깃헙 액션에 대한 소개 페이지를 적절히 번역하였다.  </p>
+<h2 id="Github-Action"><a href="#Github-Action" class="headerlink" title="Github Action"></a>Github Action</h2><p>소프트웨어 개발 workflow 자동화 도구이다. workflow는 테스트 코드를 수행하거나 빌드와 배포를 수행하는 등의 작업들을 의미한다. 깃헙 액션을 이용해 CI&#x2F;CD를 수행할 수 있다.  </p>
+<h2 id="The-Component-of-Github-action"><a href="#The-Component-of-Github-action" class="headerlink" title="The Component of Github action"></a>The Component of Github action</h2><h3 id="workflows"><a href="#workflows" class="headerlink" title="workflows"></a>workflows</h3><ul>
+<li>저장소에 추가할 수 있는 자동화 프로시저.</li>
+<li>하나 이상의 job으로 이루어짐.</li>
+<li>이벤트에 의해 시작됨.</li>
+<li>깃헙에 있는 프로젝트를 빌드, 테스트, 패키징, 배포 할 수 있음.</li>
+</ul>
+<h3 id="Events"><a href="#Events" class="headerlink" title="Events"></a>Events</h3><ul>
+<li>커밋 혹은 이슈 등록, pull request와 같은 workflow를 시작시키는 특정 활동.</li>
+<li>웹훅을 이용한 외부 이벤트 등록 가능.</li>
+<li>이벤트에 대한 자세한 사항은 링크 참조(<a target="_blank" rel="noopener" href="https://docs.github.com/en/actions/reference/events-that-trigger-workflows">https://docs.github.com/en/actions/reference/events-that-trigger-workflows</a>)</li>
+</ul>
+<h3 id="Jobs"><a href="#Jobs" class="headerlink" title="Jobs"></a>Jobs</h3><ul>
+<li>하나의 runner에서 동작하는 steps의 집합.</li>
+<li>기본적으로 workflow에 있는 job들은 병렬처리.</li>
+<li>job들을 순차적으로 처리하도록 설정 가능.</li>
+<li>빌드 후 테스트하도록 job을 설정하고, 빌드 실패 시 테스트 안하도록 함.</li>
+</ul>
+<h3 id="Steps"><a href="#Steps" class="headerlink" title="Steps"></a>Steps</h3><ul>
+<li>job에 있는 개별 실행 명령어들.</li>
+<li>하나의 step은 특정 동작이나 쉘 명령어가 될 수 있음.</li>
+<li>같은 runner에서 동작하는 job에 각각의 step들은 서로 데이터를 공유함.</li>
+</ul>
+<h3 id="Actions"><a href="#Actions" class="headerlink" title="Actions"></a>Actions</h3><ul>
+<li>step을 action은 개별 명령어.</li>
+<li>workflow를 이루는 가장 작은 블럭 단위</li>
+<li>커스텀 action을 생성하고 다른 사람이 만든 action 사용 가능.</li>
+<li>action을 사용하기 위해 step에 포함해야함.</li>
+</ul>
+<h3 id="Runners"><a href="#Runners" class="headerlink" title="Runners"></a>Runners</h3><ul>
+<li>runner는 GitHub Actions runner application이 설치되어있는 서버.</li>
+<li>깃헙이 호스팅하는 러너를 사용할수도 있고 각자의 서버를 사용할 수 있음.</li>
+<li>러너는 한번에 하나의 job을 실행하고 실행 상태, 로그, 결과를 깃헙에 리포드.</li>
+<li>깃헙이 호스팅하는 러너는 우분투, 윈도우, 맥 기반이고 각 job은 가상 환경에서 실행 됨.</li>
+</ul>
+<h2 id="Create-an-example-workflow"><a href="#Create-an-example-workflow" class="headerlink" title="Create an example workflow"></a>Create an example workflow</h2><ol>
+<li>깃헙 저장소에 .github&#x2F;workflows&#x2F; 디렉토리를 만든다.</li>
+<li>해당 위치에 learn-github-actions.yml 파일을 생성하고 아래와 같이 작성한다.</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">name: learn-github-actions</span><br><span class="line">on: [push]</span><br><span class="line">jobs:</span><br><span class="line">  check-bats-version:</span><br><span class="line">    runs-on: ubuntu-latest</span><br><span class="line">    steps:</span><br><span class="line">      - uses: actions/checkout@v2</span><br><span class="line">      - uses: actions/setup-node@v2</span><br><span class="line">        with:</span><br><span class="line">          node-version: &#x27;14&#x27;</span><br><span class="line">      - run: npm install -g bats</span><br><span class="line">      - run: bats -v</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>깃헙에 푸시한다.</li>
+</ol>
+<h2 id="Understading-the-workflow-file"><a href="#Understading-the-workflow-file" class="headerlink" title="Understading the workflow file"></a>Understading the workflow file</h2><p>앞서 작성한 파일의 내용을 살펴보자</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">name: learn-github-actions</span><br></pre></td></tr></table></figure>
+<p>이름은 액션 탭에 보여질 이름이다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">on: [push]</span><br></pre></td></tr></table></figure>
+<p>workflow를 실행시킬 특정 액션을 의미한다. 이 경우는 저장소에 push를 했을 때를 의미한다. 자세한 액션 설정은 링크를 참조한다. <a target="_blank" rel="noopener" href="https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#onpushpull_requestpaths">https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#onpushpull_requestpaths</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jobs:</span><br></pre></td></tr></table></figure>
+<p>해당 workflow에서 수행 될 모든 job의 묶음을 의미한다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">check-bats-version:</span><br></pre></td></tr></table></figure>
+<p>하나의 job이름을 의미한다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">runs-on: ubuntu-latest</span><br></pre></td></tr></table></figure>
+<p>job이 수행될 runner를 의미한다. 이 경우 깃헙에서 제공하는 가상환경 상의 우분투를 의미한다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">steps:</span><br></pre></td></tr></table></figure>
+<p>check-bats-version job에서 수행 될 step들의 모음을 의미한다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- uses: actions/checkout@v2</span><br></pre></td></tr></table></figure>
+<p>uses는 actions&#x2F;checkout@v2이라는 액션을 사용하겠다는 것을 의미한다. 이 액션은 저장소를 체크아웃하고 다운받는다. </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- uses: actions/setup-node@v2</span><br><span class="line">  with:</span><br><span class="line">    node-version: &#x27;14&#x27;</span><br></pre></td></tr></table></figure>
+<p>이 step은 특정 버전의 노드를 설치하여 npm과 같은 명령어를 사용 가능하게 한다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- run: npm install -g bats</span><br></pre></td></tr></table></figure>
+<p>run 키워드로 특정 명령을 runner에 내린다. 이 명령어는 bats를 npm으로 설치하는 것을 의미한다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- run: bats -v</span><br></pre></td></tr></table></figure>
+<p>bats 명령어 실행을 한다.</p>
+<p>  지금까지 간단하게 깃헙 액션을 사용하는 법에 대해 알아보았다. 공식 문서를 이용하여 더 다양한 활용 방법을 찾아볼 수 있겠다. 혹은 누군가 만들어 놓은 액션을 활용하는 것도 하나의 방법이다.</p>
+<p>출처: <a target="_blank" rel="noopener" href="https://docs.github.com/en/actions/learn-github-actions/introduction-to-github-actions">https://docs.github.com/en/actions/learn-github-actions/introduction-to-github-actions</a><br><a target="_blank" rel="noopener" href="https://lab.github.com/githubtraining/devops-with-github-actions">https://lab.github.com/githubtraining/devops-with-github-actions</a><br><a target="_blank" rel="noopener" href="https://zzsza.github.io/development/2020/06/06/github-action/">https://zzsza.github.io/development/2020/06/06/github-action/</a>  </p>
+</div></article></div><nav class="pagination" role="navigation" aria-label="pagination"><div class="pagination-previous"><a href="/">이전</a></div><div class="pagination-next"><a href="/page/3/">다음</a></div><ul class="pagination-list is-hidden-mobile"><li><a class="pagination-link" href="/">1</a></li><li><a class="pagination-link is-current" href="/page/2/">2</a></li><li><a class="pagination-link" href="/page/3/">3</a></li><li><span class="pagination-ellipsis">&hellip;</span></li><li><a class="pagination-link" href="/page/9/">9</a></li></ul></nav></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/images/avatar.jpg" alt="우리람부탄"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">우리람부탄</p><p class="is-size-6 is-block">개발자</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">포스트</p><a href="/archives/"><p class="title">83</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">카테고리</p><a href="/categories/"><p class="title">0</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">태그</p><a href="/tags/"><p class="title">205</p></a></div></div></nav><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="GitHub" href="https://github.com/gabre8001"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Email" href="mailto:gabre8001@gmail.com"><i class="fas fa-envelope"></i></a></div></div></div><!--!--><!--!--><div class="column-right-shadow is-hidden-widescreen"></div></div><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3"><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">최근 글</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2026-05-02T11:57:05.994Z">2026-05-02</time></p><p class="title"><a href="/2026/05/02/hello-world/">Hello World</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-04-10T15:00:00.000Z">2022-04-11</time></p><p class="title"><a href="/2022/04/11/2022-04-11-matplot-start/">Matplotlib 시작하기</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-04-10T15:00:00.000Z">2022-04-11</time></p><p class="title"><a href="/2022/04/11/2022-04-11-numpy-start/">Numpy 시작하기</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-03-19T15:00:00.000Z">2022-03-20</time></p><p class="title"><a href="/2022/03/20/2022-03-20-adabright/">OpenCV 관심영역과 평균 밝기 보정</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-03-18T15:00:00.000Z">2022-03-19</time></p><p class="title"><a href="/2022/03/19/2022-03-19-brtctl/">OpenCV 트랙바를 이용한 밝기 보정 프로그램</a></p></div></article></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">태그</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/CPU/"><span class="tag">CPU</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MongoDB/"><span class="tag">MongoDB</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Radix/"><span class="tag">Radix</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Rax/"><span class="tag">Rax</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/React/"><span class="tag">React</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Redis/"><span class="tag">Redis</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Seaborn/"><span class="tag">Seaborn</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Test/"><span class="tag">Test</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Tree/"><span class="tag">Tree</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/t/"><span class="tag">_t</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/tmain/"><span class="tag">_tmain</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/action/"><span class="tag">action</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/active/"><span class="tag">active</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/admin/"><span class="tag">admin</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ajax/"><span class="tag">ajax</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/algebra/"><span class="tag">algebra</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/amqp/"><span class="tag">amqp</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/android/"><span class="tag">android</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/annotation/"><span class="tag">annotation</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/api/"><span class="tag">api</span><span class="tag">1</span></a></div></div></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">우리람부탄</a><p class="is-size-7"><span>&copy; 2026 우리람부탄</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="GitHub" href="https://github.com/gabre8001"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ko");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="입력 하세요..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"입력 하세요...","untitled":"(제목 없음)","posts":"포스트","pages":"페이지","categories":"카테고리","tags":"태그"});
+        });</script></body></html>

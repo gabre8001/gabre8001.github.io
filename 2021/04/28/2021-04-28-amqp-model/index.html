@@ -72,7 +72,7 @@
 </ul>
 <h2 id="Toplic-Exchange"><a href="#Toplic-Exchange" class="headerlink" title="Toplic Exchange"></a>Toplic Exchange</h2><ul>
 <li>라우팅 키의 패턴이 일치하는 하나 이상의 큐에 메시지를 전달</li>
-<li>Publish&#x2F;Subscribe 패턴을 구현하는데 사용</li>
+<li>Publish/Subscribe 패턴을 구현하는데 사용</li>
 <li>멀티 캐스트 라우팅에 사용</li>
 <li>라우팅 키는 .을 구분자로 사용 (예: aaa.bbb.ccc)</li>
 <li>Subscriber는 와일드카드 문자를 사용해 구독 가능 (예: aaa.bbb.* aaa.#)</li>
@@ -119,7 +119,7 @@
 <li>Polling (pull API): highly inefficient</li>
 </ul>
 </li>
-<li>큐 하나에 하나 이상의 소비자를 가짐</li>
+<li>큐 하나에 하나 이상의 소비자를 가짐 </li>
 </ul>
 <h1 id="Message-Acknowlgements"><a href="#Message-Acknowlgements" class="headerlink" title="Message Acknowlgements"></a>Message Acknowlgements</h1><ul>
 <li>메시지를 받고 처리하는 도중 응용프로그램이 중단되거나 네트워크 문제가 발생할 수 있음</li>
@@ -146,7 +146,7 @@
 <h1 id="Channels"><a href="#Channels" class="headerlink" title="Channels"></a>Channels</h1><ul>
 <li>브로커에 대한 다중 연결이 필요할 때 여러 TCP연결을 사용하지 않고 channel로 멀티플랙스 </li>
 <li>각각의 채널은 독립적으로 분리되어 있고 채널아이디를 통해 구분</li>
-<li>어플리케이션에서 여러 스레드&#x2F;프로세서를 사용하는 경우 각 스레드&#x2F;프로세서에 하나의 channel이 연결되고 각 연결은 서로 독립적으로 동작하도록 쓰일 수 있음</li>
+<li>어플리케이션에서 여러 스레드/프로세서를 사용하는 경우 각 스레드/프로세서에 하나의 channel이 연결되고 각 연결은 서로 독립적으로 동작하도록 쓰일 수 있음</li>
 <li>채널은 커낵션 상에 존재하며 커낵션이 닫히면 채널도 닫힘</li>
 </ul>
 <h1 id="Virtual-Hosts"><a href="#Virtual-Hosts" class="headerlink" title="Virtual Hosts"></a>Virtual Hosts</h1><ul>
@@ -163,6 +163,16 @@
                     fold: 'unfolded'
                 }
             }
-        };</script><script data-pjax src="/js/column.js"></script><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="입력 하세요..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
+        };</script><script data-pjax src="/js/column.js"></script><script type="text/javascript" id="MathJax-script" async>MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="입력 하세요..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
             loadInsight({"contentUrl":"/content.json"}, {"hint":"입력 하세요...","untitled":"(제목 없음)","posts":"포스트","pages":"페이지","categories":"카테고리","tags":"태그"});
         });</script></body></html>

@@ -47,23 +47,23 @@
 </li>
 <li><p>opencv 파일 설명</p>
 <ul>
-<li>opencv&#x2F;build&#x2F;include&#x2F;opencv2 경로에 헤더파일들이 위치한다.</li>
-<li>opencv&#x2F;build&#x2F;x64 아래 vc14 vc15 디렉토리가 있다.</li>
+<li>opencv/build/include/opencv2 경로에 헤더파일들이 위치한다.</li>
+<li>opencv/build/x64 아래 vc14 vc15 디렉토리가 있다.</li>
 <li>vc14는 visual studio  2015 버전을 이용해 빌드한 파일들이 있고, vc15는 2017버전을 이용해 빌드한 파일들이 있다.</li>
 <li>visual studio 2022 버전에서는 vc15를 사용한다.</li>
-<li>vc15&#x2F;bin 경로 아래에는 dll 파일이 있다.</li>
-<li>vc15&#x2F;lib 경로 아래에는 lib 파일이 있다.</li>
+<li>vc15/bin 경로 아래에는 dll 파일이 있다.</li>
+<li>vc15/lib 경로 아래에는 lib 파일이 있다.</li>
 </ul>
 </li>
 <li><p>환경변수 등록</p>
 <ul>
 <li>설치한 opencv 를 사용하기 위해 환경 변수 등록을 해준다.<ul>
 <li>변수 이름 OPENCV_DIR</li>
-<li>변수 값 opencv&#x2F;build</li>
+<li>변수 값 opencv/build</li>
 </ul>
 </li>
 <li>path 항목 편집<ul>
-<li>%OPENCV_DIR%&#x2F;x64&#x2F;vc15&#x2F;bin 항목 추가</li>
+<li>\%OPENCV_DIR\%/x64/vc15/bin 항목 추가</li>
 </ul>
 </li>
 <li>cmd 에서 설치 확인<ul>
@@ -84,7 +84,7 @@
 <li><p>opencv 속성 추가</p>
 <ul>
 <li>헤더파일 위치 지정<ul>
-<li>구성 속성 -&gt; C&#x2F;C++ -&gt; 일반</li>
+<li>구성 속성 -&gt; C/C++ -&gt; 일반</li>
 <li>추가 포함 디렉터리 항목에 $(OPENCV_DIR)\include 입력</li>
 </ul>
 </li>
@@ -108,6 +108,16 @@
                     fold: 'unfolded'
                 }
             }
-        };</script><script data-pjax src="/js/column.js"></script><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="입력 하세요..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
+        };</script><script data-pjax src="/js/column.js"></script><script type="text/javascript" id="MathJax-script" async>MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="입력 하세요..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
             loadInsight({"contentUrl":"/content.json"}, {"hint":"입력 하세요...","untitled":"(제목 없음)","posts":"포스트","pages":"페이지","categories":"카테고리","tags":"태그"});
         });</script></body></html>

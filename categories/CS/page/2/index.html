@@ -41,6 +41,7 @@
 </div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-04-18T15:00:00.000Z" title="2019. 4. 19. 오전 12:00:00">2019-04-19</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.856Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/CS/">CS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/04/19/2019-04-19-MBR/">MBR (MAster Boot Record)</a></p><div class="content"><h2 id="MBR-MAster-Boot-Record"><a href="#MBR-MAster-Boot-Record" class="headerlink" title="MBR (MAster Boot Record)"></a>MBR (MAster Boot Record)</h2><ul>
 <li>MBR은 저장매체의 첫 번째 섹터(LBA 0)에 위치하는 512 바이트 크기의 영역이다. 처음 446 바이트는 부트 코드(boot code) 영역,64 바이트는 파티션 테이블(partition table), 마지막 2 바이트는 시크니처(signature)를 나타낸다.<br>운영체제가 부팅될 때 POST(Power On Self-Test) 과정을 마친 후 저장매체의 첫 번째 섹터를 호출되는데 이때 해당 부트 코드가 수행된다. 부트 코드의 주 역할은 파티션 테이블에서 부팅 가능한 파티션을 찾아 해당 파티션의 부트 섹터(boot sector)를 호출해주는 역할을 한다. 만약, 부팅 가능한 파티션이 없을 경우에는 미리 정의된 에러 메시지를 출력한다.<br>파티션 테이블은 각각 16 바이트씩 4개의 엔트리를 가지고 있다. 따라서 이러한 구조만 가진다면 하나의 볼륨(MBR을 갖는 볼륨)에서 파티션은 4개 밖에 생성할 수 없을 것이다. 주 파티션이 아닌 데이터 저장을 위한 논리 파티션의 경우 4개 이산 생성하는 것이 가능하다.<br>16 바이트의 파티션 테이블 엔트리의 세부적인 데이터구조</li>
 </ul>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -50,48 +51,51 @@
 <th>크기 (Size)</th>
 </tr>
 </thead>
-<tbody><tr>
-<td>0 – 0</td>
+<tbody>
+<tr>
+<td> 0 – 0</td>
 <td>0x0000 – 0x0000</td>
-<td>Boot Indicator 00 &#x3D; do not use for booting 80 &#x3D; system partition</td>
+<td>Boot Indicator 00 = do not use for booting 80 = system partition</td>
 <td>1 byte</td>
 </tr>
 <tr>
-<td>1 – 3</td>
+<td> 1 – 3</td>
 <td>0x0001 – 0x0003</td>
 <td>Starting CHS address</td>
 <td>3 bytes</td>
 </tr>
 <tr>
-<td>4 – 4</td>
+<td> 4 – 4</td>
 <td>0x0004 – 0x0004</td>
 <td>Partition type</td>
 <td>1 byte</td>
 </tr>
 <tr>
-<td>5 – 7</td>
+<td> 5 – 7</td>
 <td>0x0005 – 0x0007</td>
 <td>Ending CHS address</td>
 <td>3 bytes</td>
 </tr>
 <tr>
-<td>8 – 11</td>
+<td> 8 – 11</td>
 <td>0x0008 – 0x000B</td>
 <td>Starting LBA address</td>
 <td>4 bytes</td>
 </tr>
 <tr>
-<td>12 – 15</td>
+<td> 12 – 15</td>
 <td>0x000C – 0x000F</td>
 <td>Total sectors</td>
 <td>4 bytes</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>부트 식별자(boot indicator)는 해당 파티션이 부탕 가능한 파티션(운영체제 설치 여부)인지를 나타낸다. 0x80 값을 가질 경우 부팅 가능한 파티션을 의미하고, 0x00 값을 가질 경우 부팅이 가능하지 않은 파티션을 나타낸다. 그리고 CHS 주소 값이 나오는데 현재는 거의 대부분 LBA 모드를 사용하므로 사용되지 않고 있다. 그리고 해당 파티션의 시작 위치를 가르키는 LBA 주소 값과 파티션 전체의 섹터 수가 나온다. CHS와 다르게 LBA 주소의 마지막을 표시하지 않는 이유는 시작 LBA 주소에 섹터의 크기를 더하면  마지막 주소를 알 수 있기 때문이다.</p>
 <p>출처: <a target="_blank" rel="noopener" href="http://forensic-proof.com/archives/435">http://forensic-proof.com/archives/435</a></p>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-04-18T15:00:00.000Z" title="2019. 4. 19. 오전 12:00:00">2019-04-19</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.852Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/CS/">CS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/04/19/2019-04-19-mbr-gpt/">MBR, GPT</a></p><div class="content"><h2 id="MBR-GPT-차이"><a href="#MBR-GPT-차이" class="headerlink" title="MBR &#x2F; GPT 차이"></a>MBR &#x2F; GPT 차이</h2><ul>
-<li>MBR &#x2F; GPT 는 파티션 스타일</li>
-<li>SSD&#x2F;HDD 등의 디스크는 MBR 또는 GPT 로 파티션을 나누어 줘야 부팅 및 데이터 디스크로 사용가능</li>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-04-18T15:00:00.000Z" title="2019. 4. 19. 오전 12:00:00">2019-04-19</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.852Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/CS/">CS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/04/19/2019-04-19-mbr-gpt/">MBR, GPT</a></p><div class="content"><h2 id="MBR-GPT-차이"><a href="#MBR-GPT-차이" class="headerlink" title="MBR / GPT 차이"></a>MBR / GPT 차이</h2><ul>
+<li>MBR / GPT 는 파티션 스타일</li>
+<li>SSD/HDD 등의 디스크는 MBR 또는 GPT 로 파티션을 나누어 줘야 부팅 및 데이터 디스크로 사용가능</li>
 </ul>
 <h2 id="MBR"><a href="#MBR" class="headerlink" title="MBR"></a>MBR</h2><ul>
 <li>Master Boot Record</li>
@@ -115,13 +119,13 @@
 <li>보조 기억장치(HDD, CD-ROM)</li>
 </ul>
 <ol>
-<li><p>레지스터<br>레지스터는 CPU Core 내부에 존재, Core에서 연산을 수행할 때 직접 참조할 수 있는 유일한  기억장치<br>레지스터는 Core 내부에 몇 개 있는 귀한 기억장치<br>보통 한 워드가 레지스터 하나의 크기<br>word: 프로세서가 처리할 수 있는 가장 자연스러운 데이터의 크기이며, 보통 4Byte&#x3D;32Bit<br>레지스터들은 각각 사용되는 용도가 정해져 있으며, 유사한 기능을 하는 레지스터들 끼리 모아서 레지스터 파일(Register File)을 구성  </p>
+<li><p>레지스터<br>레지스터는 CPU Core 내부에 존재, Core에서 연산을 수행할 때 직접 참조할 수 있는 유일한  기억장치<br>레지스터는 Core 내부에 몇 개 있는 귀한 기억장치<br>보통 한 워드가 레지스터 하나의 크기<br>word: 프로세서가 처리할 수 있는 가장 자연스러운 데이터의 크기이며, 보통 4Byte=32Bit<br>레지스터들은 각각 사용되는 용도가 정해져 있으며, 유사한 기능을 하는 레지스터들 끼리 모아서 레지스터 파일(Register File)을 구성  </p>
 </li>
 <li><p>캐시 메모리<br>캐시 메모리도 레지스터와 마찬가지로 CPU 내부에 존재<br>Core와 입출력 버스를 통해 정보를 주고받음<br>보통 명령어를 저장하는 Instruction Cache와 데이터를 저장하는 Data Cache로 구분<br>때로는 캐시 메모리도 L1 Cache, L2 Cache 등 여러 레벨으로 분할해서 세부 계층화 하기도 함<br>캐시 메모리는 주로 Refresh(메모리의 내용을 보존하기 위해서 주기적으로 데이터를 갱신하는 작업. 이 작업이 수행중일 때는 메모리에 읽거나 쓰는 동작을 할 수 없다.)가 필요 없는 SRAM(Static RAM)으로 구성  </p>
 </li>
 <li><p>메인 메모리<br>메인 메모리(Main Memory)는 CPU 외부에 존재<br>CPU와 North Bridge를 통한 데이터 버스를 통해 통신<br>메인 메모리는 데이터를 보존하기 위해 주기적으로 Refresh가 필요한 DRAM으로 구성</p>
 </li>
-<li><p>보조 기억장치<br>보조 기억장치는 하드 디스크나 CD, DVD, USB메모리 등을 포함하며, 메인 메모리에 비해 접근 속도가 현저하게 떨어짐</p>
+<li><p>보조 기억장치<br>보조 기억장치는 하드 디스크나 CD, DVD, USB메모리 등을 포함하며, 메인 메모리에 비해 접근 속도가 현저하게 떨어짐  </p>
 </li>
 </ol>
 <p>출처<br><a target="_blank" rel="noopener" href="https://tuwlab.com/ece/1977">https://tuwlab.com/ece/1977</a></p>
@@ -147,6 +151,16 @@
                     fold: 'unfolded'
                 }
             }
-        };</script><script data-pjax src="/js/column.js"></script><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="입력 하세요..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
+        };</script><script data-pjax src="/js/column.js"></script><script type="text/javascript" id="MathJax-script" async>MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="입력 하세요..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
             loadInsight({"contentUrl":"/content.json"}, {"hint":"입력 하세요...","untitled":"(제목 없음)","posts":"포스트","pages":"페이지","categories":"카테고리","tags":"태그"});
         });</script></body></html>

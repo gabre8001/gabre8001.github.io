@@ -33,58 +33,62 @@
 <p><strong>Spring Cloud Gateway는 내부적으로 Netty를 사용하여 만들어졌습니다.</strong> 즉, Netty의 고성능 비동기 네트워킹 능력을 기반으로, 게이트웨이에 필요한 수많은 기능(라우팅, 필터링, 보안 등)을 추상화하여 미리 구현해 놓은 <strong>프레임워크</strong> 입니다. 반면 Netty는 이러한 프레임워크를 만들 수 있는 <strong>네트워킹 라이브러리</strong> 입니다.</p>
 <p>두 가지 방식을 비교하면 다음과 같습니다.</p>
 <hr>
-<h3 id="비교-분석-Spring-Cloud-Gateway-vs-순수-Netty-직접-구현"><a href="#비교-분석-Spring-Cloud-Gateway-vs-순수-Netty-직접-구현" class="headerlink" title="비교 분석: Spring Cloud Gateway vs. 순수 Netty 직접 구현"></a>비교 분석: Spring Cloud Gateway vs. 순수 Netty 직접 구현</h3><table>
+<h3 id="비교-분석-Spring-Cloud-Gateway-vs-순수-Netty-직접-구현"><a href="#비교-분석-Spring-Cloud-Gateway-vs-순수-Netty-직접-구현" class="headerlink" title="비교 분석: Spring Cloud Gateway vs. 순수 Netty 직접 구현"></a>비교 분석: Spring Cloud Gateway vs. 순수 Netty 직접 구현</h3><div class="table-container">
+<table>
 <thead>
 <tr>
-<th align="left">항목</th>
-<th align="left">Spring Cloud Gateway (SCG)</th>
-<th align="left">순수 Netty로 직접 구현</th>
+<th style="text-align:left">항목</th>
+<th style="text-align:left">Spring Cloud Gateway (SCG)</th>
+<th style="text-align:left">순수 Netty로 직접 구현</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="left"><strong>추상화 수준</strong></td>
-<td align="left"><strong>높음 (High-Level)</strong></td>
-<td align="left"><strong>낮음 (Low-Level)</strong></td>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>추상화 수준</strong></td>
+<td style="text-align:left"><strong>높음 (High-Level)</strong></td>
+<td style="text-align:left"><strong>낮음 (Low-Level)</strong></td>
 </tr>
 <tr>
-<td align="left"><strong>개발 속도</strong></td>
-<td align="left"><strong>매우 빠름</strong> (몇 시간 내에 기본 게이트웨이 구축 가능)</td>
-<td align="left"><strong>매우 느림</strong> (수개월 이상 소요될 수 있음)</td>
+<td style="text-align:left"><strong>개발 속도</strong></td>
+<td style="text-align:left"><strong>매우 빠름</strong> (몇 시간 내에 기본 게이트웨이 구축 가능)</td>
+<td style="text-align:left"><strong>매우 느림</strong> (수개월 이상 소요될 수 있음)</td>
 </tr>
 <tr>
-<td align="left"><strong>성능</strong></td>
-<td align="left"><strong>매우 높음</strong> (Netty 기반으로 이미 최적화됨)</td>
-<td align="left"><strong>이론상 최고 성능 가능</strong> (하지만 전문가 수준의 최적화 필요)</td>
+<td style="text-align:left"><strong>성능</strong></td>
+<td style="text-align:left"><strong>매우 높음</strong> (Netty 기반으로 이미 최적화됨)</td>
+<td style="text-align:left"><strong>이론상 최고 성능 가능</strong> (하지만 전문가 수준의 최적화 필요)</td>
 </tr>
 <tr>
-<td align="left"><strong>기능</strong></td>
-<td align="left"><strong>All-in-One (모든 기능 내장)</strong></td>
-<td align="left"><strong>모든 것을 직접 구현해야 함</strong></td>
+<td style="text-align:left"><strong>기능</strong></td>
+<td style="text-align:left"><strong>All-in-One (모든 기능 내장)</strong></td>
+<td style="text-align:left"><strong>모든 것을 직접 구현해야 함</strong></td>
 </tr>
 <tr>
-<td align="left"><strong>유연성</strong></td>
-<td align="left">프레임워크의 규칙 안에서 유연함</td>
-<td align="left"><strong>완벽한 제어 및 최고의 유연성</strong></td>
+<td style="text-align:left"><strong>유연성</strong></td>
+<td style="text-align:left">프레임워크의 규칙 안에서 유연함</td>
+<td style="text-align:left"><strong>완벽한 제어 및 최고의 유연성</strong></td>
 </tr>
 <tr>
-<td align="left"><strong>복잡도</strong></td>
-<td align="left"><strong>낮음 ~ 중간</strong> (Spring 및 반응형 프로그래밍 이해 필요)</td>
-<td align="left"><strong>매우 높음</strong> (TCP&#x2F;IP, Netty 내부 동작 등 깊은 이해 필요)</td>
+<td style="text-align:left"><strong>복잡도</strong></td>
+<td style="text-align:left"><strong>낮음 ~ 중간</strong> (Spring 및 반응형 프로그래밍 이해 필요)</td>
+<td style="text-align:left"><strong>매우 높음</strong> (TCP/IP, Netty 내부 동작 등 깊은 이해 필요)</td>
 </tr>
 <tr>
-<td align="left"><strong>유지보수</strong></td>
-<td align="left"><strong>용이함</strong> (Spring 생태계와 일관성 유지)</td>
-<td align="left"><strong>매우 어려움</strong> (코드가 복잡하고, 담당자 의존성 높음)</td>
+<td style="text-align:left"><strong>유지보수</strong></td>
+<td style="text-align:left"><strong>용이함</strong> (Spring 생태계와 일관성 유지)</td>
+<td style="text-align:left"><strong>매우 어려움</strong> (코드가 복잡하고, 담당자 의존성 높음)</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <hr>
 <h3 id="1-Spring-Cloud-Gateway-사용-시-장점과-단점"><a href="#1-Spring-Cloud-Gateway-사용-시-장점과-단점" class="headerlink" title="1. Spring Cloud Gateway 사용 시 장점과 단점"></a>1. Spring Cloud Gateway 사용 시 장점과 단점</h3><h4 id="✅-장점"><a href="#✅-장점" class="headerlink" title="✅ 장점"></a>✅ 장점</h4><ol>
-<li><strong>압도적인 생산성</strong>: 게이트웨이의 핵심 기능인 동적 라우팅, Predicate(조건부 라우팅), 필터(전&#x2F;후처리) 등을 <code>application.yml</code> 설정과 간단한 Java 코드로 빠르게 구현할 수 있습니다.</li>
+<li><strong>압도적인 생산성</strong>: 게이트웨이의 핵심 기능인 동적 라우팅, Predicate(조건부 라우팅), 필터(전/후처리) 등을 <code>application.yml</code> 설정과 간단한 Java 코드로 빠르게 구현할 수 있습니다.</li>
 <li><strong>Spring 생태계와의 완벽한 통합</strong>:<ul>
 <li><strong>Service Discovery</strong>: Eureka, Consul 등과 연동하여 마이크로서비스의 주소를 동적으로 찾아 라우팅(<code>uri: lb://SERVICE-NAME</code>)합니다.</li>
 <li><strong>Configuration</strong>: Spring Cloud Config를 통해 게이트웨이 설정을 중앙에서 관리하고 동적으로 변경할 수 있습니다.</li>
 <li><strong>Circuit Breaker</strong>: Resilience4j와 쉽게 통합하여 다운스트림 서비스의 장애가 전파되는 것을 막습니다.</li>
-<li><strong>Security</strong>: Spring Security와 통합하여 인증&#x2F;인가(OAuth2, JWT 등)를 손쉽게 구현할 수 있습니다.</li>
+<li><strong>Security</strong>: Spring Security와 통합하여 인증/인가(OAuth2, JWT 등)를 손쉽게 구현할 수 있습니다.</li>
 <li><strong>Monitoring</strong>: Micrometer, Spring Boot Actuator를 통해 메트릭 수집 및 모니터링이 용이합니다.</li>
 </ul>
 </li>
@@ -106,7 +110,7 @@
 <li>설정 파일 기반의 동적 라우팅 엔진</li>
 <li>요청 경로, 헤더, 메소드 등을 분석하는 조건부 매칭(Predicate) 로직</li>
 <li>필터 체인 및 필터 실행 순서 관리</li>
-<li>HTTP 요청&#x2F;응답 객체 파싱 및 조작의 편의성</li>
+<li>HTTP 요청/응답 객체 파싱 및 조작의 편의성</li>
 <li>Service Discovery 클라이언트 연동</li>
 <li>Circuit Breaker, Rate Limiter 구현</li>
 <li>보안, 로깅, 메트릭 수집… 등</li>
@@ -120,7 +124,7 @@
 <li><p><strong>Spring Cloud Gateway를 선택해야 하는 경우 (대부분의 상황):</strong></p>
 <ul>
 <li>MSA(마이크로서비스 아키텍처)의 API 게이트웨이를 구축하는 경우</li>
-<li>HTTP&#x2F;HTTPS 기반의 API를 처리하는 경우</li>
+<li>HTTP/HTTPS 기반의 API를 처리하는 경우</li>
 <li>빠른 개발과 안정적인 운영, 쉬운 유지보수가 중요한 경우</li>
 <li>Spring 생태계를 이미 사용하고 있거나 활용할 계획인 경우</li>
 </ul>
@@ -141,6 +145,16 @@
                     fold: 'unfolded'
                 }
             }
-        };</script><script data-pjax src="/js/column.js"></script><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="입력 하세요..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
+        };</script><script data-pjax src="/js/column.js"></script><script type="text/javascript" id="MathJax-script" async>MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="입력 하세요..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
             loadInsight({"contentUrl":"/content.json"}, {"hint":"입력 하세요...","untitled":"(제목 없음)","posts":"포스트","pages":"페이지","categories":"카테고리","tags":"태그"});
         });</script></body></html>

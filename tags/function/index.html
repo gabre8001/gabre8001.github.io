@@ -30,21 +30,14 @@
       window.addEventListener('hashchange', switchTab, false);
   })();
   </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">우리람부탄</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="검색" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/tags/">태그</a></li><li class="is-active"><a href="#" aria-current="page">function</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2018-11-29T15:00:00.000Z" title="2018. 11. 30. 오전 12:00:00">2018-11-30</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.829Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/JavaScript/">JavaScript</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2018/11/30/2018-11-30-function-ramda/">함수와 함수형 인터페이스</a></p><div class="content"><ul>
-<li>람다 대수에서 함수의 표현<br>  함수가 반드시 이름을 가질 필요 없음<br>  항등의 표현을 등호 대신 화살표로 할 수 있음<br>  위의 내용을 통해 자바에서 람다 표현식 문법이 나옴</li>
+<li>람다 대수에서 함수의 표현<br>  함수가 반드시 이름을 가질 필요 없음<br>  항등의 표현을 등호 대신 화살표로 할 수 있음<br>  위의 내용을 통해 자바에서 람다 표현식 문법이 나옴  </li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String mergeString(str1,str2) &#123;</span><br><span class="line">    return str1+str2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>위의 내용을 아래 처럼 쓸 수 있음</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(str1, str2) -&gt; &#123; return (str1 + str2)&#125;;</span><br></pre></td></tr></table></figure>
-<p>더 줄이면 아래처럼 쓸 수 있음</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(str1, str2) -&gt; str1 + str2;</span><br></pre></td></tr></table></figure>
-
+<p>위의 내용을 아래 처럼 쓸 수 있음<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(str1, str2) -&gt; &#123; return (str1 + str2)&#125;;</span><br></pre></td></tr></table></figure><br>더 줄이면 아래처럼 쓸 수 있음<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(str1, str2) -&gt; str1 + str2;</span><br></pre></td></tr></table></figure></p>
 <p>자바에서 람다 표현식은 구현해야될 추상 메서드가 1개인 인터페이스를 구현한 것<br>BinaryOperator는 apply라는 추상메서드 하나를 가진 인터페이스<br>apply는 동일한 특정 타입의 인자 두개를 받아 같은 타입으로 리턴하는 추상메서드  </p>
 <p>BinaryOperator 인터페이스에서 apply 추상메서드를 정의 하면서 인스턴스를 만드는 방법  </p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BinaryOperator&lt;String&gt; b = (str1, str2) -&gt; str1 + str2;</span><br></pre></td></tr></table></figure>
-<p>정의 된 apply 메서드 사용 방법</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String aaa = b.apply(&quot;Hello, &quot;, &quot;World&quot;);</span><br></pre></td></tr></table></figure>
-
-
+<p>정의 된 apply 메서드 사용 방법<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String aaa = b.apply(&quot;Hello, &quot;, &quot;World&quot;);</span><br></pre></td></tr></table></figure></p>
 <ul>
 <li><p>순수 함수<br>  외부의 상태를 변경 하지 않으며, 외부의 상태를 참조 하지 않음<br>  동인한 인자에 대해 항상 같은 값을 리턴</p>
 </li>
@@ -52,7 +45,7 @@
 </li>
 <li><p>일급 객체<br>  변수나 데이터 구조안에 담을 수 있다.<br>  파라미터로 전달 할 수 있다.<br>  반환값(return value)으로 사용할 수 있다.<br>  할당에 사용된 이름과 관계없이 고유한 구별이 가능하다.<br>  동적으로 프로퍼티 할당이 가능하다.  </p>
 </li>
-<li><p>함수와 메서드의 차이<br>  자바에서 메서드는 객체에 종속 되기 때문에 순수 함수의 성격을 가지지 못할 수 있음</p>
+<li><p>함수와 메서드의 차이<br>  자바에서 메서드는 객체에 종속 되기 때문에 순수 함수의 성격을 가지지 못할 수 있음  </p>
 </li>
 </ul>
 <p>람다 표현식을 쓰면서 자바의 메서드는 마치 일급 함수 처럼 인터페이스를 이용해 인자로 넘기는 것이 가능해짐</p>
@@ -65,6 +58,16 @@
                     fold: 'unfolded'
                 }
             }
-        };</script><script data-pjax src="/js/column.js"></script><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="입력 하세요..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
+        };</script><script data-pjax src="/js/column.js"></script><script type="text/javascript" id="MathJax-script" async>MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="입력 하세요..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
             loadInsight({"contentUrl":"/content.json"}, {"hint":"입력 하세요...","untitled":"(제목 없음)","posts":"포스트","pages":"페이지","categories":"카테고리","tags":"태그"});
         });</script></body></html>

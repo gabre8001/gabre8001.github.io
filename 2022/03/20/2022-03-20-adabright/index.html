@@ -37,7 +37,6 @@
 <li>이미지 저장은 Mat 클래스로 하지만, 영상을 불러올 때는 VideoCapture 클래스를 사용한다.</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">VideoCapture <span class="title">cap</span><span class="params">(<span class="string">&quot;./base_camera_dark.avi&quot;</span>)</span></span>;</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>관심영역 생성을 위해 마스크를 만든다.</li>
 <li>영상의 크기 정보를 얻어 w, h 변수에 저장한다.</li>
@@ -46,7 +45,6 @@
 <li>fillpoly 를 호출하여 마스크에 관심영역 부분을 흰색으로 채운다.</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> w = <span class="built_in">cvRound</span>(cap.<span class="built_in">get</span>(CAP_PROP_FRAME_WIDTH));</span><br><span class="line"><span class="type">int</span> h = <span class="built_in">cvRound</span>(cap.<span class="built_in">get</span>(CAP_PROP_FRAME_HEIGHT));</span><br><span class="line"></span><br><span class="line">Mat mask = Mat::<span class="built_in">zeros</span>(h, w, CV_8UC1);</span><br><span class="line">vector&lt;Point&gt;  pts = &#123;</span><br><span class="line">  <span class="built_in">Point</span>(<span class="number">240</span>, <span class="number">280</span>),</span><br><span class="line">  <span class="built_in">Point</span>(<span class="number">400</span>, <span class="number">280</span>),</span><br><span class="line">  <span class="built_in">Point</span>(<span class="number">620</span>, <span class="number">440</span>),</span><br><span class="line">  <span class="built_in">Point</span>(<span class="number">20</span>, <span class="number">440</span>)</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">fillPoly</span>(mask, &#123; pts &#125;, <span class="built_in">Scalar</span>(<span class="number">255</span>));</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>관심영역의 평균밝기를 구하고 보정하는 코드이다.</li>
 <li>동영상에서 한 프레임을 가져와 Mat 클래스에 저장한다.</li>
@@ -55,22 +53,14 @@
 <li>구한 평균을 이용해 밝기를 보정한다.</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cap &gt;&gt; frame;</span><br><span class="line"><span class="built_in">cvtColor</span>(frame, gray, COLOR_BGR2GRAY);</span><br><span class="line">Scalar m = <span class="built_in">mean</span>(gray, mask);</span><br><span class="line">dst = gray + (<span class="built_in">Scalar</span>(<span class="number">128</span>) - m);</span><br></pre></td></tr></table></figure>
-
-
-
 <ul>
 <li>아래는 동영상에 관심영역부분을 그려주는 내용이다.</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">line</span>(frame, <span class="built_in">Point</span>(<span class="number">240</span>, <span class="number">280</span>), <span class="built_in">Point</span>(<span class="number">400</span>, <span class="number">280</span>), <span class="built_in">Scalar</span>(<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>), <span class="number">2</span>);</span><br><span class="line"><span class="built_in">line</span>(frame, <span class="built_in">Point</span>(<span class="number">400</span>, <span class="number">280</span>), <span class="built_in">Point</span>(<span class="number">620</span>, <span class="number">440</span>), <span class="built_in">Scalar</span>(<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>), <span class="number">2</span>);</span><br><span class="line"><span class="built_in">line</span>(frame, <span class="built_in">Point</span>(<span class="number">620</span>, <span class="number">440</span>), <span class="built_in">Point</span>(<span class="number">20</span>, <span class="number">440</span>), <span class="built_in">Scalar</span>(<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>), <span class="number">2</span>);</span><br><span class="line"><span class="built_in">line</span>(frame, <span class="built_in">Point</span>(<span class="number">20</span>, <span class="number">440</span>), <span class="built_in">Point</span>(<span class="number">240</span>, <span class="number">280</span>), <span class="built_in">Scalar</span>(<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>), <span class="number">2</span>);</span><br></pre></td></tr></table></figure>
-
-
 <ul>
 <li>아래는 프래임 번호를 구해 화면에 그려주는 내용이다.</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> pos = <span class="built_in">cvRound</span>(cap.<span class="built_in">get</span>(CAP_PROP_POS_FRAMES));</span><br><span class="line">String text = format(<span class="string">&quot;frame number: %d&quot;</span>, pos);</span><br><span class="line"><span class="built_in">putText</span>(frame, text, <span class="built_in">Point</span>(<span class="number">20</span>, <span class="number">50</span>), FONT_HERSHEY_SIMPLEX,</span><br><span class="line">  <span class="number">0.7</span>, <span class="built_in">Scalar</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>), <span class="number">1</span>, LINE_AA);</span><br></pre></td></tr></table></figure>
-
-
-
 <ul>
 <li>아래는 전체 코드.</li>
 </ul>
@@ -82,6 +72,16 @@
                     fold: 'unfolded'
                 }
             }
-        };</script><script data-pjax src="/js/column.js"></script><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="입력 하세요..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
+        };</script><script data-pjax src="/js/column.js"></script><script type="text/javascript" id="MathJax-script" async>MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="입력 하세요..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
             loadInsight({"contentUrl":"/content.json"}, {"hint":"입력 하세요...","untitled":"(제목 없음)","posts":"포스트","pages":"페이지","categories":"카테고리","tags":"태그"});
         });</script></body></html>

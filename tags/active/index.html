@@ -30,10 +30,10 @@
       window.addEventListener('hashchange', switchTab, false);
   })();
   </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">우리람부탄</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="검색" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/tags/">태그</a></li><li class="is-active"><a href="#" aria-current="page">active</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-09-26T15:00:00.000Z" title="2019. 9. 27. 오전 12:00:00">2019-09-27</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.880Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/Network/">Network</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/09/27/2019-09-27-ldapv3/">LDAP</a></p><div class="content"><p>LDAP에 대해서 알아본다.</p>
-<h2 id="LDAP"><a href="#LDAP" class="headerlink" title="LDAP"></a>LDAP</h2><p>  LDAP(Lightweight Directory Access Protocol) 경량 디렉터리 액세스 프로토콜<br>  DAP(Directory Access Protocol)을 TCP&#x2F;IP 위에서 디렉터리 서비스를 조회하고 수정하는 응용 프로토콜로 시작했다. 비교적 적은 대역폭을 사용한다.</p>
+<h2 id="LDAP"><a href="#LDAP" class="headerlink" title="LDAP"></a>LDAP</h2><p>  LDAP(Lightweight Directory Access Protocol) 경량 디렉터리 액세스 프로토콜<br>  DAP(Directory Access Protocol)을 TCP/IP 위에서 디렉터리 서비스를 조회하고 수정하는 응용 프로토콜로 시작했다. 비교적 적은 대역폭을 사용한다.</p>
 <h3 id="디렉터리-서비스-Directory-Service"><a href="#디렉터리-서비스-Directory-Service" class="headerlink" title="디렉터리 서비스(Directory Service)"></a>디렉터리 서비스(Directory Service)</h3><p>  어떤 이름을 가지고 대상을 찾아 조회하거나 편집 할 수 있는 서비스. 사용자, 시스템, 네트워크, 서비스, 어플리케이션 등의 정보를 조회하거나 관리한다. 회사의 구성원이나 팀별 이메일 주소등, 이용자의 아이디와 패스워드와 같은 정보를 관리할 수 있다. 주로 트리구조로 정보가 정리되어있다. 이때 임직원 정보를 저장하고 있는 서버가 LDAP 서버이고, 핸드폰에 있는 어플에서 사용자 계정으로 로그인을 하고자 한다면 그것이 LDAP client 이다.</p>
 <h3 id="프로토콜-개요"><a href="#프로토콜-개요" class="headerlink" title="프로토콜 개요"></a>프로토콜 개요</h3><ul>
-<li>클라이언트는 TCP&#x2F;UDP 389 혹은 636(LDAPS) 포트를 이용해 DSA(Directory System Agent) 라는 LDAP서버에 연결하여 LDAP 세션을 시작한다.</li>
+<li>클라이언트는 TCP/UDP 389 혹은 636(LDAPS) 포트를 이용해 DSA(Directory System Agent) 라는 LDAP서버에 연결하여 LDAP 세션을 시작한다.</li>
 <li>클라이언트는 서버에 대한 동작 요청을 보내고, 서버는 응답을 보낸다.</li>
 <li>대부분의 경우 클라이언트는 다음 요청을 보내기 전에 응답을 기다릴 필요가 없다.</li>
 <li>서버는 어떤 순서로도 응답을 보낼 수 있다.</li>
@@ -67,14 +67,14 @@
 </ul>
 <h3 id="Functional-모델"><a href="#Functional-모델" class="headerlink" title="Functional 모델"></a>Functional 모델</h3><ul>
 <li>디렉토리 트리의 데이터에 접근하는 방법을 정의하며 총 3가지 그룹으로 구성된다.</li>
-<li>질문(Interrogation) 작업: 디렉토리 Entry를 검색(Search)&#x2F;비교(Compare)하는 기능</li>
+<li>질문(Interrogation) 작업: 디렉토리 Entry를 검색(Search)/비교(Compare)하는 기능</li>
 <li>갱신(Update) 작업: 디렉토리 엔트리의 추가(Add), 삭제(Delete), 변경(Modify) 등의 기능</li>
 <li>인증(Authentication) 및 제어(Control) 작업: 클라이언트 확인 및 제어 기능(Bind, Unbind, Abandon)</li>
 </ul>
 <h3 id="Security-모델"><a href="#Security-모델" class="headerlink" title="Security 모델"></a>Security 모델</h3><p>  인증된 접근만 디렉토리 내 정보를 제공합니다. LDAP은 연결지향형 프로토콜로 연결이 이루어지기 위해 서버와 클라이언트 간 인증과정이 필요하다. LDAPv3에서는 SASL 방식이 제공되며 인증과정이 이루어진 후 서버는 클라이언트에게 보다 많은 권한을 부여할 수 있다.</p>
 <h3 id="ASN-1"><a href="#ASN-1" class="headerlink" title="ASN.1"></a>ASN.1</h3><ul>
 <li>Abstract Syntax Notation One. ITU-T에서 정의한 네트워크상의 데이터 교환을 정의한 프로토콜</li>
-<li>OSI7 계층 중 프레젠테이션 계층에 속하며 데이터 구조를 기술하는데 사용하는 표기법으로 특정 장치, 데이터 표현방식, 프로그래밍 언어, 하드웨어 플랫폼에 종속되지 않고, 표현뿐만 아니라 인코딩&#x2F;디코딩 규칙도 규정한다.</li>
+<li>OSI7 계층 중 프레젠테이션 계층에 속하며 데이터 구조를 기술하는데 사용하는 표기법으로 특정 장치, 데이터 표현방식, 프로그래밍 언어, 하드웨어 플랫폼에 종속되지 않고, 표현뿐만 아니라 인코딩/디코딩 규칙도 규정한다.</li>
 <li>ASN.1은 단순히 표준을 정의하는 언어이며, ASN.1으로 작성된 데이터가 표준이다.</li>
 <li>ASN.1은 Octet Stream 형태로 Conversion을 하지 않으면 네트워크상에서 통신할 수 없다.</li>
 <li>Transfer Syntax로 변환시켜야 하며 Octet Stream 형태의 규격은 6가지가 있다.</li>
@@ -93,6 +93,16 @@
                     fold: 'unfolded'
                 }
             }
-        };</script><script data-pjax src="/js/column.js"></script><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="입력 하세요..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
+        };</script><script data-pjax src="/js/column.js"></script><script type="text/javascript" id="MathJax-script" async>MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="입력 하세요..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
             loadInsight({"contentUrl":"/content.json"}, {"hint":"입력 하세요...","untitled":"(제목 없음)","posts":"포스트","pages":"페이지","categories":"카테고리","tags":"태그"});
         });</script></body></html>

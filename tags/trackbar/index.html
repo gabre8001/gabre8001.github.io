@@ -31,18 +31,14 @@
   })();
   </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">우리람부탄</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="검색" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/tags/">태그</a></li><li class="is-active"><a href="#" aria-current="page">trackbar</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-03-18T15:00:00.000Z" title="2022. 3. 19. 오전 12:00:00">2022-03-19</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:37.039Z" title="2026. 5. 2. 오후 10:27:37">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/ROS/">ROS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/03/19/2022-03-19-brtctl/">OpenCV 트랙바를 이용한 밝기 보정 프로그램</a></p><div class="content"><p>opencv에서 재공하는 API를 이용해 밝기 보정 프로그램을 만들어 본다.</p>
 <ul>
-<li><p>코드의 상세 내용을 설명하고 가장 마지막에 전체 코드를 공개한다.</p>
-</li>
-<li><p>이미지 파일을 읽어오는 내용</p>
-</li>
-<li><p>이미지를 그레이 스케일로 읽어들이고 그 내용을 img 라는 Mat 클래스에 저장</p>
-</li>
-<li><p>img 파일이 비어있을 경우 프로그램 종료</p>
-</li>
+<li>코드의 상세 내용을 설명하고 가장 마지막에 전체 코드를 공개한다.</li>
+</ul>
+<ul>
+<li>이미지 파일을 읽어오는 내용</li>
+<li>이미지를 그레이 스케일로 읽어들이고 그 내용을 img 라는 Mat 클래스에 저장</li>
+<li>img 파일이 비어있을 경우 프로그램 종료</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Mat img = <span class="built_in">imread</span>(<span class="string">&quot;lenna.bmp&quot;</span>, IMREAD_GRAYSCALE);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (img.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">  cerr &lt;&lt; <span class="string">&quot;Image load failed!&quot;</span> &lt;&lt; endl;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
 <ul>
 <li>image라는 이름으로 창을 하나 만든다.</li>
 <li>createTrackbar 를 호출하여 트랙바가 있는 창을 만든다.</li>
@@ -51,7 +47,6 @@
 <li>setTrackbarPos 호출로 초기 트랙바의 커서 위치를 설정한다.</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">namedWindow</span>(<span class="string">&quot;image&quot;</span>);</span><br><span class="line"><span class="built_in">createTrackbar</span>(<span class="string">&quot;level&quot;</span>, <span class="string">&quot;image&quot;</span>, <span class="number">0</span>, <span class="number">200</span>, on_level_change, (<span class="type">void</span>*)&amp;img);</span><br><span class="line"><span class="built_in">setTrackbarPos</span>(<span class="string">&quot;level&quot;</span>, <span class="string">&quot;image&quot;</span>, <span class="number">100</span>);</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>on_level_change 함수 설명</li>
 <li>userdata는 밝기를 변경할 이미지를 의미한다. 트랙바를 생성할 당시 인자로 넘겨준 이미지와 같다.</li>
@@ -59,8 +54,6 @@
 <li>이후 코드는 100을 기준으로 작거나 커지면 이미지는 어두워지거나 밝아지게 하기 위해 이미지에 b 값을 더해준다.</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">on_level_change</span><span class="params">(<span class="type">int</span> pos, <span class="type">void</span>* userdata)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Mat img = *(Mat*)userdata;</span><br><span class="line"></span><br><span class="line">	<span class="type">int</span> b = pos - <span class="number">100</span>;</span><br><span class="line">	Mat dst = img + b;</span><br><span class="line">	<span class="built_in">imshow</span>(<span class="string">&quot;image&quot;</span>, dst);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
 <ul>
 <li>아래는 전체 코드이다.</li>
 </ul>
@@ -72,6 +65,16 @@
                     fold: 'unfolded'
                 }
             }
-        };</script><script data-pjax src="/js/column.js"></script><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="입력 하세요..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
+        };</script><script data-pjax src="/js/column.js"></script><script type="text/javascript" id="MathJax-script" async>MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="입력 하세요..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
             loadInsight({"contentUrl":"/content.json"}, {"hint":"입력 하세요...","untitled":"(제목 없음)","posts":"포스트","pages":"페이지","categories":"카테고리","tags":"태그"});
         });</script></body></html>

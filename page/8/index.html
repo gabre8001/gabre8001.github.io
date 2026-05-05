@@ -29,9 +29,9 @@
       switchTab();
       window.addEventListener('hashchange', switchTab, false);
   })();
-  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">우리람부탄</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="검색" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-04-18T15:00:00.000Z" title="2019. 4. 19. 오전 12:00:00">2019-04-19</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.852Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/CS/">CS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/04/19/2019-04-19-mbr-gpt/">MBR, GPT</a></p><div class="content"><h2 id="MBR-GPT-차이"><a href="#MBR-GPT-차이" class="headerlink" title="MBR &#x2F; GPT 차이"></a>MBR &#x2F; GPT 차이</h2><ul>
-<li>MBR &#x2F; GPT 는 파티션 스타일</li>
-<li>SSD&#x2F;HDD 등의 디스크는 MBR 또는 GPT 로 파티션을 나누어 줘야 부팅 및 데이터 디스크로 사용가능</li>
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">우리람부탄</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="검색" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-04-18T15:00:00.000Z" title="2019. 4. 19. 오전 12:00:00">2019-04-19</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.852Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/CS/">CS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/04/19/2019-04-19-mbr-gpt/">MBR, GPT</a></p><div class="content"><h2 id="MBR-GPT-차이"><a href="#MBR-GPT-차이" class="headerlink" title="MBR / GPT 차이"></a>MBR / GPT 차이</h2><ul>
+<li>MBR / GPT 는 파티션 스타일</li>
+<li>SSD/HDD 등의 디스크는 MBR 또는 GPT 로 파티션을 나누어 줘야 부팅 및 데이터 디스크로 사용가능</li>
 </ul>
 <h2 id="MBR"><a href="#MBR" class="headerlink" title="MBR"></a>MBR</h2><ul>
 <li>Master Boot Record</li>
@@ -64,23 +64,23 @@
 <li>부트로더(GRUB)가 메모리에 적재되면 BIOS는 종료되고, 시스템 제어권은 부트로더가 가짐</li>
 </ul>
 <h2 id="부트로더-GRUB-의-실행"><a href="#부트로더-GRUB-의-실행" class="headerlink" title="부트로더(GRUB)의 실행"></a>부트로더(GRUB)의 실행</h2><ul>
-<li>GRUB은 실행과 함께 &#x2F;boot&#x2F;grub&#x2F;grub.conf 파일을 읽어서 어떤 부팅메뉴(커널)로 부팅을 할 것인가를 결정(자동 또는 사용자 선택)</li>
+<li>GRUB은 실행과 함께 /boot/grub/grub.conf 파일을 읽어서 어떤 부팅메뉴(커널)로 부팅을 할 것인가를 결정(자동 또는 사용자 선택)</li>
 <li>GRUB은 커널(kernel) 이미지를 불러들임</li>
 <li>시스템 제어권을 커널에게 넘겨줌</li>
 </ul>
 <h2 id="커널의-로딩"><a href="#커널의-로딩" class="headerlink" title="커널의 로딩"></a>커널의 로딩</h2><ul>
 <li>커널은 swapper 프로세스(PID 0번)를 호출</li>
 <li>swapper는 커널이 사용할 각 장치드라이브들을 초기화하고 init 프로세스 (PID 1번)를 실행</li>
-<li>init 프로세스가 실행되면서 &#x2F;etc&#x2F;inittab 파일을 읽어들여서 그 내용들을 차례대로 실행</li>
+<li>init 프로세스가 실행되면서 /etc/inittab 파일을 읽어들여서 그 내용들을 차례대로 실행</li>
 </ul>
 <h2 id="init-프로세스의-실행"><a href="#init-프로세스의-실행" class="headerlink" title="init 프로세스의 실행"></a>init 프로세스의 실행</h2><ul>
-<li>이후 과정은 init 프로세스의 실행 내용(&#x2F;etc&#x2F;inittab 파일의 실행 내용들)</li>
+<li>이후 과정은 init 프로세스의 실행 내용(/etc/inittab 파일의 실행 내용들)</li>
 <li>즉, 로그인 프롬프트가 나오기 까지 init 프로세스에 의해서 실행되는 내용</li>
 <li>id:3:initdefault: ~~ 시스템 부팅 레벨을 결정하는 행</li>
-<li>si::sysinit:&#x2F;etc&#x2F;rc.d&#x2F;rc.sysinit  ~~ &#x2F;etc&#x2F;rc.d&#x2F;rc.sysinit 파일 실행, 시스템 초기화하는 스크립트들이 있음</li>
-<li>l3:3:wait:&#x2F;etc&#x2F;rc.d&#x2F;rc 3 ~~ 부팅레벨에 따라 rc3.d 와 같은 파일들이 실행</li>
-<li>ca::ctrlaltdel:&#x2F;sbin&#x2F;shutdown -t3 -r now ~~ CTRL + ALT + DEL 키를 동시에 눌렀을 때 실행될 내용을 설정한 행(일종의 magic key)</li>
-<li>1:2345:respawn:&#x2F;sbin&#x2F;mingetty tty1 ~~ tty 1부터 6까지 행이 있음, 부팅의 마지막 단계로 6개의 가상 콘솔이 실행 ALT+F1~F6 누르면 해당 번호의 가상콘솔 보여짐</li>
+<li>si::sysinit:/etc/rc.d/rc.sysinit  ~~ /etc/rc.d/rc.sysinit 파일 실행, 시스템 초기화하는 스크립트들이 있음</li>
+<li>l3:3:wait:/etc/rc.d/rc 3 ~~ 부팅레벨에 따라 rc3.d 와 같은 파일들이 실행</li>
+<li>ca::ctrlaltdel:/sbin/shutdown -t3 -r now ~~ CTRL + ALT + DEL 키를 동시에 눌렀을 때 실행될 내용을 설정한 행(일종의 magic key)</li>
+<li>1:2345:respawn:/sbin/mingetty tty1 ~~ tty 1부터 6까지 행이 있음, 부팅의 마지막 단계로 6개의 가상 콘솔이 실행 ALT+F1~F6 누르면 해당 번호의 가상콘솔 보여짐</li>
 </ul>
 <p>출처: <a target="_blank" rel="noopener" href="https://www.linux.co.kr/lecture/lec_linux_01/lec-data/08data.pdf">https://www.linux.co.kr/lecture/lec_linux_01/lec-data/08data.pdf</a></p>
 </div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-01-17T15:00:00.000Z" title="2019. 1. 18. 오전 12:00:00">2019-01-18</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.835Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/C-C/">C/C++</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/01/18/2019-01-18-_tmain-_tWinMain/">_tmain, _tWinMain</a></p><div class="content"><p>main -&gt; 윈도우 시스템에서 콘솔 응용프로그램 또는 DOS 응용프로그램의 엔트리 포인트<br>WinMain -&gt; 윈도우즈 시스템에서 GUI 응용프로그램의 엔트리 포인트<br>wmain -&gt; 유니코드 버전의 main<br>wWinMain -&gt; 유니코드 버전의 WinMain<br>_tmain -&gt; 매크로 환경에 따라 main 과 wmain 으로 전처리<br>_tWinMain -&gt; 매크로 환경에 따라 WinMain 과 wWinMain 으로 전처리  </p>
@@ -90,7 +90,6 @@
 </blockquote>
 <p>짧게 해석 하자면 어플리케이션 윈도우 생성과 메시지 처리 루프 가동</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> WINAPI \_tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInst,</span><br><span class="line">                      PTSTR pszCmdLine, <span class="type">int</span> nCmdShow) </span><br><span class="line">&#123;</span><br><span class="line">  g_hInstance = hInstance;</span><br><span class="line">  </span><br><span class="line">  ...                </span><br><span class="line">   MSG msg;</span><br><span class="line">    BOOL bRet;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        bRet = GetMessage(&amp;msg, <span class="literal">NULL</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (bRet &gt; <span class="number">0</span>)  <span class="comment">// (bRet &gt; 0 이면 메시지가 처리되어야 한다.)</span></span><br><span class="line">        &#123;</span><br><span class="line">            TranslateMessage(&amp;msg);</span><br><span class="line">            DispatchMessage(&amp;msg);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (bRet &lt; <span class="number">0</span>)  <span class="comment">// (bRet == -1 은 에러를 뜻한다.)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 에러에 대한 처리나 로그 남김이나 프로그램 종료 등의 구문.</span></span><br><span class="line">            <span class="comment">// ...</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>  <span class="comment">// (bRet == 0 은 프로그램 종료를 의미한다.)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> msg.wParam;</span><br></pre></td></tr></table></figure>
-
 <p>여기서 hInstance 매개변수를 ‘해당 애플리케이션의 현재 인스턴스에 대한 핸들(A handle to the current instance of the application)’ 이라고 정의하고 있다. 인스턴스(Instance)라는 단어 그대로의 의미는 ‘사례’, ‘경우’ 등의 뜻을 갖고 있으며, 어떤 구체적인 사실을 의미한다. 프로그래밍의 관점에서 볼 때 인스턴스는 어떤 하나의 ‘실체’를 뜻한다고 볼 수 있으며, 이 경우 무엇에 대한 실체인가가 중요하다. 그리고 그 무엇을 규정하는 것이 프로그래밍 언어에서 제공하는 다양한 데이터 타입이 될 것이다. 이 타입에는 C나 C++ 등에서 기본적으로 제공하는 int, double 등의 프리미티브 타입뿐만 아니라 여러분이 정의하는 구조체나 클래스 등도 포함된다. 하지만 이러한 타입은 칸트의 표현을 비리자면 내용없는 공허한 ‘형식’만 제공할 뿐 그자체로는 아무것도 아니다. 이 공허한 형식이 맹목적이지 않도록 내용을 갖추려면 메모리 상에서 자신의 공간을 확보해야함 하는데, 특정 타입으로 선언된 변수가 프로세스의 가상 주고 공간에 자신의 영역을 확보한 상태가 인스턴스로서의 ‘실체’가 되는 것이다.<br>WinMain 의 hInstance 매개변수는 바로 ImageBase 필드와 관련이 있다. hInstance의 값은 PE가 로드된 메모리의 시작 번지를 가지며, 이 값은 디스크 상의 PE가 아니라 메모리에 로드된 PE의 ImageBase 필드 값이 된다.  </p>
 <p>전형적으로 이벤트 루프는 가상 키 입력을 문자열로 변환하기 위한 TranslateMessage()를 각 메시지에 대해 호출한다. TranslateMessage() 호출은 필수는 아니지만 호출되지 않는 경우 문제가 발생할 소지가 있다. 메시지 루프는 DispatchMessage()는 반드시 호출해야 한다.</p>
 <p>메시지 루프는 핸들링하고 있는 메시지 자체에 대해서 직접적으로 처리하지는 않는다. 메시지 루프는 DispatchMessage()를 통해서 메시지들을 해당 메시지가 전달되어야 하는 윈도우의 “윈도우 프로시저”에 전달함으로써 메시지를 전파(Dispatch; 디스패치)시킨다. (“윈도우 프로시저”는 윈도우 클래스가 등록될 때 함께 등록되는 콜백 프로시저를 뜻한다. 여러 개의 창이 하나의 윈도우 프로시저를 공유하는 것도 가능하다.)</p>
@@ -115,21 +114,14 @@
 </ul>
 <p>출처 : <a target="_blank" rel="noopener" href="http://asfirstalways.tistory.com/335">http://asfirstalways.tistory.com/335</a><br><a target="_blank" rel="noopener" href="https://blog.seotory.com/post/2016/03/java-singleton-pattern">https://blog.seotory.com/post/2016/03/java-singleton-pattern</a></p>
 </div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2018-11-29T15:00:00.000Z" title="2018. 11. 30. 오전 12:00:00">2018-11-30</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.829Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/JavaScript/">JavaScript</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2018/11/30/2018-11-30-function-ramda/">함수와 함수형 인터페이스</a></p><div class="content"><ul>
-<li>람다 대수에서 함수의 표현<br>  함수가 반드시 이름을 가질 필요 없음<br>  항등의 표현을 등호 대신 화살표로 할 수 있음<br>  위의 내용을 통해 자바에서 람다 표현식 문법이 나옴</li>
+<li>람다 대수에서 함수의 표현<br>  함수가 반드시 이름을 가질 필요 없음<br>  항등의 표현을 등호 대신 화살표로 할 수 있음<br>  위의 내용을 통해 자바에서 람다 표현식 문법이 나옴  </li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String mergeString(str1,str2) &#123;</span><br><span class="line">    return str1+str2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>위의 내용을 아래 처럼 쓸 수 있음</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(str1, str2) -&gt; &#123; return (str1 + str2)&#125;;</span><br></pre></td></tr></table></figure>
-<p>더 줄이면 아래처럼 쓸 수 있음</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(str1, str2) -&gt; str1 + str2;</span><br></pre></td></tr></table></figure>
-
+<p>위의 내용을 아래 처럼 쓸 수 있음<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(str1, str2) -&gt; &#123; return (str1 + str2)&#125;;</span><br></pre></td></tr></table></figure><br>더 줄이면 아래처럼 쓸 수 있음<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(str1, str2) -&gt; str1 + str2;</span><br></pre></td></tr></table></figure></p>
 <p>자바에서 람다 표현식은 구현해야될 추상 메서드가 1개인 인터페이스를 구현한 것<br>BinaryOperator는 apply라는 추상메서드 하나를 가진 인터페이스<br>apply는 동일한 특정 타입의 인자 두개를 받아 같은 타입으로 리턴하는 추상메서드  </p>
 <p>BinaryOperator 인터페이스에서 apply 추상메서드를 정의 하면서 인스턴스를 만드는 방법  </p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BinaryOperator&lt;String&gt; b = (str1, str2) -&gt; str1 + str2;</span><br></pre></td></tr></table></figure>
-<p>정의 된 apply 메서드 사용 방법</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String aaa = b.apply(&quot;Hello, &quot;, &quot;World&quot;);</span><br></pre></td></tr></table></figure>
-
-
+<p>정의 된 apply 메서드 사용 방법<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String aaa = b.apply(&quot;Hello, &quot;, &quot;World&quot;);</span><br></pre></td></tr></table></figure></p>
 <ul>
 <li><p>순수 함수<br>  외부의 상태를 변경 하지 않으며, 외부의 상태를 참조 하지 않음<br>  동인한 인자에 대해 항상 같은 값을 리턴</p>
 </li>
@@ -137,7 +129,7 @@
 </li>
 <li><p>일급 객체<br>  변수나 데이터 구조안에 담을 수 있다.<br>  파라미터로 전달 할 수 있다.<br>  반환값(return value)으로 사용할 수 있다.<br>  할당에 사용된 이름과 관계없이 고유한 구별이 가능하다.<br>  동적으로 프로퍼티 할당이 가능하다.  </p>
 </li>
-<li><p>함수와 메서드의 차이<br>  자바에서 메서드는 객체에 종속 되기 때문에 순수 함수의 성격을 가지지 못할 수 있음</p>
+<li><p>함수와 메서드의 차이<br>  자바에서 메서드는 객체에 종속 되기 때문에 순수 함수의 성격을 가지지 못할 수 있음  </p>
 </li>
 </ul>
 <p>람다 표현식을 쓰면서 자바의 메서드는 마치 일급 함수 처럼 인터페이스를 이용해 인자로 넘기는 것이 가능해짐</p>
@@ -150,32 +142,32 @@
 </div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2018-11-22T15:00:00.000Z" title="2018. 11. 23. 오전 12:00:00">2018-11-23</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.824Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/C-C/">C/C++</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2018/11/23/2018-11-23-calling-convention/">calling convention</a></p><div class="content"><ul>
 <li><p>calling convention(호출 규약)<br>스택 프래임을 사용하는 함수들 간의 대화 방식<br>두개만 알아보자</p>
 </li>
-<li><p>stdcall<br> windows 에서 사용하는 호출 규약<br> windows API들이 사용<br> 함수가 return 하면서 인자를 정리하므로 별도의 명령과 절차가 필요 없음<br> callee가 스택을 정리<br> 가변인자 사용 불가</p>
+<li><p>stdcall<br>windows 에서 사용하는 호출 규약<br>windows API들이 사용<br>함수가 return 하면서 인자를 정리하므로 별도의 명령과 절차가 필요 없음<br>callee가 스택을 정리<br>가변인자 사용 불가</p>
 </li>
-<li><p>cdecl<br> c에서 에서 만든 호출 규약<br> caller가 스택을 정리<br> 가변인자 사용 가능</p>
+<li><p>cdecl<br>c에서 에서 만든 호출 규약<br>caller가 스택을 정리<br>가변인자 사용 가능</p>
 </li>
 </ul>
 <p>출처: 여기 저기</p>
 </div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2018-11-17T15:00:00.000Z" title="2018. 11. 18. 오전 12:00:00">2018-11-18</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.822Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/Network/">Network</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2018/11/18/2018-11-18-domain-socket/">Domain Socket</a></p><div class="content"><h1 id="Unix-Domain-Socket"><a href="#Unix-Domain-Socket" class="headerlink" title="Unix Domain Socket"></a>Unix Domain Socket</h1><p>Unix Domain Socket(이하 UDS) 는 socket API를 수정없이 이용며,<br>port 기반의 Inernet Domain Socket에 비해서 로컬 시스템의 파일시스템을 이용해서 내부프로세스간의 통신을 위해 사용한다는 점이 다르다고 할수 있다. </p>
-<p>파일을 통해서 통신을 하며, 커널내부에서 메시지를 관리한다는 점에서 FIFO와 매우 유사한면을 보여주지만, FIFO와는 달리 양방향 통신이 가능하다는 특징을 가지고 있다. 그러므로 다중의 클라이언트를 받아들이는 서버&#x2F;클라이언트 모델을 만들기가 매우 쉽다.<br>또한 Inet 소켓을 통한 외부통신에 비해서 2배 이상의 효율을 보여준다라는 장점을 가지고 있다. </p>
-<p>많은 경우 약간 복잡한 내부프로세스간 통신을 해야된다고 했을때 UDS을 많이 사용한다.<br>INET 계층에서의 통신이 TCP&#x2F;IP 4계층을 모두 거치는것과는 다르게, UDS 은 어플리케이션 계층에서 TCP 계층까지만 메시지가 전달되고,<br>다시 곧바로 어플리케이션 계층으로 메시지가 올라가게 된다.</p>
+<p>파일을 통해서 통신을 하며, 커널내부에서 메시지를 관리한다는 점에서 FIFO와 매우 유사한면을 보여주지만, FIFO와는 달리 양방향 통신이 가능하다는 특징을 가지고 있다. 그러므로 다중의 클라이언트를 받아들이는 서버/클라이언트 모델을 만들기가 매우 쉽다.<br>또한 Inet 소켓을 통한 외부통신에 비해서 2배 이상의 효율을 보여준다라는 장점을 가지고 있다. </p>
+<p>많은 경우 약간 복잡한 내부프로세스간 통신을 해야된다고 했을때 UDS을 많이 사용한다.<br>INET 계층에서의 통신이 TCP/IP 4계층을 모두 거치는것과는 다르게, UDS 은 어플리케이션 계층에서 TCP 계층까지만 메시지가 전달되고,<br>다시 곧바로 어플리케이션 계층으로 메시지가 올라가게 된다.</p>
 <p>위에서 INET 소켓보다 2배이상의 효율을 가진다고 했는데,<br>4계층의 레이어를 모두 거쳐야하는 INET 소켓에 비해서 단지 2개의 레이어만 사용한다는 점도 그 이유중 하나로 작용한다.</p>
-<p>UDS를 생성 할 때   unix_socket &#x3D; socket(AF_UNIX, type, 0);<br>type에는 SOCK_STREAM(TCP), SOCK_DGRAM(UDP), SOCK_SEQPACKET(2.6.4 ) 이 있다.</p>
+<p>UDS를 생성 할 때   unix_socket = socket(AF_UNIX, type, 0);<br>type에는 SOCK_STREAM(TCP), SOCK_DGRAM(UDP), SOCK_SEQPACKET(2.6.4 ) 이 있다.</p>
 <p>internet 을 위한 socket 과는 달리 unix domain socket은 udp에서 패킷이 누실 되거나 순서가 바뀔 염려가 없다.<br>TCP는 패킷의 바운드를 따로 두지 않으며, UDP는 메시지 경계를 가지는 것이 차이점이다.</p>
 <p>출처: <a target="_blank" rel="noopener" href="https://www.joinc.co.kr/w/Site/system_programing/IPC/Unix_Domain_Socket">https://www.joinc.co.kr/w/Site/system_programing/IPC/Unix_Domain_Socket</a><br><a target="_blank" rel="noopener" href="http://man7.org/linux/man-pages/man7/unix.7.html">http://man7.org/linux/man-pages/man7/unix.7.html</a><br>-끝-</p>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2018-11-05T15:00:00.000Z" title="2018. 11. 6. 오전 12:00:00">2018-11-06</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.819Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/C-C/">C/C++</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2018/11/06/2018-11-06-UART/">UART</a></p><div class="content"><h1 id="UART"><a href="#UART" class="headerlink" title="UART"></a>UART</h1><p>UART(A universal asynchronous receiver&#x2F;transmitter) 는 우리말로 하면 범용 비동기 통신기이다. 일종의 회로이며 보통 마이크로 컨트롤러안에 포함되어있다.<br>여기서 비동기의 의미는 별도의 클럭 시그널이 없이 데이터 시그널만 가지고 통신한다는 의미이다.<br>비동기 통신을 위해서는 데이터가 전달되는 주기에 대한 정보가 미리 정해져야 한다.<br>시리얼 포트라 불리는 RS-232 포트는 실제 통신을 위한 물리적 포트를 의미한다.</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2018-11-05T15:00:00.000Z" title="2018. 11. 6. 오전 12:00:00">2018-11-06</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.819Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/C-C/">C/C++</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2018/11/06/2018-11-06-UART/">UART</a></p><div class="content"><h1 id="UART"><a href="#UART" class="headerlink" title="UART"></a>UART</h1><p>UART(A universal asynchronous receiver/transmitter) 는 우리말로 하면 범용 비동기 통신기이다. 일종의 회로이며 보통 마이크로 컨트롤러안에 포함되어있다.<br>여기서 비동기의 의미는 별도의 클럭 시그널이 없이 데이터 시그널만 가지고 통신한다는 의미이다.<br>비동기 통신을 위해서는 데이터가 전달되는 주기에 대한 정보가 미리 정해져야 한다.<br>시리얼 포트라 불리는 RS-232 포트는 실제 통신을 위한 물리적 포트를 의미한다.</p>
 <p>UART의 한쪽에는 8개 이상의 라인이 물려있고, 다른 한쪽에는 시리얼 라인 RX,TX 가 물려있다.</p>
-<h2 id="Baud-Rate-통신-속도"><a href="#Baud-Rate-통신-속도" class="headerlink" title="Baud Rate (통신 속도)"></a>Baud Rate (통신 속도)</h2><p>Baud rate 는 시리얼 라인으로 전송되는 데이터 속도를 말합니다. Bits-per-second (bps) 단위로 표시하는데 이 값을 바탕으로 1 bit가 전송되는데 필요한 시간을 알 수 있습니다.<br>즉 1bit 데이터를 전송할 때 시리얼 라인을 high&#x2F;low 상태로 유지하는 시간이며, 데이터를 받기 위해 시리얼 라인을 체크하는 시간입니다.</p>
+<h2 id="Baud-Rate-통신-속도"><a href="#Baud-Rate-통신-속도" class="headerlink" title="Baud Rate (통신 속도)"></a>Baud Rate (통신 속도)</h2><p>Baud rate 는 시리얼 라인으로 전송되는 데이터 속도를 말합니다. Bits-per-second (bps) 단위로 표시하는데 이 값을 바탕으로 1 bit가 전송되는데 필요한 시간을 알 수 있습니다.<br>즉 1bit 데이터를 전송할 때 시리얼 라인을 high/low 상태로 유지하는 시간이며, 데이터를 받기 위해 시리얼 라인을 체크하는 시간입니다.</p>
 <p>Baud rates 값은 어떻게든 설정할 수 있지만 통신 속도에 크게 영향을 받지 않는 경우 일반적으로 9600 bps를 사용합니다.<br>다른 표준 baud are 값으로 1200, 2400, 4800, 19200, 38400, 57600, 115200 을 사용할 수도 있습니다.</p>
 <p>출처: <a target="_blank" rel="noopener" href="http://www.hardcopyworld.com/ngine/aduino/index.php/archives/2080">http://www.hardcopyworld.com/ngine/aduino/index.php/archives/2080</a><br>-끝-</p>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2018-09-20T15:00:00.000Z" title="2018. 9. 21. 오전 12:00:00">2018-09-21</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.816Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/Java/">Java</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2018/09/21/2018-09-21-arraylist-to-iterator/">Java Collection and Iterator</a></p><div class="content"><pre><code class="java">for (Character c : Carray) &#123;
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2018-09-20T15:00:00.000Z" title="2018. 9. 21. 오전 12:00:00">2018-09-21</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.816Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/Java/">Java</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2018/09/21/2018-09-21-arraylist-to-iterator/">Java Collection and Iterator</a></p><div class="content"><pre><code class="lang-java">for (Character c : Carray) &#123;
   if (Character.isDigit(c)) &#123;
     Carray.remove(c);
   &#125;
 &#125;
 </code></pre>
 <p>위와 같이 ArrayList 에 들어있는 요소를 for 문을 이용해 삭제하면 ConcurrentModificationException 발생한다.  </p>
-<pre><code class="java">for (Iterator&lt;Character&gt; iter = Carray.iterator(); iter.hasNext(); ) &#123;
+<pre><code class="lang-java">for (Iterator&lt;Character&gt; iter = Carray.iterator(); iter.hasNext(); ) &#123;
   Character c = iter.next();
   if (Character.isDigit(c)) &#123;
     iter.remove();
@@ -192,6 +184,16 @@
                     fold: 'unfolded'
                 }
             }
-        };</script><script data-pjax src="/js/column.js"></script><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="입력 하세요..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
+        };</script><script data-pjax src="/js/column.js"></script><script type="text/javascript" id="MathJax-script" async>MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="입력 하세요..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
             loadInsight({"contentUrl":"/content.json"}, {"hint":"입력 하세요...","untitled":"(제목 없음)","posts":"포스트","pages":"페이지","categories":"카테고리","tags":"태그"});
         });</script></body></html>

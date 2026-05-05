@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>Hazelcast 기반 Reverb 서버 구축 - 우리람부탄</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="우리람부탄"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="우리람부탄"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Hazelcast(IMDG) 사용해 Reverb(DeepMind의 분산 Replay Buffer) 역할을 하는 서버를 구축하는 방법을 “아키텍처 → 데이터 구조 → 샘플링 → 우선순위 → API 설계 → 예제 코드” 순으로, 아래 구조는 실제 Reverb가 하는 기능을 Hazelcast 기반으로 재현한 설계.  🧠 목표 Hazelcast를 이용하여 다음"><meta property="og:type" content="article"><meta property="og:title" content="Hazelcast 기반 Reverb 서버 구축"><meta property="og:url" content="https://gabre8001.github.io/2025/07/12/2025-07-13-Hazelcast-%EA%B8%B0%EB%B0%98-Reverb-%EC%84%9C%EB%B2%84-%EA%B5%AC%EC%B6%95/"><meta property="og:site_name" content="우리람부탄"><meta property="og:description" content="Hazelcast(IMDG) 사용해 Reverb(DeepMind의 분산 Replay Buffer) 역할을 하는 서버를 구축하는 방법을 “아키텍처 → 데이터 구조 → 샘플링 → 우선순위 → API 설계 → 예제 코드” 순으로, 아래 구조는 실제 Reverb가 하는 기능을 Hazelcast 기반으로 재현한 설계.  🧠 목표 Hazelcast를 이용하여 다음"><meta property="og:locale" content="ko_KR"><meta property="og:image" content="https://gabre8001.github.io/img/og_image.png"><meta property="article:published_time" content="2025-07-12T15:00:00.000Z"><meta property="article:modified_time" content="2026-05-05T11:49:02.408Z"><meta property="article:author" content="우리람부탄"><meta property="article:tag" content="hazelcast"><meta property="article:tag" content="reverb"><meta property="article:tag" content="replay-buffer"><meta property="article:tag" content="distributed"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://gabre8001.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://gabre8001.github.io/2025/07/12/2025-07-13-Hazelcast-%EA%B8%B0%EB%B0%98-Reverb-%EC%84%9C%EB%B2%84-%EA%B5%AC%EC%B6%95/"},"headline":"Hazelcast 기반 Reverb 서버 구축","image":["https://gabre8001.github.io/img/og_image.png"],"datePublished":"2025-07-12T15:00:00.000Z","dateModified":"2026-05-05T11:49:02.408Z","author":{"@type":"Person","name":"우리람부탄"},"publisher":{"@type":"Organization","name":"우리람부탄","logo":{"@type":"ImageObject"}},"description":"Hazelcast(IMDG) 사용해 Reverb(DeepMind의 분산 Replay Buffer) 역할을 하는 서버를 구축하는 방법을 “아키텍처 → 데이터 구조 → 샘플링 → 우선순위 → API 설계 → 예제 코드” 순으로, 아래 구조는 실제 Reverb가 하는 기능을 Hazelcast 기반으로 재현한 설계.  🧠 목표 Hazelcast를 이용하여 다음"}</script><link rel="canonical" href="https://gabre8001.github.io/2025/07/12/2025-07-13-Hazelcast-%EA%B8%B0%EB%B0%98-Reverb-%EC%84%9C%EB%B2%84-%EA%B5%AC%EC%B6%95/"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link data-pjax rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax rel="stylesheet" href="/css/default.css"><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">우리람부탄</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="검색" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2025-07-12T15:00:00.000Z" title="7/12/2025, 3:00:00 PM">2025-07-13</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-05T11:49:02.408Z" title="5/5/2026, 11:49:02 AM">2026-05-05</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/Java/">Java</a></span></div></div><h1 class="title is-3 is-size-4-mobile">Hazelcast 기반 Reverb 서버 구축</h1><div class="content"><p><strong>Hazelcast(IMDG)</strong> 사용해 <strong>Reverb(DeepMind의 분산 Replay Buffer)</strong> 역할을 하는 서버를 구축하는 방법을 “아키텍처 → 데이터 구조 → 샘플링 → 우선순위 → API 설계 → 예제 코드” 순으로, 아래 구조는 실제 Reverb가 하는 기능을 Hazelcast 기반으로 재현한 설계.</p>
+<hr>
+<h1>🧠 목표</h1>
+<p>Hazelcast를 이용하여 다음 기능을 수행하는 <strong>Reverb-like Distributed Replay Buffer Server</strong> 구축:</p>
+<ul>
+<li>Actor → Replay 서버로 전이(transition) insert</li>
+<li>Learner → 샘플링(pull)</li>
+<li>Prioritized Experience Replay(PER) 지원</li>
+<li>Sequence/trajectory 저장</li>
+<li>자동 eviction (FIFO 또는 priority-based)</li>
+<li>병렬 Actor 지원</li>
+<li>분산 노드 장애 대응(Hazelcast가 제공)</li>
+</ul>
+<hr>
+<h1>🏗️ 전체 아키텍처</h1>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Actors (N개)</span><br><span class="line">    │      (putAsync)</span><br><span class="line">    ▼</span><br><span class="line">[ Hazelcast Cluster ]</span><br><span class="line">    - IMap (메인 transition buffer)</span><br><span class="line">    - MultiMap / Ringbuffer (trajectory)</span><br><span class="line">    - IMap (priority map)</span><br><span class="line">    - AtomicLong (id generator)</span><br><span class="line">    - ExecutorService (sampling tasks)</span><br><span class="line">    - EntryProcessor (atomic updates)</span><br><span class="line">    │</span><br><span class="line">    ▼</span><br><span class="line">Learner (1~K개)</span><br><span class="line">    (sample / update_priority)</span><br></pre></td></tr></table></figure>
+<p>Hazelcast 노드 수가 증가하면<br>
+→ replay buffer 용량, 처리량, fault-tolerance가 수평 확장됩니다.</p>
+<hr>
+<h1>🧱 핵심 구성 요소별 설계</h1>
+<h2 id="1-Transition-구조-Replay-Item">1) Transition 구조 (Replay Item)</h2>
+<p>Reverb의 Item(trajectory/transition)을 Hazelcast에서 <strong>고정 포맷 JSON 혹은 Serializable 객체</strong>로 저장합니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Transition</span> <span class="keyword">implements</span> <span class="title class_">Serializable</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">float</span>[] state;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> action;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">float</span> reward;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">float</span>[] nextState;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> done;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="2-저장소-구조-Hazelcast-데이터-모델">2) 저장소 구조 (Hazelcast 데이터 모델)</h2>
+<h3 id="📌-a-메인-Replay-Buffer-IMap-Long-Transition">📌 a) 메인 Replay Buffer: <strong>IMap&lt;Long, Transition&gt;</strong></h3>
+<ul>
+<li>Key: 전역 증가 ID (AtomicLong 사용)</li>
+<li>Value: Transition</li>
+<li>Hazelcast가 자동 파티셔닝함 → 분산 buffer 완성</li>
+</ul>
+<h3 id="📌-b-Priority-Buffer-IMap-Long-Float">📌 b) Priority Buffer: <strong>IMap&lt;Long, Float&gt;</strong></h3>
+<ul>
+<li>Prioritized Experience Replay(PER) 구현용</li>
+<li>key: transition ID</li>
+<li>value: priority 값</li>
+</ul>
+<h3 id="📌-c-Sampling-Index">📌 c) Sampling Index</h3>
+<p>랜덤 또는 priority 기반 샘플링을 위해</p>
+<ul>
+<li>전체 key list를 캐시 or</li>
+<li>partition-local index 유지 or</li>
+<li>Hazelcast <strong>SQL</strong>로 랜덤 샘플링 가능</li>
+</ul>
+<h3 id="📌-d-AtomicLong-글로벌-ID-생성기">📌 d) AtomicLong: 글로벌 ID 생성기</h3>
+<p><code>idGenerator.getAndIncrement()</code></p>
+<h3 id="📌-e-Optional-Ringbuffer-trajectory-sequence-replay">📌 e) Optional: Ringbuffer (trajectory/sequence replay)</h3>
+<p>Reverb의 Trajectory 기능을 위해:</p>
+<ul>
+<li><code>Ringbuffer&lt;Transition[]&gt;</code></li>
+<li>또는 <code>MultiMap&lt;episode_id, Transition&gt;</code></li>
+</ul>
+<hr>
+<h1>⚙️ API 설계</h1>
+<h2 id="Actor-→-서버">Actor → 서버</h2>
+<h3 id="insert-transition-priority">insert(transition, priority)</h3>
+<ul>
+<li>id = atomicLong.getAndIncrement()</li>
+<li>transitionsMap.set(id, transition)</li>
+<li>priorityMap.set(id, priority)</li>
+</ul>
+<h2 id="Learner-→-서버">Learner → 서버</h2>
+<h3 id="sample-batch-size">sample(batch_size)</h3>
+<ul>
+<li>uniform sampling → 랜덤 key 선택</li>
+<li>prioritized sampling → priority 기반 확률 샘플링</li>
+</ul>
+<h3 id="update-priority-id-new-priority">update_priority(id, new_priority)</h3>
+<ul>
+<li>priorityMap.set(id, new_priority)</li>
+</ul>
+<h3 id="size">size()</h3>
+<ul>
+<li>transitionsMap.size()</li>
+</ul>
+<hr>
+<h1>🔥 Prioritized Experience Replay 구현</h1>
+<h3 id="1-priorityMap-에-모든-우선순위-저장">1) priorityMap 에 모든 우선순위 저장</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IMap&lt;Long, Float&gt; priorityMap = hz.getMap(<span class="string">&quot;priority&quot;</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="2-샘플링">2) 샘플링</h3>
+<p>샘플링 확률<br>
+$$ P(i) = p_i^\alpha / \sum_k p_k^\alpha $$</p>
+<p>구현 방법 2가지:</p>
+<hr>
+<h3 id="✔-방법-A-Hazelcast-ExecutorService-partition-local-reduction">✔ 방법 A: Hazelcast ExecutorService + partition local reduction</h3>
+<p>각 파티션에서 priority sum을 계산 → 합산<br>
+그 후 확률 기반으로 key 선택</p>
+<hr>
+<h3 id="✔-방법-B-Hazelcast-SQL-사용">✔ 방법 B: Hazelcast SQL 사용</h3>
+<p>Hazelcast 5.0+는 SQL 쿼리를 지원</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> __key, priority </span><br><span class="line"><span class="keyword">FROM</span> priorityMap </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> priority <span class="keyword">DESC</span> </span><br><span class="line">LIMIT ?</span><br></pre></td></tr></table></figure>
+<p>→ 상위 PRIORITY N개를 가져와 확률 기반 샘플링<br>
+대규모 환경에서 매우 빠름</p>
+<hr>
+<h3 id="✔-방법-C-Segment-Tree-SumTree-구현">✔ 방법 C: Segment Tree (SumTree) 구현</h3>
+<p>PER의 정석</p>
+<ul>
+<li>Hazelcast IMap에 segment tree 노드를 저장</li>
+<li>노드는 클러스터에 분산 저장 가능</li>
+<li>priority 업데이트 빠름</li>
+</ul>
+<p>추천 방식: <strong>A 또는 B</strong> – 구현 난이도 낮음 + Hazelcast의 분산 성능 활용</p>
+<hr>
+<h1>📚 Eviction 정책 설계</h1>
+<p>Reverb처럼 max_size를 유지하려면:</p>
+<h3 id="방법-1-FIFO-방식">방법 1) FIFO 방식</h3>
+<ul>
+<li>transitionsMap.size() &gt; max_size 일 때 최소 ID 제거</li>
+<li>EntryProcessor를 사용해 원자적으로 제거 가능</li>
+</ul>
+<h3 id="방법-2-priority-기반-eviction">방법 2) priority 기반 eviction</h3>
+<ul>
+<li>priorityMap에서 가장 작은 priority 항목 제거</li>
+<li>Hazelcast SQL:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> __key </span><br><span class="line"><span class="keyword">FROM</span> priorityMap </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> priority <span class="keyword">ASC</span> </span><br><span class="line">LIMIT <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h1>🧪 예제 코드 (Java + Hazelcast)</h1>
+<h2 id="1-서버-시작">1. 서버 시작</h2>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">HazelcastInstance</span> <span class="variable">hz</span> <span class="operator">=</span> Hazelcast.newHazelcastInstance();</span><br><span class="line">IMap&lt;Long, Transition&gt; buffer = hz.getMap(<span class="string">&quot;buffer&quot;</span>);</span><br><span class="line">IMap&lt;Long, Float&gt; priorityMap = hz.getMap(<span class="string">&quot;priority&quot;</span>);</span><br><span class="line"><span class="type">AtomicLong</span> <span class="variable">idGen</span> <span class="operator">=</span> hz.getCPSubsystem().getAtomicLong(<span class="string">&quot;idGen&quot;</span>);</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="2-Actor-insert">2. Actor insert</h2>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">long</span> <span class="title function_">insertTransition</span><span class="params">(Transition t, <span class="type">float</span> priority)</span> &#123;</span><br><span class="line">    <span class="type">long</span> <span class="variable">id</span> <span class="operator">=</span> idGen.getAndIncrement();</span><br><span class="line">    buffer.put(id, t);</span><br><span class="line">    priorityMap.put(id, priority);</span><br><span class="line">    <span class="keyword">return</span> id;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="3-Learner-sampling-Uniform">3. Learner sampling (Uniform)</h2>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> List&lt;Transition&gt; <span class="title function_">sample</span><span class="params">(<span class="type">int</span> batch)</span> &#123;</span><br><span class="line">    List&lt;Long&gt; keys = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(buffer.keySet());</span><br><span class="line">    Collections.shuffle(keys);</span><br><span class="line"></span><br><span class="line">    List&lt;Transition&gt; out = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; batch; i++) &#123;</span><br><span class="line">        out.add(buffer.get(keys.get(i)));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> out;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="4-Learner-update-priority">4. Learner update priority</h2>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">updatePriority</span><span class="params">(<span class="type">long</span> id, <span class="type">float</span> newP)</span> &#123;</span><br><span class="line">    priorityMap.set(id, newP);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h1>🖥️ Python Actor/Learner (Hazelcast Python Client)</h1>
+<p><strong>Actor</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> hazelcast <span class="keyword">import</span> HazelcastClient</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line">hz = HazelcastClient()</span><br><span class="line">buffer = hz.get_map(<span class="string">&quot;buffer&quot;</span>)</span><br><span class="line">priority = hz.get_map(<span class="string">&quot;priority&quot;</span>)</span><br><span class="line">idgen = hz.cp_subsystem.get_atomic_long(<span class="string">&quot;idGen&quot;</span>)</span><br><span class="line"></span><br><span class="line">tid = idgen.get_and_increment().result()</span><br><span class="line"></span><br><span class="line">transition = &#123;</span><br><span class="line">    <span class="string">&quot;state&quot;</span>: s,</span><br><span class="line">    <span class="string">&quot;action&quot;</span>: a,</span><br><span class="line">    <span class="string">&quot;reward&quot;</span>: r,</span><br><span class="line">    <span class="string">&quot;next_state&quot;</span>: s2,</span><br><span class="line">    <span class="string">&quot;done&quot;</span>: done</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">buffer.put(tid, transition)</span><br><span class="line">priority.put(tid, <span class="number">1.0</span>)</span><br></pre></td></tr></table></figure>
+<hr>
+<h1>🧨 Hazelcast 기반 Reverb 서버의 장점</h1>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>Reverb</th>
+<th>Hazelcast 기반 Reverb</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RL 특화 기능</td>
+<td>내장</td>
+<td>구현 필요</td>
+</tr>
+<tr>
+<td>대규모 분산</td>
+<td>매우 강함</td>
+<td>매우 강함</td>
+</tr>
+<tr>
+<td>클러스터링, HA</td>
+<td>좋음</td>
+<td><strong>우수 (IMDG 장점)</strong></td>
+</tr>
+<tr>
+<td>커스터마이징</td>
+<td>제한적</td>
+<td><strong>자유도 매우 높음</strong></td>
+</tr>
+<tr>
+<td>Key-Value 기반 확장</td>
+<td>X</td>
+<td><strong>Natural</strong></td>
+</tr>
+<tr>
+<td>상용 사용</td>
+<td>가능</td>
+<td>매우 적합</td>
+</tr>
+</tbody>
+</table>
+<p>Hazelcast는 “Replay Buffer + PER + Sequence storage + Sampling 서버”를 구현하기 위한 <strong>강력한 분산 인프라</strong>를 제공하지만 Reverb의 RL-specific 기능은 직접 설계해야 한다는 차이가 있음.</p>
+<hr>
+<h1>🎯 결론</h1>
+<p><strong>Hazelcast로 충분히 Reverb와 동일한 역할을 하는 분산 Replay Buffer Server를 구축할 수 있습니다.</strong></p>
+<ul>
+<li>IMap 기반의 분산 replay storage</li>
+<li>priorityMap 기반 PER</li>
+<li>SQL/ExecutorService 기반 sampling</li>
+<li>Ringbuffer 기반 trajectory</li>
+<li>AtomicLong 기반 global id</li>
+<li>EntryProcessor 기반 atomic priority update</li>
+<li>Hazelcast cluster 확장성으로 Actor/Learner 대규모 운영 가능</li>
+</ul>
+<p>완전한 Reverb 클론이 되고 싶다면 다음 모듈도 구현해야 합니다:</p>
+<ul>
+<li>RateLimiter (insert:sample 비율 관리)</li>
+<li>Trajectory assembler (sequence replay)</li>
+<li>Table abstraction (여러 replay table 사용)</li>
+<li>배치 기반 샘플링 API</li>
+</ul>
+</div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/hazelcast/">hazelcast</a><a class="link-muted mr-2" rel="tag" href="/tags/reverb/">reverb</a><a class="link-muted mr-2" rel="tag" href="/tags/replay-buffer/">replay-buffer</a><a class="link-muted mr-2" rel="tag" href="/tags/distributed/">distributed</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2026/02/25/2026-02-26-%ED%9A%A8%EC%9C%A8%EC%A0%81%EC%9D%B8-RPU-%EC%A7%91%EA%B3%84%EB%A5%BC-%EC%9C%84%ED%95%9C-HyperLogLog/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">효율적인 RPU 집계를 위한 HyperLogLog</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2025/05/07/2025-05-08-svelte-kit-RBAC/"><span class="level-item">SvelteKit RBAC</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/images/avatar.jpg" alt="우리람부탄"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">우리람부탄</p><p class="is-size-6 is-block">개발자</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">포스트</p><a href="/archives/"><p class="title">89</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">카테고리</p><a href="/categories/"><p class="title">14</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">태그</p><a href="/tags/"><p class="title">222</p></a></div></div></nav><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="GitHub" href="https://github.com/gabre8001"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Email" href="mailto:gabre8001@gmail.com"><i class="fas fa-envelope"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">카테고리</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Android/"><span class="level-start"><span class="level-item">Android</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/C-C/"><span class="level-start"><span class="level-item">C/C++</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile" href="/categories/CS/"><span class="level-start"><span class="level-item">CS</span></span><span class="level-end"><span class="level-item tag">17</span></span></a></li><li><a class="level is-mobile" href="/categories/Database/"><span class="level-start"><span class="level-item">Database</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/DevOps/"><span class="level-start"><span class="level-item">DevOps</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/Git/"><span class="level-start"><span class="level-item">Git</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/Java/"><span class="level-start"><span class="level-item">Java</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/JavaScript/"><span class="level-start"><span class="level-item">JavaScript</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile" href="/categories/Linux/"><span class="level-start"><span class="level-item">Linux</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile" href="/categories/MQ/"><span class="level-start"><span class="level-item">MQ</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/Math/"><span class="level-start"><span class="level-item">Math</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Network/"><span class="level-start"><span class="level-item">Network</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile" href="/categories/Python/"><span class="level-start"><span class="level-item">Python</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/ROS/"><span class="level-start"><span class="level-item">ROS</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li></ul></div></div></div><div class="column-right-shadow is-hidden-widescreen"></div></div><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3"><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">최근 글</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2026-02-25T15:00:00.000Z">2026-02-26</time></p><p class="title"><a href="/2026/02/25/2026-02-26-%ED%9A%A8%EC%9C%A8%EC%A0%81%EC%9D%B8-RPU-%EC%A7%91%EA%B3%84%EB%A5%BC-%EC%9C%84%ED%95%9C-HyperLogLog/">효율적인 RPU 집계를 위한 HyperLogLog</a></p><p class="categories"><a href="/categories/CS/">CS</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-07-12T15:00:00.000Z">2025-07-13</time></p><p class="title"><a href="/2025/07/12/2025-07-13-Hazelcast-%EA%B8%B0%EB%B0%98-Reverb-%EC%84%9C%EB%B2%84-%EA%B5%AC%EC%B6%95/">Hazelcast 기반 Reverb 서버 구축</a></p><p class="categories"><a href="/categories/Java/">Java</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-05-07T15:00:00.000Z">2025-05-08</time></p><p class="title"><a href="/2025/05/07/2025-05-08-svelte-kit-RBAC/">SvelteKit RBAC</a></p><p class="categories"><a href="/categories/JavaScript/">JavaScript</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-06-11T15:00:00.000Z">2023-06-12</time></p><p class="title"><a href="/2023/06/11/2023-06-12-Spring-Cloud-Netty/">Spring Cloud Gateway vs Netty</a></p><p class="categories"><a href="/categories/Java/">Java</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-04-16T15:00:00.000Z">2023-04-17</time></p><p class="title"><a href="/2023/04/16/2023-04-17-%EC%8A%A4%ED%94%84%EB%A7%81-%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C-%EA%B2%8C%EC%9D%B4%ED%8A%B8%EC%9B%A8%EC%9D%B4-%EB%A1%9C%EB%93%9C%EB%B2%A8%EB%9F%B0%EC%84%9C/">스프링 클라우드 게이트웨이 로드벨런서</a></p><p class="categories"><a href="/categories/Java/">Java</a></p></div></article></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">태그</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/CPU/"><span class="tag">CPU</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MongoDB/"><span class="tag">MongoDB</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Radix/"><span class="tag">Radix</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Rax/"><span class="tag">Rax</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/React/"><span class="tag">React</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Redis/"><span class="tag">Redis</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Seaborn/"><span class="tag">Seaborn</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Test/"><span class="tag">Test</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Tree/"><span class="tag">Tree</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/t/"><span class="tag">_t</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/tmain/"><span class="tag">_tmain</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/action/"><span class="tag">action</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/active/"><span class="tag">active</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/admin/"><span class="tag">admin</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/affinity/"><span class="tag">affinity</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ajax/"><span class="tag">ajax</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/algebra/"><span class="tag">algebra</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/algorithm/"><span class="tag">algorithm</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/amqp/"><span class="tag">amqp</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/android/"><span class="tag">android</span><span class="tag">1</span></a></div></div></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">우리람부탄</a><p class="is-size-7"><span>&copy; 2026 우리람부탄</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="GitHub" href="https://github.com/gabre8001"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ko");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script type="text/javascript" id="MathJax-script" async>MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="입력 하세요..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"입력 하세요...","untitled":"(제목 없음)","posts":"포스트","pages":"페이지","categories":"카테고리","tags":"태그"});
+        });</script></body></html>

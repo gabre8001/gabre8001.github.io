@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>Bash - 우리람부탄</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="우리람부탄"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="우리람부탄"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Bash와 shell script에 대해 알아본다.  주의! 마크다운 문법과 쉘 문법의 유사함으로 잘못 표기된 내용이 있을 수 있음을 주의 바랍니다.  Bash 배경 Shell 이란  application을 실행시키는 도구 shell 에서 내리는 명령어는 해석된 뒤에 자시 프로세스로 만들어져 실행됨 Bourne shell &amp;#x2F;bin&amp;#x2F;sh 표준 셸 POSIX"><meta property="og:type" content="article"><meta property="og:title" content="Bash"><meta property="og:url" content="https://gabre8001.github.io/2022/02/26/2022-02-26-bash-shell-start/"><meta property="og:site_name" content="우리람부탄"><meta property="og:description" content="Bash와 shell script에 대해 알아본다.  주의! 마크다운 문법과 쉘 문법의 유사함으로 잘못 표기된 내용이 있을 수 있음을 주의 바랍니다.  Bash 배경 Shell 이란  application을 실행시키는 도구 shell 에서 내리는 명령어는 해석된 뒤에 자시 프로세스로 만들어져 실행됨 Bourne shell &amp;#x2F;bin&amp;#x2F;sh 표준 셸 POSIX"><meta property="og:locale" content="ko_KR"><meta property="og:image" content="https://gabre8001.github.io/img/og_image.png"><meta property="article:published_time" content="2022-02-25T15:00:00.000Z"><meta property="article:modified_time" content="2026-05-02T13:27:37.017Z"><meta property="article:author" content="우리람부탄"><meta property="article:tag" content="bash"><meta property="article:tag" content="shell"><meta property="article:tag" content="script"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://gabre8001.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://gabre8001.github.io/2022/02/26/2022-02-26-bash-shell-start/"},"headline":"Bash","image":["https://gabre8001.github.io/img/og_image.png"],"datePublished":"2022-02-25T15:00:00.000Z","dateModified":"2026-05-02T13:27:37.017Z","author":{"@type":"Person","name":"우리람부탄"},"publisher":{"@type":"Organization","name":"우리람부탄","logo":{"@type":"ImageObject"}},"description":"Bash와 shell script에 대해 알아본다.  주의! 마크다운 문법과 쉘 문법의 유사함으로 잘못 표기된 내용이 있을 수 있음을 주의 바랍니다.  Bash 배경 Shell 이란  application을 실행시키는 도구 shell 에서 내리는 명령어는 해석된 뒤에 자시 프로세스로 만들어져 실행됨 Bourne shell &#x2F;bin&#x2F;sh 표준 셸 POSIX"}</script><link rel="canonical" href="https://gabre8001.github.io/2022/02/26/2022-02-26-bash-shell-start/"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link data-pjax rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax rel="stylesheet" href="/css/default.css"><!--!--><!-- hexo injector head_end start --><script>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>Bash - 우리람부탄</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="우리람부탄"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="우리람부탄"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Bash와 shell script에 대해 알아본다.  주의! 마크다운 문법과 쉘 문법의 유사함으로 잘못 표기된 내용이 있을 수 있음을 주의 바랍니다.  Bash 배경   Shell 이란  application을 실행시키는 도구 shell 에서 내리는 명령어는 해석된 뒤에 자시 프로세스로 만들어져 실행됨 Bourne shell &amp;#x2F;bin&amp;#x2F;sh 표준 셸 POSI"><meta property="og:type" content="article"><meta property="og:title" content="Bash"><meta property="og:url" content="https://gabre8001.github.io/2022/02/26/2022-02-26-bash-shell-start/"><meta property="og:site_name" content="우리람부탄"><meta property="og:description" content="Bash와 shell script에 대해 알아본다.  주의! 마크다운 문법과 쉘 문법의 유사함으로 잘못 표기된 내용이 있을 수 있음을 주의 바랍니다.  Bash 배경   Shell 이란  application을 실행시키는 도구 shell 에서 내리는 명령어는 해석된 뒤에 자시 프로세스로 만들어져 실행됨 Bourne shell &amp;#x2F;bin&amp;#x2F;sh 표준 셸 POSI"><meta property="og:locale" content="ko_KR"><meta property="og:image" content="https://gabre8001.github.io/img/og_image.png"><meta property="article:published_time" content="2022-02-25T15:00:00.000Z"><meta property="article:modified_time" content="2026-05-02T13:27:37.017Z"><meta property="article:author" content="우리람부탄"><meta property="article:tag" content="bash"><meta property="article:tag" content="shell"><meta property="article:tag" content="script"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://gabre8001.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://gabre8001.github.io/2022/02/26/2022-02-26-bash-shell-start/"},"headline":"Bash","image":["https://gabre8001.github.io/img/og_image.png"],"datePublished":"2022-02-25T15:00:00.000Z","dateModified":"2026-05-02T13:27:37.017Z","author":{"@type":"Person","name":"우리람부탄"},"publisher":{"@type":"Organization","name":"우리람부탄","logo":{"@type":"ImageObject"}},"description":"Bash와 shell script에 대해 알아본다.  주의! 마크다운 문법과 쉘 문법의 유사함으로 잘못 표기된 내용이 있을 수 있음을 주의 바랍니다.  Bash 배경   Shell 이란  application을 실행시키는 도구 shell 에서 내리는 명령어는 해석된 뒤에 자시 프로세스로 만들어져 실행됨 Bourne shell &#x2F;bin&#x2F;sh 표준 셸 POSI"}</script><link rel="canonical" href="https://gabre8001.github.io/2022/02/26/2022-02-26-bash-shell-start/"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link data-pjax rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax rel="stylesheet" href="/css/default.css"><!--!--><!-- hexo injector head_end start --><script>
   (function () {
       function switchTab() {
           if (!location.hash) {
@@ -33,24 +33,29 @@
 <ul>
 <li>주의! 마크다운 문법과 쉘 문법의 유사함으로 잘못 표기된 내용이 있을 수 있음을 주의 바랍니다.</li>
 </ul>
-<h3 id="Bash-배경"><a href="#Bash-배경" class="headerlink" title="Bash 배경"></a>Bash 배경</h3><ul>
-<li><p>Shell 이란</p>
+<h3 id="Bash-배경">Bash 배경</h3>
+<ul>
+<li>
+<p>Shell 이란</p>
 <ul>
 <li>application을 실행시키는 도구</li>
 <li>shell 에서 내리는 명령어는 해석된 뒤에 자시 프로세스로 만들어져 실행됨</li>
-<li>Bourne shell /bin/sh 표준 셸 POSIX<ul>
+<li>Bourne shell /bin/sh 표준 셸 POSIX
+<ul>
 <li>Stephen R. Bourne이 작성 1977</li>
 <li>기본 유닉스 셸</li>
 <li>기능이 미약. 대부분의 기능이 외부 명령어로 대체</li>
 </ul>
 </li>
-<li>C shell /bin/csh<ul>
+<li>C shell /bin/csh
+<ul>
 <li>Berkly의 Bill Joy가 작성. BSD UNIX에 포팅</li>
 <li>C 언어와 비슷하 문법으로 C shell 이라 명명</li>
 <li>sh와 너무 달라 외면. 후에 개량형으로 TC sh 등장</li>
 </ul>
 </li>
-<li>Korn shell /bin/ksh<ul>
+<li>Korn shell /bin/ksh
+<ul>
 <li>Bell Lab의 David Korn이 작성 1983</li>
 <li>csh 장점과 bourne shell 기능을 모두 포함</li>
 <li>vi prompt mode 지원</li>
@@ -58,7 +63,8 @@
 <li>현대적인 상용 유닉스 기본셸</li>
 </ul>
 </li>
-<li>bash /bin/bash 가장 유명하 셸<ul>
+<li>bash /bin/bash 가장 유명하 셸
+<ul>
 <li>Bourne again shell. born again sh</li>
 <li>GNU에서 발전시킨 개량판 1989</li>
 <li>현대적인 셸의 기능 대부분이 추가되어 Korn shell과 호환</li>
@@ -66,7 +72,8 @@
 <li>build in cmd로 대체 = 성능 향상</li>
 </ul>
 </li>
-<li>Zsh /bin/zsh<ul>
+<li>Zsh /bin/zsh
+<ul>
 <li>Paul Falstad 작성 1990</li>
 <li>Oh My ZSH! 등으로 커스터마이징 하느 경우 많음</li>
 <li>퍼포먼스 문제가 존재</li>
@@ -75,18 +82,20 @@
 </li>
 </ul>
 </li>
-<li><p>Special character</p>
+<li>
+<p>Special character</p>
 <ul>
-<li>‘ single quote</li>
-<li>“ double auite</li>
+<li>’ single quote</li>
+<li>&quot; double auite</li>
 <li>` back quote, backtick, grave</li>
 <li>~ tilde</li>
 <li>() left, right parenthesis</li>
 <li>[] left, right (sqare) braket</li>
 <li>{} left, right (curly) braket</li>
-<li>\&lt;> left, right chevron</li>
+<li>&lt;&gt; left, right chevron</li>
 <li>? question mark</li>
-<li><ul>
+<li>
+<ul>
 <li>hyphen, minus, dash</li>
 </ul>
 </li>
@@ -94,8 +103,8 @@
 <li>@at sign</li>
 <li># hash, hashtag, pound</li>
 <li>$ dollar sign</li>
-<li>\^ caret</li>
-<li>\&amp; ampersand</li>
+<li>^ caret</li>
+<li>&amp; ampersand</li>
 <li>* asterisk</li>
 <li>\ back slash(leader key, escape)</li>
 <li>| vertical bar</li>
@@ -103,8 +112,10 @@
 </ul>
 </li>
 </ul>
-<h3 id="prompt-input-mode"><a href="#prompt-input-mode" class="headerlink" title="prompt: input mode"></a>prompt: input mode</h3><ul>
-<li><p>2가지 방식 입력기 지원</p>
+<h3 id="prompt-input-mode">prompt: input mode</h3>
+<ul>
+<li>
+<p>2가지 방식 입력기 지원</p>
 <ul>
 <li>emacs mode(default) set -o emacs bash 기본 모드</li>
 <li>vi mode set -o vi ksh과 호환을 위해</li>
@@ -112,19 +123,32 @@
 <li>emacs editing mode 그림 추가!!</li>
 </ul>
 </li>
-<li><p>^R </p>
+<li>
+<p>^R</p>
 </li>
-<li>alt + .</li>
-<li>!:n-m</li>
+<li>
+<p>alt + .</p>
+</li>
+<li>
+<p>!:n-m</p>
+</li>
 </ul>
-<h3 id="bash-shell-작동원리"><a href="#bash-shell-작동원리" class="headerlink" title="bash shell 작동원리"></a>bash shell 작동원리</h3><ul>
-<li>셸에서 실행되는 UNIX 명령어는 sub-shell 이 생성되어 실행</li>
-<li>서브셸이란 fork-exec로 만들어지는 child process 셸</li>
-<li>부모 프로세스는 자식 프로세스의 exit code 를 읽어햐한다.</li>
-<li>자식이 성공했는지 실패했는지 알수 있다. 0이면 성공 아니면 실패</li>
-</ul>
+<h3 id="bash-shell-작동원리">bash shell 작동원리</h3>
 <ul>
-<li><p>zombie</p>
+<li>
+<p>셸에서 실행되는 UNIX 명령어는 sub-shell 이 생성되어 실행</p>
+</li>
+<li>
+<p>서브셸이란 fork-exec로 만들어지는 child process 셸</p>
+</li>
+<li>
+<p>부모 프로세스는 자식 프로세스의 exit code 를 읽어햐한다.</p>
+</li>
+<li>
+<p>자식이 성공했는지 실패했는지 알수 있다. 0이면 성공 아니면 실패</p>
+</li>
+<li>
+<p>zombie</p>
 <ul>
 <li>부모 프로세스가 종료된 자식 프로세스의 exit status르 처리하기 전의 상태</li>
 <li>자식 프로세스를 zombie process 혹은 defunct process 라고 부름</li>
@@ -132,48 +156,63 @@
 <li>좀비 프로세스가 생긴다는 건 부모 프로세스에 문제가 있다는 것!</li>
 </ul>
 </li>
-<li><p>echo $? 이전 명령어의 리턴값</p>
+<li>
+<p>echo $? 이전 명령어의 리턴값</p>
 </li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">touch qwer</span><br><span class="line">rm qwer</span><br><span class="line">echo $?</span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">rm qwer</span><br><span class="line">echo $?</span><br><span class="line">1</span><br><span class="line"></span><br><span class="line">rm -f qwer</span><br><span class="line">echo $?</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
 <ul>
-<li>rm --force 옵션에 대하 오래<ul>
+<li>rm --force 옵션에 대하 오래
+<ul>
 <li>UNIX command 특히 rm과 같으 optional하 기능에 --force 옵션이 존재하는 것은 child process로 작동할 때 exit code르 조작하기 위함.</li>
 </ul>
 </li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">cat Makefile</span><br><span class="line">all:</span><br><span class="line">  @echo &#x27;Clear temprary files&#x27;</span><br><span class="line">  rm *.tmp</span><br><span class="line">  @echo &#x27;All temporary files are deleted on current dir.&#x27;</span><br><span class="line"></span><br><span class="line">$ touch hello.tmp; ls</span><br><span class="line">Makefile hello.tmp</span><br><span class="line">$make</span><br><span class="line">Clear temporary files</span><br><span class="line">rm *.tmp</span><br><span class="line">All temporary files are deleted on current dir.</span><br><span class="line">$ ls</span><br><span class="line">Makefile</span><br><span class="line">$ make</span><br><span class="line">Clear temporary files</span><br><span class="line">rm *.tmp</span><br><span class="line">rm: cannot remove &#x27;*.tmp&#x27;: No such file or directory</span><br><span class="line">make: *** [Makefile:3: all] Error 1</span><br><span class="line"></span><br><span class="line">all:</span><br><span class="line">  @echo &#x27;Clear temprary files&#x27;</span><br><span class="line">  rm -f *.tmp</span><br><span class="line">  @echo &#x27;All temporary files are deleted on current dir.&#x27;</span><br></pre></td></tr></table></figure>
 <ul>
-<li><p>make 외에 gradle이나 다른 빌드 툴도 동일한 기능으로 작동하느 것들이 많다.</p>
+<li>
+<p>make 외에 gradle이나 다른 빌드 툴도 동일한 기능으로 작동하느 것들이 많다.</p>
 </li>
-<li><p>프로세스의 main 함수의 리턴값 == exit code</p>
+<li>
+<p>프로세스의 main 함수의 리턴값 == exit code</p>
 </li>
-<li>부모 프로세스가 자식 프로세스가 어떻게 종료되었는지 알수 있다.</li>
-<li>shell script도 정상 작동이 아닌 경우 return 값을 0이 아닌 값을 줘야한다.</li>
-<li>셸의 명령 기능을 조합하여 batch 처리를 목표로 한다.<ul>
+<li>
+<p>부모 프로세스가 자식 프로세스가 어떻게 종료되었는지 알수 있다.</p>
+</li>
+<li>
+<p>shell script도 정상 작동이 아닌 경우 return 값을 0이 아닌 값을 줘야한다.</p>
+</li>
+<li>
+<p>셸의 명령 기능을 조합하여 batch 처리를 목표로 한다.</p>
+<ul>
 <li>외부 명령어와 built-in 명령어르 조합</li>
 <li>그 외에 perl(정규표현식 사용 많을 때), python(c언어와의 연동을 생각하면), ruby와 같으 스크립트 언어 사용</li>
 </ul>
 </li>
 </ul>
-<h3 id="variable"><a href="#variable" class="headerlink" title="variable"></a>variable</h3><ul>
-<li>declareation<ul>
+<h3 id="variable">variable</h3>
+<ul>
+<li>declareation
+<ul>
 <li>[set] name=value 변수 선언/변경</li>
 </ul>
 </li>
-<li>expression<ul>
+<li>expression
+<ul>
 <li>${name} 중괄호 생략가능하지만 그냥 써라</li>
 </ul>
 </li>
-<li>removal<ul>
-<li>unset \<name\></li>
+<li>removal
+<ul>
+<li>unset &lt;name&gt;</li>
 </ul>
 </li>
 <li>셸 프로그래밍 문법에서 공백(space)의 역할은 중요!</li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ var1=&quot;Macallan&quot;</span><br><span class="line">$ echo $var1</span><br><span class="line">Macallan</span><br><span class="line"></span><br><span class="line">$ var1 = &quot;Tallicker&quot;</span><br><span class="line">오류 남. 공백 쓰지마</span><br></pre></td></tr></table></figure>
 <ul>
-<li>환경 변수<ul>
+<li>환경 변수
+<ul>
 <li>셸 변수에 상속 속성을 설정. folk 하는 경우 child process에 상속됨</li>
 <li>c언어 프로그램에서는 getenv()로 환경 변수르 읽을 수 있음</li>
 <li>새롭게 시작하는 child 프로세스에 설정을 넘겨주는 용도로 주로 사용</li>
@@ -188,51 +227,66 @@
 <li>~/.bashrc 에 PATH 선언을 하지마라. 여러번 import 하면 PATH가 엉망이 된다.</li>
 <li>pathmunge 셸함수를 사용해 PATH를 추가!</li>
 <li>shell variable scope은 process life-cycle과 같다</li>
-<li>permanency르 제공하려면<ul>
+<li>permanency르 제공하려면
+<ul>
 <li>rc(run command, runtime config)나 profile에 변수의 값으 저장시켜야한다.</li>
 <li>.bashrc, .bash_profile이 그 역할을 함</li>
 </ul>
 </li>
 </ul>
-<h3 id="Involking-Type"><a href="#Involking-Type" class="headerlink" title="Involking Type"></a>Involking Type</h3><ul>
-<li>Authentication 과정에 따른 분류<ul>
+<h3 id="Involking-Type">Involking Type</h3>
+<ul>
+<li>
+<p>Authentication 과정에 따른 분류</p>
+<ul>
 <li>login shell, non-login shell</li>
 </ul>
 </li>
-<li>Command-execution 방식에 따른 분류<ul>
+<li>
+<p>Command-execution 방식에 따른 분류</p>
+<ul>
 <li>interative shell, non-interactive shell</li>
 </ul>
 </li>
-<li><p>총 세가지 방식의 조합이 사용됨</p>
+<li>
+<p>총 세가지 방식의 조합이 사용됨</p>
 <ul>
 <li>interactive login chell</li>
 <li>interactive non-login shell</li>
 <li>non-interactive shell</li>
 </ul>
 </li>
-<li><p>login shell</p>
+<li>
+<p>login shell</p>
 <ul>
 <li>import /etc/profile (if exist) global profile</li>
-<li>~/.bash_profile, ~/.bash_login, ~/.profile 순으로 읽어옴<ul>
+<li>~/.bash_profile, ~/.bash_login, ~/.profile 순으로 읽어옴
+<ul>
 <li>RH 계열은 .bash_profile debian 계열은 .profile 주로 사용</li>
 </ul>
 </li>
 <li>종료시 ~/.bash_logout 을 실행 (if exist)</li>
 </ul>
 </li>
-<li>non-login shell<ul>
-<li>import ~/.bashrc (if exist)<ul>
+<li>
+<p>non-login shell</p>
+<ul>
+<li>import ~/.bashrc (if exist)
+<ul>
 <li>일반적으로 ~/.bash_profile 에 .bashrc를 import 하는 코드가 들어있음</li>
 </ul>
 </li>
-<li>non-login shell은 X window에서 실행된 terminal 애플리케이션이나 su로 열리는 셸<ul>
+<li>non-login shell은 X window에서 실행된 terminal 애플리케이션이나 su로 열리는 셸
+<ul>
 <li>su - login shell</li>
 <li>su non-login shell</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>.bash_profile에 아래 내용 추가</li>
+<li>
+<p>.bash_profile에 아래 내용 추가</p>
+</li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export TERM=xterm-256color</span><br></pre></td></tr></table></figure>
 <ul>
@@ -240,7 +294,8 @@
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">alias enus=&quot;export LANG=en_US.UTF-8; export LANGUAGE=&quot;</span><br><span class="line">alias kokr=&quot;export LANG=ko_KR.UTF-8; export LANGUAGE=en:ko&quot;</span><br><span class="line">alias vi=vim</span><br><span class="line">alias man=&quot;LANG=en_US.utf8 man&quot;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>import, source<ul>
+<li>import, source
+<ul>
 <li>. 혹은 source 명령을 사용한다.</li>
 </ul>
 </li>
@@ -251,13 +306,15 @@
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ cat hellobash.sh</span><br><span class="line">#!/bin/bash</span><br><span class="line">echo Hello bash</span><br><span class="line">echo $-</span><br><span class="line">$ chmod 755 ./hellobash.sh</span><br><span class="line"></span><br><span class="line">$ ./hellobash.sh</span><br><span class="line">Hello bash</span><br><span class="line">hB</span><br><span class="line"></span><br><span class="line">$ bash ./hellobash.sh</span><br><span class="line">Hello bash</span><br><span class="line">hB</span><br><span class="line"></span><br><span class="line">$ source ./hellobash.sh -&gt; interactive shell에서 실행을 의미</span><br><span class="line">Hello bash</span><br><span class="line">himBH</span><br></pre></td></tr></table></figure>
 <ul>
-<li>non-interative 에서 option을 변경하려면?<ul>
+<li>non-interative 에서 option을 변경하려면?
+<ul>
 <li>명령을 실행할 때 옵션을 주거나 script 안에 명령을 넣거나</li>
 </ul>
 </li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ bash -e ./hellobash.sh</span><br><span class="line">Hello bash</span><br><span class="line">ehB</span><br><span class="line"></span><br><span class="line">$ cat hellobash.sh</span><br><span class="line">#!/bin/bash</span><br><span class="line">set -o errexit</span><br><span class="line">echo Hello bash</span><br><span class="line">echo $-</span><br></pre></td></tr></table></figure>
-<h3 id="script-구조"><a href="#script-구조" class="headerlink" title="script 구조"></a>script 구조</h3><ul>
+<h3 id="script-구조">script 구조</h3>
+<ul>
 <li>실행 셸 선언부 #!(셔뱅/시뱅/쉬뱅)으로 시작</li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">#!/usr/bin/env bash</span><br><span class="line">#! /usr/bin/env LANG=en_US.UTF-8 bash</span><br><span class="line"># 실행 셸 선언 위 3개 중 하나 사용 가능</span><br><span class="line"># 아래는 스크립트 부분</span><br><span class="line">src_dir=$HOME</span><br><span class="line">echo -n &quot;Your home directory : &quot;</span><br><span class="line">echo $src_dir</span><br></pre></td></tr></table></figure>
@@ -268,17 +325,21 @@
 <ul>
 <li>sh 와 bash는 다른 것</li>
 </ul>
-<h3 id="Variable"><a href="#Variable" class="headerlink" title="Variable"></a>Variable</h3><ul>
-<li>전역변수 기본값<ul>
+<h3 id="Variable">Variable</h3>
+<ul>
+<li>전역변수 기본값
+<ul>
 <li>자식 프로세스에 상속도 됨. 대부분 이거 씀</li>
 </ul>
 </li>
-<li>지역변수<ul>
+<li>지역변수
+<ul>
 <li>local var_name[=value]</li>
 </ul>
 </li>
 <li>변수에 공백이 있으면 single/double quotation으로 묶어야 함</li>
-<li>quotation mark<ul>
+<li>quotation mark
+<ul>
 <li>double quotes 문자열으 표기, $ 괄호 등의 특수 문자를 해석</li>
 <li>single quotes 문자열으로 표기, 특수 문자르 그대로 표현</li>
 <li>back slash 문자의 특수한 기능으 제거하여 일반 문자로 인식시킴. 이스케이프 시킴.</li>
@@ -288,42 +349,48 @@
 </li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">OS_RELEASE=/etc/os-release</span><br><span class="line">OS_REL_ID=`grep &#x27;^ID=&#x27; $OS_RELEASE | cut -d &#x27;=&#x27; -f 2 | tr -d &#x27;&quot;&#x27;` </span><br><span class="line">OS_REL_VER=`grep &#x27;^VERSION=&#x27; $OS_RELEASE | cut -d &#x27;=&#x27; -f 2`</span><br><span class="line">OS_KERNEL_VER=`uname -r`</span><br><span class="line">echo &quot;$OS_REL_ID $OS_REL_VER | $OS_KERNEL_VER&quot;</span><br></pre></td></tr></table></figure>
-<h3 id="Condition-조건문"><a href="#Condition-조건문" class="headerlink" title="Condition 조건문"></a>Condition 조건문</h3><ul>
+<h3 id="Condition-조건문">Condition 조건문</h3>
+<ul>
 <li>if</li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">if [ condition ] ; then ... fi</span><br><span class="line"># condition 앞과 뒤에 공백이 있어야 함</span><br><span class="line"># condition은 test 실행기로 대체 가능</span><br><span class="line">if [ &quot;구문&quot; [-a|-o] &quot;구문&quot; [-a|-o] ... ]; then</span><br><span class="line">  shell_command</span><br><span class="line">fi</span><br><span class="line">if [ &quot;구문&quot; [-a|-o] &quot;구문&quot; [-a|-o] ... ]; then shell_command; fi</span><br><span class="line">test &quot;구문&quot; [-a|-o] &quot;구문&quot; [-a|-o] ... </span><br></pre></td></tr></table></figure>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">if [ $USER != &quot;root&quot; ]; then</span><br><span class="line">  echo &quot;!root&quot;</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">//좋다</span><br><span class="line">[ $USER != &quot;root&quot; ] &amp;&amp; echo &quot;not root&quot; </span><br><span class="line">//중간 </span><br><span class="line">test $USER != &quot;root&quot; &amp;&amp; echo &quot;not root&quot;</span><br><span class="line">//별로 외부 명령을 불러다 쓰는 경우로 성능 이슈</span><br><span class="line">/usr/bin/test $USER != &quot;root&quot; &amp;&amp; echo &quot;not root&quot;</span><br></pre></td></tr></table></figure>
 <ul>
-<li><p>산술 연산자</p>
+<li>
+<p>산술 연산자</p>
 <ul>
 <li>-eq equal</li>
 <li>-ne not equal</li>
 <li>-gt greater than</li>
 <li>-ge greater equal</li>
-<li>-lt less than </li>
+<li>-lt less than</li>
 <li>-le less equal</li>
 </ul>
 </li>
-<li><p>문자열 연산자</p>
+<li>
+<p>문자열 연산자</p>
 <ul>
-<li>=, \== 같음 띄어쓰기르 안하면 할당 연산임</li>
+<li>=, == 같음 띄어쓰기르 안하면 할당 연산임</li>
 <li>!= 다름</li>
 <li>-z A 문자열 A 길이가 zero면 참</li>
 <li>-n A 문자열 A 길이가 zero가 아니면 참</li>
 </ul>
 </li>
-<li><p>결합 연산자</p>
+<li>
+<p>결합 연산자</p>
 <ul>
 <li>-a and</li>
 <li>-o or</li>
 </ul>
 </li>
-<li><p>단항 연산자</p>
+<li>
+<p>단항 연산자</p>
 <ul>
 <li>!A A결과의 부정</li>
 </ul>
 </li>
-<li><p>파일 테스트</p>
+<li>
+<p>파일 테스트</p>
 <ul>
 <li>-r 해당 file이 존재하고 읽기 가능하면 true</li>
 <li>-w 해당 file이 존재하고 쓰기 가능하면 true</li>
@@ -349,19 +416,23 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if [ condition1 ]; then</span><br><span class="line"></span><br><span class="line">elif [ codition2 ]; then</span><br><span class="line"></span><br><span class="line">else</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>/usr/bin/run-parts 파일 확인!</p>
 <ul>
-<li><p>short-circuit</p>
+<li>
+<p>short-circuit</p>
 <ul>
 <li>A &amp;&amp; B 앞이 참이며 뒤가 실행</li>
 <li>A || B</li>
 </ul>
 </li>
-<li><p>다중 상태 분기 case</p>
+<li>
+<p>다중 상태 분기 case</p>
 </li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">case $test_variable in</span><br><span class="line">value1)</span><br><span class="line">  ...</span><br><span class="line">  ;;</span><br><span class="line">value2)</span><br><span class="line">  ...</span><br><span class="line">  ;;</span><br><span class="line">*)</span><br><span class="line">  default 값일때</span><br><span class="line">  ;;</span><br><span class="line">esac</span><br><span class="line"></span><br><span class="line">// 예제</span><br><span class="line">case $answer in</span><br><span class="line">  y*|Y*)</span><br><span class="line">    commands...</span><br><span class="line">    ;;</span><br><span class="line">  n*|N*)</span><br><span class="line">    commands...</span><br><span class="line">    ;;</span><br><span class="line">  *)</span><br><span class="line">    echo &quot;잘못된 입력입니다&quot;</span><br><span class="line">    ;;</span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
 <p>pathmunge 확인하자</p>
-<h3 id="loop-순환문-및-그-외"><a href="#loop-순환문-및-그-외" class="headerlink" title="loop 순환문 및 그 외"></a>loop 순환문 및 그 외</h3><ul>
-<li>while<ul>
+<h3 id="loop-순환문-및-그-외">loop 순환문 및 그 외</h3>
+<ul>
+<li>while
+<ul>
 <li>test 구문이 true인 경우 loop</li>
 </ul>
 </li>
@@ -373,39 +444,38 @@
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">for iterator in val1 val2 ...</span><br><span class="line">do</span><br><span class="line">  command...</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">for fname in * ; do</span><br><span class="line">  echo &quot;file : $fname&quot;</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">for names in aa bb cc ; do</span><br><span class="line">  echo &quot;Name : $names&quot;</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">for i in `seq 1 10`</span><br><span class="line">do</span><br><span class="line">  echo &quot;sequence : $i&quot;</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">for i in `seq 1 2 10`</span><br><span class="line">do</span><br><span class="line">  echo &quot;sequence : $i&quot;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
 <ul>
-<li>until<ul>
+<li>until
+<ul>
 <li>test 구문이 false인 경우 loop 실행</li>
 </ul>
 </li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">until [ test condition ]</span><br><span class="line">do</span><br><span class="line">  commands...</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
 <ul>
-<li>select<ul>
+<li>select
+<ul>
 <li>메뉴 선택으 위한 기능(from ksh)</li>
 <li>잘 안써요</li>
 </ul>
 </li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select menu in [ lists ... ]</span><br><span class="line">do</span><br><span class="line">  title...</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
-<h3 id="Expression"><a href="#Expression" class="headerlink" title="Expression"></a>Expression</h3><ul>
+<h3 id="Expression">Expression</h3>
+<ul>
 <li>변수 길이</li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ myname=sunyzero</span><br><span class="line">$ echo $(#myname)</span><br><span class="line">8</span><br><span class="line">$ echo $(myname:2&#125;</span><br><span class="line">nyzero</span><br><span class="line">$ echo $&#123;myname:2:3&#125;</span><br><span class="line">nyz</span><br><span class="line">$ echo $&#123;myname:0:-2&#125;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>2가지 지정 가능 타입<ul>
+<li>2가지 지정 가능 타입</li>
 <li>정수형 integer</li>
 <li>배열. indexed array, associative array</li>
 <li>dictionary에 가까움 index는 키가 정수</li>
 </ul>
-</li>
-</ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">$ ii=123</span><br><span class="line">$ echo $11</span><br><span class="line">123</span><br><span class="line"></span><br><span class="line">$ ((ii++))</span><br><span class="line">$ echo $ii</span><br><span class="line">124</span><br><span class="line">$ii=hello</span><br><span class="line">$ echo $ii</span><br><span class="line">hello</span><br><span class="line"></span><br><span class="line">// 숫자만 넣을 수 있다</span><br><span class="line">$ declare -i jj </span><br><span class="line">$ jj=234</span><br><span class="line">$ echo $jj</span><br><span class="line">234</span><br><span class="line"></span><br><span class="line">$ jj=hello</span><br><span class="line">$ echo $jj</span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">$ jj=256</span><br><span class="line">$ ((jj+=64))</span><br><span class="line">$ echo $jj</span><br><span class="line">320</span><br><span class="line"></span><br><span class="line">//수식 안에서 공백은 자유롭게 사용</span><br><span class="line">$ (( kk = (jj*2) ))</span><br><span class="line">$ echo $kk</span><br><span class="line">640</span><br><span class="line"></span><br><span class="line">// 계산 결과 치환은 $(()) 사용</span><br><span class="line">$ echo &quot;Value = $(( kk + jj ))&quot;</span><br><span class="line">Value = 960</span><br></pre></td></tr></table></figure>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">$ declare -a arrayv=(&#x27;hello world&#x27; &quot;posix.1&quot; &quot;SUSv1&quot;)</span><br><span class="line"># echo $(#arrayv[@]&#125;</span><br><span class="line">3</span><br><span class="line">$ echo $&#123;arrayv[@]:1&#125;</span><br><span class="line">posix.1 SUSv1</span><br><span class="line">$ arrayv+=( &quot;SUSv2&quot;)//공백은 맘대로</span><br><span class="line">$ echo $(#arrayv[@])</span><br><span class="line">4</span><br><span class="line">$ echo $&#123;arrayv[@]&#125;</span><br><span class="line">hello world posix.1 SUSv1 SUSv2</span><br><span class="line">$ unset arrayv[1]</span><br><span class="line">$ echo $&#123;arrayv[@]&#125;</span><br><span class="line">hello world SUSv1 SUSv2</span><br><span class="line">$ echo $(#arrayv[@])</span><br><span class="line">3</span><br><span class="line">$ echo $&#123;!arrayv[@]&#125;</span><br><span class="line">0 2 3</span><br><span class="line">$ arrayv+=( &quot;SUSv3&quot; )</span><br><span class="line">$ echo $&#123;!arrayv[@]&#125; // 빈 index가 생김</span><br><span class="line">0 2 3 4</span><br><span class="line">$ echo $&#123;arrayv[@]&#125;</span><br><span class="line">hello world SUSv1 SUSv2 SUSv3</span><br><span class="line"></span><br><span class="line">$ for ii in $&#123;arrayv[@]&#125;; do echo &quot;=&gt;|$ii|&quot;; done</span><br><span class="line">이렇게 하면 띄어쓰기 기준으로 출력하기 때문에 IFS의 첫번째 문자르 구분자로 사용 아래와 같이 써줘야 한다.</span><br><span class="line">$ for ii in &quot;$&#123;array[@]&#125;&quot;; do echo &quot;=&gt;|$ii|&quot;; done</span><br><span class="line"></span><br><span class="line">$ for ii in $&#123;arrayv[*]&#125;; do echo &quot;=&gt;|$ii|&quot;; done</span><br><span class="line">이건 @똑같이 처리</span><br><span class="line">$ for ii in &quot;$&#123;arrayv[*]&#125;&quot;; do echo &quot;=&gt;|$ii|&quot;; done</span><br><span class="line">전체가 하나의 문자로 처리</span><br></pre></td></tr></table></figure>
 <ul>
-<li>IFS<ul>
+<li>IFS</li>
 <li>Internal Field Separator로 데이터 처리시 중요!!</li>
-</ul>
-</li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ echo -n &quot;$IFS&quot; | hexdump -C</span><br><span class="line">00000000 20 09 0a</span><br><span class="line">00000003</span><br></pre></td></tr></table></figure>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//ifs를 , 로 설정</span><br><span class="line">$ IFS=&#x27;,&#x27;</span><br><span class="line">$ for ii in $&#123;arrayv[@]&#125;; do echo &quot;=&gt;|$ii|&quot;; done</span><br><span class="line">이렇게 해주면 구분자를 , 로 사용한다. 출려 결과가 바뀐다.</span><br><span class="line"></span><br><span class="line">$ for ii in &quot;$&#123;arrayv[*]&#125;&quot;; do echo &quot;=&gt;|$ii|&quot;; done</span><br><span class="line">, 를 구분자로 하는 한문장으로 출력 됨!</span><br></pre></td></tr></table></figure>
@@ -414,11 +484,22 @@
 <li>associative array</li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ declare -A mem_spec=([bank=&quot;ddr4&quot; [vendor]=&quot;sec&quot; [capacity]=&quot;32&quot;</span><br><span class="line">$ echo $(mem_spec[@]&#125;</span><br><span class="line">ddr4 sec 32</span><br><span class="line">$ echo $&#123;mem_spec[vendor]&#125;</span><br><span class="line">sec</span><br><span class="line">$ echo $(!mem_spec[@]&#125;//키 값 출력</span><br><span class="line">bank vendor capacity</span><br><span class="line">$ mem_spec+=([clock speed]=3200)//공백문자 허용</span><br><span class="line">$ echo $(mem_spec[@]&#125;</span><br><span class="line">ddr4 sec 3200 32//순서 무시</span><br></pre></td></tr></table></figure>
-<h3 id="Special-Parameters"><a href="#Special-Parameters" class="headerlink" title="Special Parameters"></a>Special Parameters</h3><p>$$ | 현재 셸 프로세스의 PID $()로 묶이 서브셸로 실행될 경우 치환이 먼저 이뤄지므로 부모 프로세스의 PID가 나온다.<br>$! | 마지막으로 실행된 백그라운드 프로세스의 PID<br>$? | 최근 포그라운드 프로세스의 종료값 (zero=true, otherwise=false)<br>$_ | 이전 명령어의 마지막 인수 (!$)<br>$- | on 되어있는 실행 옵션<br>$# | 인수의 개수<br>$0, $1, $2, .. | 인수 리스트(argv)<br>$* | 명령에 전달된 인수 전체의 목록. double-quote으로 감싼 경우 IFS의 첫번째 문자르 구분자로 사용하여 1개의 문자열화<br>$@ | 전달 인수르 문자열의 배열로 표시</p>
+<h3 id="Special-Parameters">Special Parameters</h3>
+<p>$$ | 현재 셸 프로세스의 PID $()로 묶이 서브셸로 실행될 경우 치환이 먼저 이뤄지므로 부모 프로세스의 PID가 나온다.<br>
+$! | 마지막으로 실행된 백그라운드 프로세스의 PID<br>
+$? | 최근 포그라운드 프로세스의 종료값 (zero=true, otherwise=false)<br>
+$_ | 이전 명령어의 마지막 인수 (!$)<br>
+$- | on 되어있는 실행 옵션<br>
+$# | 인수의 개수<br>
+$0, $1, $2, … | 인수 리스트(argv)<br>
+$* | 명령에 전달된 인수 전체의 목록. double-quote으로 감싼 경우 IFS의 첫번째 문자르 구분자로 사용하여 1개의 문자열화<br>
+$@ | 전달 인수르 문자열의 배열로 표시</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">if [ $# -eq 0 ]; then</span><br><span class="line"> echo &quot;Usage: $0 &lt;quote string ...&gt;&quot;</span><br><span class="line"> exit 1</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">echo &quot;argv[0]: $0&quot;</span><br><span class="line">echo &quot;argv[1]: $1&quot;</span><br><span class="line"></span><br><span class="line">for arg_list in $*; do</span><br><span class="line">  echo &#x27;$* : param =&#x27; $arg_list</span><br><span class="line">done </span><br><span class="line"></span><br><span class="line">for arg_list in &quot;$*&quot;; do</span><br><span class="line">  echo &#x27;&quot;$*&quot; : param =&#x27; $arg_list</span><br><span class="line">done </span><br><span class="line"></span><br><span class="line">for arg_list in #@; do</span><br><span class="line">  echo &#x27;$@ : param =&#x27; $arg_list</span><br><span class="line">done </span><br><span class="line"></span><br><span class="line">for arg_list in &quot;$@&quot;; do</span><br><span class="line">  echo &#x27;&quot;$@&quot; : param =&#x27; $arg_list</span><br><span class="line">done </span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">if [ $# -eq 0 ]; then</span><br><span class="line">  echo &quot;Usage: $0 &lt;backup dir&gt; [...]&quot;</span><br><span class="line">  exit 1</span><br><span class="line">if</span><br><span class="line"></span><br><span class="line">destdir=$1</span><br><span class="line">basename=$(basename $1)</span><br><span class="line">date_now=$(date +%Y%m%d-%H%M%S)</span><br><span class="line">#tarball=$&#123;basename&#125;_$&#123;date_now&#125;.tar.gz</span><br><span class="line">tarball=$&#123;basename&#125;_$&#123;date_now&#125;.tar.zst</span><br><span class="line">for tdir in &quot;$@&quot;;</span><br><span class="line">do</span><br><span class="line">  if [ ! -d &quot;$tdir&quot; ]; then</span><br><span class="line">    echo &quot;ENOENT: $tdir&quot;</span><br><span class="line">    exit 1</span><br><span class="line">done</span><br><span class="line">#tar cfa $tarball $* 2&gt; $&#123;basename&#125;_$&#123;date_now&#125;_stderr.log</span><br><span class="line">2&gt; $&#123;basename&#125;_$&#123;date_now&#125;_stderr.log tar c $* | zstd -T2 &gt; $tarball</span><br><span class="line">echo &quot;New tarball: $tarball&quot;</span><br></pre></td></tr></table></figure>
-<h3 id="stdio"><a href="#stdio" class="headerlink" title="stdio"></a>stdio</h3><ul>
-<li><p>history</p>
+<h3 id="stdio">stdio</h3>
+<ul>
+<li>
+<p>history</p>
 <ul>
 <li>C 언어로부터 유래</li>
 <li>추상화된 입출려 계층이 필요. 장치에 대해 투명성(transparency)을 제공</li>
@@ -426,7 +507,8 @@
 <li>유닉스 계열의 /dev/*를 오픈할 때 fd를 부여</li>
 </ul>
 </li>
-<li><p>stdio</p>
+<li>
+<p>stdio</p>
 <ul>
 <li>stdin standard input 0</li>
 <li>stdout standard out 1</li>
@@ -435,7 +517,8 @@
 <li>기본적으로 연결된 stdin은 특정 파일에 연결시킬 수 있음</li>
 </ul>
 </li>
-<li><p>redirection</p>
+<li>
+<p>redirection</p>
 <ul>
 <li>/&gt; 표준 출력을 파일로</li>
 <li>/&gt;/&gt; 표준 출력으 기존의 파일에 덧붙이거나 없으며 새 파일</li>
@@ -445,12 +528,17 @@
 </li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">car &gt;myff.log</span><br><span class="line">: &gt;myff.log</span><br><span class="line">&gt;myff.log</span><br></pre></td></tr></table></figure>
-<p>\&lt;&amp;# | 표준 입력을 파일에서<br>#>  | fd #번을 파일로<br>&amp;>  | stdout, stderr을 파일로<br>>&amp;# | 출력을 fd #으로<br>a | b | 리다이렉션파이프, a의 표준출력은 b의 표준입려으로 연결됨</p>
+<p>&lt;&amp;# | 표준 입력을 파일에서<br>
+#&gt;  | fd #번을 파일로<br>
+&amp;&gt;  | stdout, stderr을 파일로<br>
+&gt;&amp;# | 출력을 fd #으로<br>
+a | b | 리다이렉션파이프, a의 표준출력은 b의 표준입려으로 연결됨</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ ./redirection.sh &gt; redirection.txt</span><br><span class="line">+ Message : stderr</span><br><span class="line">$ ./redirection.sh 2&gt;&amp;1 | cat &gt; redirection.txt</span><br><span class="line">$ ./redirection.sh 2&gt;&amp;1 | tee redirection.txt</span><br><span class="line"></span><br><span class="line">$ sysctl -a | grep tcp</span><br><span class="line">blabla</span><br><span class="line">$ sysctl -a 2&gt;/dev/null | grep tcp</span><br></pre></td></tr></table></figure>
 <ul>
 <li>pipe redirection</li>
 </ul>
-<p>>(cmd) | anonymous pipe로 만들어 cmd 명령에 보내어 출력 cmd 실행 결과는 임시 anonymous pipe인 /dev/fd/60 으로 매핑된다.<br>\&lt;(cmd) | cmd 명령 결과를 anonymous pipe로 보내어 읽어들인다. cmd 실행 결과는 임시 anonymous pipe인 /dev/fd/63 으로 매핑된다.</p>
+<p>&gt;(cmd) | anonymous pipe로 만들어 cmd 명령에 보내어 출력 cmd 실행 결과는 임시 anonymous pipe인 /dev/fd/60 으로 매핑된다.<br>
+&lt;(cmd) | cmd 명령 결과를 anonymous pipe로 보내어 읽어들인다. cmd 실행 결과는 임시 anonymous pipe인 /dev/fd/63 으로 매핑된다.</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">while : ; do</span><br><span class="line">  sleep 1</span><br><span class="line">  echo &quot;$(date) STDOUT&quot;</span><br><span class="line">  echo &quot;$(data) STDERR&quot; &gt;&amp;2</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">#!/bin/bash</span><br><span class="line">PREFIX_STR=$1</span><br><span class="line">while read logline; do</span><br><span class="line">  echo &quot;$PREFIX_STR : $logline&quot; &gt;&gt; log_$&#123;PREFIX_STR).log</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">$ ./deamon.sh &gt; &gt;(./proclog.sh INFO) 2&gt; &gt;(./proclog.sh ERR) &amp;</span><br><span class="line"></span><br><span class="line">$ tail log_INFO.txt</span><br><span class="line">$ tail log_ERR.txt</span><br></pre></td></tr></table></figure>
 <ul>
 <li>HERE document redirection</li>
@@ -465,14 +553,17 @@
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;... &#125; &gt;file.txr</span><br></pre></td></tr></table></figure>
 <ul>
-<li>named PIPE<ul>
+<li>named PIPE
+<ul>
 <li>PIPE의 특징. 직렬 통신 제공, 가벼움</li>
-<li>UNIX는 전통적으로 2 종류의 PIPE를 지원함<ul>
+<li>UNIX는 전통적으로 2 종류의 PIPE를 지원함
+<ul>
 <li>named pipe: external interface가 있는 경우 = 이름이 있다고 표현 mkfifo로 생성</li>
 <li>anonymous, unamed pipe: temporal한 경우 = 이름이 없다고 표현 셸에서 vertical bar로 호출 pipe, popen 시스템콜로 생성</li>
 </ul>
 </li>
-<li>file 이란 무엇인가<ul>
+<li>file 이란 무엇인가
+<ul>
 <li><a target="_blank" rel="noopener" href="https://sunyzero.tistory.com/260">https://sunyzero.tistory.com/260</a></li>
 </ul>
 </li>
@@ -480,26 +571,38 @@
 </li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ mkfifo /tmp/myfifo_m1</span><br><span class="line">$ ls -l !$</span><br><span class="line">blabla</span><br><span class="line"></span><br><span class="line">$ ps -ef &gt; /temp/myfifo_m1</span><br><span class="line">blabla</span><br><span class="line"></span><br><span class="line">$ grep sbin /tmp/myfifo_m1</span><br><span class="line">blabla</span><br></pre></td></tr></table></figure>
-<h3 id="괄호-기능-총정리"><a href="#괄호-기능-총정리" class="headerlink" title="괄호 기능 총정리"></a>괄호 기능 총정리</h3><ul>
+<h3 id="괄호-기능-총정리">괄호 기능 총정리</h3>
+<ul>
 <li>소괄호 parentheses</li>
 </ul>
-<p>$(string) | string 문자열을 명령어로 인식하여 sub-shell로 실행. 서브셸에서 선언 or 변경된 값은 서브셸 스코프에서만 유효. string 앞뒤 공백 허용<br>$((string)) | string 해당하는 문자열을 수치 연산을 인식. expr, let으로 대치 가능.(expr은 외부 명령으로 지양) string 앞뒤 공백 허용</p>
+<p>$(string) | string 문자열을 명령어로 인식하여 sub-shell로 실행. 서브셸에서 선언 or 변경된 값은 서브셸 스코프에서만 유효. string 앞뒤 공백 허용<br>
+$((string)) | string 해당하는 문자열을 수치 연산을 인식. expr, let으로 대치 가능.(expr은 외부 명령으로 지양) string 앞뒤 공백 허용</p>
 <ul>
 <li>중괄호 braces</li>
 </ul>
-<p>{… , … , …} | brace expansion. a{1,2,3}b = a1b a2b a3b<br>{ …; …; }     | 현대 셸에서 실행함. 공백, 마지막 세미콜론 생략시 에러 발생</p>
+<p>{… , … , …} | brace expansion. a{1,2,3}b = a1b a2b a3b<br>
+{ …; …; }     | 현대 셸에서 실행함. 공백, 마지막 세미콜론 생략시 에러 발생</p>
 <ul>
-<li><p>대괄호 brackets<br>[…] | 배열 변수의 인덱스<br>[ expression ] | 테스트 구문(expression 부분의 true, false를 테스트)</p>
+<li>
+<p>대괄호 brackets<br>
+[…] | 배열 변수의 인덱스<br>
+[ expression ] | 테스트 구문(expression 부분의 true, false를 테스트)</p>
 </li>
-<li><p>sub-shell 에서 PID, PPID 를 얻어야 하는 경우 변수가 치환되는 시점이 스크립특 해석되느 시점에 결정되기 때문에 오동작이 될 수 있다.</p>
+<li>
+<p>sub-shell 에서 PID, PPID 를 얻어야 하는 경우 변수가 치환되는 시점이 스크립특 해석되느 시점에 결정되기 때문에 오동작이 될 수 있다.</p>
 </li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">sum=0</span><br><span class="line">iter=0</span><br><span class="line">while [ $iter -le 100 ];</span><br><span class="line">do</span><br><span class="line">  (( sum = iter + sum ))</span><br><span class="line">  iter=$(($iter+1))//((iter=iter+1))</span><br><span class="line">  ---- bash 전용</span><br><span class="line">  let sum+=iter</span><br><span class="line">  let iter++</span><br><span class="line">  ---- fork-exec</span><br><span class="line">  sum=`expr $iter + $sum`</span><br><span class="line">  iter=`expr $iter + 1`</span><br><span class="line">  ----</span><br><span class="line">done</span><br><span class="line">echo $sum</span><br></pre></td></tr></table></figure>
-<h3 id="integer"><a href="#integer" class="headerlink" title="integer"></a>integer</h3><ul>
-<li>64bit long integer &lt; after 2.05</li>
-<li><p>floating point 인식 못함</p>
+<h3 id="integer">integer</h3>
+<ul>
+<li>
+<p>64bit long integer &lt; after 2.05</p>
 </li>
-<li><p>let</p>
+<li>
+<p>floating point 인식 못함</p>
+</li>
+<li>
+<p>let</p>
 <ul>
 <li>대부분의 정수 연산이 가능</li>
 <li>base#value 진수 변환 유리</li>
@@ -508,45 +611,53 @@
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">let &quot;vone = 3, vtwo = 4&quot;</span><br><span class="line">let &quot; vthree = vone * vtwo + 1&quot;</span><br><span class="line">echo vthree = $vthree</span><br><span class="line">let &quot;vfour = vthree / 3&quot;</span><br><span class="line">echo vfour = $vfour</span><br><span class="line">(( $vone + $vthree + 10 &gt; 20 ))</span><br><span class="line">if [ $? = 0 ]; then</span><br><span class="line">  echo &quot;True (greater than 20)&quot;</span><br><span class="line">fi</span><br><span class="line">(( (vfive = ($vone + $vthree + 10)) &gt; 20 &amp;&amp; echo &quot;$vfive gt 20&quot;</span><br><span class="line"></span><br><span class="line">let &quot;ioct = 064&quot;//8진수</span><br><span class="line">let &quot;ihex = 0x64</span><br><span class="line">let :ibin = 2#10110111&quot;</span><br><span class="line">echo &quot;oct($ioct) hex($ihex) bin($ibin) base64($ib64)&quot;</span><br><span class="line"></span><br><span class="line"># C-style for loop</span><br><span class="line">for ((i=0, sum=0; i&lt;10000; i++))</span><br><span class="line">do</span><br><span class="line">  ((sum+=i))</span><br><span class="line">done</span><br><span class="line">echo $sum</span><br></pre></td></tr></table></figure>
 <ul>
-<li>braceexpand<ul>
+<li>braceexpand
+<ul>
 <li>set -o | grep brace 로 설정 확인</li>
 </ul>
 </li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">for iter in &#123;0..10&#125;; do; blabla; done</span><br></pre></td></tr></table></figure>
 <ul>
-<li><p>replacement, substitution</p>
+<li>replacement, substitution
 <ul>
-<li><p>확장된 변수 치환법</p>
+<li>
+<p>확장된 변수 치환법</p>
 <ul>
 <li>변수 값의 일부를 반환하는 기법. 위에서 설명함.</li>
 <li>문자열 연산. 일부 삭제. 길이 확인. 일부 치환</li>
 <li>변수명 검색</li>
 </ul>
 </li>
-<li><p>변수 할당</p>
+<li>
+<p>변수 할당</p>
 </li>
 </ul>
 </li>
 </ul>
-<p>${varname:=default} | varname이 null이면 default를 할달. 아니면 기존 값으로 치환<br>${varname:-default} | varname이 null이면 default를 반환. 할당 안함<br>${varname:+alternat} | varname이 nullㅇ 아니면 alternat르 반환. null이며 그대로. 할당 안함<br>${varname:?error} | varname이 null이면 에러 발생 후 error 메시지의 값을 화면에 출력. return code는 1</p>
+<p>${varname:=default} | varname이 null이면 default를 할달. 아니면 기존 값으로 치환<br>
+${varname:-default} | varname이 null이면 default를 반환. 할당 안함<br>
+${varname:+alternat} | varname이 nullㅇ 아니면 alternat르 반환. null이며 그대로. 할당 안함<br>
+${varname:?error} | varname이 null이면 에러 발생 후 error 메시지의 값을 화면에 출력. return code는 1</p>
 <ul>
 <li>prefix/suffix removal</li>
 </ul>
-<p>${varname%pattern} | 후방 탐색으로 pattern과 매칭되는 varname의 값이 삭제됨 %는 non-greedy 매칭 %%는 greedy 매칭<br>${varname#pattern} | 전방 탐색으 pattern과 매칭되는 varname의 값이 삭제됨</p>
+<p>${varname%pattern} | 후방 탐색으로 pattern과 매칭되는 varname의 값이 삭제됨 %는 non-greedy 매칭 %%는 greedy 매칭<br>
+${varname#pattern} | 전방 탐색으 pattern과 매칭되는 varname의 값이 삭제됨</p>
 <ul>
 <li>pattern replacement</li>
 </ul>
 <p>${varname/pat[/replace]}</p>
 <ul>
-<li>glob patterns<ul>
+<li>
+<p>glob patterns</p>
+<ul>
 <li>그림 추가</li>
 <li>참고할만한 문서 <a target="_blank" rel="noopener" href="https://mywiki.wooledge.org/glob">https://mywiki.wooledge.org/glob</a></li>
 </ul>
 </li>
-</ul>
-<ul>
-<li><p>typeset, declare</p>
+<li>
+<p>typeset, declare</p>
 <ul>
 <li>-a 배열변수 선언 -A는 associative array</li>
 <li>-f 함수르 선언. 보통 생략</li>
@@ -558,9 +669,10 @@
 <li>+{aAfirx} 해당 변수의 속성을 해제</li>
 </ul>
 </li>
-<li><p>name</p>
+<li>
+<p>name</p>
 <ul>
-<li>${!varname*}, ${!varname@} </li>
+<li>${!varname*}, ${!varname@}</li>
 </ul>
 </li>
 </ul>

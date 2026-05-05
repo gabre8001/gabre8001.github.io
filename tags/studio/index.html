@@ -30,22 +30,26 @@
       window.addEventListener('hashchange', switchTab, false);
   })();
   </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">우리람부탄</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="검색" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/tags/">태그</a></li><li class="is-active"><a href="#" aria-current="page">studio</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-03-16T15:00:00.000Z" title="2022. 3. 17. 오전 12:00:00">2022-03-17</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:37.033Z" title="2026. 5. 2. 오후 10:27:37">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/Python/">Python</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/03/17/2022-03-17-opencv-start/">Open CV</a></p><div class="content"><p>open cv 설치에 대해 알아본다. 본문에서는 윈도우10과 비주얼 스투디오 2022를 사용하는 환경을 기준으로 한다.</p>
-<h3 id="설치"><a href="#설치" class="headerlink" title="설치"></a>설치</h3><ul>
-<li><p>설치 파일 다운로드</p>
+<h3 id="설치">설치</h3>
+<ul>
+<li>
+<p>설치 파일 다운로드</p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://opencv.org/releases">https://opencv.org/releases</a> 에서 파일 다운로드</li>
 <li>이 글에서는 opencv 버전 4.5.5를 기준으로 한다.</li>
 <li>opencv-4.5.5vc14_vc15.exe 파일 다운로드한다.</li>
 </ul>
 </li>
-<li><p>설치 실행 파일 이용</p>
+<li>
+<p>설치 실행 파일 이용</p>
 <ul>
 <li>opencv-4.5.5vc14_vc15.exe 파일을 실행하면 압축이 풀린다.</li>
 <li>압축을 풀 때 위치를 지정할 수 있다.</li>
 <li>설치는 압축을 푼것으로 완료.</li>
 </ul>
 </li>
-<li><p>opencv 파일 설명</p>
+<li>
+<p>opencv 파일 설명</p>
 <ul>
 <li>opencv/build/include/opencv2 경로에 헤더파일들이 위치한다.</li>
 <li>opencv/build/x64 아래 vc14 vc15 디렉토리가 있다.</li>
@@ -55,45 +59,55 @@
 <li>vc15/lib 경로 아래에는 lib 파일이 있다.</li>
 </ul>
 </li>
-<li><p>환경변수 등록</p>
+<li>
+<p>환경변수 등록</p>
 <ul>
-<li>설치한 opencv 를 사용하기 위해 환경 변수 등록을 해준다.<ul>
+<li>설치한 opencv 를 사용하기 위해 환경 변수 등록을 해준다.
+<ul>
 <li>변수 이름 OPENCV_DIR</li>
 <li>변수 값 opencv/build</li>
 </ul>
 </li>
-<li>path 항목 편집<ul>
-<li>\%OPENCV_DIR\%/x64/vc15/bin 항목 추가</li>
+<li>path 항목 편집
+<ul>
+<li>%OPENCV_DIR%/x64/vc15/bin 항목 추가</li>
 </ul>
 </li>
-<li>cmd 에서 설치 확인<ul>
+<li>cmd 에서 설치 확인
+<ul>
 <li>opencv_version 명령어를 입력하여 버전 정보를 확인 할 수 있으면 설치 완료</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<h3 id="Visual-Studio-2022-프로젝트-만들기"><a href="#Visual-Studio-2022-프로젝트-만들기" class="headerlink" title="Visual Studio 2022 프로젝트 만들기"></a>Visual Studio 2022 프로젝트 만들기</h3><ul>
-<li><p>opencv 새 프로젝트 만들기</p>
+<h3 id="Visual-Studio-2022-프로젝트-만들기">Visual Studio 2022 프로젝트 만들기</h3>
+<ul>
+<li>
+<p>opencv 새 프로젝트 만들기</p>
 <ul>
 <li>새 프로젝트 만들기</li>
 <li>빈 프로젝트 선택</li>
 <li>솔루션 및 프로젝트를 같은 디렉토리에 배치</li>
 </ul>
 </li>
-<li><p>opencv 속성 추가</p>
+<li>
+<p>opencv 속성 추가</p>
 <ul>
-<li>헤더파일 위치 지정<ul>
+<li>헤더파일 위치 지정
+<ul>
 <li>구성 속성 -&gt; C/C++ -&gt; 일반</li>
 <li>추가 포함 디렉터리 항목에 $(OPENCV_DIR)\include 입력</li>
 </ul>
 </li>
-<li>lib 폴더 위치 지정<ul>
+<li>lib 폴더 위치 지정
+<ul>
 <li>구성 속성 -&gt; 링커 -&gt; 일반</li>
 <li>추가 라이브러리 디렉터리 항목에 $(OPENCV_DIR)\x64\vc15\lib 입력</li>
 </ul>
 </li>
-<li>lib 파일 이름 지정<ul>
+<li>lib 파일 이름 지정
+<ul>
 <li>구성 속성 -&gt; 링커 -&gt; 입력</li>
 <li>추가 종속성 항목에 opencv_world455d.dll 추가 (Release 모드는 opencv_world455.lib 추가)</li>
 </ul>

@@ -30,12 +30,19 @@
       window.addEventListener('hashchange', switchTab, false);
   })();
   </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">우리람부탄</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="검색" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/tags/">태그</a></li><li class="is-active"><a href="#" aria-current="page">remote</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-03-01T15:00:00.000Z" title="2022. 3. 2. 오전 12:00:00">2022-03-02</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:37.025Z" title="2026. 5. 2. 오후 10:27:37">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/ROS/">ROS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/03/02/2022-02-30-ros-network/">ROS 원격 노드 통신</a></p><div class="content"><p>ROS 원격 노드 통신에 대해 알아본다.</p>
-<h3 id="ROS-통신"><a href="#ROS-통신" class="headerlink" title="ROS 통신"></a>ROS 통신</h3><ul>
-<li>메시지 발행 노드는 자신의 접속 관련 정보를 마스터에게 전달한다.</li>
-<li>메시지 구독 노드는 자신의 구독 정보를 마스터에게 알리고 접속할 노드의 정보를 마스터로부터 받는다.</li>
-<li><p>구독 노드와 발행 노드는 직접 연결을 하고 토픽을 주고 받는다.</p>
+<h3 id="ROS-통신">ROS 통신</h3>
+<ul>
+<li>
+<p>메시지 발행 노드는 자신의 접속 관련 정보를 마스터에게 전달한다.</p>
 </li>
-<li><p>ROS 사용 통신 프로토콜(TCP/IP)</p>
+<li>
+<p>메시지 구독 노드는 자신의 구독 정보를 마스터에게 알리고 접속할 노드의 정보를 마스터로부터 받는다.</p>
+</li>
+<li>
+<p>구독 노드와 발행 노드는 직접 연결을 하고 토픽을 주고 받는다.</p>
+</li>
+<li>
+<p>ROS 사용 통신 프로토콜(TCP/IP)</p>
 <ul>
 <li>XMLRPC: 노드들이 마스터와 통신할 때 이용</li>
 <li>TCPROS: 각 노드간 통신할 때 이용</li>

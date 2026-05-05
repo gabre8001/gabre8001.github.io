@@ -33,10 +33,12 @@
 <ul>
 <li>포스트를 마크다운 문법과 본문의 쉘 문법이 섞여 정상적으로 나타나지 않을 수 있음을 주의바랍니다.</li>
 </ul>
-<h3 id="vim-시작"><a href="#vim-시작" class="headerlink" title="vim 시작"></a>vim 시작</h3><ul>
+<h3 id="vim-시작">vim 시작</h3>
+<ul>
 <li>vim [filename] 으로 실행</li>
-<li>find . -name “*.txt” &#124; vim -</li>
-<li>vi의 작동모드는 일반모드(normal mode), 입력모드(insert mode), 명령행모드(command-line mode), 비주얼모드(visual mode)가 있음<ul>
+<li>find . -name “*.txt” | vim -</li>
+<li>vi의 작동모드는 일반모드(normal mode), 입력모드(insert mode), 명령행모드(command-line mode), 비주얼모드(visual mode)가 있음
+<ul>
 <li>normal mode에서 a,i,o 입력 -&gt; insert mode 반대는 ESC 입력</li>
 <li>normal mode에서 : 입력 -&gt; command mode 반대는 ESC, 실행</li>
 <li>노말모드에서 단축키로 실행</li>
@@ -46,43 +48,49 @@
 <li>!: force 명령으로 강제 시행을 의미</li>
 </ul>
 </li>
-<li>커서 이동<ul>
+<li>커서 이동
+<ul>
 <li>일반모드에서 화살표키 대신에 h(left), j(down), k(up), l(right) 을 이용하여 커서를 이동</li>
 <li>^: 행의 맨 앞으로 이동(caret)</li>
 <li>$: 행의 맨 끝으로 이동</li>
-<li>\<CTRL-B\>: page up backward</li>
-<li>\<CTRL-F\>: page down forward</li>
-<li>\<CTRL-U\>: 1/2 page up upward</li>
-<li>\<CTRL-D\>: 1/2 page down downward</li>
+<li>&lt;CTRL-B&gt;: page up backward</li>
+<li>&lt;CTRL-F&gt;: page down forward</li>
+<li>&lt;CTRL-U&gt;: 1/2 page up upward</li>
+<li>&lt;CTRL-D&gt;: 1/2 page down downward</li>
 <li>:# -&gt; #행으로 이동</li>
-<li><h1 id="gg-행으로-이동-생략-시-맨위로-이동"><a href="#gg-행으로-이동-생략-시-맨위로-이동" class="headerlink" title="gg: #행으로 이동 # 생략 시 맨위로 이동"></a>gg: #행으로 이동 # 생략 시 맨위로 이동</h1></li>
-<li><h1 id="G-행으로-이동-생략-시-마지막으로-이동"><a href="#G-행으로-이동-생략-시-마지막으로-이동" class="headerlink" title="G: #행으로 이동 # 생략 시 마지막으로 이동"></a>G: #행으로 이동 # 생략 시 마지막으로 이동</h1></li>
+<li>#gg: #행으로 이동 # 생략 시 맨위로 이동</li>
+<li>#G: #행으로 이동 # 생략 시 마지막으로 이동</li>
 </ul>
 </li>
 </ul>
-<h3 id="buffer-사용"><a href="#buffer-사용" class="headerlink" title="buffer 사용"></a>buffer 사용</h3><ul>
-<li>vi에서 삭제 = 임시 버퍼에 잘라내기<ul>
+<h3 id="buffer-사용">buffer 사용</h3>
+<ul>
+<li>vi에서 삭제 = 임시 버퍼에 잘라내기
+<ul>
 <li>x: 커서에 위치한 문자 삭제 = delete키</li>
 <li>dd(:d): 현재 행을 삭제 (3dd는 세줄 삭제)</li>
 <li>D: 현재 컬럼 위치에서 현재행의 끝부분까지 삭제</li>
 <li>J: 아래 행을 현재 행의 끝에 붙임(아래 행의 앞부분 공백은 제거됨)</li>
 </ul>
 </li>
-<li>paste<ul>
+<li>paste
+<ul>
 <li>p: 현재 행에 붙여 넣습니다.(put)(5p 는 5번 반복 붙여넣기)</li>
 <li>pu: 개행 문자가 포함된 경우에는 현재 행의 아래에 붙여 넣습니다.</li>
 <li>P: 현재 행의 위쪽에 붙입니다.(대문자)</li>
 </ul>
 </li>
-<li>copy<ul>
+<li>copy
+<ul>
 <li>yy, :y, Y: 현재 행을 레지스터에 복사(yank)</li>
 </ul>
 </li>
 <li>u: (undo) 바로 이전에 행한 명령 한 개를 취소</li>
-<li>\<CTRL-R\>: (redo) 바로 이전에 취소했던 명령을 다시 실행</li>
+<li>&lt;CTRL-R&gt;: (redo) 바로 이전에 취소했던 명령을 다시 실행</li>
 <li>.: 이전 명령어 반복</li>
 </ul>
-<h3 id="range"><a href="#range" class="headerlink" title="range"></a>range</h3><ul>
+<h3 id="range">range</h3>
+<ul>
 <li>명령행 모드에서 범위를 지정해서 명령</li>
 <li>:20d - 20번 행을 삭제</li>
 <li>:10,25d - 10~25번 행을 삭제</li>
@@ -91,7 +99,8 @@
 <li>:.,+20y - 현재 행부터 아래로 스무행을 복사</li>
 <li>:-10,+5d - 현재 행부터 위로 10행, 아래로 5행, 총 열여섯 행을 삭제</li>
 <li>:40pu - 40번 행에 레지스터의 내용 붙여넣기</li>
-<li>범위 연산 meta character<ul>
+<li>범위 연산 meta character
+<ul>
 <li>.: 현재 행을 의미(relative path의 현재 디렉터리와 유사)</li>
 <li>$: 마지막 행을 의미 (REGEX의 $와 유사)</li>
 <li>+#: 현재 위치에서 #만큼 아래 행을 의미</li>
@@ -100,14 +109,16 @@
 </ul>
 </li>
 </ul>
-<h3 id="visual-mode"><a href="#visual-mode" class="headerlink" title="visual mode"></a>visual mode</h3><ul>
+<h3 id="visual-mode">visual mode</h3>
+<ul>
 <li>mouse의 drag 기능을 대신</li>
 <li>v: (소문자) 일반 비주얼 모드로 현재 커서 위치에서 블록을 지정</li>
 <li>V: (대문자) visual line mode로, 현재 커서가 위치한 행에서 행 단위로 블록을 지정</li>
-<li>\<CTRL-V\>: visual block mode, 열(column)단위로 블록을 지정(ctrl + q 로 사용하기도 함)</li>
-<li>column editing<ul>
+<li>&lt;CTRL-V&gt;: visual block mode, 열(column)단위로 블록을 지정(ctrl + q 로 사용하기도 함)</li>
+<li>column editing
+<ul>
 <li>특정 열에 문자열을 삽입/교체하는 경우</li>
-<li>\<CTRL-V\>, 에디팅, ESC*2 하면 완료</li>
+<li>&lt;CTRL-V&gt;, 에디팅, ESC*2 하면 완료</li>
 <li>I: insert, A: append</li>
 <li>c: change</li>
 <li>~: switch case</li>
@@ -116,16 +127,19 @@
 <li>gv: previous highlighted text 영역 불러오기</li>
 <li>o: hightlighted text 블록의 시작, 끝 이동</li>
 </ul>
-<h3 id="clipboard"><a href="#clipboard" class="headerlink" title="clipboard"></a>clipboard</h3><ul>
+<h3 id="clipboard">clipboard</h3>
+<ul>
 <li>vi: vi 호환의 vim 이며 vim 종류 중에 가장 적은 기능을 가지고 있다. compact vim, tiny vim 이라 부름</li>
 <li>vim: 일반적인 vim을 의미. vi에 추가적인 기능과 플러그인 사용이 가능. enhanced vim이라 부름. 프로그래밍이 많이 사용됨.</li>
 <li>vimx: 가장 많은 기능을 가진 vim. vim + clipboard, X window clipboard 기능 포함.</li>
-<li>$ vim —version &#124; grep clipboard 명령어로 clipboard 기능이 포함되어있는지 알 수 있다.</li>
+<li>$ vim --version | grep clipboard 명령어로 clipboard 기능이 포함되어있는지 알 수 있다.</li>
 <li>기능이 포함되어 있는 경우 아래 내용을 ~/. vimrc 파일에 추가한다. X window에서 개발 할 경우 이 기능은 유용하다.</li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">clipboard settings : Copy/Paste/Cut</span><br><span class="line">if has(&#x27;unnamedplus&#x27;)</span><br><span class="line">  set clipboard=unnamed, uunnamedplus</span><br><span class="line">endif</span><br></pre></td></tr></table></figure>
-<h3 id="vim-options"><a href="#vim-options" class="headerlink" title="vim options"></a>vim options</h3><ul>
-<li>~/.vimrc 파일에 옵션 저장 가능<ul>
+<h3 id="vim-options">vim options</h3>
+<ul>
+<li>~/.vimrc 파일에 옵션 저장 가능
+<ul>
 <li>:set - 현재 옵션 설정을 보여줌</li>
 <li>:set all - 모든 옵션 설정을 보여줌(default 옵션까지 출력)</li>
 <li>:set [no]name - name에 해당하는 옵션을 on/off 함</li>
@@ -133,7 +147,8 @@
 <li>:set name=value  name옵션에 value의 값을 할당</li>
 </ul>
 </li>
-<li>주로 사용하는 옵션<ul>
+<li>주로 사용하는 옵션
+<ul>
 <li>nu: (number) 화면에 행번호 표시. nu는 초보로 의심 받을 수 있음??</li>
 <li>rnu: (relativenu) 현재행을 기준으로 상하의 상대적 행번호 표시.</li>
 <li>ai: (autoindent) 자동 들여쓰기</li>
@@ -143,46 +158,54 @@
 <li>fencs=value: (fileencodings) 지원할 파일 인코딩 방식 리스트 e.g. set fencs=ucs-bom,utf-8,korea</li>
 </ul>
 </li>
-<li>colorscheme<ul>
+<li>colorscheme
+<ul>
 <li>:coloscheme + ‘tab’ 으로 선택 가능</li>
 <li>jellybean 과 같은 커스텀 색도 별도 추가할 수 있음.</li>
 </ul>
 </li>
 </ul>
-<h3 id="vim-manual"><a href="#vim-manual" class="headerlink" title="vim manual"></a>vim manual</h3><ul>
-<li>:help word + \<CTRL-D\> word가 포함된 명령어를 볼 수 있음</li>
-<li>:help 뒤에 여러가지 모드를 추가해 설명을 확인 할 수 있음.<ul>
+<h3 id="vim-manual">vim manual</h3>
+<ul>
+<li>:help word + &lt;CTRL-D&gt; word가 포함된 명령어를 볼 수 있음</li>
+<li>:help 뒤에 여러가지 모드를 추가해 설명을 확인 할 수 있음.
+<ul>
 <li>없음 - :help x 일반 모드</li>
 <li>i_ - :help i_CTRL-N 입력모드</li>
 <li>: - :help :w 명령행모드</li>
 <li>v_ - :help v_u 비주얼모드</li>
 <li>-  :help -r vim 실행인수</li>
-<li>\’ - :help ‘tabstop’ 옵션</li>
+<li>' - :help ‘tabstop’ 옵션</li>
 <li>c_ - :help c_CTRL-B 명령행 모드 특수키</li>
 </ul>
 </li>
-<li>help 모드에서 명령어<ul>
-<li>^] \<CTRL-\]\>: jump to the definition of the keyword under the cusor</li>
-<li>^T \<CTRL-T\>: jump to older entry in the tag stack</li>
+<li>help 모드에서 명령어
+<ul>
+<li>^] &lt;CTRL-]&gt;: jump to the definition of the keyword under the cusor</li>
+<li>^T &lt;CTRL-T&gt;: jump to older entry in the tag stack</li>
 <li>:tags: show the contents of the tag stack. The active entry is marked with a ‘&gt;’</li>
-<li>^W^W (\<CTRL-W\>*2): move cursor to window below/right of the current one</li>
+<li>^W^W (&lt;CTRL-W&gt;*2): move cursor to window below/right of the current one</li>
 </ul>
 </li>
 </ul>
-<h3 id="vim-error"><a href="#vim-error" class="headerlink" title="vim error"></a>vim error</h3><ul>
+<h3 id="vim-error">vim error</h3>
+<ul>
 <li>파일을 중복해서 오픈 한 경우: 오류 메세지 process ID에 still running이라고 써있을 경우 Q(quit), O(read only) 를 선택</li>
 <li>vim crash로 swapfile이 제거되지 못한 경우: 오류 메세지 process ID에 pid만 써있을 경우 R(recovery)을 선택</li>
 </ul>
-<h3 id="문자열-관련-기능"><a href="#문자열-관련-기능" class="headerlink" title="문자열 관련 기능"></a>문자열 관련 기능</h3><ul>
+<h3 id="문자열-관련-기능">문자열 관련 기능</h3>
+<ul>
 <li>center, right, left</li>
-<li>문자 1개를 검색<ul>
+<li>문자 1개를 검색
+<ul>
 <li>fc: 문자 c를 전방 검색</li>
 <li>Fc: 문자 c를 후방 검색</li>
 <li>;: 최근 검색을 재검색</li>
 <li>,: 최근 검색을 반대방향으로 재검색</li>
 </ul>
 </li>
-<li>단어 검색<ul>
+<li>단어 검색
+<ul>
 <li>/string: string을 전방탐색</li>
 <li>?string: string을 후방탐색</li>
 <li>*: 현재 커서에 위치한 단어를 전방탐색함</li>
@@ -190,7 +213,8 @@
 <li>n: 다음 탐색 결과를 찾음(전방탐색의 경우 전방으로, 후방탐색의 경우 후방으로 이동)</li>
 <li>N: n과 반대방향으로 다음 탐색</li>
 <li>%: 괄호의 짝을 찾아줌</li>
-<li>case-sensitive searching<ul>
+<li>case-sensitive searching
+<ul>
 <li>\c 접두어를 추가할 경우 e.g. /\cinter 로 실행하면 inter의 대소문자 무시 \C(대문자c)는 반대 기능</li>
 <li>:set ignorecase 는 ignorecase 활성화 반대는 :set noignorecase</li>
 </ul>
@@ -200,62 +224,72 @@
 <li>\M magic이라 불린다. 해석을 금지하는 접두어. \M[section] 이렇게 하면 REGEX로 해석을 안하고 그냥 문자열로 인식</li>
 </ul>
 </li>
-<li>문자열 교체<ul>
+<li>문자열 교체
+<ul>
 <li>sed의 기능이 import 된 것. sed 문법과 동일</li>
-<li>:[range]s/\&lt;찾는 문자열>/\&lt;교체할 문자열>/\&lt;옵션> separator로 slash가 주로 사용되지만 다른 문자를 사용해도 무방(예: 콤마)</li>
-<li>명령어 옵션<ul>
+<li>:[range]s/&lt;찾는 문자열&gt;/&lt;교체할 문자열&gt;/&lt;옵션&gt; separator로 slash가 주로 사용되지만 다른 문자를 사용해도 무방(예: 콤마)</li>
+<li>명령어 옵션
+<ul>
 <li>g: (global) 검색된 문자열 모두를 교체. 이 옵션 생략시 처음 1개만 교체</li>
 <li>i: (ignore case) 대소문자 무시</li>
 <li>c: (confirm) 교체 할 때마다 확인</li>
 <li>e: 교체 과정 중 에러 무시</li>
 </ul>
 </li>
-<li>찾으려는 문자열에 /가 들어있을 경우 escape문자를 추가한다.<ul>
-<li>:%s/\/home\/linux/\/home\/unix/g 를 아래 처럼 써도 무방하다.</li>
+<li>찾으려는 문자열에 /가 들어있을 경우 escape문자를 추가한다.
+<ul>
+<li>:%s//home/linux//home/unix/g 를 아래 처럼 써도 무방하다.</li>
 <li>:%s,/home/linux,/home/unix,g</li>
 </ul>
 </li>
-<li>특수 문자의 교체<ul>
+<li>특수 문자의 교체
+<ul>
 <li>개행문자 DOS(CR+LF) UNIX(LF)</li>
-<li>CR 입력: ^V^M \<CTRL-V\> 대신 \<CTRL-Q\> 사용 가능</li>
+<li>CR 입력: ^V^M &lt;CTRL-V&gt; 대신 &lt;CTRL-Q&gt; 사용 가능</li>
 <li>:%s/CR입력//g 혹은 :%s/\r//g</li>
 <li>실전에서 :set ff=dos 혹은 :set ff=unix 로 설정 후 저장하는 방법 씀</li>
 </ul>
 </li>
-<li>ASCII를 코드값으로 입력<ul>
-<li>\<CTRL-V\> ###: ###에 10진수를 사용하여 ASCII 입력</li>
-<li>\<CTRL-V\> o###: ###에 8진수를 사용하여 ASCII 입력</li>
-<li>\<CTRL-V\> x###: ###에 16진수를 사용하여 ASCII 입력</li>
+<li>ASCII를 코드값으로 입력
+<ul>
+<li>&lt;CTRL-V&gt; ###: ###에 10진수를 사용하여 ASCII 입력</li>
+<li>&lt;CTRL-V&gt; o###: ###에 8진수를 사용하여 ASCII 입력</li>
+<li>&lt;CTRL-V&gt; x###: ###에 16진수를 사용하여 ASCII 입력</li>
 <li>man ascii 로 아스키코드 확인 가능</li>
 </ul>
 </li>
-<li>숫자 증감: 숫자 위에서 \<CTRL-A\> 누르면 증가 \<CTRL-X\> 누르면 감소</li>
+<li>숫자 증감: 숫자 위에서 &lt;CTRL-A&gt; 누르면 증가 &lt;CTRL-X&gt; 누르면 감소</li>
 </ul>
 </li>
 </ul>
-<h3 id="파일-관련-기능"><a href="#파일-관련-기능" class="headerlink" title="파일 관련 기능"></a>파일 관련 기능</h3><ul>
+<h3 id="파일-관련-기능">파일 관련 기능</h3>
+<ul>
 <li>buffer: 파일을 편집하기 위한 임시 공간. 파일명 없이 vim을 실행하면 이름이 없는 buffer에 작업. :w myfile.txt 처럼 저장하면 buffer에 있는 내용이 저장이 됨</li>
-<li>register: 텍스트 일부를 저장하고 있는 임시 공간. dd 사용하면..</li>
-<li>vim에서 다른 파일을 편집하려고 할 때<ul>
+<li>register: 텍스트 일부를 저장하고 있는 임시 공간. dd 사용하면…</li>
+<li>vim에서 다른 파일을 편집하려고 할 때
+<ul>
 <li>:e [filename] 파일을 편집모드로 오픈한다. 파일이름을 생략하면 현재 파일을 다시 오픈한다.</li>
 <li>:e #[count] count번째 파일을 오픈한다. count가 생략되면 바로 인전 파일이다.</li>
 <li>:find filename 파일을 검색하여 오픈. 매칭결과가 여러개이면 에러메시지를 출력</li>
-<li>ctrl + ^ 명령어 단축키 “:e #”과 동일  </li>
+<li>ctrl + ^ 명령어 단축키 &quot;:e #&quot;과 동일</li>
 </ul>
 </li>
-<li>한번에 여러개 열 수 있음<ul>
+<li>한번에 여러개 열 수 있음
+<ul>
 <li>$vim file1 file2 file3</li>
 <li>:n입력하면 다음 파일 :N 입력하면 이전 파일</li>
 </ul>
 </li>
-<li>종료 기능<ul>
+<li>종료 기능
+<ul>
 <li>q[!] 현재 창 종료. !는 강제종료</li>
 <li>:qa[!] 모든 창 종료. 복수개의 창을 열었을 때 유용</li>
 <li>:wq 저장하면서 종료 :x 와 동일 요즘은 ZZ 사용</li>
 <li>:wqa 저장하면서 종료를 모든 창에 대해서</li>
 </ul>
 </li>
-<li>파일 저장<ul>
+<li>파일 저장
+<ul>
 <li>:w [filename] 파일이 지정되면 해당 파일에 쓰기를 지정(복사본) 사본을 만든 경우 편집중인 파일은 원래 파일</li>
 <li>sav file 현재 파일을 다른이름으로 저장. 편집중인 파일도 새로 저장된 파일로 교체</li>
 <li>:up 변경된 점이 있는 경우만 :w 명령어 실행</li>
@@ -266,9 +300,10 @@
 <li>:%w history 전체를 history 파일로 저장, 즉 %는 있으나 없으나 결과가 같음</li>
 </ul>
 </li>
-<li>netrw: vim으로 디렉터리 열기(browsing)<ul>
-<li>:e . 하면 현재 디렉토리 열기 </li>
-<li>\<Enter\> 파일을 현재 창에 열기</li>
+<li>netrw: vim으로 디렉터리 열기(browsing)
+<ul>
+<li>:e . 하면 현재 디렉토리 열기</li>
+<li>&lt;Enter&gt; 파일을 현재 창에 열기</li>
 <li>i 파일 표시 방법 변경(한줄, 파일정보도 함께, 와이드 형식, 트리방식)</li>
 <li>s 정렬 방식을 바꿈(이름순, 시간순, 크기순)</li>
 <li>o 커서 위치 파일을 수평 분할된 새 창으로 열기</li>
@@ -278,79 +313,94 @@
 <li>- 상위 디렉터리로 이동</li>
 </ul>
 </li>
-<li>복수의 파일 다루기<ul>
-<li>split horizontal  CTRL-W s / :sp [file] </li>
-<li>split virtical CTRL-W v / :vs [file] </li>
-<li>창 이동<ul>
+<li>복수의 파일 다루기
+<ul>
+<li>split horizontal  CTRL-W s / :sp [file]</li>
+<li>split virtical CTRL-W v / :vs [file]</li>
+<li>창 이동
+<ul>
 <li>CTRL-W CTRL-방향키</li>
 <li>CTRL-W CTRL-W 현재 창에서 오른쪽 방향으로 이동</li>
 <li>CTRL-W CTRL-P 바로 이전에 이동한 창으로 이동</li>
 </ul>
 </li>
-<li>창 크기<ul>
+<li>창 크기
+<ul>
 <li>CTRL-W = 모든 창의 크기를 동일하게 조절</li>
 <li>CTRL-W [#]+ #크기만큼 크기를 키움. 숫자 생략시 1 키움</li>
 <li>CTRL-W [#]- #크기만큼 크기를 줄임. 숫자 생략시 1 줄임</li>
 </ul>
 </li>
-<li>split diff<ul>
+<li>split diff
+<ul>
 <li>vim -d file1 file2</li>
 <li>do, dp 로 바로 변경 사항 가져오기</li>
 </ul>
 </li>
-<li>tabpage<ul>
+<li>tabpage
+<ul>
 <li>vim -p file1 file2 file3</li>
 <li>:[#]tabe[dit] file #번재 탭에 파일을 연다. #생략시 현재 탭 뒤에 생성. 번호는 0번부터</li>
 <li>:[#]tabnew file #번째 위치에 비어있는 탭 생성</li>
 <li>:[#]tabc[los] #번째 탭을 닫음. #생략시 현재 탭 닫음</li>
-<li>:[#]tabn[ext] [#]gt [#]\<CTRL-PageDown\> 다음 탭으로 이동, 일반모드의 gt와 동일</li>
-<li>:[#]tabp[revious] [#]gT [#]\<CTRL-PageUp\> 이전 탭으로 이동, 일반모드의 gT와 동일</li>
+<li>:[#]tabn[ext] [#]gt [#]&lt;CTRL-PageDown&gt; 다음 탭으로 이동, 일반모드의 gt와 동일</li>
+<li>:[#]tabp[revious] [#]gT [#]&lt;CTRL-PageUp&gt; 이전 탭으로 이동, 일반모드의 gT와 동일</li>
 <li>:tabm[ove] [#] #번째 탭으로 이동(0부터 시작) #생략시 가장 오른쪽으로 이동</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>buffers<ul>
+<li>buffers
+<ul>
 <li>아직 저장 전이면 이름없는 공간으로 버퍼라 부른다</li>
 <li>:file :buffer 명령어로 버퍼를 볼 수 있다.</li>
 <li>% 현재 편집 중인 버퍼</li>
 <li># 바로 이전에 열었던(혹은 열 예정인) 버퍼</li>
 <li>a 활성화된 버퍼. 창 분할 기능을 쓸 경우 여러 파일에 나타남</li>
-<li>+ 변경된 부분이 있는 버퍼 </li>
+<li>+ 변경된 부분이 있는 버퍼</li>
 </ul>
 </li>
-<li>커서 아래 파일명을 인식하여 오픈하는 기능<ul>
-<li>파일 명에 커서를 가져다 놓고 gf(이동), </li>
+<li>커서 아래 파일명을 인식하여 오픈하는 기능
+<ul>
+<li>파일 명에 커서를 가져다 놓고 gf(이동),</li>
 <li>C 언어 소스코드에 include 파일에 커서 놓고 gf 입력</li>
-<li>\<CTRL-W\> f 커서 위치 파일명을 분할된 창에 열어줌</li>
-<li>\<CTRL-W\> gf 커서 위치 파일명을 탭에 열어줌</li>
-<li>\<CTRL-^(6)\> 이전 파일로 되돌아가기</li>
+<li>&lt;CTRL-W&gt; f 커서 위치 파일명을 분할된 창에 열어줌</li>
+<li>&lt;CTRL-W&gt; gf 커서 위치 파일명을 탭에 열어줌</li>
+<li>&lt;CTRL-^(6)&gt; 이전 파일로 되돌아가기</li>
 </ul>
 </li>
 </ul>
-<h3 id="파일-인코딩"><a href="#파일-인코딩" class="headerlink" title="파일 인코딩"></a>파일 인코딩</h3><ul>
-<li>fileencodings (fencs)<ul>
+<h3 id="파일-인코딩">파일 인코딩</h3>
+<ul>
+<li>fileencodings (fencs)
+<ul>
 <li>파일을 읽을 때 확인할 encoding list를 설정. .vimrc 에 list로 설정. 순서 중요</li>
 <li>set fencs=value e.g. fencs=usc-bom,utf-8,korea,latin-1</li>
 <li>BOM(Byte Order Mark) UCS(Universal coded Charater Set) 주로 생략하나, 관습적으로 옵션 설정시 앞부분에 넣어줌</li>
-<li>사용 가능 문자 셋 :help encoding-values<ul>
+<li>사용 가능 문자 셋 :help encoding-values
+<ul>
 <li>utf-8, utf8, usc-bom, korea(이건 별칭으로 유닉스에서는 euc-kr로 윈도에서는 cp949로 바뀜), euc-kr, cp949, japan, latin1, ansi(영문 아스키 방식)</li>
 </ul>
 </li>
 <li>:set fenc=korea 로 하면 현재 사용 문자 인코딩을 설정하는 것</li>
-<li>linux to window 파일을 가져갈 때 UTF-8 을 지원하는 에디터가 아닐 경우 변환을 거쳐야함.<ul>
+<li>linux to window 파일을 가져갈 때 UTF-8 을 지원하는 에디터가 아닐 경우 변환을 거쳐야함.
+<ul>
 <li>:set ff=dos :set fenc=korea :wq 명령어를 통해 변환 :sav newfilename.txt 로 다른이름 저장</li>
 </ul>
 </li>
-<li>window to linux 파일을 가져올 때 fencs가 잘 설정되어있으면 자동 변환됨. 이후 저장은 dos 형태로 되기 때문에<ul>
+<li>window to linux 파일을 가져올 때 fencs가 잘 설정되어있으면 자동 변환됨. 이후 저장은 dos 형태로 되기 때문에
+<ul>
 <li>:set ff=unix :set fenc=utf8 :wq 명령어를 통해 리눅스에서 추후 사용시 편하도록 변환 :sav 로 다른 이름 저장</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<h3 id="기타-편리한-기능"><a href="#기타-편리한-기능" class="headerlink" title="기타 편리한 기능"></a>기타 편리한 기능</h3><ul>
-<li>단어 경계 이동<ul>
+<h3 id="기타-편리한-기능">기타 편리한 기능</h3>
+<ul>
+<li>
+<p>단어 경계 이동</p>
+<ul>
 <li>w, e 키를 이용해 이동 w는 단어의 앞에 멈춤. e는 단어 뒤에 멈춤</li>
 <li>0 0번째 열 이동</li>
 <li>^ 공백이 아닌 실제 내용이 있는 시작 열</li>
@@ -359,90 +409,152 @@
 <li>W, E, B 해봐라</li>
 </ul>
 </li>
-<li>괄호, 문단, 블록 단위 이동<ul>
+<li>
+<p>괄호, 문단, 블록 단위 이동</p>
+<ul>
 <li>% 가장 가까운 괄호 짝으로 이동</li>
 <li>(, ) 문장 단위의 시작 위치, 끝 위치로 이동</li>
 <li>{, } 문단 단위의 시작 위치, 끝 위치로 이동</li>
 <li>[[,]] 블록 단위의 시작 위치, 끝 위치로 이동</li>
 </ul>
 </li>
-<li><p>abbreviation</p>
+<li>
+<p>abbreviation</p>
 <ul>
 <li>특정 단어 입력시 대체 입력하는 기능</li>
-<li>“내멜”을 입력하면 실제 이메일이 입력되는 기능</li>
+<li>&quot;내멜&quot;을 입력하면 실제 이메일이 입력되는 기능</li>
 <li>ia는 insert mode 에서만 작동. ca는 command mode 에서만 작동</li>
-<li>ab 내맬 abcdvvv@gmail.com</li>
+<li>ab 내맬 <a href="mailto:abcdvvv@gmail.com">abcdvvv@gmail.com</a></li>
 <li>ab projectsrc /export/2/local/pjr2/mds/src</li>
-<li>ia 시간0 \<C-R\>=strftime(“%Y.%m.%d-%H:%M:%S”)\<CR\></li>
-<li>ia tlrks1 \<C-R\>=strftime(“%c”)\<CR\></li>
-<li>ca 기능을 이용하면 한글상태 오타를 변환할 수 있다.<ul>
+<li>ia 시간0 &lt;C-R&gt;=strftime(“%Y.%m.%d-%H:%M:%S”)&lt;CR&gt;</li>
+<li>ia tlrks1 &lt;C-R&gt;=strftime(“%c”)&lt;CR&gt;</li>
+<li>ca 기능을 이용하면 한글상태 오타를 변환할 수 있다.
+<ul>
 <li>ca ㅈ w</li>
 <li>ca ㅈㅂ wq</li>
 <li>ca ㅌ x</li>
-<li>.vimrc 파일이 EUC-KR로 되어있으면 UTF-8 무서 편집시 작동하지 않을 수 있다. fenc=euc-kr은 안됨!<br>| 명령 | 설명 |<br>| —— | —— |<br>| \:ab [lhs] | 현재 설정된 모든 약어 목록을 출력. lhs에 약어 지정시 해당 약어 정보만 출력 |<br>| \:ab {lhs} {rhs} | 약어 lhs를 rhs 로 변환 |<br>| \:unab {lhs} | 약어 lhs 해제 |<br>| \:abclear | 설정된 모든 약어 해제 |<br>| \:ia {lhs} {rhs} | ab와 기능은 같지만 입력 모드에서만 작동 |<br>| \:ca {lhs} {rhs} | ab와 기능은 같지만 명령행 모드에서만 작동 |</li>
-</ul>
+<li>.vimrc 파일이 EUC-KR로 되어있으면 UTF-8 무서 편집시 작동하지 않을 수 있다. fenc=euc-kr은 안됨!
+<table>
+<thead>
+<tr>
+<th>명령</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>:ab [lhs]</td>
+<td>현재 설정된 모든 약어 목록을 출력. lhs에 약어 지정시 해당 약어 정보만 출력</td>
+</tr>
+<tr>
+<td>:ab {lhs} {rhs}</td>
+<td>약어 lhs를 rhs 로 변환</td>
+</tr>
+<tr>
+<td>:unab {lhs}</td>
+<td>약어 lhs 해제</td>
+</tr>
+<tr>
+<td>:abclear</td>
+<td>설정된 모든 약어 해제</td>
+</tr>
+<tr>
+<td>:ia {lhs} {rhs}</td>
+<td>ab와 기능은 같지만 입력 모드에서만 작동</td>
+</tr>
+<tr>
+<td>:ca {lhs} {rhs}</td>
+<td>ab와 기능은 같지만 명령행 모드에서만 작동</td>
+</tr>
+</tbody>
+</table>
 </li>
 </ul>
 </li>
-<li><p>key map</p>
+</ul>
+</li>
+<li>
+<p>key map</p>
 <ul>
-<li>nmap \&lt;단축키> \&lt;명령> normal mode 에서만 작동<ul>
-<li>nmap \<F2\> :up\<CR\></li>
+<li>nmap &lt;단축키&gt; &lt;명령&gt; normal mode 에서만 작동
+<ul>
+<li>nmap &lt;F2&gt; :up&lt;CR&gt;</li>
 </ul>
 </li>
-<li>imap \&lt;단축키> \&lt;명령> insert mode 에서만 작동<ul>
-<li>imap \<F4\> abcdvvv@gmail.com</li>
+<li>imap &lt;단축키&gt; &lt;명령&gt; insert mode 에서만 작동
+<ul>
+<li>imap &lt;F4&gt; <a href="mailto:abcdvvv@gmail.com">abcdvvv@gmail.com</a></li>
 </ul>
 </li>
-<li>map \&lt;단축키> \&lt;명령> </li>
+<li>map &lt;단축키&gt; &lt;명령&gt;</li>
 <li>vmap, cmap 도 가능</li>
-<li>.vimrc에 nmap \<F3\> :tabnext\<Enter\> nmap \<F4\> gT 이렇게 적을 놓으면 됨</li>
-<li>autocmd 특정 상황에서 자동으로 실행할 명령<ul>
-<li>예시 *.c 파일을 열 때 자동으로 실행할 명령<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">autocmd BufRead, BufNewFile *.txt colo evening</span><br><span class="line">autocmd BufRead, BufNewFile *.java colo morning\|setlocal ts=2 sw=2</span><br><span class="line">au SwapExists * let v:sqapchoice = &#x27;o&#x27; 스왑파일이 존재할 경우 read only</span><br><span class="line">autocmd BufRead, BufNewFile */include/* colo slate\|setlocal ts=8 sw=8</span><br></pre></td></tr></table></figure>
-</li>
+<li>.vimrc에 nmap &lt;F3&gt; :tabnext&lt;Enter&gt; nmap &lt;F4&gt; gT 이렇게 적을 놓으면 됨</li>
+<li>autocmd 특정 상황에서 자동으로 실행할 명령
+<ul>
+<li>예시 *.c 파일을 열 때 자동으로 실행할 명령</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<h3 id="For-Programmers"><a href="#For-Programmers" class="headerlink" title="For Programmers"></a>For Programmers</h3><ul>
-<li>re-indenting 들여쓰기 다시 하기<ul>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">autocmd BufRead, BufNewFile *.txt colo evening</span><br><span class="line">autocmd BufRead, BufNewFile *.java colo morning\|setlocal ts=2 sw=2</span><br><span class="line">au SwapExists * let v:sqapchoice = &#x27;o&#x27; 스왑파일이 존재할 경우 read only</span><br><span class="line">autocmd BufRead, BufNewFile */include/* colo slate\|setlocal ts=8 sw=8</span><br></pre></td></tr></table></figure>
+<h3 id="For-Programmers">For Programmers</h3>
+<ul>
+<li>re-indenting 들여쓰기 다시 하기
+<ul>
 <li>={motion} gg -&gt; = -&gt; G</li>
 <li>visualmode + = 비주얼모드로 라인 선택 후 = 키 입력</li>
 </ul>
 </li>
-<li>tab vs whitespace<ul>
+<li>tab vs whitespace
+<ul>
 <li>기존 작성된 탭을 4칸으로 전환하려면 :set et ts=4 :ret</li>
 <li>공백 4칸을 탭문자로 변환 :set noet ts=4 :ret!</li>
 </ul>
 </li>
-<li>자동 완성 기능<ul>
-<li>\<CTRL-N\>: 단어완성을 위해 현재 문서와 관련 파일을 전방 탐색 (include 같은거)</li>
-<li>abcdvv@gmail.com 같이 특수문자를 포함한 검색하려면 abc\<CTRL-N\>\<CTRL-X\>\<CTRL-N\>…. 사전 검색 모드로 추가 검색</li>
+<li>자동 완성 기능
+<ul>
+<li>&lt;CTRL-N&gt;: 단어완성을 위해 현재 문서와 관련 파일을 전방 탐색 (include 같은거)</li>
+<li><a href="mailto:abcdvv@gmail.com">abcdvv@gmail.com</a> 같이 특수문자를 포함한 검색하려면 abc&lt;CTRL-N&gt;&lt;CTRL-X&gt;&lt;CTRL-N&gt;… 사전 검색 모드로 추가 검색</li>
 </ul>
 </li>
 </ul>
-<h3 id="vim-bootstrap"><a href="#vim-bootstrap" class="headerlink" title="vim-bootstrap"></a>vim-bootstrap</h3><ul>
-<li>자동으로 vimrc를 만들어주는 곳<ul>
+<h3 id="vim-bootstrap">vim-bootstrap</h3>
+<ul>
+<li>자동으로 vimrc를 만들어주는 곳
+<ul>
 <li><a target="_blank" rel="noopener" href="https://vim-bootstrap.com">https://vim-bootstrap.com</a> 여기서 만든 파일을 약간 수정해서 사용하라</li>
 </ul>
 </li>
 </ul>
-<h3 id="vimrc"><a href="#vimrc" class="headerlink" title=".vimrc"></a>.vimrc</h3><ul>
+<h3 id="vimrc">.vimrc</h3>
+<ul>
 <li>지금까지 배운 설정을 아래와 같이 적용해 봄</li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">set ai cindent hls</span><br><span class="line">set ts=4 sw=4</span><br><span class="line">set fencs=usc-bom,utf-8,korea,latin1</span><br><span class="line">&quot;colo desert</span><br><span class="line">colorscheme desert</span><br><span class="line"></span><br><span class="line">nmap &lt;F2&gt; :up&lt;CR&gt;</span><br><span class="line">nmap &lt;F3&gt; :tabprev&lt;Enter&gt;</span><br><span class="line">&quot;nmap &lt;F3&gt; :gt&lt;Enter&gt;</span><br><span class="line">nmap &lt;F3&gt; :tabnext&lt;Enter&gt;</span><br><span class="line">&quot;nmap &lt;F4&gt; :gT&lt;CR&gt;</span><br><span class="line"></span><br><span class="line">&quot;abbreviation</span><br><span class="line">ab 내맬 abcdvvv@gmail.com</span><br><span class="line">ia 시간0 \&lt;C-R\&gt;=strftime(&quot;%Y.%m.%d-%H:%M:%S&quot;)\&lt;CR\&gt;</span><br><span class="line">ia tlrks1 \&lt;C-R\&gt;=strftime(&quot;%c&quot;)\&lt;CR\&gt;</span><br><span class="line">ca ㅈ w</span><br><span class="line">ca ㅈㅂ wq</span><br><span class="line">ca ㅌ x</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">autocmd BufRead,BufNewFile *.txt colo evening</span><br><span class="line">&quot;autocmd BufRead, BufNewFile */include/* colo slate\|setlocal ts=8 sw=8</span><br><span class="line"></span><br><span class="line">set fencs=ucs-bom,utf8,korea,llatin1</span><br></pre></td></tr></table></figure>
-<h3 id="bash에서-alias-무시하고-실행하고-싶을-때-명령어-앞에-추가하면-됨"><a href="#bash에서-alias-무시하고-실행하고-싶을-때-명령어-앞에-추가하면-됨" class="headerlink" title="bash에서 alias 무시하고 실행하고 싶을 때 명령어 앞에 \ 추가하면 됨"></a>bash에서 alias 무시하고 실행하고 싶을 때 명령어 앞에 \ 추가하면 됨</h3></div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-12-23T15:00:00.000Z" title="2019. 12. 24. 오전 12:00:00">2019-12-24</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.887Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/Linux/">Linux</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/12/24/2019-12-24-vim-plugin/">vim plugin</a></p><div class="content"><h2 id="Vundle-Plugin-설치"><a href="#Vundle-Plugin-설치" class="headerlink" title="Vundle Plugin 설치"></a>Vundle Plugin 설치</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim</span><br></pre></td></tr></table></figure>
-<h2 id="vim-설정-추가"><a href="#vim-설정-추가" class="headerlink" title="vim 설정 추가"></a>vim 설정 추가</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi ~/.vimrc</span><br></pre></td></tr></table></figure>
+<h3 id="bash에서-alias-무시하고-실행하고-싶을-때-명령어-앞에-추가하면-됨">bash에서 alias 무시하고 실행하고 싶을 때 명령어 앞에 \ 추가하면 됨</h3>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-12-23T15:00:00.000Z" title="2019. 12. 24. 오전 12:00:00">2019-12-24</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.887Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/Linux/">Linux</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/12/24/2019-12-24-vim-plugin/">vim plugin</a></p><div class="content"><h2 id="Vundle-Plugin-설치">Vundle Plugin 설치</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim</span><br></pre></td></tr></table></figure>
+<h2 id="vim-설정-추가">vim 설정 추가</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi ~/.vimrc</span><br></pre></td></tr></table></figure>
 <p>아래 내용 추가</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line">set nocompatible              &quot; be iMproved, required</span><br><span class="line">filetype off                  &quot; required</span><br><span class="line">&quot; set the runtime path to include Vundle and initialize</span><br><span class="line">set rtp+=~/.vim/bundle/Vundle.vim</span><br><span class="line">call vundle#begin()</span><br><span class="line">&quot; alternatively, pass a path where Vundle should install plugins</span><br><span class="line">&quot;call vundle#begin(&#x27;~/some/path/here&#x27;)</span><br><span class="line">&quot; let Vundle manage Vundle, required</span><br><span class="line">Plugin &#x27;VundleVim/Vundle.vim&#x27;</span><br><span class="line">&quot; The following are examples of different formats supported.</span><br><span class="line">&quot; Keep Plugin commands between vundle#begin/end.</span><br><span class="line">&quot; plugin on GitHub repo</span><br><span class="line">Plugin &#x27;tpope/vim-fugitive&#x27;</span><br><span class="line">&quot; plugin from http://vim-scripts.org/vim/scripts.html</span><br><span class="line">&quot; Plugin &#x27;L9&#x27;</span><br><span class="line">&quot; Git plugin not hosted on GitHub</span><br><span class="line">Plugin &#x27;git://git.wincent.com/command-t.git&#x27;</span><br><span class="line">&quot; git repos on your local machine (i.e. when working on your own plugin),</span><br><span class="line">&quot;Plugin &#x27;file:///home/jjeaby/Dev/tools/vim-plugin&#x27;</span><br><span class="line">&quot; The sparkup vim script is in a subdirectory of this repo called vim.</span><br><span class="line">&quot; Pass the path to set the runtimepath properly.</span><br><span class="line">Plugin &#x27;rstacruz/sparkup&#x27;, &#123;&#x27;rtp&#x27;: &#x27;vim/&#x27;&#125;</span><br><span class="line">&quot; Install L9 and avoid a Naming conflict if you&#x27;ve already installed a</span><br><span class="line">&quot; different version somewhere else.</span><br><span class="line">&quot; Plugin &#x27;ascenator/L9&#x27;, &#123;&#x27;name&#x27;: &#x27;newL9&#x27;&#125;</span><br><span class="line">&quot; All of your Plugins must be added before the following line</span><br><span class="line">Plugin &#x27;vim-airline/vim-airline&#x27;</span><br><span class="line">Plugin &#x27;scrooloose/nerdtree&#x27;</span><br><span class="line">Plugin &#x27;airblade/vim-gitgutter&#x27;</span><br><span class="line">Plugin &#x27;scrooloose/syntastic&#x27;</span><br><span class="line">Plugin &#x27;ctrlpvim/ctrlp.vim&#x27;</span><br><span class="line">Plugin &#x27;nanotech/jellybeans.vim&#x27;</span><br><span class="line">call vundle#end()            &quot; required</span><br><span class="line">&quot;filetype plugin indent on    &quot; required</span><br><span class="line">&quot;NERDTree ON 단축키를 &quot;\nt&quot;로 설정</span><br><span class="line">map &lt;Leader&gt;nt &lt;ESC&gt;:NERDTree&lt;CR&gt;</span><br><span class="line">let NERDTreeShowHidden=1</span><br><span class="line">&quot; let NERDTreeQuitOnOpen=1</span><br><span class="line">let g:ctrlp_custom_ignore = &#123;</span><br><span class="line">  \ &#x27;dir&#x27;:  &#x27;\.git$\|vendor$&#x27;,</span><br><span class="line">    \ &#x27;file&#x27;: &#x27;\v\.(exe|so|dll)$&#x27;</span><br><span class="line">\ &#125;</span><br><span class="line">color jellybeans</span><br><span class="line">&quot; Tag List 환경설정</span><br><span class="line">filetype on                                 &quot;vim filetype on</span><br><span class="line">&quot;Source Explorer 환경설정</span><br><span class="line">nmap &lt;F8&gt; :SrcExplToggle&lt;CR&gt;                &quot;F8 Key = SrcExpl Toggling</span><br><span class="line">nmap &lt;C-H&gt; &lt;C-W&gt;h                           &quot;왼쪽 창으로 이동</span><br><span class="line">nmap &lt;C-J&gt; &lt;C-W&gt;j                           &quot;아래 창으로 이동</span><br><span class="line">nmap &lt;C-K&gt; &lt;C-W&gt;k                           &quot;윗 창으로 이동</span><br><span class="line">nmap &lt;C-L&gt; &lt;C-W&gt;l                           &quot;오른쪽 창으로 이동</span><br><span class="line">&quot; 세부 정보 출력</span><br><span class="line">set nu</span><br><span class="line">set title</span><br><span class="line">set showmatch</span><br><span class="line">set ruler</span><br><span class="line">&quot; 구문 강조 사용</span><br><span class="line">if has(&quot;syntax&quot;)</span><br><span class="line"> syntax on</span><br><span class="line">endif</span><br><span class="line">&quot; 색깔 설정</span><br><span class="line">set t_Co=256</span><br><span class="line">&quot; 들여쓰기 설정</span><br><span class="line">set autoindent</span><br><span class="line">set smartindent</span><br><span class="line">set tabstop=4</span><br><span class="line">set shiftwidth=4</span><br><span class="line">set softtabstop=4</span><br><span class="line">set smarttab</span><br><span class="line">set expandtab</span><br><span class="line">&quot; 붙여넣기 설정</span><br><span class="line">set paste</span><br><span class="line">set mouse-=a</span><br><span class="line">&quot; 한글 입력 설정</span><br><span class="line">set encoding=utf-8</span><br><span class="line">set termencoding=utf-8</span><br><span class="line">&quot; 커서가 있는 줄을 강조함</span><br><span class="line">set cursorline</span><br><span class="line">&quot; 상태바 표시를 항상한다</span><br><span class="line">set laststatus=2 </span><br><span class="line">set statusline=\ %&lt;%l:%v\ [%P]%=%a\ %h%m%r\ %F\</span><br><span class="line">&quot; 검색 설정</span><br><span class="line">set ignorecase</span><br><span class="line">&quot; 마지막으로 수정된 곳에 커서를 위치함</span><br><span class="line">au BufReadPost *</span><br><span class="line">\ if line(&quot;&#x27;\&quot;&quot;) &gt; 0 &amp;&amp; line(&quot;&#x27;\&quot;&quot;) &lt;= line(&quot;$&quot;) |</span><br><span class="line">\ exe &quot;norm g`\&quot;&quot; |</span><br><span class="line">\ endif</span><br><span class="line">&quot; Markdown 문법 설정 (Git 에서 사용)</span><br><span class="line">augroup markdown</span><br><span class="line">    &quot; remove previous autocmds</span><br><span class="line">    autocmd!</span><br><span class="line">    &quot; set every new or read *.md buffer to use the markdown filetype</span><br><span class="line">    autocmd BufRead,BufNew *.md setf markdown</span><br><span class="line">augroup END</span><br></pre></td></tr></table></figure>
-<h2 id="플러그인-설치"><a href="#플러그인-설치" class="headerlink" title="플러그인 설치"></a>플러그인 설치</h2><p>.vimrc를 저장한 후 vim로 연 상태에서 아래와 같이 입력<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:PluginInstall</span><br></pre></td></tr></table></figure></p>
-<h2 id="사용법"><a href="#사용법" class="headerlink" title="사용법"></a>사용법</h2><ul>
-<li>\nt 입력하면 파일 트리 나옴</li>
-<li>ctrl + w, w 를 누르면 파일트리 &lt;—&gt; 에디터 창으로 포커스가 이동된다.</li>
-<li>:sp “파일이름” 으로 창을 분할한 경우 ctrl + w, ctrl + h,j,k,l 로 분할된 창을 이동 할 수 있다.</li>
+<h2 id="플러그인-설치">플러그인 설치</h2>
+<p>.vimrc를 저장한 후 vim로 연 상태에서 아래와 같이 입력</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:PluginInstall</span><br></pre></td></tr></table></figure>
+<h2 id="사용법">사용법</h2>
+<ul>
+<li>
+<p>\nt 입력하면 파일 트리 나옴</p>
+</li>
+<li>
+<p>ctrl + w, w 를 누르면 파일트리 &lt;–&gt; 에디터 창으로 포커스가 이동된다.</p>
+</li>
+<li>
+<p>:sp “파일이름” 으로 창을 분할한 경우 ctrl + w, ctrl + h,j,k,l 로 분할된 창을 이동 할 수 있다.</p>
+<p>출처: <a target="_blank" rel="noopener" href="https://medium.com/@jjeaby/vim-%EC%9D%84-ide-%EC%B2%98%EB%9F%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-plugin-%EC%84%A4%EC%A0%95-87b40c5bfc14">https://medium.com/@jjeaby/vim-을-ide-처럼-사용하기-plugin-설정-87b40c5bfc14</a></p>
+</li>
 </ul>
-<p>  출처: <a target="_blank" rel="noopener" href="https://medium.com/@jjeaby/vim-%EC%9D%84-ide-%EC%B2%98%EB%9F%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-plugin-%EC%84%A4%EC%A0%95-87b40c5bfc14">https://medium.com/@jjeaby/vim-%EC%9D%84-ide-%EC%B2%98%EB%9F%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-plugin-%EC%84%A4%EC%A0%95-87b40c5bfc14</a></p>
 </div></article></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/images/avatar.jpg" alt="우리람부탄"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">우리람부탄</p><p class="is-size-6 is-block">개발자</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">포스트</p><a href="/archives/"><p class="title">89</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">카테고리</p><a href="/categories/"><p class="title">14</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">태그</p><a href="/tags/"><p class="title">222</p></a></div></div></nav><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="GitHub" href="https://github.com/gabre8001"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Email" href="mailto:gabre8001@gmail.com"><i class="fas fa-envelope"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">카테고리</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Android/"><span class="level-start"><span class="level-item">Android</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/C-C/"><span class="level-start"><span class="level-item">C/C++</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile" href="/categories/CS/"><span class="level-start"><span class="level-item">CS</span></span><span class="level-end"><span class="level-item tag">16</span></span></a></li><li><a class="level is-mobile" href="/categories/Database/"><span class="level-start"><span class="level-item">Database</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/DevOps/"><span class="level-start"><span class="level-item">DevOps</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/Git/"><span class="level-start"><span class="level-item">Git</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/Java/"><span class="level-start"><span class="level-item">Java</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/JavaScript/"><span class="level-start"><span class="level-item">JavaScript</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile" href="/categories/Linux/"><span class="level-start"><span class="level-item">Linux</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile" href="/categories/MQ/"><span class="level-start"><span class="level-item">MQ</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/Math/"><span class="level-start"><span class="level-item">Math</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Network/"><span class="level-start"><span class="level-item">Network</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile" href="/categories/Python/"><span class="level-start"><span class="level-item">Python</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/ROS/"><span class="level-start"><span class="level-item">ROS</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li></ul></div></div></div><div class="column-right-shadow is-hidden-widescreen"></div></div><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3"><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">최근 글</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2026-05-02T11:57:05.994Z">2026-05-02</time></p><p class="title"><a href="/2026/05/02/hello-world/">Hello World</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2026-02-25T15:00:00.000Z">2026-02-26</time></p><p class="title"><a href="/2026/02/26/2026-02-26-%ED%9A%A8%EC%9C%A8%EC%A0%81%EC%9D%B8-RPU-%EC%A7%91%EA%B3%84%EB%A5%BC-%EC%9C%84%ED%95%9C-HyperLogLog/">효율적인 RPU 집계를 위한 HyperLogLog</a></p><p class="categories"><a href="/categories/CS/">CS</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-07-12T15:00:00.000Z">2025-07-13</time></p><p class="title"><a href="/2025/07/13/2025-07-13-Hazelcast-%EA%B8%B0%EB%B0%98-Reverb-%EC%84%9C%EB%B2%84-%EA%B5%AC%EC%B6%95/">Hazelcast 기반 Reverb 서버 구축</a></p><p class="categories"><a href="/categories/Java/">Java</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-05-07T15:00:00.000Z">2025-05-08</time></p><p class="title"><a href="/2025/05/08/2025-05-08-svelte-kit-RBAC/">SvelteKit RBAC</a></p><p class="categories"><a href="/categories/JavaScript/">JavaScript</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-06-11T15:00:00.000Z">2023-06-12</time></p><p class="title"><a href="/2023/06/12/2023-06-12-Spring-Cloud-Netty/">Spring Cloud Gateway vs Netty</a></p><p class="categories"><a href="/categories/Java/">Java</a></p></div></article></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">태그</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/CPU/"><span class="tag">CPU</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MongoDB/"><span class="tag">MongoDB</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Radix/"><span class="tag">Radix</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Rax/"><span class="tag">Rax</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/React/"><span class="tag">React</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Redis/"><span class="tag">Redis</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Seaborn/"><span class="tag">Seaborn</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Test/"><span class="tag">Test</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Tree/"><span class="tag">Tree</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/t/"><span class="tag">_t</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/tmain/"><span class="tag">_tmain</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/action/"><span class="tag">action</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/active/"><span class="tag">active</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/admin/"><span class="tag">admin</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/affinity/"><span class="tag">affinity</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ajax/"><span class="tag">ajax</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/algebra/"><span class="tag">algebra</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/algorithm/"><span class="tag">algorithm</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/amqp/"><span class="tag">amqp</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/android/"><span class="tag">android</span><span class="tag">1</span></a></div></div></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">우리람부탄</a><p class="is-size-7"><span>&copy; 2026 우리람부탄</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="GitHub" href="https://github.com/gabre8001"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ko");</script><script>var IcarusThemeSettings = {
             article: {
                 highlight: {

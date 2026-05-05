@@ -29,10 +29,13 @@
       switchTab();
       window.addEventListener('hashchange', switchTab, false);
   })();
-  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">우리람부탄</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="검색" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/tags/">태그</a></li><li class="is-active"><a href="#" aria-current="page">mbr</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-04-18T15:00:00.000Z" title="2019. 4. 19. 오전 12:00:00">2019-04-19</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.856Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/CS/">CS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/04/19/2019-04-19-MBR/">MBR (MAster Boot Record)</a></p><div class="content"><h2 id="MBR-MAster-Boot-Record"><a href="#MBR-MAster-Boot-Record" class="headerlink" title="MBR (MAster Boot Record)"></a>MBR (MAster Boot Record)</h2><ul>
-<li>MBR은 저장매체의 첫 번째 섹터(LBA 0)에 위치하는 512 바이트 크기의 영역이다. 처음 446 바이트는 부트 코드(boot code) 영역,64 바이트는 파티션 테이블(partition table), 마지막 2 바이트는 시크니처(signature)를 나타낸다.<br>운영체제가 부팅될 때 POST(Power On Self-Test) 과정을 마친 후 저장매체의 첫 번째 섹터를 호출되는데 이때 해당 부트 코드가 수행된다. 부트 코드의 주 역할은 파티션 테이블에서 부팅 가능한 파티션을 찾아 해당 파티션의 부트 섹터(boot sector)를 호출해주는 역할을 한다. 만약, 부팅 가능한 파티션이 없을 경우에는 미리 정의된 에러 메시지를 출력한다.<br>파티션 테이블은 각각 16 바이트씩 4개의 엔트리를 가지고 있다. 따라서 이러한 구조만 가진다면 하나의 볼륨(MBR을 갖는 볼륨)에서 파티션은 4개 밖에 생성할 수 없을 것이다. 주 파티션이 아닌 데이터 저장을 위한 논리 파티션의 경우 4개 이산 생성하는 것이 가능하다.<br>16 바이트의 파티션 테이블 엔트리의 세부적인 데이터구조</li>
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">우리람부탄</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="검색" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/tags/">태그</a></li><li class="is-active"><a href="#" aria-current="page">mbr</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-04-18T15:00:00.000Z" title="2019. 4. 19. 오전 12:00:00">2019-04-19</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.856Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/CS/">CS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/04/19/2019-04-19-MBR/">MBR (MAster Boot Record)</a></p><div class="content"><h2 id="MBR-MAster-Boot-Record">MBR (MAster Boot Record)</h2>
+<ul>
+<li>MBR은 저장매체의 첫 번째 섹터(LBA 0)에 위치하는 512 바이트 크기의 영역이다. 처음 446 바이트는 부트 코드(boot code) 영역,64 바이트는 파티션 테이블(partition table), 마지막 2 바이트는 시크니처(signature)를 나타낸다.<br>
+운영체제가 부팅될 때 POST(Power On Self-Test) 과정을 마친 후 저장매체의 첫 번째 섹터를 호출되는데 이때 해당 부트 코드가 수행된다. 부트 코드의 주 역할은 파티션 테이블에서 부팅 가능한 파티션을 찾아 해당 파티션의 부트 섹터(boot sector)를 호출해주는 역할을 한다. 만약, 부팅 가능한 파티션이 없을 경우에는 미리 정의된 에러 메시지를 출력한다.<br>
+파티션 테이블은 각각 16 바이트씩 4개의 엔트리를 가지고 있다. 따라서 이러한 구조만 가진다면 하나의 볼륨(MBR을 갖는 볼륨)에서 파티션은 4개 밖에 생성할 수 없을 것이다. 주 파티션이 아닌 데이터 저장을 위한 논리 파티션의 경우 4개 이산 생성하는 것이 가능하다.<br>
+16 바이트의 파티션 테이블 엔트리의 세부적인 데이터구조</li>
 </ul>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -44,58 +47,60 @@
 </thead>
 <tbody>
 <tr>
-<td> 0 – 0</td>
+<td>0 – 0</td>
 <td>0x0000 – 0x0000</td>
 <td>Boot Indicator 00 = do not use for booting 80 = system partition</td>
 <td>1 byte</td>
 </tr>
 <tr>
-<td> 1 – 3</td>
+<td>1 – 3</td>
 <td>0x0001 – 0x0003</td>
 <td>Starting CHS address</td>
 <td>3 bytes</td>
 </tr>
 <tr>
-<td> 4 – 4</td>
+<td>4 – 4</td>
 <td>0x0004 – 0x0004</td>
 <td>Partition type</td>
 <td>1 byte</td>
 </tr>
 <tr>
-<td> 5 – 7</td>
+<td>5 – 7</td>
 <td>0x0005 – 0x0007</td>
 <td>Ending CHS address</td>
 <td>3 bytes</td>
 </tr>
 <tr>
-<td> 8 – 11</td>
+<td>8 – 11</td>
 <td>0x0008 – 0x000B</td>
 <td>Starting LBA address</td>
 <td>4 bytes</td>
 </tr>
 <tr>
-<td> 12 – 15</td>
+<td>12 – 15</td>
 <td>0x000C – 0x000F</td>
 <td>Total sectors</td>
 <td>4 bytes</td>
 </tr>
 </tbody>
 </table>
-</div>
 <p>부트 식별자(boot indicator)는 해당 파티션이 부탕 가능한 파티션(운영체제 설치 여부)인지를 나타낸다. 0x80 값을 가질 경우 부팅 가능한 파티션을 의미하고, 0x00 값을 가질 경우 부팅이 가능하지 않은 파티션을 나타낸다. 그리고 CHS 주소 값이 나오는데 현재는 거의 대부분 LBA 모드를 사용하므로 사용되지 않고 있다. 그리고 해당 파티션의 시작 위치를 가르키는 LBA 주소 값과 파티션 전체의 섹터 수가 나온다. CHS와 다르게 LBA 주소의 마지막을 표시하지 않는 이유는 시작 LBA 주소에 섹터의 크기를 더하면  마지막 주소를 알 수 있기 때문이다.</p>
 <p>출처: <a target="_blank" rel="noopener" href="http://forensic-proof.com/archives/435">http://forensic-proof.com/archives/435</a></p>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-04-18T15:00:00.000Z" title="2019. 4. 19. 오전 12:00:00">2019-04-19</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.852Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/CS/">CS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/04/19/2019-04-19-mbr-gpt/">MBR, GPT</a></p><div class="content"><h2 id="MBR-GPT-차이"><a href="#MBR-GPT-차이" class="headerlink" title="MBR / GPT 차이"></a>MBR / GPT 차이</h2><ul>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-04-18T15:00:00.000Z" title="2019. 4. 19. 오전 12:00:00">2019-04-19</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.852Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/CS/">CS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/04/19/2019-04-19-mbr-gpt/">MBR, GPT</a></p><div class="content"><h2 id="MBR-GPT-차이">MBR / GPT 차이</h2>
+<ul>
 <li>MBR / GPT 는 파티션 스타일</li>
 <li>SSD/HDD 등의 디스크는 MBR 또는 GPT 로 파티션을 나누어 줘야 부팅 및 데이터 디스크로 사용가능</li>
 </ul>
-<h2 id="MBR"><a href="#MBR" class="headerlink" title="MBR"></a>MBR</h2><ul>
+<h2 id="MBR">MBR</h2>
+<ul>
 <li>Master Boot Record</li>
 <li>사용할 수 있는 디스크 용량의 제한이 2TB, 3TB의 하드디스크를 MBR 로 파티셔닝 하면 1TB는 사용 불가</li>
 <li>파티션은 주 4개 또는 주3개, 확장 1개 로 만들수 있음, 확장 파티션안에 여러 논리 파티션 가능</li>
 <li>부팅 파티션 하나만 지정 가능 확장 및 논리 파티션은 부팅 파티션으로 지정 불가</li>
 <li>BIOS, UEFI 메인보드 펌웨어 모두 대응 가능</li>
 </ul>
-<h2 id="GPT"><a href="#GPT" class="headerlink" title="GPT"></a>GPT</h2><ul>
+<h2 id="GPT">GPT</h2>
+<ul>
 <li>GUID Partition Table</li>
 <li>2TB 이상의 디스크 사용 가능, 최대 8ZB 까지 사용 가능</li>
 <li>최대 128개의 파티션 가능</li>

@@ -37,104 +37,120 @@
 <li>해시값의 <strong>앞쪽 0의 개수(leading zero)</strong> 를 관찰</li>
 <li>가장 긴 0 길이가 나올 확률로 전체 개수를 추정</li>
 </ol>
-<p>랜덤 해시에서<br>앞에 0이 k개 나올 확률은:</p>
-<div class="math block">$$1 / 2^k$$</div>
-<p>→ 만약 20개 연속 0이 나왔다면<br>→ 데이터가 대략 2^20 ≈ 100만 개 정도 있다고 추정 가능</p>
-<h1 id="수식-포함한-수학적-유도-과정"><a href="#수식-포함한-수학적-유도-과정" class="headerlink" title="수식 포함한 수학적 유도 과정"></a>수식 포함한 수학적 유도 과정</h1><p><strong>HyperLogLog의 수학적 유도 과정</strong><br>(핵심 직관 → 확률 모델 → 기대값 → 추정식 도출 순서)</p>
+<p>랜덤 해시에서<br>
+앞에 0이 k개 나올 확률은:<br>
+$$ 1 / 2^k $$</p>
+<p>→ 만약 20개 연속 0이 나왔다면<br>
+→ 데이터가 대략 2^20 ≈ 100만 개 정도 있다고 추정 가능</p>
+<h1>수식 포함한 수학적 유도 과정</h1>
+<p><strong>HyperLogLog의 수학적 유도 과정</strong><br>
+(핵심 직관 → 확률 모델 → 기대값 → 추정식 도출 순서)</p>
 <hr>
-<h1 id="1️⃣-확률-모델-설정"><a href="#1️⃣-확률-모델-설정" class="headerlink" title="1️⃣ 확률 모델 설정"></a>1️⃣ 확률 모델 설정</h1><p>서로 다른 원소가 ( n )개 있다고 가정합니다.<br>각 원소에 대해 <strong>균등한 무작위 해시 함수</strong> ( h(x) )를 적용합니다.</p>
-<p>해시값은:</p>
-<div class="math block">$$h(x) \sim \text{Uniform}(0,1)$$</div>
-<p>이를 이진수로 표현하면:</p>
-<div class="math block">$$0.b_1 b_2 b_3 \dots$$</div>
+<h1>1️⃣ 확률 모델 설정</h1>
+<p>서로 다른 원소가 ( n )개 있다고 가정합니다.<br>
+각 원소에 대해 <strong>균등한 무작위 해시 함수</strong> ( h(x) )를 적용합니다.</p>
+<p>해시값은:<br>
+$$ h(x) \sim \text{Uniform}(0,1) $$<br>
+이를 이진수로 표현하면:<br>
+$$ 0.b_1 b_2 b_3 \dots $$</p>
 <hr>
-<h1 id="2️⃣-Leading-Zero의-확률"><a href="#2️⃣-Leading-Zero의-확률" class="headerlink" title="2️⃣ Leading Zero의 확률"></a>2️⃣ Leading Zero의 확률</h1><p>앞에서부터 연속된 0의 개수를:</p>
-<div class="math block">$$\rho(x)$$</div>
-<p>라고 정의합니다.</p>
-<p>예:<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0.000101...</span><br></pre></td></tr></table></figure></p>
+<h1>2️⃣ Leading Zero의 확률</h1>
+<p>앞에서부터 연속된 0의 개수를:<br>
+$$ \rho(x) $$<br>
+라고 정의합니다.</p>
+<p>예:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0.000101...</span><br></pre></td></tr></table></figure>
 <p>→ $( \rho(x) = 3 )$</p>
-<p>랜덤 비트열에서:</p>
-<div class="math block">$$P(\rho = k) = 2^{-(k+1)}$$</div>
-<p>왜냐하면:</p>
+<p>랜덤 비트열에서:<br>
+$$ P(\rho = k) = 2^{-(k+1)} $$<br>
+왜냐하면:</p>
 <ul>
 <li>앞에 k개가 0일 확률: (2^{-k})</li>
 <li>그 다음 비트가 1일 확률: (1/2)</li>
 </ul>
-<p>따라서:</p>
-<div class="math block">$$P(\rho \ge k) = 2^{-k}$$</div>
+<p>따라서:<br>
+$$ P(\rho \ge k) = 2^{-k} $$</p>
 <hr>
-<h1 id="3️⃣-최대값의-분포"><a href="#3️⃣-최대값의-분포" class="headerlink" title="3️⃣ 최대값의 분포"></a>3️⃣ 최대값의 분포</h1><p>이제 n개의 독립 샘플이 있다고 하면:</p>
-<div class="math block">$$R = \max(\rho_1, \rho_2, ..., \rho_n)$$</div>
-<p>그럼:</p>
-<div class="math block">$$P(R < k) = (1 - 2^{-k})^n$$</div>
+<h1>3️⃣ 최대값의 분포</h1>
+<p>이제 n개의 독립 샘플이 있다고 하면:<br>
+$$ R = \max(\rho_1, \rho_2, …, \rho_n) $$<br>
+그럼:<br>
+$$ P(R &lt; k) = (1 - 2^{-k})^n $$</p>
 <p>왜냐하면:</p>
 <ul>
 <li>각 원소가 ( \rho \ge k )일 확률 = (2^{-k})</li>
 <li>모두가 그보다 작을 확률 = ((1 - 2^{-k})^n)</li>
 </ul>
 <hr>
-<h1 id="4️⃣-기대값-근사"><a href="#4️⃣-기대값-근사" class="headerlink" title="4️⃣ 기대값 근사"></a>4️⃣ 기대값 근사</h1><p>이제 ( R )의 기대값을 근사해보겠습니다.</p>
+<h1>4️⃣ 기대값 근사</h1>
+<p>이제 ( R )의 기대값을 근사해보겠습니다.</p>
 <p>( R )이 k보다 작을 확률이 1/2이 되는 지점을 찾습니다:</p>
-<div class="math block">$$(1 - 2^{-k})^n \approx 1/2$$</div>
-<p>로그 취하면:</p>
-<div class="math block">$$n \cdot 2^{-k} \approx \ln 2$$</div>
-<p>따라서:</p>
-<div class="math block">$$2^k \approx \frac{n}{\ln 2}$$</div>
-<p>즉,</p>
-<div class="math block">$$k \approx \log_2 n$$</div>
-<p>👉 <strong>leading zero 최대값은 log₂(n)에 비례</strong></p>
+<p>$$ (1 - 2^{-k})^n \approx 1/2 $$<br>
+로그 취하면:<br>
+$$ n \cdot 2^{-k} \approx \ln 2 $$<br>
+따라서:<br>
+$$ 2^k \approx \frac{n}{\ln 2} $$<br>
+즉,<br>
+$$ k \approx \log_2 n $$<br>
+👉 <strong>leading zero 최대값은 log₂(n)에 비례</strong></p>
 <hr>
-<h1 id="5️⃣-단순-추정량"><a href="#5️⃣-단순-추정량" class="headerlink" title="5️⃣ 단순 추정량"></a>5️⃣ 단순 추정량</h1><p>그래서 매우 단순하게는:</p>
-<div class="math block">$$\hat{n} \approx 2^R$$</div>
-<p>하지만 이 방식은 분산이 매우 큽니다.</p>
+<h1>5️⃣ 단순 추정량</h1>
+<p>그래서 매우 단순하게는:<br>
+$$ \hat{n} \approx 2^R $$<br>
+하지만 이 방식은 분산이 매우 큽니다.</p>
 <hr>
-<h1 id="6️⃣-여러-버킷-사용-분산-감소"><a href="#6️⃣-여러-버킷-사용-분산-감소" class="headerlink" title="6️⃣ 여러 버킷 사용 (분산 감소)"></a>6️⃣ 여러 버킷 사용 (분산 감소)</h1><p>해시값을 두 부분으로 나눕니다:</p>
+<h1>6️⃣ 여러 버킷 사용 (분산 감소)</h1>
+<p>해시값을 두 부분으로 나눕니다:</p>
 <ul>
 <li>앞의 p비트 → bucket 선택</li>
 <li>나머지 비트 → zero 계산</li>
 </ul>
-<p>버킷 수:</p>
-<div class="math block">$$m = 2^p$$</div>
-<p>각 버킷은 약:</p>
-<div class="math block">$$n/m$$</div>
-<p>개의 원소를 받습니다.</p>
-<p>각 버킷 i에서:</p>
-<div class="math block">$$R_i = \max \rho$$</div>
+<p>버킷 수:<br>
+$$ m = 2^p $$<br>
+각 버킷은 약:<br>
+$$ n/m $$<br>
+개의 원소를 받습니다.</p>
+<h2 id="각-버킷-i에서-R-i-max-rho">각 버킷 i에서:<br>
+$$ R_i = \max \rho $$</h2>
+<h1>7️⃣ 왜 조화 평균을 쓰는가?</h1>
+<p>각 버킷에서:<br>
+$$ E[2^{R_i}] \propto \frac{n}{m} $$<br>
+따라서:<br>
+$$ n \propto m \cdot \text{average}(2^{R_i}) $$<br>
+하지만 산술 평균은 큰 값에 민감합니다.</p>
+<h2 id="그래서-조화-평균-harmonic-mean-을-사용합니다-Z-left-sum-i-1-m-2-R-i-right-1-최종-추정량-hat-n-alpha-m-cdot-m-2-cdot-Z-즉-hat-n-alpha-m-cdot-m-2-left-sum-i-1-m-2-R-i-right-1">그래서 <strong>조화 평균(harmonic mean)</strong> 을 사용합니다:<br>
+$$ Z = \left( \sum_{i=1}^{m} 2^{-R_i} \right)^{-1} $$<br>
+최종 추정량:<br>
+$$ \hat{n} = \alpha_m \cdot m^2 \cdot Z $$<br>
+즉,<br>
+$$ \hat{n} = \alpha_m \cdot m^2 \left( \sum_{i=1}^{m} 2^{-R_i} \right)^{-1} $$</h2>
+<h1>8️⃣ 보정 상수 ( \alpha_m )</h1>
+<p>이 상수는 편향(bias)을 줄이기 위해 존재합니다.<br>
+$$ \alpha_m \approx \frac{0.7213}{1 + 1.079/m} $$<br>
+(큰 m일 때 근사값)</p>
 <hr>
-<h1 id="7️⃣-왜-조화-평균을-쓰는가"><a href="#7️⃣-왜-조화-평균을-쓰는가" class="headerlink" title="7️⃣ 왜 조화 평균을 쓰는가?"></a>7️⃣ 왜 조화 평균을 쓰는가?</h1><p>각 버킷에서:</p>
-<div class="math block">$$E[2^{R_i}] \propto \frac{n}{m}$$</div>
-<p>따라서:</p>
-<div class="math block">$$n \propto m \cdot \text{average}(2^{R_i})$$</div>
-<p>하지만 산술 평균은 큰 값에 민감합니다.</p>
-<p>그래서 <strong>조화 평균(harmonic mean)</strong> 을 사용합니다:</p>
-<div class="math block">$$Z = \left( \sum_{i=1}^{m} 2^{-R_i} \right)^{-1}$$</div>
-<p>최종 추정량:</p>
-<div class="math block">$$\hat{n} = \alpha_m \cdot m^2 \cdot Z$$</div>
-<p>즉,</p>
-<div class="math block">$$\hat{n} = \alpha_m \cdot m^2 \left( \sum_{i=1}^{m} 2^{-R_i} \right)^{-1}$$</div>
-<hr>
-<h1 id="8️⃣-보정-상수-alpha-m"><a href="#8️⃣-보정-상수-alpha-m" class="headerlink" title="8️⃣ 보정 상수 ( \alpha_m )"></a>8️⃣ 보정 상수 ( \alpha_m )</h1><p>이 상수는 편향(bias)을 줄이기 위해 존재합니다.</p>
-<div class="math block">$$\alpha_m \approx \frac{0.7213}{1 + 1.079/m}$$</div>
-<p>(큰 m일 때 근사값)</p>
-<hr>
-<h1 id="9️⃣-오차율"><a href="#9️⃣-오차율" class="headerlink" title="9️⃣ 오차율"></a>9️⃣ 오차율</h1><p>분산 분석 결과:</p>
-<div class="math block">$$\text{Standard Error} \approx \frac{1.04}{\sqrt{m}}$$</div>
-<p>예:</p>
+<h1>9️⃣ 오차율</h1>
+<p>분산 분석 결과:<br>
+$$ \text{Standard Error} \approx \frac{1.04}{\sqrt{m}} $$<br>
+예:</p>
 <ul>
 <li>m = 16384 → 오차 약 0.8%</li>
 </ul>
 <hr>
-<h1 id="🔎-전체-정리"><a href="#🔎-전체-정리" class="headerlink" title="🔎 전체 정리"></a>🔎 전체 정리</h1><p>HyperLogLog 추정 공식:</p>
-<div class="math block">$$
-\boxed{  
-\hat{n} =  
-\alpha_m m^2  
-\left(  
-\sum_{i=1}^{m} 2^{-R_i}  
-\right)^{-1}  
-}$$</div>
+<h1>🔎 전체 정리</h1>
+<p>HyperLogLog 추정 공식:<br>
+$$<br>
+\boxed{<br>
+\hat{n} =<br>
+\alpha_m m^2<br>
+\left(<br>
+\sum_{i=1}^{m} 2^{-R_i}<br>
+\right)^{-1}<br>
+}<br>
+$$</p>
 <hr>
-<h1 id="📌-수학적-핵심-요약"><a href="#📌-수학적-핵심-요약" class="headerlink" title="📌 수학적 핵심 요약"></a>📌 수학적 핵심 요약</h1><ol>
+<h1>📌 수학적 핵심 요약</h1>
+<ol>
 <li>Leading zero 확률은 기하분포</li>
 <li>최대값은 log(n)에 비례</li>
 <li>여러 독립 샘플로 분산 감소</li>
@@ -166,35 +182,46 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;pthread.h&gt;</span><br><span class="line">#include &lt;sched.h&gt;</span><br><span class="line"><span class="keyword">void</span>* thread_function(<span class="keyword">void</span>* arg) &#123;</span><br><span class="line">	cpu_set_t cpuset;</span><br><span class="line">	CPU_ZERO(&amp;cpuset);</span><br><span class="line">	CPU_SET(<span class="number">0</span>, &amp;cpuset); <span class="comment">// 스레드를 코어 0에 할당</span></span><br><span class="line">	</span><br><span class="line">	<span class="type">pthread_t</span> <span class="variable">thread</span> <span class="operator">=</span> pthread_self();</span><br><span class="line">	<span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> pthread_setaffinity_np(thread, sizeof(cpu_set_t), &amp;cpuset);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> (result != <span class="number">0</span>) &#123;</span><br><span class="line">		std::cerr &lt;&lt; <span class="string">&quot;pthread_setaffinity_np failed: &quot;</span> &lt;&lt; result &lt;&lt; std::endl;</span><br><span class="line">		<span class="keyword">return</span> nullptr;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	std::cout &lt;&lt; <span class="string">&quot;Thread running on core 0&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">	<span class="keyword">return</span> nullptr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">	pthread_t thread;</span><br><span class="line">	pthread_create(&amp;thread, nullptr, thread_function, nullptr);</span><br><span class="line">	pthread_join(thread, nullptr);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>결론:</strong></p>
 <p>스레드 어피니티는 특정 상황에서 성능 향상을 가져올 수 있는 강력한 기능이지만, 잘못 사용하면 오히려 성능 저하를 일으킬 수 있습니다. 따라서 스레드 어피니티를 적용하기 전에 시스템의 특성을 고려하고, 충분한 성능 테스트를 수행해야 합니다.</p>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-05-10T15:00:00.000Z" title="2021. 5. 11. 오전 12:00:00">2021-05-11</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.965Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/CS/">CS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/05/11/2021-05-11-observer-pattern/">Observer Pattern</a></p><div class="content"><h2 id="Observer-Pattern"><a href="#Observer-Pattern" class="headerlink" title="Observer Pattern"></a>Observer Pattern</h2><ul>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-05-10T15:00:00.000Z" title="2021. 5. 11. 오전 12:00:00">2021-05-11</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.965Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/CS/">CS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/05/11/2021-05-11-observer-pattern/">Observer Pattern</a></p><div class="content"><h2 id="Observer-Pattern">Observer Pattern</h2>
+<ul>
 <li>한 객체 상태 변화에 다라 다른 객체 상태도 연동되도록 일대다 객체 의존 관계를 구성하는 패턴</li>
 <li>데이터 변경이 발생했을 결우 상대 클래스나 객체에 의존하지 않으면서 데이터 변경을 통보하고자 할 때 유용</li>
 <li>옵저버 패턴은 통보 대상 객체의 관리르 Subject 클래스와 Observer 인터페이스로 일반화</li>
 <li>데이터 변경을 통보하는 클래스(CondreteSubject)는 통보 대상 클래스나 객체에 대한 의존성을 없앨 수 있음</li>
 </ul>
-<h2 id="구현-예시"><a href="#구현-예시" class="headerlink" title="구현 예시"></a>구현 예시</h2><p>야구 카운트 정보에 대한 정보를 보여주는 시스템이 있다고 가정하자. 야구 카운트에 대한 정보를 가진 Subject가 존재하고 이를 여러군데에서 보여주는 Observer 구현체들이 있다. 정보는 한군데에서 제공하고 Observer 구현체들은 여러 곳에서 여러 방식으로 정보를 보여줄 수 있다. Observer 구현체들은 여러가지 방법으로 구현 될 수 있고 이에 따라 정보를 보여주는 방법도 여러가지가 될 수 있다. Observer 구현체가 추가 되거나 다른 방식을 구현 되더라도 정보를 제공하는 Subject는 정보를 제공하기만 하기 때문에 이에 따른 변경이 필요 없다.</p>
+<h2 id="구현-예시">구현 예시</h2>
+<p>야구 카운트 정보에 대한 정보를 보여주는 시스템이 있다고 가정하자. 야구 카운트에 대한 정보를 가진 Subject가 존재하고 이를 여러군데에서 보여주는 Observer 구현체들이 있다. 정보는 한군데에서 제공하고 Observer 구현체들은 여러 곳에서 여러 방식으로 정보를 보여줄 수 있다. Observer 구현체들은 여러가지 방법으로 구현 될 수 있고 이에 따라 정보를 보여주는 방법도 여러가지가 될 수 있다. Observer 구현체가 추가 되거나 다른 방식을 구현 되더라도 정보를 제공하는 Subject는 정보를 제공하기만 하기 때문에 이에 따른 변경이 필요 없다.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Subject</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">registerObserver</span><span class="params">(Observer o)</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">removeObserver</span><span class="params">(Observer o)</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">notifyObservers</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">BaseballStatus</span> <span class="keyword">implements</span> <span class="title class_">Subject</span> &#123;</span><br><span class="line">	<span class="keyword">private</span> ArrayList&lt;Observer&gt; observers;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> strike;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> ball;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> out;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">BaseballStatus</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.observers = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getStrike</span><span class="params">()</span> &#123;</span><br><span class="line">    	<span class="keyword">return</span> strike;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setStrike</span><span class="params">(<span class="type">int</span> strike)</span> &#123;</span><br><span class="line">    	<span class="built_in">this</span>.strike = strike;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getBall</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> ball;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setBall</span><span class="params">(<span class="type">int</span> ball)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.ball = ball;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getOut</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> out;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setOut</span><span class="params">(<span class="type">int</span> out)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.out = out;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">registerObserver</span><span class="params">(Observer o)</span> &#123;</span><br><span class="line">        observers.add(o);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">removeObserver</span><span class="params">(Observer o)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> observers.indexOf(o);</span><br><span class="line">        <span class="keyword">if</span> (i &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">            observers.remove(i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">notifyObservers</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (Observer o : observers) &#123;</span><br><span class="line">            o.update();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">gameChanged</span><span class="params">()</span> &#123;</span><br><span class="line">        notifyObservers();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setGame</span><span class="params">(<span class="type">int</span> strike, <span class="type">int</span> ball, <span class="type">int</span> out)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.setStrike(strike);</span><br><span class="line">        <span class="built_in">this</span>.ball = ball;</span><br><span class="line">        <span class="built_in">this</span>.out = out;</span><br><span class="line">        gameChanged();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>위는 야구 정보를 제공하는 Subject BaseballStatus에 대한 코드</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Observer</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">update</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Display</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">display</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CurrentStateDisplayMonitor</span> <span class="keyword">implements</span> <span class="title class_">Observer</span>, Display &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> String monitorName;</span><br><span class="line">	<span class="keyword">private</span> BaseballStatus baseballStatus;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">CurrentStateDisplayMonitor</span><span class="params">(String dn, BaseballStatus bs)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.monitorName = dn;</span><br><span class="line">		<span class="built_in">this</span>.baseballStatus = bs;</span><br><span class="line">		bs.registerObserver(<span class="built_in">this</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">display</span><span class="params">()</span> &#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;monitor: &quot;</span> + monitorName);</span><br><span class="line">		System.out.println(<span class="string">&quot;Strike: &quot;</span> + baseballStatus.getStrike() + <span class="string">&quot; Ball: &quot;</span> + baseballStatus.getBall() + <span class="string">&quot; Out: &quot;</span> + baseballStatus.getOut() );</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">update</span><span class="params">()</span> &#123;</span><br><span class="line">		display();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>위는 정보를 받아 보여주는 Observer 구현체이다. 이 구현체는 다른 방식을 구현된 클래스가 추가 될 수 있으나 정보를 제공하는 BaseballStatus인 Subject는 변경이 필요 없다.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ObserverMain</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		<span class="type">BaseballStatus</span> <span class="variable">bs</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BaseballStatus</span>();</span><br><span class="line">		<span class="type">CurrentStateDisplayMonitor</span> <span class="variable">monitor1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CurrentStateDisplayMonitor</span>(<span class="string">&quot;시청역 전광판&quot;</span>, bs);</span><br><span class="line">		<span class="type">CurrentStateDisplayMonitor</span> <span class="variable">monitor2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CurrentStateDisplayMonitor</span>(<span class="string">&quot;광화문 전광판&quot;</span>, bs);</span><br><span class="line">		<span class="type">CurrentStateDisplayMonitor</span> <span class="variable">monitor3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CurrentStateDisplayMonitor</span>(<span class="string">&quot;테해란로 전광판&quot;</span>, bs);</span><br><span class="line">		</span><br><span class="line">		bs.setGame(<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">		bs.setGame(<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">		bs.setGame(<span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>);</span><br><span class="line">		bs.setGame(<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">monitor: 시청역 전광판</span><br><span class="line">Strike: <span class="number">0</span> Ball: <span class="number">1</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 광화문 전광판</span><br><span class="line">Strike: <span class="number">0</span> Ball: <span class="number">1</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 테해란로 전광판</span><br><span class="line">Strike: <span class="number">0</span> Ball: <span class="number">1</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 시청역 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">1</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 광화문 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">1</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 테해란로 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">1</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 시청역 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">2</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 광화문 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">2</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 테해란로 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">2</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 시청역 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">2</span> Out: <span class="number">1</span></span><br><span class="line">monitor: 광화문 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">2</span> Out: <span class="number">1</span></span><br><span class="line">monitor: 테해란로 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">2</span> Out: <span class="number">1</span></span><br></pre></td></tr></table></figure><br>BaseballStatus를 observer 구현체들에 등록하고 setGame을 통해 BaseballStatus가 변경될 때마다 정보가 표시되는 것을 확인 할 수 있다.</p>
-<p>출처: <a target="_blank" rel="noopener" href="https://gmlwjd9405.github.io/2018/07/08/observer-pattern.html">https://gmlwjd9405.github.io/2018/07/08/observer-pattern.html</a><br>  <a target="_blank" rel="noopener" href="https://johngrib.github.io/wiki/observer-pattern/">https://johngrib.github.io/wiki/observer-pattern/</a></p>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-05-10T15:00:00.000Z" title="2021. 5. 11. 오전 12:00:00">2021-05-11</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.969Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/CS/">CS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/05/11/2021-05-11-proxy-pattern/">Proxy Pattern</a></p><div class="content"><h2 id="Proxy-Pattern"><a href="#Proxy-Pattern" class="headerlink" title="Proxy Pattern"></a>Proxy Pattern</h2><p>어떤 객체에 대한 접근을 제어하는 용도로 대리인이나 대변인에 해당하는 객체를 제공하는 패턴</p>
+<p>위는 정보를 받아 보여주는 Observer 구현체이다. 이 구현체는 다른 방식을 구현된 클래스가 추가 될 수 있으나 정보를 제공하는 BaseballStatus인 Subject는 변경이 필요 없다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ObserverMain</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		<span class="type">BaseballStatus</span> <span class="variable">bs</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BaseballStatus</span>();</span><br><span class="line">		<span class="type">CurrentStateDisplayMonitor</span> <span class="variable">monitor1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CurrentStateDisplayMonitor</span>(<span class="string">&quot;시청역 전광판&quot;</span>, bs);</span><br><span class="line">		<span class="type">CurrentStateDisplayMonitor</span> <span class="variable">monitor2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CurrentStateDisplayMonitor</span>(<span class="string">&quot;광화문 전광판&quot;</span>, bs);</span><br><span class="line">		<span class="type">CurrentStateDisplayMonitor</span> <span class="variable">monitor3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CurrentStateDisplayMonitor</span>(<span class="string">&quot;테해란로 전광판&quot;</span>, bs);</span><br><span class="line">		</span><br><span class="line">		bs.setGame(<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">		bs.setGame(<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">		bs.setGame(<span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>);</span><br><span class="line">		bs.setGame(<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">monitor: 시청역 전광판</span><br><span class="line">Strike: <span class="number">0</span> Ball: <span class="number">1</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 광화문 전광판</span><br><span class="line">Strike: <span class="number">0</span> Ball: <span class="number">1</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 테해란로 전광판</span><br><span class="line">Strike: <span class="number">0</span> Ball: <span class="number">1</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 시청역 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">1</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 광화문 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">1</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 테해란로 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">1</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 시청역 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">2</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 광화문 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">2</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 테해란로 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">2</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 시청역 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">2</span> Out: <span class="number">1</span></span><br><span class="line">monitor: 광화문 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">2</span> Out: <span class="number">1</span></span><br><span class="line">monitor: 테해란로 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">2</span> Out: <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>BaseballStatus를 observer 구현체들에 등록하고 setGame을 통해 BaseballStatus가 변경될 때마다 정보가 표시되는 것을 확인 할 수 있다.</p>
+<p>출처: <a target="_blank" rel="noopener" href="https://gmlwjd9405.github.io/2018/07/08/observer-pattern.html">https://gmlwjd9405.github.io/2018/07/08/observer-pattern.html</a><br>
+<a target="_blank" rel="noopener" href="https://johngrib.github.io/wiki/observer-pattern/">https://johngrib.github.io/wiki/observer-pattern/</a></p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-05-10T15:00:00.000Z" title="2021. 5. 11. 오전 12:00:00">2021-05-11</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.969Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/CS/">CS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/05/11/2021-05-11-proxy-pattern/">Proxy Pattern</a></p><div class="content"><h2 id="Proxy-Pattern">Proxy Pattern</h2>
+<p>어떤 객체에 대한 접근을 제어하는 용도로 대리인이나 대변인에 해당하는 객체를 제공하는 패턴</p>
 <ol>
-<li>virtual proxy<br>클래스가 사용하는 자원이 많을 경우 작업이 필요할 때에만 클래스를 사용하도록 프록시를 사용</li>
-<li>Protection proxy<br>클래스에 대한 접근을 제어하기 위한 경우 프록시 클래스에서 주체 클래스에 대한 접근권한을 확인하여 메소드 호출을 제어</li>
-<li>remote proxy<br>프록시 클래스는 로컬에 있고 주체 클래스는 remote로 존재하는 경우 사용</li>
+<li>virtual proxy<br>
+클래스가 사용하는 자원이 많을 경우 작업이 필요할 때에만 클래스를 사용하도록 프록시를 사용</li>
+<li>Protection proxy<br>
+클래스에 대한 접근을 제어하기 위한 경우 프록시 클래스에서 주체 클래스에 대한 접근권한을 확인하여 메소드 호출을 제어</li>
+<li>remote proxy<br>
+프록시 클래스는 로컬에 있고 주체 클래스는 remote로 존재하는 경우 사용</li>
 </ol>
-<h2 id="구현-예시"><a href="#구현-예시" class="headerlink" title="구현 예시"></a>구현 예시</h2><p>아주 간단한 예제 하나만 들어보도록 한다. 프록시의 구현에서 프록시 메소드에 본 서비스 객체를 생성하는 경우 virtual proxy 이고, 접근 권한을 확인하여 본 서비스의 메소드 호출을 제어하는 경우 protection proxy, 리모트 통신을 통해 본 서비스를 호출하는 경우 remote proxy라 한다. 아래는 서비스가 있고 이 서비스를 호출하기 위한 프록시가 존재하는 경우이다. </p>
+<h2 id="구현-예시">구현 예시</h2>
+<p>아주 간단한 예제 하나만 들어보도록 한다. 프록시의 구현에서 프록시 메소드에 본 서비스 객체를 생성하는 경우 virtual proxy 이고, 접근 권한을 확인하여 본 서비스의 메소드 호출을 제어하는 경우 protection proxy, 리모트 통신을 통해 본 서비스를 호출하는 경우 remote proxy라 한다. 아래는 서비스가 있고 이 서비스를 호출하기 위한 프록시가 존재하는 경우이다.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Service</span> &#123;</span><br><span class="line">	String <span class="title function_">run</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">Service</span> &#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;call service&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ProxyService</span> <span class="keyword">implements</span> <span class="title class_">Service</span> &#123;</span><br><span class="line">	Service service;</span><br><span class="line">  </span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">    service = <span class="keyword">new</span> <span class="title class_">Service</span>();</span><br><span class="line">    <span class="keyword">return</span> service.run();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ProxyMain</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">Service</span> <span class="variable">proxy</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ProxyService</span>();</span><br><span class="line">    System.out.println(proxy.run());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>메인 함수에서 프록시를 호출하여 결과적으로 서비스 구현체를 호출하는 것을 볼 수 있다.</p>
-<h2 id="디자인-패턴"><a href="#디자인-패턴" class="headerlink" title="디자인 패턴"></a>디자인 패턴</h2><ul>
-<li>생성 creational 패턴은 객체 생성에 관련된 패턴, 객체의 생성과 조합을 캡슐화해 특정 객체가 생성되거나 변경되어도 프로그램 구조에 영향을 크게 받지 않도록 유연성을 제공한다. </li>
+<h2 id="디자인-패턴">디자인 패턴</h2>
+<ul>
+<li>생성 creational 패턴은 객체 생성에 관련된 패턴, 객체의 생성과 조합을 캡슐화해 특정 객체가 생성되거나 변경되어도 프로그램 구조에 영향을 크게 받지 않도록 유연성을 제공한다.</li>
 </ul>
 <ul>
 <li>abstract factory</li>
@@ -207,7 +234,7 @@
 <ul>
 <li>adapter</li>
 <li>composite</li>
-<li>decorator </li>
+<li>decorator</li>
 <li>proxy</li>
 </ul>
 <ul>
@@ -219,34 +246,46 @@
 <li>strategy</li>
 <li>template method</li>
 </ul>
-<p>출처: <a target="_blank" rel="noopener" href="https://yaboong.github.io/design-pattern/2018/10/17/proxy-pattern/">https://yaboong.github.io/design-pattern/2018/10/17/proxy-pattern/</a><br>  <a target="_blank" rel="noopener" href="https://limkydev.tistory.com/79">https://limkydev.tistory.com/79</a><br>  <a target="_blank" rel="noopener" href="https://jdm.kr/blog/235">https://jdm.kr/blog/235</a></p>
+<p>출처: <a target="_blank" rel="noopener" href="https://yaboong.github.io/design-pattern/2018/10/17/proxy-pattern/">https://yaboong.github.io/design-pattern/2018/10/17/proxy-pattern/</a><br>
+<a target="_blank" rel="noopener" href="https://limkydev.tistory.com/79">https://limkydev.tistory.com/79</a><br>
+<a target="_blank" rel="noopener" href="https://jdm.kr/blog/235">https://jdm.kr/blog/235</a></p>
 </div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2020-04-07T15:00:00.000Z" title="2020. 4. 8. 오전 12:00:00">2020-04-08</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.905Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/CS/">CS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2020/04/08/2020-04-08-vector-processor/">Vector Processor</a></p><div class="content"><p>벡터 프로세서(vector processor or array processor)는 벡터라고 불리는 다수의 데이터를 처리하는 명령어를 가진 CPU를 말한다. 컴퓨터에서 벡터란 1차원 배열의 데이터를 뜻한다. 벡터 프로세서와 반대되는 말로는 스칼라 프로세서가 있는데 한 개의 데이터를 처리하는 명령어를 가진 프로세서를 말한다. 대부분의 CPU는 스칼라 프로세서이다.</p>
 <p>파이프라인(pipeline)이 복수의 명령어를 동시에 처리하는 것이라면 벡터 프로세싱은 복수의 데이터를 동시에 처리하는 것이다. 즉 스칼라 값인 1개의 데이터를 연산하는 것이 아니라 벡터로 구성된 여러 데이터를 1개의 명령어로 벡터 합, 차, 곱 등의 연산을 한다. 벡터 연산을소프트웨어가 아닌 하드웨어로 고속으로 처리한다.</p>
 <p>벡터 프로세서는 1970년대 처음 나타났으며 1980년에서 1990년대 동안 슈퍼 컴퓨터의 기본적인 형태였다. 스칼라 프로세서, 특히 마이크로프로세서에서 성능을 높이기 위해 벡터 프로세서 기술을 도입한 CPU가 1990년대 초 나타났다. 오늘날 대부분의 cpu는 MMX, SSE, AltiVec 같이 다수의 데이터를 처리하는 베터 프로세싱을 위한 SIMD(Single Instruction Multiple Data) 명령어를 갖추고 있다. 벡터 프로세서 기술은 그래픽 가속기나 게임 콘솔에서도 찾아 볼 수 있다. 2000년 IBM, 도시바, 소니가 개발한 Cell Processor는 1개의 스칼라 프로세서와 8개의 벡터 프로세서로 구성되어 있으며 플레이스테이션 3에 사용되었다.</p>
 <p>벡터 프로세싱을 위한 또 다른 CPU 디자인으로 다수의 명령어로 다수의 데이터를 처리하는 MIMD (Multiple Instruction Multiple Data)가 있지만 전문적인 용도로만 사용될 뿐 일반적인 용도로 쓰이지는 않았다.</p>
-<h2 id="역사"><a href="#역사" class="headerlink" title="역사"></a>역사</h2><p>최초로 동작되는 벡터 프로세서는 1960년대 초, 웨스팅하우스의 솔로몬 프로젝트였다. 솔로몬의 목료는 많은 수의 단순한 수치 연산 코프로세서(ALU)를 1개의 마스터 CPU로 제어하는 방법을 사용해 수치 연산 성능을 극적으로 끌어올리는 것이었다. CPU는 사이클 당 하나의 공통 명령어를 모든 ALU로 보냈지만 데이터는 ALU 마다 각각 다르게 보내주었다. 이 방법은 솔로몬 머신에서 하나의 알고리즘을 배열 형태의 많은 데이터에 이용할 수 있도록 해준다. 1962년 웨스팅하우스는 솔로몬 프로젝트를 중단하였지만 벡터 프로세서의 개발에 대한 노력은 일리노이즈 대학의 일리악 IV에서 다시 시작되었다. 일리악은 256개의 ALU를 사용해 1 GFLOPS의 머신을 만들고자 하였으나 1972년 완성되었을 때는 64개의 ALU로 100 ~ 150 MFLOPS의 성능밖에 내지 못했다. 그렇지만 기본 개념은 충실해서 유체역학과 같은 데이터 중심의 애플리케이션에서는 세계에서 가장 빠른 머신이었다. 일리악의 각 데이터 요소마다 별도의 ALU를 사용한 방법은 이후 벡터 프로세서 설계에서도 일반적인 것은 아니었으며 대규모 병렬 컴퓨팅 범주로 구분되기도 한다.</p>
+<h2 id="역사">역사</h2>
+<p>최초로 동작되는 벡터 프로세서는 1960년대 초, 웨스팅하우스의 솔로몬 프로젝트였다. 솔로몬의 목료는 많은 수의 단순한 수치 연산 코프로세서(ALU)를 1개의 마스터 CPU로 제어하는 방법을 사용해 수치 연산 성능을 극적으로 끌어올리는 것이었다. CPU는 사이클 당 하나의 공통 명령어를 모든 ALU로 보냈지만 데이터는 ALU 마다 각각 다르게 보내주었다. 이 방법은 솔로몬 머신에서 하나의 알고리즘을 배열 형태의 많은 데이터에 이용할 수 있도록 해준다. 1962년 웨스팅하우스는 솔로몬 프로젝트를 중단하였지만 벡터 프로세서의 개발에 대한 노력은 일리노이즈 대학의 일리악 IV에서 다시 시작되었다. 일리악은 256개의 ALU를 사용해 1 GFLOPS의 머신을 만들고자 하였으나 1972년 완성되었을 때는 64개의 ALU로 100 ~ 150 MFLOPS의 성능밖에 내지 못했다. 그렇지만 기본 개념은 충실해서 유체역학과 같은 데이터 중심의 애플리케이션에서는 세계에서 가장 빠른 머신이었다. 일리악의 각 데이터 요소마다 별도의 ALU를 사용한 방법은 이후 벡터 프로세서 설계에서도 일반적인 것은 아니었으며 대규모 병렬 컴퓨팅 범주로 구분되기도 한다.</p>
 <p>초창기 벡터 프로세서 시스템 중 유명한 것은 CDC(Control Data Corporation)의 STAR-100과 텍사스 인스트루먼츠의 ASC(Advanced Scientific Computer)였다. ASC의 ALU는 1개의 파이프를 가진 파이프라인 아키텍처를 사용해 스칼라와 벡터 연산을 모두 처리할 수 있었으며 최대 성능은 길이가 긴 벡터를 처리할 경우 약 20MFLOPS에 달했다. 확장 ALU 구성에서는 2개나 4개로 파이프를 확장해 2배나 4배의 성능을 얻을 수 있었다. 메모리 대역폭은 확장 모드를 사용하는데 충분했다. STAR는 CDC 7600 같은 CDC의 슈퍼 컴퓨터보다느 ㄴ느릴지는 몰라도 데이터 관련 작업에서는 크기도 작고 가격도 낮았다. 하지만 STAR는 벡터 명령어를 디코딩하고 프로세스의 실행을 준비하는데 시간이 많이 걸렸다. 그래서 실제 성능을 발휘하려면 매우 일정한 데이터 집합이 필요했다.</p>
 <p>벡터 기술은 크레이-1에서 처음으로 완성되었다. 크레이는 STAR나 ASC 같이 데이터를 메모리에 남겨두지 않고 8개의 벡터 레지스터를 사용했다. 벡터 레지스터는 64비트 워드 64개로 이루어져 있다. 벡터 명령어는 레지스터 사이에서 실행되었는데 메인 메모리에서 가져오는 방법보다 훨씬 빨랐다. 크레이는 벡터 명령어를 실행하는데 다수의 ALU를 사용하는 대신 파이프라인 병령화를 사용했다. 이 방법은 명령어에 따라 파이프라인을 나누어 놓은 것으로 예를 들어 덧셈/뺄셈은 곱셈과는 다른 파이프라인에서 실행된다. 이런 기술을 벡터 체이닝이라 부른다. 크레이-1의 일반적인 성능은 80 MFLOPS 저옫였으나 3개의 체인으로 실행할 경우 최대 성능은 240 MFLOPS를 기록했다.</p>
 <p>벡터 프로세싱 기술은 최근 거의 모든 CPU에서 SIMD라는 명칭으로 추가되었다. 베터 유닛은 프로그램으로부터 처리할 데이터를 받아 메인 스칼라 CPU와 동시에 작동한다.</p>
-<h2 id="특징"><a href="#특징" class="headerlink" title="특징"></a>특징</h2><p>출처: <a target="_blank" rel="noopener" href="https://ko.wikipedia.org/wiki/%EB%B2%A1%ED%84%B0_%ED%94%84%EB%A1%9C%EC%84%B8%EC%84%9C">https://ko.wikipedia.org/wiki/%EB%B2%A1%ED%84%B0_%ED%94%84%EB%A1%9C%EC%84%B8%EC%84%9C</a><br><a target="_blank" rel="noopener" href="https://article2.tistory.com/697">https://article2.tistory.com/697</a></p>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2020-02-04T15:00:00.000Z" title="2020. 2. 5. 오전 12:00:00">2020-02-05</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.896Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/CS/">CS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2020/02/05/2020-02-05-program-memory/">Program and Memory</a></p><div class="content"><h3 id="c-언어로-만들어진-프로그램이-실행되면-메모리로-로드되며-메모리에-올라온-프로그램은-기계어-코드가-들어있는-코드-섹션-Code-Section-과-데이터를-저장하는-데이터-섹션-Data-Section-으로-나뉜다-데이터-섹션은-전역-메모리-Global-Memory-스택-메모리-Stack-Memory-와-힙-메모리-Heap-Memory-로-나뉜다"><a href="#c-언어로-만들어진-프로그램이-실행되면-메모리로-로드되며-메모리에-올라온-프로그램은-기계어-코드가-들어있는-코드-섹션-Code-Section-과-데이터를-저장하는-데이터-섹션-Data-Section-으로-나뉜다-데이터-섹션은-전역-메모리-Global-Memory-스택-메모리-Stack-Memory-와-힙-메모리-Heap-Memory-로-나뉜다" class="headerlink" title="c 언어로 만들어진 프로그램이 실행되면 메모리로 로드되며, 메모리에 올라온 프로그램은 기계어 코드가 들어있는 코드 섹션(Code Section)과 데이터를 저장하는 데이터 섹션(Data Section)으로 나뉜다. 데이터 섹션은 전역 메모리(Global Memory), 스택 메모리(Stack Memory)와 힙 메모리(Heap Memory)로 나뉜다."></a>c 언어로 만들어진 프로그램이 실행되면 메모리로 로드되며, 메모리에 올라온 프로그램은 기계어 코드가 들어있는 코드 섹션(Code Section)과 데이터를 저장하는 데이터 섹션(Data Section)으로 나뉜다. 데이터 섹션은 전역 메모리(Global Memory), 스택 메모리(Stack Memory)와 힙 메모리(Heap Memory)로 나뉜다.</h3><ul>
-<li><p>코드 섹션에는 함수, 제어문, 상수 등 program code(cpu에 의해서 수행되는 기계어 명령어들)이 모여있다.</p>
+<h2 id="특징">특징</h2>
+<p>출처: <a target="_blank" rel="noopener" href="https://ko.wikipedia.org/wiki/%EB%B2%A1%ED%84%B0_%ED%94%84%EB%A1%9C%EC%84%B8%EC%84%9C">https://ko.wikipedia.org/wiki/벡터_프로세서</a><br>
+<a target="_blank" rel="noopener" href="https://article2.tistory.com/697">https://article2.tistory.com/697</a></p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2020-02-04T15:00:00.000Z" title="2020. 2. 5. 오전 12:00:00">2020-02-05</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.896Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/CS/">CS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2020/02/05/2020-02-05-program-memory/">Program and Memory</a></p><div class="content"><h3 id="c-언어로-만들어진-프로그램이-실행되면-메모리로-로드되며-메모리에-올라온-프로그램은-기계어-코드가-들어있는-코드-섹션-Code-Section-과-데이터를-저장하는-데이터-섹션-Data-Section-으로-나뉜다-데이터-섹션은-전역-메모리-Global-Memory-스택-메모리-Stack-Memory-와-힙-메모리-Heap-Memory-로-나뉜다">c 언어로 만들어진 프로그램이 실행되면 메모리로 로드되며, 메모리에 올라온 프로그램은 기계어 코드가 들어있는 코드 섹션(Code Section)과 데이터를 저장하는 데이터 섹션(Data Section)으로 나뉜다. 데이터 섹션은 전역 메모리(Global Memory), 스택 메모리(Stack Memory)와 힙 메모리(Heap Memory)로 나뉜다.</h3>
+<ul>
+<li>
+<p>코드 섹션에는 함수, 제어문, 상수 등 program code(cpu에 의해서 수행되는 기계어 명령어들)이 모여있다.</p>
 </li>
-<li><p>전역 메모리에는 모든 지역 함수(Local Function) 바깥에서 선언된 변수(Global Variable)와 정적 변수(Static Variables)를 할당한다. 메인 함수는 운영체제가 프로그램 실행을 위해 최초로 호출하는 일종의 지역 함수로 구분된다. 프로그램 시작과 동시에 할당되고, 프로그램이 종료되어야만 메모리에서 소멸된다.</p>
+<li>
+<p>전역 메모리에는 모든 지역 함수(Local Function) 바깥에서 선언된 변수(Global Variable)와 정적 변수(Static Variables)를 할당한다. 메인 함수는 운영체제가 프로그램 실행을 위해 최초로 호출하는 일종의 지역 함수로 구분된다. 프로그램 시작과 동시에 할당되고, 프로그램이 종료되어야만 메모리에서 소멸된다.</p>
 </li>
-<li><p>전역 메모리 영역은 data 영역과 bss 영역으로 나뉜다. 초기화가 된 변수는 data 영역에 초기화가 안된 변수는 bss 영역에 저장된다. </p>
+<li>
+<p>전역 메모리 영역은 data 영역과 bss 영역으로 나뉜다. 초기화가 된 변수는 data 영역에 초기화가 안된 변수는 bss 영역에 저장된다.</p>
 </li>
-<li><p>코드역역과 데이터 영역은 compile time에 결정이 되어 프로그램 바이너리에 들어간다.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int start = 0;//global variable</span><br><span class="line">void main()</span><br><span class="line">&#123;</span><br><span class="line">  static int count = 0;////static variable</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>스택 메모리는 함수내에 선언된 지역 변수(Local Variables)와 매개 변수(Parameter Variables)를 저장한다. 컴파일 시에 필요한 공간의 크기를 확정한다. 함수 호출시 그에 해당하는 지역 변수를 위한 공간을 확보하며 해당 함수의 실행이 끝나면 지역 변수의 공간을 자동으로 해제한다. 스택 영역은 SP(stack pointer)를 베이스로 하여 스택 함수(push, pop)를 통해 스택 영역에 데이터를 write한다. 즉 함수 호출이 되면 4개(시스템마다 다를 수 있음)까지는 레지스터에 변수가 매핑이 되고 그 이후의 함수 파라미터들은 스택에 push 된 후 pop을 통해 파라미터들을 전달 받는다. 함수 내부의 변수들 만큼 스택에 push를 한다. 함수 호출이 완료되면 지역 변수의 공간을 자동으로 해제 한다는 것은 함수가 종료되어 필요하지 않은 변수들은 pop을 해서 sp를 감소시킨다는 의미이다. 반대로 push는 sp를 증가시킨다.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">void main()</span><br><span class="line">&#123;</span><br><span class="line">  int a;//local variable</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>힙 메모리는 프로그램 실행 중 필요에 의한 동적 메모리 할당을 위해 마련한 일정량의 메모리 공간이다. C에서는 malloc, C++에서는 new를 사용하여 메모리를 할당한다. 힙 메모리의 크기는 운영체제가 정한 최대 가상 메모리(Virtual Memory) 만큼이다. </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">void main()</span><br><span class="line">&#123;</span><br><span class="line">  char *p = (char *)malloc(1000*sizeof(char));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li>
+<p>코드역역과 데이터 영역은 compile time에 결정이 되어 프로그램 바이너리에 들어간다.</p>
 </li>
 </ul>
-<h3 id="메모리-구조"><a href="#메모리-구조" class="headerlink" title="메모리 구조"></a>메모리 구조</h3><div class="table-container">
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int start = 0;//global variable</span><br><span class="line">void main()</span><br><span class="line">&#123;</span><br><span class="line">  static int count = 0;////static variable</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>스택 메모리는 함수내에 선언된 지역 변수(Local Variables)와 매개 변수(Parameter Variables)를 저장한다. 컴파일 시에 필요한 공간의 크기를 확정한다. 함수 호출시 그에 해당하는 지역 변수를 위한 공간을 확보하며 해당 함수의 실행이 끝나면 지역 변수의 공간을 자동으로 해제한다. 스택 영역은 SP(stack pointer)를 베이스로 하여 스택 함수(push, pop)를 통해 스택 영역에 데이터를 write한다. 즉 함수 호출이 되면 4개(시스템마다 다를 수 있음)까지는 레지스터에 변수가 매핑이 되고 그 이후의 함수 파라미터들은 스택에 push 된 후 pop을 통해 파라미터들을 전달 받는다. 함수 내부의 변수들 만큼 스택에 push를 한다. 함수 호출이 완료되면 지역 변수의 공간을 자동으로 해제 한다는 것은 함수가 종료되어 필요하지 않은 변수들은 pop을 해서 sp를 감소시킨다는 의미이다. 반대로 push는 sp를 증가시킨다.</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">void main()</span><br><span class="line">&#123;</span><br><span class="line">  int a;//local variable</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>힙 메모리는 프로그램 실행 중 필요에 의한 동적 메모리 할당을 위해 마련한 일정량의 메모리 공간이다. C에서는 malloc, C++에서는 new를 사용하여 메모리를 할당한다. 힙 메모리의 크기는 운영체제가 정한 최대 가상 메모리(Virtual Memory) 만큼이다.</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">void main()</span><br><span class="line">&#123;</span><br><span class="line">  char *p = (char *)malloc(1000*sizeof(char));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="메모리-구조">메모리 구조</h3>
 <table>
 <thead>
 <tr>
@@ -259,77 +298,87 @@
 <td>높은 번지(High Address)</td>
 <td></td>
 </tr>
-<tr>
-<td>         ↓</td>
-<td>아래로 갈수록 주소값 감소</td>
-</tr>
-<tr>
-<td></td>
-<td>힙(Heap)</td>
-</tr>
-<tr>
-<td></td>
-<td>미사용 공간(Available)</td>
-</tr>
-<tr>
-<td></td>
-<td>스택(Stack)</td>
-</tr>
-<tr>
-<td></td>
-<td>전역 변수(Global Variables)</td>
-</tr>
-<tr>
-<td></td>
-<td>bss 영역</td>
-</tr>
-<tr>
-<td></td>
-<td>data 영역</td>
-</tr>
-<tr>
-<td>         ↑</td>
-<td>기계어 코드(Machine Code) </td>
-</tr>
-<tr>
-<td></td>
-<td>위로 갈수록 주소값 증가</td>
-</tr>
-<tr>
-<td>낮은 번지(Low Address)</td>
-<td></td>
-</tr>
 </tbody>
 </table>
-</div>
+<pre><code>     ↓             | 아래로 갈수록 주소값 감소
+                   | 힙(Heap)
+                   | 미사용 공간(Available)
+                   | 스택(Stack)
+                   | 전역 변수(Global Variables)
+                   | bss 영역
+                   | data 영역
+     ↑             | 기계어 코드(Machine Code) 
+                   | 위로 갈수록 주소값 증가
+</code></pre>
+<p>낮은 번지(Low Address)  |</p>
 <ul>
-<li><p>미사용 공간은 스택의 정적으로 할당, 힙의 동적 할당에 따라 줄어든다. 이말의 의미는 처음부터 모든 스택과 힙 공간이 할당되어 있는 것이 아니라 동적이든 정적이든 함수의 호출로 인하여 메모리 공간이 필요한 시기에 할당된다는 의미이다.</p>
+<li>
+<p>미사용 공간은 스택의 정적으로 할당, 힙의 동적 할당에 따라 줄어든다. 이말의 의미는 처음부터 모든 스택과 힙 공간이 할당되어 있는 것이 아니라 동적이든 정적이든 함수의 호출로 인하여 메모리 공간이 필요한 시기에 할당된다는 의미이다.</p>
 </li>
-<li><p>상세 내용은 리눅스와 윈도우간의 차이가 있다.  </p>
+<li>
+<p>상세 내용은 리눅스와 윈도우간의 차이가 있다.</p>
+<p>출처: <a target="_blank" rel="noopener" href="https://clarus.tistory.com/entry/%EC%BD%94%EB%93%9C%EC%84%B9%EC%85%98-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%84%B9%EC%85%98">https://clarus.tistory.com/entry/코드섹션-데이터-섹션</a><br>
+<a target="_blank" rel="noopener" href="https://pro-gen.tistory.com/18">https://pro-gen.tistory.com/18</a></p>
 </li>
 </ul>
-<p>  출처: <a target="_blank" rel="noopener" href="https://clarus.tistory.com/entry/%EC%BD%94%EB%93%9C%EC%84%B9%EC%85%98-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%84%B9%EC%85%98">https://clarus.tistory.com/entry/%EC%BD%94%EB%93%9C%EC%84%B9%EC%85%98-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%84%B9%EC%85%98</a><br>  <a target="_blank" rel="noopener" href="https://pro-gen.tistory.com/18">https://pro-gen.tistory.com/18</a></p>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2020-02-03T15:00:00.000Z" title="2020. 2. 4. 오전 12:00:00">2020-02-04</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.892Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/CS/">CS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2020/02/04/2020-02-04-register/">CPU Register</a></p><div class="content"><h3 id="레지스터는-CPU-내부에-존재하는-다목적-저장-공간이다-CPU와-한-몸이기-때문에-고속으로-데이터를-처리할-수-있다-레지스터는-범용-레지스터-세그먼트-레지스터-상태-플래그-레지스터-명령-포인터-레지스터로-나뉜다"><a href="#레지스터는-CPU-내부에-존재하는-다목적-저장-공간이다-CPU와-한-몸이기-때문에-고속으로-데이터를-처리할-수-있다-레지스터는-범용-레지스터-세그먼트-레지스터-상태-플래그-레지스터-명령-포인터-레지스터로-나뉜다" class="headerlink" title="레지스터는 CPU 내부에 존재하는 다목적 저장 공간이다. CPU와 한 몸이기 때문에 고속으로 데이터를 처리할 수 있다. 레지스터는 범용 레지스터, 세그먼트 레지스터, 상태 플래그 레지스터, 명령 포인터 레지스터로 나뉜다."></a>레지스터는 CPU 내부에 존재하는 다목적 저장 공간이다. CPU와 한 몸이기 때문에 고속으로 데이터를 처리할 수 있다. 레지스터는 범용 레지스터, 세그먼트 레지스터, 상태 플래그 레지스터, 명령 포인터 레지스터로 나뉜다.</h3><h2 id="범용-레지스터"><a href="#범용-레지스터" class="headerlink" title="범용 레지스터"></a>범용 레지스터</h2><p>아래 항목들은 모두 32Bit 이다.</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2020-02-03T15:00:00.000Z" title="2020. 2. 4. 오전 12:00:00">2020-02-04</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.892Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/CS/">CS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2020/02/04/2020-02-04-register/">CPU Register</a></p><div class="content"><h3 id="레지스터는-CPU-내부에-존재하는-다목적-저장-공간이다-CPU와-한-몸이기-때문에-고속으로-데이터를-처리할-수-있다-레지스터는-범용-레지스터-세그먼트-레지스터-상태-플래그-레지스터-명령-포인터-레지스터로-나뉜다">레지스터는 CPU 내부에 존재하는 다목적 저장 공간이다. CPU와 한 몸이기 때문에 고속으로 데이터를 처리할 수 있다. 레지스터는 범용 레지스터, 세그먼트 레지스터, 상태 플래그 레지스터, 명령 포인터 레지스터로 나뉜다.</h3>
+<h2 id="범용-레지스터">범용 레지스터</h2>
+<p>아래 항목들은 모두 32Bit 이다.</p>
 <ul>
-<li><p>EAX (Extended Accumulator Register)<br>EAX 레지스터는 산술(덧셈, 곱셈, 나눗셈 등), 논리 연산을 수행하며<br>함수의 반환값이 이 레지스터에 저장됩니다.<br>즉, 덧셈, 곱셈, 나눗셈 등의 명령은 모두 EAX 레지스터를 사용하며,<br>함수의 반환 값이 EAX 레지스터에 저장되므로<br>호출 함수의 성공 여부, 실패 여부를 쉽게 파악할 수 있으며<br>반환값을 쉽게 얻어올 수 있습니다.</p>
+<li>
+<p>EAX (Extended Accumulator Register)<br>
+EAX 레지스터는 산술(덧셈, 곱셈, 나눗셈 등), 논리 연산을 수행하며<br>
+함수의 반환값이 이 레지스터에 저장됩니다.<br>
+즉, 덧셈, 곱셈, 나눗셈 등의 명령은 모두 EAX 레지스터를 사용하며,<br>
+함수의 반환 값이 EAX 레지스터에 저장되므로<br>
+호출 함수의 성공 여부, 실패 여부를 쉽게 파악할 수 있으며<br>
+반환값을 쉽게 얻어올 수 있습니다.</p>
 </li>
-<li><p>EBX (Extended Base address Register)<br>EBX는 DS 세그먼트에 대한 포인터를 주로 저장한다. ESI 레지스터나 EDI 레지스터와 결합될 수 있으며, EBX 레지스터는 메모리 주소를 저장하기 위한 용도로 사용될 수 있는 유일한 범용 레지스터이다.</p>
+<li>
+<p>EBX (Extended Base address Register)<br>
+EBX는 DS 세그먼트에 대한 포인터를 주로 저장한다. ESI 레지스터나 EDI 레지스터와 결합될 수 있으며, EBX 레지스터는 메모리 주소를 저장하기 위한 용도로 사용될 수 있는 유일한 범용 레지스터이다.</p>
 </li>
-<li><p>ECX (Extended Counter Register)<br>카운터 레지스터입니다.<br>주로 반복 명령어 사용시 반복 카운터로 사용되는 레지스터입니다.<br>ECX 레지스터에 반복할 횟수를 지정하고, 반복 작업을 수행합니다. </p>
+<li>
+<p>ECX (Extended Counter Register)<br>
+카운터 레지스터입니다.<br>
+주로 반복 명령어 사용시 반복 카운터로 사용되는 레지스터입니다.<br>
+ECX 레지스터에 반복할 횟수를 지정하고, 반복 작업을 수행합니다.</p>
 </li>
-<li><p>EDX (Extended Data Register)<br>데이터 레지스터이다. 입, 출력 포인터 값을 저장할 때 사용한다.<br>EAX와 같이 쓰이고 부호 확장 명령 등에 쓰입니다.<br>큰 수의 곱셈 또는 나눗셈 등의 연산이 이루어질때,<br>EDX 레지스터가 사용되어 EAX 레지스터와 함께 쓰입니다</p>
+<li>
+<p>EDX (Extended Data Register)<br>
+데이터 레지스터이다. 입, 출력 포인터 값을 저장할 때 사용한다.<br>
+EAX와 같이 쓰이고 부호 확장 명령 등에 쓰입니다.<br>
+큰 수의 곱셈 또는 나눗셈 등의 연산이 이루어질때,<br>
+EDX 레지스터가 사용되어 EAX 레지스터와 함께 쓰입니다</p>
 </li>
-<li><p>ESI (Extended Source Index)<br>데이터를 조작하거나, 복사시에 소스 데이터의 주소가 저장됩니다.<br>ESI 레지스터가 가리키는 주소의 데이터를 EDI 레지스터가 가리키는 주소로 복사하는 용도로 많이 사용된다.</p>
+<li>
+<p>ESI (Extended Source Index)<br>
+데이터를 조작하거나, 복사시에 소스 데이터의 주소가 저장됩니다.<br>
+ESI 레지스터가 가리키는 주소의 데이터를 EDI 레지스터가 가리키는 주소로 복사하는 용도로 많이 사용된다.</p>
 </li>
-<li><p>EDI (Extended Destination Index)<br>ESI 레지스터와 비슷하나, ESI 레지스터가 가리키는 주소의 데이터가 복사된다.<br>EDI 레지스터에는 복사 시의 목적지의 주소가 저장됩니다.</p>
+<li>
+<p>EDI (Extended Destination Index)<br>
+ESI 레지스터와 비슷하나, ESI 레지스터가 가리키는 주소의 데이터가 복사된다.<br>
+EDI 레지스터에는 복사 시의 목적지의 주소가 저장됩니다.</p>
 </li>
-<li><p>EBP (Extended Base Pointer)<br>스택 프레임의 시작 지점 주소(스택의 가장 윗 부분, 스택의 처음)가 저장됩니다.<br>EBP 레지스터는 현재 사용되는 스택 프레임이 소멸되지 않는 이상<br>EBP 레지스터의 값은 변하지 않습니다.<br>현재의 스택 프레임이 소멸되면 이전에 사용되던 스택 프레임을 가리키게 된다.</p>
+<li>
+<p>EBP (Extended Base Pointer)<br>
+스택 프레임의 시작 지점 주소(스택의 가장 윗 부분, 스택의 처음)가 저장됩니다.<br>
+EBP 레지스터는 현재 사용되는 스택 프레임이 소멸되지 않는 이상<br>
+EBP 레지스터의 값은 변하지 않습니다.<br>
+현재의 스택 프레임이 소멸되면 이전에 사용되던 스택 프레임을 가리키게 된다.</p>
 </li>
-<li><p>ESP (Extended Stack Pointer)<br>스택 프레임의 끝 지점 주소(스택의 가장 아랫부분, 스택의 마지막)가 저장되며,<br>PUSH, POP 명령에 따라 ESP의 값이 stack 하나 크기인 4 Byte(32 Bit) 씩 변합니다.</p>
+<li>
+<p>ESP (Extended Stack Pointer)<br>
+스택 프레임의 끝 지점 주소(스택의 가장 아랫부분, 스택의 마지막)가 저장되며,<br>
+PUSH, POP 명령에 따라 ESP의 값이 stack 하나 크기인 4 Byte(32 Bit) 씩 변합니다.</p>
 </li>
 </ul>
-<h2 id="명령-포인터-레지스터"><a href="#명령-포인터-레지스터" class="headerlink" title="명령 포인터 레지스터"></a>명령 포인터 레지스터</h2><p>EIP (Extended Instruction Pointer)<br>다음에 실행해야 할 명령어가 존재하는 메모리 주소가 저장된다. 현재 명령어를 실행 완료한 후에 EIP 레지스터에 저장되어 있는 주소에 위치한 명령어를 실행하게 된다. 실행 전 EIP 레지스터에는 다름 실행해야 할 명령어가 존재하는 주소의 값이 저장된다.</p>
-<h2 id="Segment-Registers"><a href="#Segment-Registers" class="headerlink" title="Segment Registers"></a>Segment Registers</h2><p>세그먼트 레지스터는 총 6개(CS, SS, DS, ES, FS, GS)이고 각 크기는 16 비트입니다. 각 세그먼트 레지스터가 가리키는 세그먼트 디스크립터와 가상메로리가 조합되어 선형주소가 되며, 페이징 기법에 의해서 선형 주소가 최종적으로 물리주소로 변환된다. 만약 OS에서 페이징을 사용하지 않는다면 선형주소는 그대로 물리주소가 된다.</p>
+<h2 id="명령-포인터-레지스터">명령 포인터 레지스터</h2>
+<p>EIP (Extended Instruction Pointer)<br>
+다음에 실행해야 할 명령어가 존재하는 메모리 주소가 저장된다. 현재 명령어를 실행 완료한 후에 EIP 레지스터에 저장되어 있는 주소에 위치한 명령어를 실행하게 된다. 실행 전 EIP 레지스터에는 다름 실행해야 할 명령어가 존재하는 주소의 값이 저장된다.</p>
+<h2 id="Segment-Registers">Segment Registers</h2>
+<p>세그먼트 레지스터는 총 6개(CS, SS, DS, ES, FS, GS)이고 각 크기는 16 비트입니다. 각 세그먼트 레지스터가 가리키는 세그먼트 디스크립터와 가상메로리가 조합되어 선형주소가 되며, 페이징 기법에 의해서 선형 주소가 최종적으로 물리주소로 변환된다. 만약 OS에서 페이징을 사용하지 않는다면 선형주소는 그대로 물리주소가 된다.</p>
 <ul>
 <li>CS(Code Segment) - 코드 영역의 시작 주소를 저장한다.</li>
 <li>DS(Data Segment) - 데이터 영역의 시작 주소를 저장한다.</li>
@@ -337,12 +386,20 @@
 <li>FS - 기타 영역의 시작 주소를 저장한다.</li>
 <li>SS(Stack Segment) - 스택 영역의 시작 주소를 저장한다.</li>
 </ul>
-<h2 id="그-외"><a href="#그-외" class="headerlink" title="그 외"></a>그 외</h2><p>플레그 레지스터 (Carry Flag, Zero Flag, Overlfow Flag, Sign Flag, Direction Flag)<br>부동 소수점 데이터 레지스터</p>
-<p>출처: <a target="_blank" rel="noopener" href="https://securityfactory.tistory.com/182">https://securityfactory.tistory.com/182</a><br><a target="_blank" rel="noopener" href="https://m.blog.naver.com/PostView.nhn?blogId=cung91&amp;logNo=220196144355&amp;proxyReferer=https%3A%2F%2Fwww.google.com%2F">https://m.blog.naver.com/PostView.nhn?blogId=cung91&amp;logNo=220196144355&amp;proxyReferer=https%3A%2F%2Fwww.google.com%2F</a><br><a target="_blank" rel="noopener" href="https://kblab.tistory.com/54">https://kblab.tistory.com/54</a>  </p>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-07-14T15:00:00.000Z" title="2019. 7. 15. 오전 12:00:00">2019-07-15</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.870Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/CS/">CS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/07/15/2019-07-15-garbage-collection/">Garbage Collection</a></p><div class="content"><p>자바의 가비지 컬렉터가 어떻게 돌아가는지 알아보자.<br>자바의 힙은 아래의 그림과 같이 여러 부분으로 나뉜다.</p>
-<p><img src="!--swig￼0--&gt;/assets/img/post/java_heap.PNG" alt="Image of java heap"></p>
-<p>먼저 Permanent 라고 써있는 부분에는 자바에서 가지고 있어야 할 메타데이터를 보관하고 있다.<br>어플리케이션에서 사용되는 클래스와 메소드들의 정보들이다.<br>자바 SE 라이브러리의 클래스와 메소드들도 저장되어있다.</p>
-<h2 id="가비지-컬랙션이-진행되는-과정"><a href="#가비지-컬랙션이-진행되는-과정" class="headerlink" title="가비지 컬랙션이 진행되는 과정"></a>가비지 컬랙션이 진행되는 과정</h2><ol>
+<h2 id="그-외">그 외</h2>
+<p>플레그 레지스터 (Carry Flag, Zero Flag, Overlfow Flag, Sign Flag, Direction Flag)<br>
+부동 소수점 데이터 레지스터</p>
+<p>출처: <a target="_blank" rel="noopener" href="https://securityfactory.tistory.com/182">https://securityfactory.tistory.com/182</a><br>
+<a target="_blank" rel="noopener" href="https://m.blog.naver.com/PostView.nhn?blogId=cung91&amp;logNo=220196144355&amp;proxyReferer=https%3A%2F%2Fwww.google.com%2F">https://m.blog.naver.com/PostView.nhn?blogId=cung91&amp;logNo=220196144355&amp;proxyReferer=https%3A%2F%2Fwww.google.com%2F</a><br>
+<a target="_blank" rel="noopener" href="https://kblab.tistory.com/54">https://kblab.tistory.com/54</a></p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-07-14T15:00:00.000Z" title="2019. 7. 15. 오전 12:00:00">2019-07-15</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.870Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/CS/">CS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/07/15/2019-07-15-garbage-collection/">Garbage Collection</a></p><div class="content"><p>자바의 가비지 컬렉터가 어떻게 돌아가는지 알아보자.<br>
+자바의 힙은 아래의 그림과 같이 여러 부분으로 나뉜다.</p>
+<p>![Image of java heap](/assets/img/post/java_heap.PNG)</p>
+<p>먼저 Permanent 라고 써있는 부분에는 자바에서 가지고 있어야 할 메타데이터를 보관하고 있다.<br>
+어플리케이션에서 사용되는 클래스와 메소드들의 정보들이다.<br>
+자바 SE 라이브러리의 클래스와 메소드들도 저장되어있다.</p>
+<h2 id="가비지-컬랙션이-진행되는-과정">가비지 컬랙션이 진행되는 과정</h2>
+<ol>
 <li>새로운 객체는 eden에 들어간다. S0, S1는 비어있다.</li>
 <li>eden이 가득 차면 minor 가비지 컬랙션이 진행된다.</li>
 <li>참조되고 있는 객체는 eden에서 S0으로 이동하고, 참조되지 않는 객체는 eden에서 지워진다.</li>
@@ -350,17 +407,20 @@
 <li>그 다음 minor GC에서는 위와 같은 동작이 일어나지만 객체는 S0으로 이동하고 S1영역은 비워진다.</li>
 <li>minor GC가 일어난 후 servivor 영역에 있는 객체 중 일정 age 이상인 객체들은 Tenured(old ganeration)으로 이동한다.</li>
 <li>minor GC가 계속 일어나면 young generation에 있는 객체들이 old generation으로 이동한다.</li>
-<li>대부분의 GC는 minor GC를 통해 해결이 되고, old generation 영역을 정리하기 위해 major GC가 실행된다. </li>
+<li>대부분의 GC는 minor GC를 통해 해결이 되고, old generation 영역을 정리하기 위해 major GC가 실행된다.</li>
 </ol>
-<p>minor/major garbage collection은 기본적으로 stop the world events 이다. major garbage collection이 오래걸린다.<br>가비지 컬랙션의 종류에 따라 major garbage collection이 진행되는 시간이 영향을 받는다.</p>
-<h3 id="The-Serial-GC"><a href="#The-Serial-GC" class="headerlink" title="The Serial GC"></a>The Serial GC</h3><ul>
-<li>Serial GC는 Java SE 5 and 6의 기본 GC다. </li>
+<p>minor/major garbage collection은 기본적으로 stop the world events 이다. major garbage collection이 오래걸린다.<br>
+가비지 컬랙션의 종류에 따라 major garbage collection이 진행되는 시간이 영향을 받는다.</p>
+<h3 id="The-Serial-GC">The Serial GC</h3>
+<ul>
+<li>Serial GC는 Java SE 5 and 6의 기본 GC다.</li>
 <li>minor GC와 major GC가 차례로 실행된다.</li>
 <li>mark compact collection method가 사용된다. 이 방법은 사용되고 있는 메모리를 힙의 시작 부분에 모아 놓고 그 뒤로 메로리를 새로 할당한다. 새로운 메모리 할당이 빠른 장점이 있다.</li>
 <li>Serial GC는 stop the world에 걸리는 시간이 길어도 별 상관 없는 client-style machine에서 사용된다. GC를 위해 single virtual processor를 사용할 경우 이점이 있는 방법이다. heap을 수백MBs 를 사용하는 보통의 어플리케이션에서 효과적인 GC 방법이 될 수 있다.</li>
 <li>실제 프로세서보다 JVM의 수가 더 많을 경우에도 좋은 선택이 될 수 있다.</li>
 </ul>
-<h3 id="The-Parallel-GC"><a href="#The-Parallel-GC" class="headerlink" title="The Parallel GC"></a>The Parallel GC</h3><ul>
+<h3 id="The-Parallel-GC">The Parallel GC</h3>
+<ul>
 <li>minor GC가 여러 쓰래드에 의해서 수행된다.</li>
 <li>호스트 하나의 CPU가 하나라도 Parallel GC가 권장된다.</li>
 <li>Parallel collector는 Throughput collector로도 불린다.</li>
@@ -369,14 +429,16 @@
 <li>-XX:+UseParallelGC 이 명령으로 minor GC는 multi-thread로 major GC는 single-thread로 수행한다.</li>
 <li>-XX:+UseParallelOldGC 이 명령을 이용해 minor/major GC 모두 multi-thread로 수행한다.메모리 정리는 old generation에서만 한다.</li>
 </ul>
-<h3 id="The-Concurrent-Mark-Sweep-CMS-Collector"><a href="#The-Concurrent-Mark-Sweep-CMS-Collector" class="headerlink" title="The Concurrent Mark Sweep (CMS) Collector"></a>The Concurrent Mark Sweep (CMS) Collector</h3><ul>
+<h3 id="The-Concurrent-Mark-Sweep-CMS-Collector">The Concurrent Mark Sweep (CMS) Collector</h3>
+<ul>
 <li>the concurrent low pause collector라고 불리기도 한다.</li>
 <li>어플리케이션이 돌아가면서 동시에 GC를 수행하여 중지 상태를 최소화하려고 한다.</li>
 <li>live object를 복사하거나 compact하지 않는다.</li>
 <li>조각화가 문제가 된다면 더 큰 힙을 할당한다.</li>
 <li>CMS collector는 적은 정지시간을 요하면서 GC와 자원을 공유할 수 있는 환경(UI application, webserver)에서 사용된다.</li>
 </ul>
-<h3 id="The-G1-Garbage-Collector"><a href="#The-G1-Garbage-Collector" class="headerlink" title="The G1 Garbage Collector"></a>The G1 Garbage Collector</h3><ul>
+<h3 id="The-G1-Garbage-Collector">The G1 Garbage Collector</h3>
+<ul>
 <li>Java 7 부터 지원한다. CMS collector를 대체하기 위해 만들어 졌다.</li>
 <li>그냥 제일 좋다고 보면된다.(대부분의 경우에서…)</li>
 <li>위에서 언급한 heap의 구조와는 다른 heap 구조를 가진다.</li>
@@ -388,36 +450,52 @@
 <li>메모리 영역들의 각각의 객체들의 참조 상태를 스캔한다.</li>
 <li>비어있는 영역에 aging을 거친 객체들을 옮겨놓는다.</li>
 </ul>
-<p><img src="!--swig￼1--&gt;/assets/img/post/g1-garbage-collector-details-and-tuning-44-638.jpg" alt="Image of java heap"></p>
-<p>지금까지 대략적으로 Java의 Garbage collection에 대해 알아보았다. G1 GC는 좀 더 공부가 필요할 것 같다..</p>
-<p>출처: <a target="_blank" rel="noopener" href="https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html">https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html</a><br><a target="_blank" rel="noopener" href="https://yaboong.github.io/java/2018/06/09/java-garbage-collection/">https://yaboong.github.io/java/2018/06/09/java-garbage-collection/</a><br><a target="_blank" rel="noopener" href="https://d2.naver.com/helloworld/1329">https://d2.naver.com/helloworld/1329</a><br><a target="_blank" rel="noopener" href="https://initproc.tistory.com/entry/G1-Garbage-Collection">https://initproc.tistory.com/entry/G1-Garbage-Collection</a></p>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-06-16T15:00:00.000Z" title="2019. 6. 17. 오전 12:00:00">2019-06-17</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.868Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/CS/">CS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/06/17/2019-06-17-gdb-child-process/">GDB Child Process Debugging</a></p><div class="content"><p>GDB에서 디버깅을 하는데 fork() 이후에 원하는데로 디버깅 할 수 없었다.<br>fork() 이후에 parent process 만 계속 디버깅 된다.  </p>
-<p>아래와 같이 GDB에서 명령을 내리면 child process를 디버깅 할 수 있다. 완전 좋다.  </p>
-<p>set follow-fork-mode child  </p>
-<p>위와 같이 설정하면 fork() 후에 child process를 디버깅 상태로 만들고 parent는 계속 실행시킨다.<br>follow-fork-mode의 기본값은 parent이며 이는 다음과 같이 확인할 수 있다.  </p>
-<p>show follow-fork-mode  </p>
-<p>만약 parent와 child process를 모두 디버깅해야한다면<br>이들을 모두 제어하기 위해 다음 명령을 이용할 수 있다.  </p>
-<p>set detach-on-fork off  </p>
-<p>만약 fork/vfork/exec와 같은 특정 이벤트 발생 시 실행을 중지시키고 싶다면<br>catchpoint를 설정할 수 있다.  </p>
-<p>catch exec  </p>
+<p>![Image of java heap](/assets/img/post/g1-garbage-collector-details-and-tuning-44-638.jpg)</p>
+<p>지금까지 대략적으로 Java의 Garbage collection에 대해 알아보았다. G1 GC는 좀 더 공부가 필요할 것 같다…</p>
+<p>출처: <a target="_blank" rel="noopener" href="https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html">https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html</a><br>
+<a target="_blank" rel="noopener" href="https://yaboong.github.io/java/2018/06/09/java-garbage-collection/">https://yaboong.github.io/java/2018/06/09/java-garbage-collection/</a><br>
+<a target="_blank" rel="noopener" href="https://d2.naver.com/helloworld/1329">https://d2.naver.com/helloworld/1329</a><br>
+<a target="_blank" rel="noopener" href="https://initproc.tistory.com/entry/G1-Garbage-Collection">https://initproc.tistory.com/entry/G1-Garbage-Collection</a></p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-06-16T15:00:00.000Z" title="2019. 6. 17. 오전 12:00:00">2019-06-17</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.868Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/CS/">CS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/06/17/2019-06-17-gdb-child-process/">GDB Child Process Debugging</a></p><div class="content"><p>GDB에서 디버깅을 하는데 fork() 이후에 원하는데로 디버깅 할 수 없었다.<br>
+fork() 이후에 parent process 만 계속 디버깅 된다.</p>
+<p>아래와 같이 GDB에서 명령을 내리면 child process를 디버깅 할 수 있다. 완전 좋다.</p>
+<p>set follow-fork-mode child</p>
+<p>위와 같이 설정하면 fork() 후에 child process를 디버깅 상태로 만들고 parent는 계속 실행시킨다.<br>
+follow-fork-mode의 기본값은 parent이며 이는 다음과 같이 확인할 수 있다.</p>
+<p>show follow-fork-mode</p>
+<p>만약 parent와 child process를 모두 디버깅해야한다면<br>
+이들을 모두 제어하기 위해 다음 명령을 이용할 수 있다.</p>
+<p>set detach-on-fork off</p>
+<p>만약 fork/vfork/exec와 같은 특정 이벤트 발생 시 실행을 중지시키고 싶다면<br>
+catchpoint를 설정할 수 있다.</p>
+<p>catch exec</p>
 <ul>
 <li>부록 - gdb 명령어</li>
 </ul>
-<p>break — 브레이크 포인트 설정 (b 와 같음)<br>b [함수명] — 함수명으로 설정<br>b [파일명]:[함수명] — 파일과 함수명으로 설정<br>b [파일명]:[라인 번호] — 파일과 라인 번호로 설정<br>b *0x7932700 — 메모리 주소에 설정  </p>
-<p>info break — 현재 설정된 브레이크 포인트 확인  </p>
-<p>clear — 브레이크 포인트 제거 (cl과 같음)<br>cl [함수명] — 해당 함수명의 브레이크 포인트 제거<br>cl 10 — 해당 라인 브레이크 포인트 제거  </p>
-<p>d — 모든 브레이크 포인트 제거  </p>
-<p>disable b - 모든 브레이크 포인트 비활성화<br>enable b - 모든 브레이크 포인트 활성화  </p>
+<p>break – 브레이크 포인트 설정 (b 와 같음)<br>
+b [함수명] – 함수명으로 설정<br>
+b [파일명]:[함수명] – 파일과 함수명으로 설정<br>
+b [파일명]:[라인 번호] – 파일과 라인 번호로 설정<br>
+b *0x7932700 – 메모리 주소에 설정</p>
+<p>info break – 현재 설정된 브레이크 포인트 확인</p>
+<p>clear – 브레이크 포인트 제거 (cl과 같음)<br>
+cl [함수명] – 해당 함수명의 브레이크 포인트 제거<br>
+cl 10 – 해당 라인 브레이크 포인트 제거</p>
+<p>d – 모든 브레이크 포인트 제거</p>
+<p>disable b - 모든 브레이크 포인트 비활성화<br>
+enable b - 모든 브레이크 포인트 활성화</p>
 <p>출처: <a target="_blank" rel="noopener" href="http://egloos.zum.com/studyfoss/v/5120049">http://egloos.zum.com/studyfoss/v/5120049</a></p>
 </div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-05-30T15:00:00.000Z" title="2019. 5. 31. 오전 12:00:00">2019-05-31</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.864Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/CS/">CS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/05/31/2019-05-31-the-google-file-system/">The Google File System</a></p><div class="content"><p>구글 파일 시스템에 대해서 공부할 일이 있어서 요약본을 남긴다.</p>
-<h2 id="The-Google-File-System"><a href="#The-Google-File-System" class="headerlink" title="The Google File System"></a>The Google File System</h2><ol>
-<li>Introduction  </li>
+<h2 id="The-Google-File-System">The Google File System</h2>
+<ol>
+<li>Introduction</li>
 </ol>
 <p>Google에서 요구하는 데이터 처리 요수사항을 충족하기 위해 Google File System(GFS)를 설계하고 구현했습다. 성능, 확장성, 안정성, 가용성을 목표한다.</p>
-<ol>
-<li>Design Overview  </li>
+<ol start="2">
+<li>Design Overview</li>
 </ol>
-<p>2.1 Assumtion<br>GFS는 다음과 같은 가정을 기반으로 설계한다.</p>
+<p>2.1 Assumtion<br>
+GFS는 다음과 같은 가정을 기반으로 설계한다.</p>
 <ul>
 <li>일반적인 IBM호환 부품을 이용한다.</li>
 <li>시스템은 적은 수의 큰 파일을 저장한다. 작은 파일은 지원하지만 최적화 안한다.</li>
@@ -426,49 +504,77 @@
 <li>동기화 오버헤드를 최소화 한다.</li>
 <li>낮은 레이턴시보다 높은 대역폭이 중요하다.</li>
 </ul>
-<p>2.2 Interface<br>POSIX와 호환되지 않는 interface를 제공한다. 파일 생성, 삭제, 열기, 닫기, 읽기, 쓰기 작업을 지원한다. 스냅샷은 파일 또는 디렉토리 트리의 복사본을 만든다. 레코드 추가 기능을 이용하여 많은 클라이언트가 lock 없이 데이터를 하나의 파일에 동시에 추가할 수 있다.</p>
-<p>2.3 Architecture<br>하나의 master와 여러개의 chunkservers로 이루어 진다. 각각의 서버는 범용 linux 시스템이다. 파일은 고정크기의 chunk로 나뉘고 각 청크는 64비트의 청크핸들로 식별된다. 파일이 저장될 때 chunkserver는 linux file로 저장한다. chunk는 여러 chunkserver에 저장이 되며, 기본적으로 세개의 복제본을 저장한다.<br>master는 모든 파일 시스템의 메타 데이터를 유지 관리한다. file과 chunk의 매핑 및 위치 정보를 포함한다. 클라이언트는 메타데이터 작업을 위해 master와 통신하지만 데이터 관련 통신은 chunkserver와 직접한다. 클라이언트와 chunkserver는 파일 데이터를 캐시하지 않는다. 파일이 너무 크기 때문이다.</p>
-<p>2.4 Single Master<br>단일 마스터를 사용하여 설계를 단순화 한다. 파일시스템의 모든 메타데이터를 한곳에서 다루기 때문에 병목현상이 발생하지 않도록 한다. 클라이언트는 마스터에게 file이 저장되어있는 chunk의 위치와 chunk handle에 대한 정보를 묻고 해당 정보를 캐시한 후 chunkserver와 직접 통신한다.</p>
-<p>2.5 Chunk Size<br>Chunk Size는 64MB 이다. 각 chunk의 복재본들은 chunkserver에 linux file로 저장된다. chunk 가 크면 chunk의 개수가 줄어든다. 좋은 점이 있다. chunk단위로 위치에 대한 질의를 master-client가 하기 때문에 master의 작업 부하를 줄인다. chunk하나에 대한 많은 작업을 가능성이 높기 때문에 chunkserver와의 TCP연결을 유지하여 네트워크 오버헤드를 줄인다. 메타데이터의 양이 작아진다. chunk가 크기 때문에 많은 클라이언트가 하나의 chunk에 접근하려 할 수도 있다는 단점이 있다.</p>
-<p>2.6 Metadata<br>master는 file 및 chunk namespace, file-chunk mapping 정보, chunk복사본의 위치와 같은 세가지 주요 메타 데이터를 가진다.</p>
-<p>2.6.1 In-Memory Data Structures<br>메타 데이터는 메모리에 저장되어 작업이 빠르다. 마스터는 64MB의 chunk 하나에 64바이트 미만의 메타데이터를 유지한다.file namespace 데이터는 접두사 압축을 사용하여 파일당 64바이트이다.</p>
-<p>2.6.2 Chunk Locations<br>master는 시작시와 주기적으로 chunkserver의 상태정보를 요청하여 metadata를 최신으로 유지한다.</p>
-<p>2.6.3 Operation Log<br>메타 데이터의 변경사항에 대한 기록을 남긴다. 로그가 일정크기 이상을 커질때마다 상태를 점검하고 체크포인트 한다.</p>
-<p>2.7 Consistancy Model 일단 통과<br>2.7.1 Guarantees by GFS<br>file namespace 변경(예: 파일 생성)은 원자적이다. namespace locking을 통해 구현 된다.</p>
-<ol>
-<li>SYSTEM INTERACTIONS  </li>
+<p>2.2 Interface<br>
+POSIX와 호환되지 않는 interface를 제공한다. 파일 생성, 삭제, 열기, 닫기, 읽기, 쓰기 작업을 지원한다. 스냅샷은 파일 또는 디렉토리 트리의 복사본을 만든다. 레코드 추가 기능을 이용하여 많은 클라이언트가 lock 없이 데이터를 하나의 파일에 동시에 추가할 수 있다.</p>
+<p>2.3 Architecture<br>
+하나의 master와 여러개의 chunkservers로 이루어 진다. 각각의 서버는 범용 linux 시스템이다. 파일은 고정크기의 chunk로 나뉘고 각 청크는 64비트의 청크핸들로 식별된다. 파일이 저장될 때 chunkserver는 linux file로 저장한다. chunk는 여러 chunkserver에 저장이 되며, 기본적으로 세개의 복제본을 저장한다.<br>
+master는 모든 파일 시스템의 메타 데이터를 유지 관리한다. file과 chunk의 매핑 및 위치 정보를 포함한다. 클라이언트는 메타데이터 작업을 위해 master와 통신하지만 데이터 관련 통신은 chunkserver와 직접한다. 클라이언트와 chunkserver는 파일 데이터를 캐시하지 않는다. 파일이 너무 크기 때문이다.</p>
+<p>2.4 Single Master<br>
+단일 마스터를 사용하여 설계를 단순화 한다. 파일시스템의 모든 메타데이터를 한곳에서 다루기 때문에 병목현상이 발생하지 않도록 한다. 클라이언트는 마스터에게 file이 저장되어있는 chunk의 위치와 chunk handle에 대한 정보를 묻고 해당 정보를 캐시한 후 chunkserver와 직접 통신한다.</p>
+<p>2.5 Chunk Size<br>
+Chunk Size는 64MB 이다. 각 chunk의 복재본들은 chunkserver에 linux file로 저장된다. chunk 가 크면 chunk의 개수가 줄어든다. 좋은 점이 있다. chunk단위로 위치에 대한 질의를 master-client가 하기 때문에 master의 작업 부하를 줄인다. chunk하나에 대한 많은 작업을 가능성이 높기 때문에 chunkserver와의 TCP연결을 유지하여 네트워크 오버헤드를 줄인다. 메타데이터의 양이 작아진다. chunk가 크기 때문에 많은 클라이언트가 하나의 chunk에 접근하려 할 수도 있다는 단점이 있다.</p>
+<p>2.6 Metadata<br>
+master는 file 및 chunk namespace, file-chunk mapping 정보, chunk복사본의 위치와 같은 세가지 주요 메타 데이터를 가진다.</p>
+<p>2.6.1 In-Memory Data Structures<br>
+메타 데이터는 메모리에 저장되어 작업이 빠르다. 마스터는 64MB의 chunk 하나에 64바이트 미만의 메타데이터를 유지한다.file namespace 데이터는 접두사 압축을 사용하여 파일당 64바이트이다.</p>
+<p>2.6.2 Chunk Locations<br>
+master는 시작시와 주기적으로 chunkserver의 상태정보를 요청하여 metadata를 최신으로 유지한다.</p>
+<p>2.6.3 Operation Log<br>
+메타 데이터의 변경사항에 대한 기록을 남긴다. 로그가 일정크기 이상을 커질때마다 상태를 점검하고 체크포인트 한다.</p>
+<p>2.7 Consistancy Model 일단 통과<br>
+2.7.1 Guarantees by GFS<br>
+file namespace 변경(예: 파일 생성)은 원자적이다. namespace locking을 통해 구현 된다.</p>
+<ol start="3">
+<li>SYSTEM INTERACTIONS</li>
 </ol>
-<p>3.1 Leases and Mutation Order<br>Mutation은 chunk의 내용이나 메타 데이터를 추가 하거나 쓰는 작업을 의미한다. 마스터는 클라이언트가 mutation을 요청 할 경우 chunk 중 하나에 Lease를 부여한다. lease의 부여시간은 기본 60이며 시간을 연장하기위해 heartbeat 메시지를 통한다.<br>1.client 가 master에게 mutation 요청</p>
-<ol>
-<li>master는 해당 chunk가 lease되어있는지 확인하고 없으면 lease를 부여 후 chunk의 모든 복제본의 위치를 반환한다.</li>
-<li>클라이언트는 모든 복제본에 데이터를 넣는다.</li>
-<li>모든 복제본이 데이터 수신을 허락하면 클라이언트는 쓰기 요청을 보낸다.</li>
-<li>주 복제본이 보조 복제본에게 쓰기 요청을 보낸다.</li>
-<li>보조 복제본은 작업을 완료했음을 주 복제본에게 보낸다.</li>
-<li>주 복제본이 클라이언트에게 모든 작업에 대한 결과를 응답하고 클라이언트는 결과를 확인하고 실패한 부분은 재시도한다.</li>
-</ol>
-<p>3.2 Data Flow<br>앞서 본 순서 처럼 제어의 흐름과 데이터의 흐름이 분리된다. 데이터는 트리에 분산되지 않고 chunkserver의 체인 흐름을 따라 이동한다. 한번에 여러 chunkserver에 데이터를 보냄으로 대역폭을 나누지 않고 하나의 데이터 이동 요청을 가능한 빠르게 처리한다. IP를 통해 “거리”를 추정할 수 있는 네트워크 토폴로지를 사용한다.<br>TCP 연결을 통한 데이터 전송을 파이프로 연결하여 하나의 chunkserver가 데이터를 받기 시작하는 즉시 다른 chunkserver에 데이터 전송을 시작한다. 전이중 네트워크를 사용하기때문에 수신률의 감소는 없다.</p>
-<p>3.3 Atomic Record Appends<br>GFS는 record append라 불리는 원자적 append를 지원한다. 여러 사용자가 race condition 없이 쓰기 동작이 가능한 unix의 O_APPEND 모드의 파일열기와 유사한 동작을 한다. 파일에 쓰려고 할 때 오프셋을 주어 파일을 쓰고 클라이언트에게 해당 오프셋을 리턴한다.</p>
-<p>3.4 Snapshot<br>스냅샷 작업은 파일이나 디렉토리 트리의 복사본을 거의 즉각적으로 만든다. 스냅샷 구현을 위해 표준 copy-on-write기술을 사용한다.</p>
-<ol>
-<li>MASTER OPERATION  </li>
+<p>3.1 Leases and Mutation Order<br>
+Mutation은 chunk의 내용이나 메타 데이터를 추가 하거나 쓰는 작업을 의미한다. 마스터는 클라이언트가 mutation을 요청 할 경우 chunk 중 하나에 Lease를 부여한다. lease의 부여시간은 기본 60이며 시간을 연장하기위해 heartbeat 메시지를 통한다.<br>
+1.client 가 master에게 mutation 요청<br>
+2. master는 해당 chunk가 lease되어있는지 확인하고 없으면 lease를 부여 후 chunk의 모든 복제본의 위치를 반환한다.<br>
+3. 클라이언트는 모든 복제본에 데이터를 넣는다.<br>
+4. 모든 복제본이 데이터 수신을 허락하면 클라이언트는 쓰기 요청을 보낸다.<br>
+5. 주 복제본이 보조 복제본에게 쓰기 요청을 보낸다.<br>
+6. 보조 복제본은 작업을 완료했음을 주 복제본에게 보낸다.<br>
+7. 주 복제본이 클라이언트에게 모든 작업에 대한 결과를 응답하고 클라이언트는 결과를 확인하고 실패한 부분은 재시도한다.</p>
+<p>3.2 Data Flow<br>
+앞서 본 순서 처럼 제어의 흐름과 데이터의 흐름이 분리된다. 데이터는 트리에 분산되지 않고 chunkserver의 체인 흐름을 따라 이동한다. 한번에 여러 chunkserver에 데이터를 보냄으로 대역폭을 나누지 않고 하나의 데이터 이동 요청을 가능한 빠르게 처리한다. IP를 통해 &quot;거리&quot;를 추정할 수 있는 네트워크 토폴로지를 사용한다.<br>
+TCP 연결을 통한 데이터 전송을 파이프로 연결하여 하나의 chunkserver가 데이터를 받기 시작하는 즉시 다른 chunkserver에 데이터 전송을 시작한다. 전이중 네트워크를 사용하기때문에 수신률의 감소는 없다.</p>
+<p>3.3 Atomic Record Appends<br>
+GFS는 record append라 불리는 원자적 append를 지원한다. 여러 사용자가 race condition 없이 쓰기 동작이 가능한 unix의 O_APPEND 모드의 파일열기와 유사한 동작을 한다. 파일에 쓰려고 할 때 오프셋을 주어 파일을 쓰고 클라이언트에게 해당 오프셋을 리턴한다.</p>
+<p>3.4 Snapshot<br>
+스냅샷 작업은 파일이나 디렉토리 트리의 복사본을 거의 즉각적으로 만든다. 스냅샷 구현을 위해 표준 copy-on-write기술을 사용한다.</p>
+<ol start="4">
+<li>MASTER OPERATION</li>
 </ol>
 <p>마스터는 모든 네임 스페이스 작업, 모든 시스템의 chunk 복제 관리, chunkserver의 로드를 조정등 다양한 활동을 한다.</p>
-<p>4.1 Namespace Management and Locking<br>마스터의 작업을 지연하지 않기위해 namespace 영역에서 locking을 사용한다. GFS에서 namespace는 논리적으로 저체 경로 이름을 메타데이터에 매핑하는 조회 테이블로 나타낸다. 접두어 압축을 사용하여 테이블의 크기를 줄인다. namespace의 각 노드는 읽기-쓰기 잠금이 있다.</p>
-<p>4.2 Replica Placement<br>GFS는 분산 시스템이다. 여러개의 랙에 chunkserver가 분산되어 있다. chunk 복제 배치 정책은 신뢰성과 가용성을 극대화하고 네트워크 대역폭 사용을 최소화 하는 목적을 수행한다. chunk 복제본을 랙 전체에 분산하므로서 일부 랙이 다운이 될경우도 데이터를 보존할 수 있다.</p>
-<p>4.3 Creation, Re-replication, Rebalancing<br>chunk 복제본은 creation, re-replication, rebalancing의 세가지 이유로 생성된다. master가 chunk를 만들면 디스크의 여유가 있는 chunkserver에 배치한다. 하나의 chunkserver에 chunk가 연속적으로 많이 쓰여지는 것을 제한하고, 최대한 분산된 랙의 chunkserver로 복제본을 전한다. chunk 복제본의 수가 줄어들 경우 master는 chunk가 있는 chunkserver에 직접 복사를 요청한다. master는 주기적으로 복제본 배포상황을 검사하고 디스크 공간 및 로드의 균형 조정을 위해 복제본을 이동한다.</p>
-<p>4.4 Garbage Collection<br>GFS는 정기적으로 삭제된 파일와 chunk 의 삭제 기록을 확인하여 자원을 회수한다.</p>
-<p>4.4.1 Mechanism<br>응용프로그램에서 파일 삭제시 파일은 삭제 시점이 포함된 숨겨진 이름으로 바뀌고 마스터는 정기적으로 namespace를 검색하면서 숨겨진 이름의 파일을 제거한다. namespace에서 제거되면 해당 메타 데이터가 삭제되고 master와 chunkserver가 HeartBeat 통신 시 받은 메타 데이터에 없는 chunk의 복제본을 chunkserver는 삭제 한다.</p>
-<ol>
-<li>Tault Tolerance and Diagnosis  </li>
+<p>4.1 Namespace Management and Locking<br>
+마스터의 작업을 지연하지 않기위해 namespace 영역에서 locking을 사용한다. GFS에서 namespace는 논리적으로 저체 경로 이름을 메타데이터에 매핑하는 조회 테이블로 나타낸다. 접두어 압축을 사용하여 테이블의 크기를 줄인다. namespace의 각 노드는 읽기-쓰기 잠금이 있다.</p>
+<p>4.2 Replica Placement<br>
+GFS는 분산 시스템이다. 여러개의 랙에 chunkserver가 분산되어 있다. chunk 복제 배치 정책은 신뢰성과 가용성을 극대화하고 네트워크 대역폭 사용을 최소화 하는 목적을 수행한다. chunk 복제본을 랙 전체에 분산하므로서 일부 랙이 다운이 될경우도 데이터를 보존할 수 있다.</p>
+<p>4.3 Creation, Re-replication, Rebalancing<br>
+chunk 복제본은 creation, re-replication, rebalancing의 세가지 이유로 생성된다. master가 chunk를 만들면 디스크의 여유가 있는 chunkserver에 배치한다. 하나의 chunkserver에 chunk가 연속적으로 많이 쓰여지는 것을 제한하고, 최대한 분산된 랙의 chunkserver로 복제본을 전한다. chunk 복제본의 수가 줄어들 경우 master는 chunk가 있는 chunkserver에 직접 복사를 요청한다. master는 주기적으로 복제본 배포상황을 검사하고 디스크 공간 및 로드의 균형 조정을 위해 복제본을 이동한다.</p>
+<p>4.4 Garbage Collection<br>
+GFS는 정기적으로 삭제된 파일와 chunk 의 삭제 기록을 확인하여 자원을 회수한다.</p>
+<p>4.4.1 Mechanism<br>
+응용프로그램에서 파일 삭제시 파일은 삭제 시점이 포함된 숨겨진 이름으로 바뀌고 마스터는 정기적으로 namespace를 검색하면서 숨겨진 이름의 파일을 제거한다. namespace에서 제거되면 해당 메타 데이터가 삭제되고 master와 chunkserver가 HeartBeat 통신 시 받은 메타 데이터에 없는 chunk의 복제본을 chunkserver는 삭제 한다.</p>
+<ol start="5">
+<li>Tault Tolerance and Diagnosis</li>
 </ol>
 <p>빈번하게 발생하는 장비의 오류를 극복하기 위한 방법에 대해 논한다.</p>
-<p>5.1 High Availability<br>GFS 클러스터는 빠른 복구와 복제를 통해 전체 시스템의 가용성을 높인다.</p>
-<p>5.1.1 Fast Recovery<br>마스터와 chunkserver는 정상종료와 비정상 종료를 구분하지 않고 종료 상태에 상관없이 상태를 복원하고 초단위로 시작하도록 한다.</p>
-<p>5.1.2 Chunk Replication<br>chunk는 여러 랙에 나뉘어 복제된다. 기본적으로 3개를 복제하며 사용자가 복제 수준을 지정 할 수 있다.마스터는 체크섬 확인을 통해 각 청크가 완전히 복제 되도록 한다.</p>
-<p>5.1.3 Master Replication<br>마스터도 신뢰성을 위해 복제된다. 로그와 체크포인트는 여러 시스템에 복제된다. mutation은 로그레코드가 디스크와 복제된 마스터에 전달이 된 후 커밋이 되었다고 간주된다. 하나의 마스터가 모든 mutation을 담당하고 가비지컬랙션 같은 작업은 다 같이 한다.<br>복제본 마스터는 기본 마스터가 다운 될 경우 파일시스템의 읽기 기능을 제공하여 읽기 가용성을 높인다.</p>
-<p>5.2 Data Integrity<br>각 chunkserver는 체크섬을 사용하여 자체적으로 저장된 데이터의 손상을 감지한다. chunk는 64KB 블록으로 분리되어있고 각각에는 32bit 체크섬이 있다. 체크섬도 메모리에 저장되고 로그와 함께 별도로 저장된다.<br>읽기를 요청받은 chunkserver는 해당 블록의 체크섬을 확인하고 오류 발생시 마스터에게 보고한다.</p>
-<p>5.3 Diagnostic Tools<br>GFS 는 중요한 이벤트와 모든 RPC 요청 및 응답을 기록하는 진단 로그를 생성한다. 요청과 응답에 대한 로그를 다른 컴퓨터에서의 로그와 대조함으로서 전체 상호작용 내역을 재구성하여 문제를 진단하고 성능 분석을 위한 자료로 사용되기도 한다. 로그는 순차적이고 비동기적으로 기록된다.</p>
+<p>5.1 High Availability<br>
+GFS 클러스터는 빠른 복구와 복제를 통해 전체 시스템의 가용성을 높인다.</p>
+<p>5.1.1 Fast Recovery<br>
+마스터와 chunkserver는 정상종료와 비정상 종료를 구분하지 않고 종료 상태에 상관없이 상태를 복원하고 초단위로 시작하도록 한다.</p>
+<p>5.1.2 Chunk Replication<br>
+chunk는 여러 랙에 나뉘어 복제된다. 기본적으로 3개를 복제하며 사용자가 복제 수준을 지정 할 수 있다.마스터는 체크섬 확인을 통해 각 청크가 완전히 복제 되도록 한다.</p>
+<p>5.1.3 Master Replication<br>
+마스터도 신뢰성을 위해 복제된다. 로그와 체크포인트는 여러 시스템에 복제된다. mutation은 로그레코드가 디스크와 복제된 마스터에 전달이 된 후 커밋이 되었다고 간주된다. 하나의 마스터가 모든 mutation을 담당하고 가비지컬랙션 같은 작업은 다 같이 한다.<br>
+복제본 마스터는 기본 마스터가 다운 될 경우 파일시스템의 읽기 기능을 제공하여 읽기 가용성을 높인다.</p>
+<p>5.2 Data Integrity<br>
+각 chunkserver는 체크섬을 사용하여 자체적으로 저장된 데이터의 손상을 감지한다. chunk는 64KB 블록으로 분리되어있고 각각에는 32bit 체크섬이 있다. 체크섬도 메모리에 저장되고 로그와 함께 별도로 저장된다.<br>
+읽기를 요청받은 chunkserver는 해당 블록의 체크섬을 확인하고 오류 발생시 마스터에게 보고한다.</p>
+<p>5.3 Diagnostic Tools<br>
+GFS 는 중요한 이벤트와 모든 RPC 요청 및 응답을 기록하는 진단 로그를 생성한다. 요청과 응답에 대한 로그를 다른 컴퓨터에서의 로그와 대조함으로서 전체 상호작용 내역을 재구성하여 문제를 진단하고 성능 분석을 위한 자료로 사용되기도 한다. 로그는 순차적이고 비동기적으로 기록된다.</p>
 <p>이하는 벤치마크와 운용과정에서 생긴 경험에 대한 기술이므로 생략</p>
 </div></article></div><nav class="pagination" role="navigation" aria-label="pagination"><div class="pagination-previous is-invisible is-hidden-mobile"><a href="/categories/CS/page/0/">이전</a></div><div class="pagination-next"><a href="/categories/CS/page/2/">다음</a></div><ul class="pagination-list is-hidden-mobile"><li><a class="pagination-link is-current" href="/categories/CS/">1</a></li><li><a class="pagination-link" href="/categories/CS/page/2/">2</a></li></ul></nav></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/images/avatar.jpg" alt="우리람부탄"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">우리람부탄</p><p class="is-size-6 is-block">개발자</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">포스트</p><a href="/archives/"><p class="title">89</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">카테고리</p><a href="/categories/"><p class="title">14</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">태그</p><a href="/tags/"><p class="title">222</p></a></div></div></nav><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="GitHub" href="https://github.com/gabre8001"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Email" href="mailto:gabre8001@gmail.com"><i class="fas fa-envelope"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">카테고리</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Android/"><span class="level-start"><span class="level-item">Android</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/C-C/"><span class="level-start"><span class="level-item">C/C++</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile" href="/categories/CS/"><span class="level-start"><span class="level-item">CS</span></span><span class="level-end"><span class="level-item tag">16</span></span></a></li><li><a class="level is-mobile" href="/categories/Database/"><span class="level-start"><span class="level-item">Database</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/DevOps/"><span class="level-start"><span class="level-item">DevOps</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/Git/"><span class="level-start"><span class="level-item">Git</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/Java/"><span class="level-start"><span class="level-item">Java</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/JavaScript/"><span class="level-start"><span class="level-item">JavaScript</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile" href="/categories/Linux/"><span class="level-start"><span class="level-item">Linux</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile" href="/categories/MQ/"><span class="level-start"><span class="level-item">MQ</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/Math/"><span class="level-start"><span class="level-item">Math</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Network/"><span class="level-start"><span class="level-item">Network</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile" href="/categories/Python/"><span class="level-start"><span class="level-item">Python</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/ROS/"><span class="level-start"><span class="level-item">ROS</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li></ul></div></div></div><div class="column-right-shadow is-hidden-widescreen"></div></div><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3"><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">최근 글</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2026-05-02T11:57:05.994Z">2026-05-02</time></p><p class="title"><a href="/2026/05/02/hello-world/">Hello World</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2026-02-25T15:00:00.000Z">2026-02-26</time></p><p class="title"><a href="/2026/02/26/2026-02-26-%ED%9A%A8%EC%9C%A8%EC%A0%81%EC%9D%B8-RPU-%EC%A7%91%EA%B3%84%EB%A5%BC-%EC%9C%84%ED%95%9C-HyperLogLog/">효율적인 RPU 집계를 위한 HyperLogLog</a></p><p class="categories"><a href="/categories/CS/">CS</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-07-12T15:00:00.000Z">2025-07-13</time></p><p class="title"><a href="/2025/07/13/2025-07-13-Hazelcast-%EA%B8%B0%EB%B0%98-Reverb-%EC%84%9C%EB%B2%84-%EA%B5%AC%EC%B6%95/">Hazelcast 기반 Reverb 서버 구축</a></p><p class="categories"><a href="/categories/Java/">Java</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-05-07T15:00:00.000Z">2025-05-08</time></p><p class="title"><a href="/2025/05/08/2025-05-08-svelte-kit-RBAC/">SvelteKit RBAC</a></p><p class="categories"><a href="/categories/JavaScript/">JavaScript</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-06-11T15:00:00.000Z">2023-06-12</time></p><p class="title"><a href="/2023/06/12/2023-06-12-Spring-Cloud-Netty/">Spring Cloud Gateway vs Netty</a></p><p class="categories"><a href="/categories/Java/">Java</a></p></div></article></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">태그</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/CPU/"><span class="tag">CPU</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MongoDB/"><span class="tag">MongoDB</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Radix/"><span class="tag">Radix</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Rax/"><span class="tag">Rax</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/React/"><span class="tag">React</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Redis/"><span class="tag">Redis</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Seaborn/"><span class="tag">Seaborn</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Test/"><span class="tag">Test</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Tree/"><span class="tag">Tree</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/t/"><span class="tag">_t</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/tmain/"><span class="tag">_tmain</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/action/"><span class="tag">action</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/active/"><span class="tag">active</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/admin/"><span class="tag">admin</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/affinity/"><span class="tag">affinity</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ajax/"><span class="tag">ajax</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/algebra/"><span class="tag">algebra</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/algorithm/"><span class="tag">algorithm</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/amqp/"><span class="tag">amqp</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/android/"><span class="tag">android</span><span class="tag">1</span></a></div></div></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">우리람부탄</a><p class="is-size-7"><span>&copy; 2026 우리람부탄</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="GitHub" href="https://github.com/gabre8001"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ko");</script><script>var IcarusThemeSettings = {
             article: {

@@ -29,28 +29,34 @@
       switchTab();
       window.addEventListener('hashchange', switchTab, false);
   })();
-  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">우리람부탄</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="검색" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/tags/">태그</a></li><li class="is-active"><a href="#" aria-current="page">pilot</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-03-03T15:00:00.000Z" title="2022. 3. 4. 오전 12:00:00">2022-03-04</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:37.028Z" title="2026. 5. 2. 오후 10:27:37">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/ROS/">ROS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/03/04/2022-03-04-auto-pilot-start/">자율주행 자동차 기술 소개</a></p><div class="content"><h3 id="자율주행-프로세스"><a href="#자율주행-프로세스" class="headerlink" title="자율주행 프로세스"></a>자율주행 프로세스</h3><ul>
-<li><p>인지</p>
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">우리람부탄</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="검색" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/tags/">태그</a></li><li class="is-active"><a href="#" aria-current="page">pilot</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-03-03T15:00:00.000Z" title="2022. 3. 4. 오전 12:00:00">2022-03-04</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:37.028Z" title="2026. 5. 2. 오후 10:27:37">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/ROS/">ROS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/03/04/2022-03-04-auto-pilot-start/">자율주행 자동차 기술 소개</a></p><div class="content"><h3 id="자율주행-프로세스">자율주행 프로세스</h3>
+<ul>
+<li>
+<p>인지</p>
 <ul>
 <li>경로탐색, 차량/인프라 통신, 센서</li>
 <li>고정지물 인식 및 경로탐색, 변동지물 및 이동물 인식</li>
 </ul>
 </li>
-<li><p>판단</p>
+<li>
+<p>판단</p>
 <ul>
 <li>주행상황 판단 및 주행전략 결정</li>
 <li>주행경로 생성</li>
 </ul>
 </li>
-<li><p>제어</p>
+<li>
+<p>제어</p>
 <ul>
 <li>차량제어</li>
-<li>엔진 가감속, 조향 </li>
+<li>엔진 가감속, 조향</li>
 </ul>
 </li>
 </ul>
-<h3 id="요소-기술"><a href="#요소-기술" class="headerlink" title="요소 기술"></a>요소 기술</h3><ul>
-<li><p>고정밀 지도</p>
+<h3 id="요소-기술">요소 기술</h3>
+<ul>
+<li>
+<p>고정밀 지도</p>
 <ul>
 <li>기존 네비게이션 지도보다 정밀한 지도</li>
 <li>100 ~ 200 mm 정밀도 제공</li>
@@ -59,29 +65,34 @@
 <li>포인트 맵</li>
 </ul>
 </li>
-<li><p>Localization 기술</p>
+<li>
+<p>Localization 기술</p>
 <ul>
 <li>정밀지도와 차량의 센서와 연동하여 차량의 현재 위치 파악</li>
 </ul>
 </li>
-<li><p>Global Path Planning (Route Planning)</p>
+<li>
+<p>Global Path Planning (Route Planning)</p>
 <ul>
 <li>목적지가지의 경로 찾기</li>
 <li>중간목적지 또는 최종목적지까지의 경로</li>
 <li>교차로에서 행동 결정</li>
 </ul>
 </li>
-<li><p>Object Detection</p>
+<li>
+<p>Object Detection</p>
 <ul>
 <li>주변 차량, 보행자, 오토바이, 자전거 등을 인식</li>
 </ul>
 </li>
-<li><p>Object Tracking</p>
+<li>
+<p>Object Tracking</p>
 <ul>
 <li>각 객체에 고유 ID 부여하여 추적, 예상되는 주행경로 예측</li>
 </ul>
 </li>
-<li><p>Local Path Planning (Trajectory Planning)</p>
+<li>
+<p>Local Path Planning (Trajectory Planning)</p>
 <ul>
 <li>다음 이동할 곳 경로 찾기(충돌 회피 교려)</li>
 <li>여러개의 후보 경로 확보</li>
@@ -89,19 +100,23 @@
 <li>실시간성이 중요 -&gt; 시스템 최적화 필요</li>
 </ul>
 </li>
-<li><p>Behavior Selector</p>
+<li>
+<p>Behavior Selector</p>
 <ul>
-<li>행위 결정<ul>
+<li>행위 결정
+<ul>
 <li>운전 의사결정</li>
 <li>운전 방법, 성향</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p>Local Path Following (Trajectory Following)</p>
+<li>
+<p>Local Path Following (Trajectory Following)</p>
 <ul>
 <li>경로 따라 차량을 운전하기</li>
-<li>Pure pursuit 알고리즘<ul>
+<li>Pure pursuit 알고리즘
+<ul>
 <li>차량의 현재 위치를 결정</li>
 <li>차향에서 가장 가까운 경로상의 점을 찾는다.</li>
 <li>목표점을 찾는다.</li>
@@ -111,13 +126,16 @@
 </li>
 </ul>
 </li>
-<li><p>Vehicle Control</p>
+<li>
+<p>Vehicle Control</p>
 <ul>
-<li>주행 제어<ul>
+<li>주행 제어
+<ul>
 <li>원하는 대로 차량을 움직이게 만들기</li>
 </ul>
 </li>
-<li>단순하지 않음<ul>
+<li>단순하지 않음
+<ul>
 <li>차량 운동학</li>
 <li>관성, 마찰력, 미끄러짐 등 있음</li>
 </ul>
@@ -125,8 +143,10 @@
 </ul>
 </li>
 </ul>
-<h3 id="자율주행-통합-플랫폼"><a href="#자율주행-통합-플랫폼" class="headerlink" title="자율주행 통합 플랫폼"></a>자율주행 통합 플랫폼</h3><ul>
-<li>Autoware<ul>
+<h3 id="자율주행-통합-플랫폼">자율주행 통합 플랫폼</h3>
+<ul>
+<li>Autoware
+<ul>
 <li><a target="_blank" rel="noopener" href="https://www.autoware.org">https://www.autoware.org</a></li>
 <li>오픈소스 자율주행 통합플랫폼</li>
 <li>SAE-레벨2</li>
@@ -137,32 +157,40 @@
 </ul>
 </li>
 </ul>
-<h3 id="자율주행-자동차-구현기술"><a href="#자율주행-자동차-구현기술" class="headerlink" title="자율주행 자동차 구현기술"></a>자율주행 자동차 구현기술</h3><ul>
-<li>자율주행 알고리즘<ul>
+<h3 id="자율주행-자동차-구현기술">자율주행 자동차 구현기술</h3>
+<ul>
+<li>자율주행 알고리즘
+<ul>
 <li>센싱 - 주변정보 획득</li>
 <li>인지 - Localization, Object Detection, Object Tracking</li>
 <li>의사결정 - 동작 예측, 경로 계획, 장애물 회피</li>
 </ul>
 </li>
-<li>자율주행 클라이언트 시스템<ul>
-<li>소프트웨어<ul>
+<li>자율주행 클라이언트 시스템
+<ul>
+<li>소프트웨어
+<ul>
 <li>실시간성과 신뢰성 확보</li>
-<li>ROS 문제점 해결 필요. master 장애시 대책 필요. 메시지 브로드캐스팅시 성능 저하. 노드 해킹 위움. </li>
+<li>ROS 문제점 해결 필요. master 장애시 대책 필요. 메시지 브로드캐스팅시 성능 저하. 노드 해킹 위움.</li>
 </ul>
 </li>
-<li>하드웨어<ul>
+<li>하드웨어
+<ul>
 <li>성능 향상. 파이프라인 병령 프로세싱. 가성비. 전성비. 발열제어.</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>자율주행 클라우드 플랫폼<ul>
-<li>분산 컴퓨팅<ul>
+<li>자율주행 클라우드 플랫폼
+<ul>
+<li>분산 컴퓨팅
+<ul>
 <li>시뮬레이션</li>
 <li>HD맵 생성</li>
 </ul>
 </li>
-<li>분산 스토리지<ul>
+<li>분산 스토리지
+<ul>
 <li>팁러닝 모델 학습. 학습 데이터 준비. 학습진행. 모델의 유효성과 효율성 개선.</li>
 </ul>
 </li>

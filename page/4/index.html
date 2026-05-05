@@ -30,17 +30,60 @@
       window.addEventListener('hashchange', switchTab, false);
   })();
   </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">우리람부탄</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="검색" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-05-13T15:00:00.000Z" title="2021. 5. 14. 오전 12:00:00">2021-05-14</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.977Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/DevOps/">DevOps</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/05/14/2021-05-14-kube-info/">Kubernetes Resource</a></p><div class="content"><p>쿠버네티스의 리소스에 대해 알아본다. 개념정리 부터 시작이다. 까먹으면 나중에 찾아봐야징.</p>
-<h2 id="리소스"><a href="#리소스" class="headerlink" title="리소스"></a>리소스</h2><p>쿠버네티스에서 말하는 리소스란 애플리케이션을 구성하는 부품과 같은 것. 이번에는 개념 정리만 하고 각 세부사항은 나중에 하겠다.</p>
-<h3 id="노드"><a href="#노드" class="headerlink" title="노드"></a>노드</h3><ul>
-<li>컨테이너가 배치되는 서버<h3 id="네임스페이스"><a href="#네임스페이스" class="headerlink" title="네임스페이스"></a>네임스페이스</h3>쿠버네티스 클러스터 안의 가상 클러스터<h3 id="파드"><a href="#파드" class="headerlink" title="파드"></a>파드</h3>컨테이너의 집합 중 가장 작은 단위로, 컨테이너의 실행 방법을 정의<h3 id="레플리카세트"><a href="#레플리카세트" class="headerlink" title="레플리카세트"></a>레플리카세트</h3>같은 스펙을 갖는 파드를 여러 개 생성하고 관리하는 역할<h3 id="디플로이먼트"><a href="#디플로이먼트" class="headerlink" title="디플로이먼트"></a>디플로이먼트</h3>레플리카 세트의 리비전을 관리<h3 id="서비스"><a href="#서비스" class="headerlink" title="서비스"></a>서비스</h3>파드의 집합에 접근하기 위한 경로를 정의<h3 id="인그레스"><a href="#인그레스" class="headerlink" title="인그레스"></a>인그레스</h3>서비스를 쿠버네티스 클러스터를 외부로 노출시킨다.<h3 id="컨피그맵"><a href="#컨피그맵" class="headerlink" title="컨피그맵"></a>컨피그맵</h3>설정 벙보를 정의하고 파드에 전달한다.<h3 id="퍼시스턴트볼륨"><a href="#퍼시스턴트볼륨" class="headerlink" title="퍼시스턴트볼륨"></a>퍼시스턴트볼륨</h3>파드가 사용할 스토리지의 크기 및 종류를 정의<h3 id="퍼시스턴트볼륨클레임"><a href="#퍼시스턴트볼륨클레임" class="headerlink" title="퍼시스턴트볼륨클레임"></a>퍼시스턴트볼륨클레임</h3>퍼시스턴트 볼륨을 동적으로 확보<h3 id="스토리지-클래스"><a href="#스토리지-클래스" class="headerlink" title="스토리지 클래스"></a>스토리지 클래스</h3>퍼시스턴트 볼륨이 확보하는 스토리지의 종류를 정의<h3 id="스테이트풀세트"><a href="#스테이트풀세트" class="headerlink" title="스테이트풀세트"></a>스테이트풀세트</h3>같은 스펙으로 모두 동일한 파드를 여러개 생성하고 관리한다.<h3 id="잡"><a href="#잡" class="headerlink" title="잡"></a>잡</h3>상주 실행을 목적으로 하지 않는 파드를 여러 개 생성하고 정상적인 종료를 보장한다.<h3 id="크론잡"><a href="#크론잡" class="headerlink" title="크론잡"></a>크론잡</h3>크론 문법으로 스케줄링되는 잡<h3 id="시크릿"><a href="#시크릿" class="headerlink" title="시크릿"></a>시크릿</h3>인증 정보 같은 기밀 데이터를 정의한다.<h3 id="롤"><a href="#롤" class="headerlink" title="롤"></a>롤</h3>네임스페이스 안에서 조작 가능한 쿠버네티스 리소스의 규칙을 정의한다.<h3 id="롤바인딩"><a href="#롤바인딩" class="headerlink" title="롤바인딩"></a>롤바인딩</h3>쿠버네티스 리소스 사용자와 롤을 연결 짓는다.<h3 id="클러스터롤"><a href="#클러스터롤" class="headerlink" title="클러스터롤"></a>클러스터롤</h3>클러스터 전체적으로 조작 가능한 쿠버네티스 리소스의 규칙을 정의한다.<h3 id="클러스터롤바인딩"><a href="#클러스터롤바인딩" class="headerlink" title="클러스터롤바인딩"></a>클러스터롤바인딩</h3>쿠버네티스 리소스 사용자와 클러스터롤을 연결 짓는다.<h3 id="서비스-계정"><a href="#서비스-계정" class="headerlink" title="서비스 계정"></a>서비스 계정</h3>파드가 쿠버네티스 리소스를 조작할 대 사용하는 계정</li>
+<h2 id="리소스">리소스</h2>
+<p>쿠버네티스에서 말하는 리소스란 애플리케이션을 구성하는 부품과 같은 것. 이번에는 개념 정리만 하고 각 세부사항은 나중에 하겠다.</p>
+<h3 id="노드">노드</h3>
+<ul>
+<li>컨테이너가 배치되는 서버</li>
 </ul>
-<h2 id="클러스터와-노드"><a href="#클러스터와-노드" class="headerlink" title="클러스터와 노드"></a>클러스터와 노드</h2><p>쿠버네티스 클러스터는 쿠버네티스의 여러 리소스를 관리하기 위한 집합체를 의미</p>
-<h3 id="노드-1"><a href="#노드-1" class="headerlink" title="노드"></a>노드</h3><ul>
+<h3 id="네임스페이스">네임스페이스</h3>
+<p>쿠버네티스 클러스터 안의 가상 클러스터</p>
+<h3 id="파드">파드</h3>
+<p>컨테이너의 집합 중 가장 작은 단위로, 컨테이너의 실행 방법을 정의</p>
+<h3 id="레플리카세트">레플리카세트</h3>
+<p>같은 스펙을 갖는 파드를 여러 개 생성하고 관리하는 역할</p>
+<h3 id="디플로이먼트">디플로이먼트</h3>
+<p>레플리카 세트의 리비전을 관리</p>
+<h3 id="서비스">서비스</h3>
+<p>파드의 집합에 접근하기 위한 경로를 정의</p>
+<h3 id="인그레스">인그레스</h3>
+<p>서비스를 쿠버네티스 클러스터를 외부로 노출시킨다.</p>
+<h3 id="컨피그맵">컨피그맵</h3>
+<p>설정 벙보를 정의하고 파드에 전달한다.</p>
+<h3 id="퍼시스턴트볼륨">퍼시스턴트볼륨</h3>
+<p>파드가 사용할 스토리지의 크기 및 종류를 정의</p>
+<h3 id="퍼시스턴트볼륨클레임">퍼시스턴트볼륨클레임</h3>
+<p>퍼시스턴트 볼륨을 동적으로 확보</p>
+<h3 id="스토리지-클래스">스토리지 클래스</h3>
+<p>퍼시스턴트 볼륨이 확보하는 스토리지의 종류를 정의</p>
+<h3 id="스테이트풀세트">스테이트풀세트</h3>
+<p>같은 스펙으로 모두 동일한 파드를 여러개 생성하고 관리한다.</p>
+<h3 id="잡">잡</h3>
+<p>상주 실행을 목적으로 하지 않는 파드를 여러 개 생성하고 정상적인 종료를 보장한다.</p>
+<h3 id="크론잡">크론잡</h3>
+<p>크론 문법으로 스케줄링되는 잡</p>
+<h3 id="시크릿">시크릿</h3>
+<p>인증 정보 같은 기밀 데이터를 정의한다.</p>
+<h3 id="롤">롤</h3>
+<p>네임스페이스 안에서 조작 가능한 쿠버네티스 리소스의 규칙을 정의한다.</p>
+<h3 id="롤바인딩">롤바인딩</h3>
+<p>쿠버네티스 리소스 사용자와 롤을 연결 짓는다.</p>
+<h3 id="클러스터롤">클러스터롤</h3>
+<p>클러스터 전체적으로 조작 가능한 쿠버네티스 리소스의 규칙을 정의한다.</p>
+<h3 id="클러스터롤바인딩">클러스터롤바인딩</h3>
+<p>쿠버네티스 리소스 사용자와 클러스터롤을 연결 짓는다.</p>
+<h3 id="서비스-계정">서비스 계정</h3>
+<p>파드가 쿠버네티스 리소스를 조작할 대 사용하는 계정</p>
+<h2 id="클러스터와-노드">클러스터와 노드</h2>
+<p>쿠버네티스 클러스터는 쿠버네티스의 여러 리소스를 관리하기 위한 집합체를 의미</p>
+<h3 id="노드-2">노드</h3>
+<ul>
 <li>컨테이너가 배치되는 서버</li>
 <li>쿠버네티스 클러스터의 관리 대상으로 등록된 도커 호스트(물리머신, 가상머신을 구분하지 않는다.)</li>
 <li>컨테이너가 배치되는 대상</li>
 <li>쿠버네티스 클러스터 전체를 관리하는 서버인 마스터 노드가 적어도 하나 이상 있어야 한다.</li>
-<li>마스터 노드에는 kube-apiserver, etcd, kube-scheduler, kube-controller-manager 가 있다.<ul>
+<li>마스터 노드에는 kube-apiserver, etcd, kube-scheduler, kube-controller-manager 가 있다.
+<ul>
 <li>kube-apiserver - 쿠버네티스 API를 노출하는 컴포넌트 kubectl로부터 리소스를 조작하라는 지시를 받는다.</li>
 <li>etcd - 고가용성을 갖춘 분산 키-값 스토어. 쿠버네티스 클러스터의 백킹 스토어로 쓰인다.</li>
 <li>kube-scheduler - 노드를 모니터링하고 컨테이너를 배치할 적절한 노드를 선택한다.</li>
@@ -50,13 +93,15 @@
 <li>쿠버네티스는 노드의 리소스 사용현황 및 배치 전략을 근거로 컨테이너를 적절히 배치</li>
 <li>$ kubectl get nodes 명령어를 통해 클러스터에 소속된 노드의 목록 확인 가능</li>
 </ul>
-<h3 id="네임스페이스-1"><a href="#네임스페이스-1" class="headerlink" title="네임스페이스"></a>네임스페이스</h3><ul>
+<h3 id="네임스페이스-2">네임스페이스</h3>
+<ul>
 <li>클러스터 안에 가상 클러스터를 네임스페이스라 한다.</li>
 <li>클러스터를 처음 구축하면 defualt, docker, kube-public, kube-system의 네임스페이스가 이미 만들어져 있다.</li>
 <li>$ kubectl get namespace 명령어를 통해 클러스터에 존재하는 네임스페이스 목록을 확인 할 수 있다.</li>
 <li>네임스페이스마다 권한을 설정할 수 있다.</li>
 </ul>
-<h3 id="파드-1"><a href="#파드-1" class="headerlink" title="파드"></a>파드</h3><ul>
+<h3 id="파드-2">파드</h3>
+<ul>
 <li>파드는 컨테이너가 모인 집합체의 단위. 적어도 하나 이상의 컨테이너로 이루어진다.</li>
 <li>파드안의 컨테이너는 모두 같은 노드에 배치해야 한다.</li>
 <li>결합이 강한 컨테이너를 파드로 묶어 일괄배포하는 것이 일반적이다. (함께 배포해야 정합성을 유지할 수 있는 컨테이너를 묶는 경우)</li>
@@ -64,98 +109,129 @@
 <li>마스터 노드는 관리용 컴포넌트가 담긴 파드만 배포하고 애플리케이션에서 사용하는 파드는 배포안됨(로컴 쿠버네티스 환경 같은 경우 단일노드로 구성하므로 예외 케이스)</li>
 <li>파드 생성 및 배포는 매니패스트 파일(쿠버네티스의 여러가지 리소스를 정의하는 파일)을 이용.</li>
 </ul>
-<h3 id="레플리카세트-1"><a href="#레플리카세트-1" class="headerlink" title="레플리카세트"></a>레플리카세트</h3><ul>
+<h3 id="레플리카세트-2">레플리카세트</h3>
+<ul>
 <li>규모가 큰 애플리케이션을 구축하려면 같은 파드를 여러 개 실행해 가용성 확보가 필요.</li>
 <li>레플리카세트는 똑같은 정의를 갖는 파드를 여러개 생성하고 관리하기 위한 리소스</li>
 <li>레플리카세트 파일을 yaml로 작성할 때 파드 정의가 포함되므로 별도 파드 정의 파일이 필요 없음.</li>
 <li>쿠버네티스는 디플로이먼트를 단위로 애플리케이션을 배포하기 때문에 실제 운영에서는 레플리카세트를 직접 다루기보다는 디플로이먼트 매니페스트 파일을 통해 다루는 경우가 대부분</li>
 <li>디플로이먼트를 수정하면 레플리카세트가 새로 생성되고 기존 레플리카세트와 교체됨</li>
-<li>파드 개수만 수정하면 레플리카세트가 새로 생성되지 않으나 컨테이너 정의 수정을 하면 </li>
+<li>파드 개수만 수정하면 레플리카세트가 새로 생성되지 않으나 컨테이너 정의 수정을 하면</li>
 </ul>
-<h3 id="서비스-1"><a href="#서비스-1" class="headerlink" title="서비스"></a>서비스</h3><ul>
-<li>서비스는 쿠버네티스 클러스터 안에서 파드의 집합(주로 레플리카세트)에 대한 경로나 서비스 디스커버리를 제공하는 리소스<ul>
+<h3 id="서비스-2">서비스</h3>
+<ul>
+<li>서비스는 쿠버네티스 클러스터 안에서 파드의 집합(주로 레플리카세트)에 대한 경로나 서비스 디스커버리를 제공하는 리소스
+<ul>
 <li>디스커버리 - API 주소가 동적으로 바뀌는 경우에도 클라이언트가 접속 대상을 바꾸지 않고 하나의 이름으로 접근할 수 있도록 하는 기능</li>
 </ul>
 </li>
 <li>서비스의 대상이 되는 파드는 서비스에서 정의하는 레이블 셀렉터로 정해짐</li>
-<li>쿠버네티스에는 4가지 서비스가 있다.<ul>
+<li>쿠버네티스에는 4가지 서비스가 있다.
+<ul>
 <li>ClusterIP 서비스 - 기본 서비스로 쿠버네티스 클러스터의 내부 IP 주소에 서비스를 공개할 수 있다. 어떤 파드에서 다른 파드 구룹으로 접근할 때 서비스를 거쳐가도록 할 수 있으며, 서비스명으로 네임 레졸루션이 가능해진다. 회부로부터 접근 불가</li>
 <li>NodePort 서비스 - 회부에서 접근할 수 있는 서비스. ClusterIP를 만드는 동시에 각 노드에서 서비스 포트로 접속하기 위한 글로벌 포트를 개방한다는 점이 차이점</li>
 <li>LoadBalancer 서비스 - 로컬쿠버네티스 환경에서 사용할 수 없는 서비스. 주로 클라우드 플랫폼에서 제공하는 로드 밸런서와 연동하기 위해 사용</li>
-<li>ExternalName 서비스 - 셀렉터도 포트 정의도 없는 상당히 특이한 서비스. 쿠버네티스 클러스터에서 외부 호스트를 네임 레졸루션하기 위한 별명을 </li>
+<li>ExternalName 서비스 - 셀렉터도 포트 정의도 없는 상당히 특이한 서비스. 쿠버네티스 클러스터에서 외부 호스트를 네임 레졸루션하기 위한 별명을</li>
 </ul>
 </li>
 </ul>
-<h3 id="인그레스-1"><a href="#인그레스-1" class="headerlink" title="인그레스"></a>인그레스</h3><ul>
-<li>쿠버네티스 클러스터 외부로 서비스를 공개하려면 서비스는 NodePost로 노출시킨다. 이 방법은 L4 에벨까지만 다룰 수 있기 때문에 HTTP/HTTPS 처럼 경로를 기반으로 서비스를 전환하는 L7레벨의 제어는 불가능하기 때문에 인그레스를 사용해 L7 레벨 제어</li>
-<li>로컬 쿠버네티스 환경에서 인그레스를 사용하려면 직접 배포해야한다고 하는군요..</li>
+<h3 id="인그레스-2">인그레스</h3>
+<ul>
+<li>
+<p>쿠버네티스 클러스터 외부로 서비스를 공개하려면 서비스는 NodePost로 노출시킨다. 이 방법은 L4 에벨까지만 다룰 수 있기 때문에 HTTP/HTTPS 처럼 경로를 기반으로 서비스를 전환하는 L7레벨의 제어는 불가능하기 때문에 인그레스를 사용해 L7 레벨 제어</p>
+</li>
+<li>
+<p>로컬 쿠버네티스 환경에서 인그레스를 사용하려면 직접 배포해야한다고 하는군요…</p>
+<p>아… 양 많다…<br>
+실제 설정과 테스트도 해봐야하는데!</p>
+</li>
 </ul>
-<p>  아.. 양 많다…<br>  실제 설정과 테스트도 해봐야하는데!</p>
-<p>출처: 도커/쿠버네티스를 활용한 컨테이너 개발 실전 입문  </p>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-05-11T15:00:00.000Z" title="2021. 5. 12. 오전 12:00:00">2021-05-12</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.972Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/DevOps/">DevOps</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/05/12/2021-05-12-dockerfile/">Dockerfile</a></p><div class="content"><h2 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h2><p>도커 이미지를 빌드하기 위한 정보를 담아놓은 파일<br>dockrfile은 전용 도메인 언어로 이미지 구성을 정의하는데 FROM, RUN과 같은 키워드를 인스트럭션(명령)이라 한다.</p>
-<h3 id="FROM-인스트럭션"><a href="#FROM-인스트럭션" class="headerlink" title="FROM 인스트럭션"></a>FROM 인스트럭션</h3><ul>
+<p>출처: 도커/쿠버네티스를 활용한 컨테이너 개발 실전 입문</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-05-11T15:00:00.000Z" title="2021. 5. 12. 오전 12:00:00">2021-05-12</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.972Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/DevOps/">DevOps</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/05/12/2021-05-12-dockerfile/">Dockerfile</a></p><div class="content"><h2 id="Dockerfile">Dockerfile</h2>
+<p>도커 이미지를 빌드하기 위한 정보를 담아놓은 파일<br>
+dockrfile은 전용 도메인 언어로 이미지 구성을 정의하는데 FROM, RUN과 같은 키워드를 인스트럭션(명령)이라 한다.</p>
+<h3 id="FROM-인스트럭션">FROM 인스트럭션</h3>
+<ul>
 <li>꼭 있어야 하는 인스트럭션</li>
 <li>도커 이미지의 바탕이 될 베이스 이미지를 지정</li>
 <li>기본적으로 도커 허브 레지스트리에서 참조</li>
 <li>FROM [이미지 이름]: [태그 이름]</li>
 </ul>
-<h3 id="RUN-인스트럭션"><a href="#RUN-인스트럭션" class="headerlink" title="RUN 인스트럭션"></a>RUN 인스트럭션</h3><ul>
+<h3 id="RUN-인스트럭션">RUN 인스트럭션</h3>
+<ul>
 <li>도커 이미지를 실행할 때 컨테이너 안에서 실행할 명령을 정의</li>
 <li>도커 컨테이너 안에서 실행할 명령을 그대로 기술</li>
 </ul>
-<h3 id="Copy-인스트럭션"><a href="#Copy-인스트럭션" class="headerlink" title="Copy 인스트럭션"></a>Copy 인스트럭션</h3><ul>
+<h3 id="Copy-인스트럭션">Copy 인스트럭션</h3>
+<ul>
 <li>도커가 동작 중인 호스트 며신의 파일이나 디렉터리를 도커 컨테이너 안으로 복사하는 인스트럭션</li>
 </ul>
-<h3 id="Entrypoint-인스트럭션"><a href="#Entrypoint-인스트럭션" class="headerlink" title="Entrypoint 인스트럭션"></a>Entrypoint 인스트럭션</h3><ul>
+<h3 id="Entrypoint-인스트럭션">Entrypoint 인스트럭션</h3>
+<ul>
 <li>컨테이너의 명령 실행 방식을 조정</li>
 <li>CMD와 마찬가지로 컨테이너 안에서 실행할 프로세스를 지정하는 인스트럭션</li>
 <li>entrypoint를 지정하면 cmd의 인자가 entrypoint에서 실행하는 파일에 인자로 주어짐</li>
 </ul>
-<h3 id="CMD-인스트럭션"><a href="#CMD-인스트럭션" class="headerlink" title="CMD 인스트럭션"></a>CMD 인스트럭션</h3><ul>
+<h3 id="CMD-인스트럭션">CMD 인스트럭션</h3>
+<ul>
 <li>도커 컨테이너를 실행할 때 컨테이너 안에서 실행할 프로세스를 지정</li>
-<li>RUN 인스트럭션은 이미지를 빌드할 때 실행되고 CMD 인스트럭션은 컨테이너를 시작할 때 한 번 실행<ul>
+<li>RUN 인스트럭션은 이미지를 빌드할 때 실행되고 CMD 인스트럭션은 컨테이너를 시작할 때 한 번 실행
+<ul>
 <li>CMD[“실행 파일”, “인자1”,ㅡ “인자2”] - 실행파일에 인자를 전달(권장방식)</li>
 <li>CMD 명령 인자1 인자2 - 명령과 인자를 지정, 셸에서 실행되므로 셸에 정의된 변수를 참조할 수 있음</li>
 <li>CMD [“인자1”, “인자2”] - entrypoint에 지정된 명령에 사용할 인자를 전달</li>
 </ul>
 </li>
 </ul>
-<h3 id="ENV-인스트럭션"><a href="#ENV-인스트럭션" class="headerlink" title="ENV 인스트럭션"></a>ENV 인스트럭션</h3><ul>
+<h3 id="ENV-인스트럭션">ENV 인스트럭션</h3>
+<ul>
 <li>도커 컨테이너 안에서 사용할 수 있는 환경변수를 지정</li>
 </ul>
-<h3 id="ARG-인스트럭션"><a href="#ARG-인스트럭션" class="headerlink" title="ARG 인스트럭션"></a>ARG 인스트럭션</h3><ul>
+<h3 id="ARG-인스트럭션">ARG 인스트럭션</h3>
+<ul>
 <li>이미지를 빌드할 때 정보를 함게 넣기 위해 사용한다. 이미지를 빌드할 때만 사용할 수 있는 일시적인 환경변수</li>
 </ul>
-<p>출처: 도커/쿠버네티스를 활용한 컨테이너 개발 실전 입문  </p>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-05-10T15:00:00.000Z" title="2021. 5. 11. 오전 12:00:00">2021-05-11</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.965Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/CS/">CS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/05/11/2021-05-11-observer-pattern/">Observer Pattern</a></p><div class="content"><h2 id="Observer-Pattern"><a href="#Observer-Pattern" class="headerlink" title="Observer Pattern"></a>Observer Pattern</h2><ul>
+<p>출처: 도커/쿠버네티스를 활용한 컨테이너 개발 실전 입문</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-05-10T15:00:00.000Z" title="2021. 5. 11. 오전 12:00:00">2021-05-11</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.965Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/CS/">CS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/05/11/2021-05-11-observer-pattern/">Observer Pattern</a></p><div class="content"><h2 id="Observer-Pattern">Observer Pattern</h2>
+<ul>
 <li>한 객체 상태 변화에 다라 다른 객체 상태도 연동되도록 일대다 객체 의존 관계를 구성하는 패턴</li>
 <li>데이터 변경이 발생했을 결우 상대 클래스나 객체에 의존하지 않으면서 데이터 변경을 통보하고자 할 때 유용</li>
 <li>옵저버 패턴은 통보 대상 객체의 관리르 Subject 클래스와 Observer 인터페이스로 일반화</li>
 <li>데이터 변경을 통보하는 클래스(CondreteSubject)는 통보 대상 클래스나 객체에 대한 의존성을 없앨 수 있음</li>
 </ul>
-<h2 id="구현-예시"><a href="#구현-예시" class="headerlink" title="구현 예시"></a>구현 예시</h2><p>야구 카운트 정보에 대한 정보를 보여주는 시스템이 있다고 가정하자. 야구 카운트에 대한 정보를 가진 Subject가 존재하고 이를 여러군데에서 보여주는 Observer 구현체들이 있다. 정보는 한군데에서 제공하고 Observer 구현체들은 여러 곳에서 여러 방식으로 정보를 보여줄 수 있다. Observer 구현체들은 여러가지 방법으로 구현 될 수 있고 이에 따라 정보를 보여주는 방법도 여러가지가 될 수 있다. Observer 구현체가 추가 되거나 다른 방식을 구현 되더라도 정보를 제공하는 Subject는 정보를 제공하기만 하기 때문에 이에 따른 변경이 필요 없다.</p>
+<h2 id="구현-예시">구현 예시</h2>
+<p>야구 카운트 정보에 대한 정보를 보여주는 시스템이 있다고 가정하자. 야구 카운트에 대한 정보를 가진 Subject가 존재하고 이를 여러군데에서 보여주는 Observer 구현체들이 있다. 정보는 한군데에서 제공하고 Observer 구현체들은 여러 곳에서 여러 방식으로 정보를 보여줄 수 있다. Observer 구현체들은 여러가지 방법으로 구현 될 수 있고 이에 따라 정보를 보여주는 방법도 여러가지가 될 수 있다. Observer 구현체가 추가 되거나 다른 방식을 구현 되더라도 정보를 제공하는 Subject는 정보를 제공하기만 하기 때문에 이에 따른 변경이 필요 없다.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Subject</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">registerObserver</span><span class="params">(Observer o)</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">removeObserver</span><span class="params">(Observer o)</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">notifyObservers</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">BaseballStatus</span> <span class="keyword">implements</span> <span class="title class_">Subject</span> &#123;</span><br><span class="line">	<span class="keyword">private</span> ArrayList&lt;Observer&gt; observers;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> strike;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> ball;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> out;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">BaseballStatus</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.observers = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getStrike</span><span class="params">()</span> &#123;</span><br><span class="line">    	<span class="keyword">return</span> strike;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setStrike</span><span class="params">(<span class="type">int</span> strike)</span> &#123;</span><br><span class="line">    	<span class="built_in">this</span>.strike = strike;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getBall</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> ball;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setBall</span><span class="params">(<span class="type">int</span> ball)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.ball = ball;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getOut</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> out;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setOut</span><span class="params">(<span class="type">int</span> out)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.out = out;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">registerObserver</span><span class="params">(Observer o)</span> &#123;</span><br><span class="line">        observers.add(o);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">removeObserver</span><span class="params">(Observer o)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> observers.indexOf(o);</span><br><span class="line">        <span class="keyword">if</span> (i &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">            observers.remove(i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">notifyObservers</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (Observer o : observers) &#123;</span><br><span class="line">            o.update();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">gameChanged</span><span class="params">()</span> &#123;</span><br><span class="line">        notifyObservers();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setGame</span><span class="params">(<span class="type">int</span> strike, <span class="type">int</span> ball, <span class="type">int</span> out)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.setStrike(strike);</span><br><span class="line">        <span class="built_in">this</span>.ball = ball;</span><br><span class="line">        <span class="built_in">this</span>.out = out;</span><br><span class="line">        gameChanged();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>위는 야구 정보를 제공하는 Subject BaseballStatus에 대한 코드</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Observer</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">update</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Display</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">display</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CurrentStateDisplayMonitor</span> <span class="keyword">implements</span> <span class="title class_">Observer</span>, Display &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> String monitorName;</span><br><span class="line">	<span class="keyword">private</span> BaseballStatus baseballStatus;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">CurrentStateDisplayMonitor</span><span class="params">(String dn, BaseballStatus bs)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.monitorName = dn;</span><br><span class="line">		<span class="built_in">this</span>.baseballStatus = bs;</span><br><span class="line">		bs.registerObserver(<span class="built_in">this</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">display</span><span class="params">()</span> &#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;monitor: &quot;</span> + monitorName);</span><br><span class="line">		System.out.println(<span class="string">&quot;Strike: &quot;</span> + baseballStatus.getStrike() + <span class="string">&quot; Ball: &quot;</span> + baseballStatus.getBall() + <span class="string">&quot; Out: &quot;</span> + baseballStatus.getOut() );</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">update</span><span class="params">()</span> &#123;</span><br><span class="line">		display();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>위는 정보를 받아 보여주는 Observer 구현체이다. 이 구현체는 다른 방식을 구현된 클래스가 추가 될 수 있으나 정보를 제공하는 BaseballStatus인 Subject는 변경이 필요 없다.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ObserverMain</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		<span class="type">BaseballStatus</span> <span class="variable">bs</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BaseballStatus</span>();</span><br><span class="line">		<span class="type">CurrentStateDisplayMonitor</span> <span class="variable">monitor1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CurrentStateDisplayMonitor</span>(<span class="string">&quot;시청역 전광판&quot;</span>, bs);</span><br><span class="line">		<span class="type">CurrentStateDisplayMonitor</span> <span class="variable">monitor2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CurrentStateDisplayMonitor</span>(<span class="string">&quot;광화문 전광판&quot;</span>, bs);</span><br><span class="line">		<span class="type">CurrentStateDisplayMonitor</span> <span class="variable">monitor3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CurrentStateDisplayMonitor</span>(<span class="string">&quot;테해란로 전광판&quot;</span>, bs);</span><br><span class="line">		</span><br><span class="line">		bs.setGame(<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">		bs.setGame(<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">		bs.setGame(<span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>);</span><br><span class="line">		bs.setGame(<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">monitor: 시청역 전광판</span><br><span class="line">Strike: <span class="number">0</span> Ball: <span class="number">1</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 광화문 전광판</span><br><span class="line">Strike: <span class="number">0</span> Ball: <span class="number">1</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 테해란로 전광판</span><br><span class="line">Strike: <span class="number">0</span> Ball: <span class="number">1</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 시청역 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">1</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 광화문 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">1</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 테해란로 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">1</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 시청역 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">2</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 광화문 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">2</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 테해란로 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">2</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 시청역 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">2</span> Out: <span class="number">1</span></span><br><span class="line">monitor: 광화문 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">2</span> Out: <span class="number">1</span></span><br><span class="line">monitor: 테해란로 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">2</span> Out: <span class="number">1</span></span><br></pre></td></tr></table></figure><br>BaseballStatus를 observer 구현체들에 등록하고 setGame을 통해 BaseballStatus가 변경될 때마다 정보가 표시되는 것을 확인 할 수 있다.</p>
-<p>출처: <a target="_blank" rel="noopener" href="https://gmlwjd9405.github.io/2018/07/08/observer-pattern.html">https://gmlwjd9405.github.io/2018/07/08/observer-pattern.html</a><br>  <a target="_blank" rel="noopener" href="https://johngrib.github.io/wiki/observer-pattern/">https://johngrib.github.io/wiki/observer-pattern/</a></p>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-05-10T15:00:00.000Z" title="2021. 5. 11. 오전 12:00:00">2021-05-11</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.969Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/CS/">CS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/05/11/2021-05-11-proxy-pattern/">Proxy Pattern</a></p><div class="content"><h2 id="Proxy-Pattern"><a href="#Proxy-Pattern" class="headerlink" title="Proxy Pattern"></a>Proxy Pattern</h2><p>어떤 객체에 대한 접근을 제어하는 용도로 대리인이나 대변인에 해당하는 객체를 제공하는 패턴</p>
+<p>위는 정보를 받아 보여주는 Observer 구현체이다. 이 구현체는 다른 방식을 구현된 클래스가 추가 될 수 있으나 정보를 제공하는 BaseballStatus인 Subject는 변경이 필요 없다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ObserverMain</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		<span class="type">BaseballStatus</span> <span class="variable">bs</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BaseballStatus</span>();</span><br><span class="line">		<span class="type">CurrentStateDisplayMonitor</span> <span class="variable">monitor1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CurrentStateDisplayMonitor</span>(<span class="string">&quot;시청역 전광판&quot;</span>, bs);</span><br><span class="line">		<span class="type">CurrentStateDisplayMonitor</span> <span class="variable">monitor2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CurrentStateDisplayMonitor</span>(<span class="string">&quot;광화문 전광판&quot;</span>, bs);</span><br><span class="line">		<span class="type">CurrentStateDisplayMonitor</span> <span class="variable">monitor3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CurrentStateDisplayMonitor</span>(<span class="string">&quot;테해란로 전광판&quot;</span>, bs);</span><br><span class="line">		</span><br><span class="line">		bs.setGame(<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">		bs.setGame(<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">		bs.setGame(<span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>);</span><br><span class="line">		bs.setGame(<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">monitor: 시청역 전광판</span><br><span class="line">Strike: <span class="number">0</span> Ball: <span class="number">1</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 광화문 전광판</span><br><span class="line">Strike: <span class="number">0</span> Ball: <span class="number">1</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 테해란로 전광판</span><br><span class="line">Strike: <span class="number">0</span> Ball: <span class="number">1</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 시청역 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">1</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 광화문 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">1</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 테해란로 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">1</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 시청역 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">2</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 광화문 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">2</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 테해란로 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">2</span> Out: <span class="number">0</span></span><br><span class="line">monitor: 시청역 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">2</span> Out: <span class="number">1</span></span><br><span class="line">monitor: 광화문 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">2</span> Out: <span class="number">1</span></span><br><span class="line">monitor: 테해란로 전광판</span><br><span class="line">Strike: <span class="number">1</span> Ball: <span class="number">2</span> Out: <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>BaseballStatus를 observer 구현체들에 등록하고 setGame을 통해 BaseballStatus가 변경될 때마다 정보가 표시되는 것을 확인 할 수 있다.</p>
+<p>출처: <a target="_blank" rel="noopener" href="https://gmlwjd9405.github.io/2018/07/08/observer-pattern.html">https://gmlwjd9405.github.io/2018/07/08/observer-pattern.html</a><br>
+<a target="_blank" rel="noopener" href="https://johngrib.github.io/wiki/observer-pattern/">https://johngrib.github.io/wiki/observer-pattern/</a></p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-05-10T15:00:00.000Z" title="2021. 5. 11. 오전 12:00:00">2021-05-11</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.969Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/CS/">CS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/05/11/2021-05-11-proxy-pattern/">Proxy Pattern</a></p><div class="content"><h2 id="Proxy-Pattern">Proxy Pattern</h2>
+<p>어떤 객체에 대한 접근을 제어하는 용도로 대리인이나 대변인에 해당하는 객체를 제공하는 패턴</p>
 <ol>
-<li>virtual proxy<br>클래스가 사용하는 자원이 많을 경우 작업이 필요할 때에만 클래스를 사용하도록 프록시를 사용</li>
-<li>Protection proxy<br>클래스에 대한 접근을 제어하기 위한 경우 프록시 클래스에서 주체 클래스에 대한 접근권한을 확인하여 메소드 호출을 제어</li>
-<li>remote proxy<br>프록시 클래스는 로컬에 있고 주체 클래스는 remote로 존재하는 경우 사용</li>
+<li>virtual proxy<br>
+클래스가 사용하는 자원이 많을 경우 작업이 필요할 때에만 클래스를 사용하도록 프록시를 사용</li>
+<li>Protection proxy<br>
+클래스에 대한 접근을 제어하기 위한 경우 프록시 클래스에서 주체 클래스에 대한 접근권한을 확인하여 메소드 호출을 제어</li>
+<li>remote proxy<br>
+프록시 클래스는 로컬에 있고 주체 클래스는 remote로 존재하는 경우 사용</li>
 </ol>
-<h2 id="구현-예시"><a href="#구현-예시" class="headerlink" title="구현 예시"></a>구현 예시</h2><p>아주 간단한 예제 하나만 들어보도록 한다. 프록시의 구현에서 프록시 메소드에 본 서비스 객체를 생성하는 경우 virtual proxy 이고, 접근 권한을 확인하여 본 서비스의 메소드 호출을 제어하는 경우 protection proxy, 리모트 통신을 통해 본 서비스를 호출하는 경우 remote proxy라 한다. 아래는 서비스가 있고 이 서비스를 호출하기 위한 프록시가 존재하는 경우이다. </p>
+<h2 id="구현-예시">구현 예시</h2>
+<p>아주 간단한 예제 하나만 들어보도록 한다. 프록시의 구현에서 프록시 메소드에 본 서비스 객체를 생성하는 경우 virtual proxy 이고, 접근 권한을 확인하여 본 서비스의 메소드 호출을 제어하는 경우 protection proxy, 리모트 통신을 통해 본 서비스를 호출하는 경우 remote proxy라 한다. 아래는 서비스가 있고 이 서비스를 호출하기 위한 프록시가 존재하는 경우이다.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Service</span> &#123;</span><br><span class="line">	String <span class="title function_">run</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">Service</span> &#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;call service&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ProxyService</span> <span class="keyword">implements</span> <span class="title class_">Service</span> &#123;</span><br><span class="line">	Service service;</span><br><span class="line">  </span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">    service = <span class="keyword">new</span> <span class="title class_">Service</span>();</span><br><span class="line">    <span class="keyword">return</span> service.run();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ProxyMain</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">Service</span> <span class="variable">proxy</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ProxyService</span>();</span><br><span class="line">    System.out.println(proxy.run());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>메인 함수에서 프록시를 호출하여 결과적으로 서비스 구현체를 호출하는 것을 볼 수 있다.</p>
-<h2 id="디자인-패턴"><a href="#디자인-패턴" class="headerlink" title="디자인 패턴"></a>디자인 패턴</h2><ul>
-<li>생성 creational 패턴은 객체 생성에 관련된 패턴, 객체의 생성과 조합을 캡슐화해 특정 객체가 생성되거나 변경되어도 프로그램 구조에 영향을 크게 받지 않도록 유연성을 제공한다. </li>
+<h2 id="디자인-패턴">디자인 패턴</h2>
+<ul>
+<li>생성 creational 패턴은 객체 생성에 관련된 패턴, 객체의 생성과 조합을 캡슐화해 특정 객체가 생성되거나 변경되어도 프로그램 구조에 영향을 크게 받지 않도록 유연성을 제공한다.</li>
 </ul>
 <ul>
 <li>abstract factory</li>
@@ -168,7 +244,7 @@
 <ul>
 <li>adapter</li>
 <li>composite</li>
-<li>decorator </li>
+<li>decorator</li>
 <li>proxy</li>
 </ul>
 <ul>
@@ -180,36 +256,95 @@
 <li>strategy</li>
 <li>template method</li>
 </ul>
-<p>출처: <a target="_blank" rel="noopener" href="https://yaboong.github.io/design-pattern/2018/10/17/proxy-pattern/">https://yaboong.github.io/design-pattern/2018/10/17/proxy-pattern/</a><br>  <a target="_blank" rel="noopener" href="https://limkydev.tistory.com/79">https://limkydev.tistory.com/79</a><br>  <a target="_blank" rel="noopener" href="https://jdm.kr/blog/235">https://jdm.kr/blog/235</a></p>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-05-09T15:00:00.000Z" title="2021. 5. 10. 오전 12:00:00">2021-05-10</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.962Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/DevOps/">DevOps</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/05/10/2021-05-10-qemu-kvm-install/">Qemu-KVM install</a></p><div class="content"><p>  qemu와 kvm 설치하는 법에 대해 알아본다.</p>
-<h3 id="KVM-설치"><a href="#KVM-설치" class="headerlink" title="KVM 설치"></a>KVM 설치</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virtinst virt-manager</span><br></pre></td></tr></table></figure>
-<p>  qemu-kvm: KVM hypervisor를 위해 hardware emulation을 제공한다.<br>  libvirt-daemon-system: libvirt daemon을 system service로 동작시키기 위한 파일<br>  libvirt-cients: virtualization platform을 관리하기 위한 소프트웨어<br>  bridge-utils: ethernet bridges를 구성하기 위한 command 모음<br>  virtinst: virtual machine을 생성하기 위한 command 모음<br>  virt-manager: virtual machine을 관리하기 위한 GUI interface와 command 모음</p>
-<h3 id="KVM-실행"><a href="#KVM-실행" class="headerlink" title="KVM 실행"></a>KVM 실행</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo virt-manager</span><br></pre></td></tr></table></figure>
+<p>출처: <a target="_blank" rel="noopener" href="https://yaboong.github.io/design-pattern/2018/10/17/proxy-pattern/">https://yaboong.github.io/design-pattern/2018/10/17/proxy-pattern/</a><br>
+<a target="_blank" rel="noopener" href="https://limkydev.tistory.com/79">https://limkydev.tistory.com/79</a><br>
+<a target="_blank" rel="noopener" href="https://jdm.kr/blog/235">https://jdm.kr/blog/235</a></p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-05-09T15:00:00.000Z" title="2021. 5. 10. 오전 12:00:00">2021-05-10</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.962Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/DevOps/">DevOps</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/05/10/2021-05-10-qemu-kvm-install/">Qemu-KVM install</a></p><div class="content"><p>qemu와 kvm 설치하는 법에 대해 알아본다.</p>
+<h3 id="KVM-설치">KVM 설치</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virtinst virt-manager</span><br></pre></td></tr></table></figure>
+<p>qemu-kvm: KVM hypervisor를 위해 hardware emulation을 제공한다.<br>
+libvirt-daemon-system: libvirt daemon을 system service로 동작시키기 위한 파일<br>
+libvirt-cients: virtualization platform을 관리하기 위한 소프트웨어<br>
+bridge-utils: ethernet bridges를 구성하기 위한 command 모음<br>
+virtinst: virtual machine을 생성하기 위한 command 모음<br>
+virt-manager: virtual machine을 관리하기 위한 GUI interface와 command 모음</p>
+<h3 id="KVM-실행">KVM 실행</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo virt-manager</span><br></pre></td></tr></table></figure>
 <p>출처: <a target="_blank" rel="noopener" href="https://marcokhan.tistory.com/259">https://marcokhan.tistory.com/259</a></p>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-04-28T15:00:00.000Z" title="2021. 4. 29. 오전 12:00:00">2021-04-29</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.955Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/DevOps/">DevOps</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/04/29/2021-04-29-docker-image-container/">Docker Image and Container</a></p><div class="content"><h2 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h2><p>도커는 컨테이너 기반 가상화 도구이다. 도커는 리눅스 상에서 프로세스를 컨테이너 단위로 격리해서 관리 할 수 있도록 해준다. 하드웨어를 가상화하는 기술과는 달리 프로세스를 격리하는 방법으로 가상화를 구현한다. 컨테이너는 별도의 파일 시스템과 함께 cgroup, namspace 등을 이용해 호스트위에서 별도의 머신이 돌아가는 것 처럼 보인다. 본문에서는 도커나 컨테이너의 기술 상세에 대해 이야기 하지 않고 도커를 사용하는 방법에 대해 알아보고자 한다.</p>
-<h2 id="Docker-Image"><a href="#Docker-Image" class="headerlink" title="Docker Image"></a>Docker Image</h2><p>도커 이미지는 어플리케이션을 실행하기 위한 환경을 담고 있습니다. 이 이미지를 도커에서 실행하면 컨테이너가 생성되고 그 컨테이너 안에서 어플리케이션이 실행됩니다. 도커 이미지는 변경할 수 없고 변경을 위해서는 별도의 이미지를 생성해야 한다. 도커 이미지를 추가하는 법은 세가지가 있다.</p>
-<h3 id="pull-명령어를-통해-이미-만들어져-있는-이미지를-가져오는-법"><a href="#pull-명령어를-통해-이미-만들어져-있는-이미지를-가져오는-법" class="headerlink" title="pull 명령어를 통해 이미 만들어져 있는 이미지를 가져오는 법"></a>pull 명령어를 통해 이미 만들어져 있는 이미지를 가져오는 법</h3><p>nginx 이미지를 가져와 보자.<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull nginx</span><br><span class="line">docker images</span><br></pre></td></tr></table></figure><br>nginx 이미지를 받아온 것을 확인 할 수 있다.</p>
-<h3 id="컨테이너-변경사항을-기반으로-커밋을-통해-이미지를-만드는-법"><a href="#컨테이너-변경사항을-기반으로-커밋을-통해-이미지를-만드는-법" class="headerlink" title="컨테이너 변경사항을 기반으로 커밋을 통해 이미지를 만드는 법"></a>컨테이너 변경사항을 기반으로 커밋을 통해 이미지를 만드는 법</h3><p>우분투 이미지 기반으로 nginx를 실행 할 수 있는 이미지를 만들어 보자<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker pull ubuntu</span><br><span class="line">docker run -it ubuntu bash</span><br><span class="line">apt update</span><br><span class="line">apt install -y nginx</span><br><span class="line">nginx -v</span><br></pre></td></tr></table></figure><br>컨테이너에 nginx가 설치 된것을 확인 할 수 있다. docker diff $containerid 를 이용하면 컨테이너의 변경 사항을 확인해 볼 수도 있다. 이제 이 컨테이너를 커밋해보자.<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker commit $containerid ubuntu-nginx</span><br><span class="line">docker images</span><br></pre></td></tr></table></figure><br>커밋을 통해 이미지를 추가해 보았다.</p>
-<h3 id="도커파일-Dockerfile-을-이용해-이미지를-빌드하는-법"><a href="#도커파일-Dockerfile-을-이용해-이미지를-빌드하는-법" class="headerlink" title="도커파일(Dockerfile)을 이용해 이미지를 빌드하는 법"></a>도커파일(Dockerfile)을 이용해 이미지를 빌드하는 법</h3><p>Dockerfile이라는 파일 내에 이런 저런 내용을 채워 놓고 빌드하는 방법이 있다.<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir ubuntu-nginx</span><br><span class="line">cd ubuntu-nginx</span><br></pre></td></tr></table></figure><br>이렇게 디렉토리 하나 만들어 그안에서 Dockerfile을 아래와 같이 작성한다.<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">FROM ubuntu</span><br><span class="line">RUN apt update &amp;&amp;\</span><br><span class="line">  apt install -y nginx</span><br></pre></td></tr></table></figure><br>도커파일이 있는 경로에서 아래와 같이 빌드 명령어를 실행한다.<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker build -t ubuntu-nginx-build .</span><br><span class="line">docker images</span><br></pre></td></tr></table></figure><br>빌드를 통해 이미지를 추가할 수 있다. 보통은 첫번째 방법을 통해 이미지를 추가하고 이미지의 변경이 필요할 경우 세번째 방법을 이용한다. 나도 세번째 방법을 이용해야겠다. Dockerfile은 FROM 으로 시작한다. 기본이 되는 이미지를 지정하기 위한 내용이다. RUN은 명령을 직접 실행하기 위한 지시자이다. RUN 뒤에 쓰여있는 명령어가 쉘에서 실행된다고 보면 된다. 그 외 WORKDIR 지시자는 작업이 진행되는 디렉토리를 변경한다. 도커파일에 대해서는 따로 더 자세하게 알아보기로 한다.<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WORKDIR /tmp</span><br></pre></td></tr></table></figure><br>처럼 사용하면 이후 실행 되는 작업들이 /tmp에서 진행 된다. ENV 라는 지시자도 있는데 컨테이너 실행 환경에 적용되는 환경변수의 값을 지정할 수 있다.<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ENV JAVA_HOME /usr/lib/jvm/openjdk1.8</span><br></pre></td></tr></table></figure><br>이런식으로 설정하고 컨테이너에서 싱행되는 어플리케이션은 이 환경변수 값을 받아 동작을 제어한다. 도커에서 권장 하는 방식이다. EXPOSE는 컨테이너가 오픈할 포트를 지정해준다.<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXPOSE 8080</span><br></pre></td></tr></table></figure><br>이 값은 컨테이너에서 실행되는 어플리케이션이 사용하는 포트를 적어주고 호스트에서 컨테이너에 있는 어플리케이션을 포트 8080을 통해 접근 할 수 있다.</p>
-<h3 id="도커-이미지-삭제"><a href="#도커-이미지-삭제" class="headerlink" title="도커 이미지 삭제"></a>도커 이미지 삭제</h3><p>도커 이미지를 만들어 봤으니 삭제도 해보자<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rmi $imageid</span><br></pre></td></tr></table></figure><br>이미지를 삭제하기 위해서는 해당 이미지를 기반으로 하는 컨테이너도 모두 지워주어야 한다.</p>
-<h2 id="Docker-Container"><a href="#Docker-Container" class="headerlink" title="Docker Container"></a>Docker Container</h2><p>도커 이미지는 어플리케이션을 실행하기 위한 환경이었다. 이런저런 파일들의 모음이라고 봐도 된다. 이미지를 실제 프로세스로 띄운것이 컨테이너이다. 컨테이너에서 수정된 내용은 이미지에 영향을 미치지 않고 컨테이너가 종료되면 변경 내용이 사라진다.</p>
-<h3 id="도커-컨테이너-실행"><a href="#도커-컨테이너-실행" class="headerlink" title="도커 컨테이너 실행"></a>도커 컨테이너 실행</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 8080:8080 ubuntu-nginx</span><br></pre></td></tr></table></figure>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-04-28T15:00:00.000Z" title="2021. 4. 29. 오전 12:00:00">2021-04-29</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.955Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/DevOps/">DevOps</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/04/29/2021-04-29-docker-image-container/">Docker Image and Container</a></p><div class="content"><h2 id="Docker">Docker</h2>
+<p>도커는 컨테이너 기반 가상화 도구이다. 도커는 리눅스 상에서 프로세스를 컨테이너 단위로 격리해서 관리 할 수 있도록 해준다. 하드웨어를 가상화하는 기술과는 달리 프로세스를 격리하는 방법으로 가상화를 구현한다. 컨테이너는 별도의 파일 시스템과 함께 cgroup, namspace 등을 이용해 호스트위에서 별도의 머신이 돌아가는 것 처럼 보인다. 본문에서는 도커나 컨테이너의 기술 상세에 대해 이야기 하지 않고 도커를 사용하는 방법에 대해 알아보고자 한다.</p>
+<h2 id="Docker-Image">Docker Image</h2>
+<p>도커 이미지는 어플리케이션을 실행하기 위한 환경을 담고 있습니다. 이 이미지를 도커에서 실행하면 컨테이너가 생성되고 그 컨테이너 안에서 어플리케이션이 실행됩니다. 도커 이미지는 변경할 수 없고 변경을 위해서는 별도의 이미지를 생성해야 한다. 도커 이미지를 추가하는 법은 세가지가 있다.</p>
+<h3 id="pull-명령어를-통해-이미-만들어져-있는-이미지를-가져오는-법">pull 명령어를 통해 이미 만들어져 있는 이미지를 가져오는 법</h3>
+<p>nginx 이미지를 가져와 보자.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull nginx</span><br><span class="line">docker images</span><br></pre></td></tr></table></figure>
+<p>nginx 이미지를 받아온 것을 확인 할 수 있다.</p>
+<h3 id="컨테이너-변경사항을-기반으로-커밋을-통해-이미지를-만드는-법">컨테이너 변경사항을 기반으로 커밋을 통해 이미지를 만드는 법</h3>
+<p>우분투 이미지 기반으로 nginx를 실행 할 수 있는 이미지를 만들어 보자</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker pull ubuntu</span><br><span class="line">docker run -it ubuntu bash</span><br><span class="line">apt update</span><br><span class="line">apt install -y nginx</span><br><span class="line">nginx -v</span><br></pre></td></tr></table></figure>
+<p>컨테이너에 nginx가 설치 된것을 확인 할 수 있다. docker diff $containerid 를 이용하면 컨테이너의 변경 사항을 확인해 볼 수도 있다. 이제 이 컨테이너를 커밋해보자.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker commit $containerid ubuntu-nginx</span><br><span class="line">docker images</span><br></pre></td></tr></table></figure>
+<p>커밋을 통해 이미지를 추가해 보았다.</p>
+<h3 id="도커파일-Dockerfile-을-이용해-이미지를-빌드하는-법">도커파일(Dockerfile)을 이용해 이미지를 빌드하는 법</h3>
+<p>Dockerfile이라는 파일 내에 이런 저런 내용을 채워 놓고 빌드하는 방법이 있다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir ubuntu-nginx</span><br><span class="line">cd ubuntu-nginx</span><br></pre></td></tr></table></figure>
+<p>이렇게 디렉토리 하나 만들어 그안에서 Dockerfile을 아래와 같이 작성한다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">FROM ubuntu</span><br><span class="line">RUN apt update &amp;&amp;\</span><br><span class="line">  apt install -y nginx</span><br></pre></td></tr></table></figure>
+<p>도커파일이 있는 경로에서 아래와 같이 빌드 명령어를 실행한다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker build -t ubuntu-nginx-build .</span><br><span class="line">docker images</span><br></pre></td></tr></table></figure>
+<p>빌드를 통해 이미지를 추가할 수 있다. 보통은 첫번째 방법을 통해 이미지를 추가하고 이미지의 변경이 필요할 경우 세번째 방법을 이용한다. 나도 세번째 방법을 이용해야겠다. Dockerfile은 FROM 으로 시작한다. 기본이 되는 이미지를 지정하기 위한 내용이다. RUN은 명령을 직접 실행하기 위한 지시자이다. RUN 뒤에 쓰여있는 명령어가 쉘에서 실행된다고 보면 된다. 그 외 WORKDIR 지시자는 작업이 진행되는 디렉토리를 변경한다. 도커파일에 대해서는 따로 더 자세하게 알아보기로 한다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WORKDIR /tmp</span><br></pre></td></tr></table></figure>
+<p>처럼 사용하면 이후 실행 되는 작업들이 /tmp에서 진행 된다. ENV 라는 지시자도 있는데 컨테이너 실행 환경에 적용되는 환경변수의 값을 지정할 수 있다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ENV JAVA_HOME /usr/lib/jvm/openjdk1.8</span><br></pre></td></tr></table></figure>
+<p>이런식으로 설정하고 컨테이너에서 싱행되는 어플리케이션은 이 환경변수 값을 받아 동작을 제어한다. 도커에서 권장 하는 방식이다. EXPOSE는 컨테이너가 오픈할 포트를 지정해준다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXPOSE 8080</span><br></pre></td></tr></table></figure>
+<p>이 값은 컨테이너에서 실행되는 어플리케이션이 사용하는 포트를 적어주고 호스트에서 컨테이너에 있는 어플리케이션을 포트 8080을 통해 접근 할 수 있다.</p>
+<h3 id="도커-이미지-삭제">도커 이미지 삭제</h3>
+<p>도커 이미지를 만들어 봤으니 삭제도 해보자</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rmi $imageid</span><br></pre></td></tr></table></figure>
+<p>이미지를 삭제하기 위해서는 해당 이미지를 기반으로 하는 컨테이너도 모두 지워주어야 한다.</p>
+<h2 id="Docker-Container">Docker Container</h2>
+<p>도커 이미지는 어플리케이션을 실행하기 위한 환경이었다. 이런저런 파일들의 모음이라고 봐도 된다. 이미지를 실제 프로세스로 띄운것이 컨테이너이다. 컨테이너에서 수정된 내용은 이미지에 영향을 미치지 않고 컨테이너가 종료되면 변경 내용이 사라진다.</p>
+<h3 id="도커-컨테이너-실행">도커 컨테이너 실행</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 8080:8080 ubuntu-nginx</span><br></pre></td></tr></table></figure>
 <p>-d 컨테이너를 데몬으로 실행하겠다는 옵션이다. -p 8080:8080 이렇게 쓰면 컨테이너의 8080 포트(:구분자의 뒤)와 호스트의 8080 포트(: 구분자의 앞)가 포트포워드 된다. 하나의 이미지로 여러 컨테이너 생성이 가능하다. 이때 포트는 겹치지 않도록 한다.</p>
-<h3 id="도커-컨테이너-접속"><a href="#도커-컨테이너-접속" class="headerlink" title="도커 컨테이너 접속"></a>도커 컨테이너 접속</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it ubuntu-nginx /bin/bash</span><br></pre></td></tr></table></figure>
+<h3 id="도커-컨테이너-접속">도커 컨테이너 접속</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it ubuntu-nginx /bin/bash</span><br></pre></td></tr></table></figure>
 <p>exec 명령어는 도커 컨테이너 안쪽으로 명령어를 전송한다. 명령어는 컨테이너 이름뒤에 /bin/bash이다. i 옵션은 표준 입출력 사용, t 옵션은 가상 tty 사용을 의미 한다. 터미널을 통해 ssh 접근을 한것과 같은 환경을 사용할 수 있다.</p>
-<h3 id="도커-컨테이너-확인-및-삭제"><a href="#도커-컨테이너-확인-및-삭제" class="headerlink" title="도커 컨테이너 확인 및 삭제"></a>도커 컨테이너 확인 및 삭제</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker ps -a</span><br><span class="line">docker rm $containerid</span><br></pre></td></tr></table></figure>
+<h3 id="도커-컨테이너-확인-및-삭제">도커 컨테이너 확인 및 삭제</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker ps -a</span><br><span class="line">docker rm $containerid</span><br></pre></td></tr></table></figure>
 <p>docker ps 명령어를 통해 컨테이너들을 확인한다. -a 옵션을 주면 실행중이 아닌 컨테이너도 확인할 수 있다.</p>
 <p>이제 시작이다.</p>
-<p>출처: <a target="_blank" rel="noopener" href="https://www.44bits.io/ko/post/easy-deploy-with-docker">https://www.44bits.io/ko/post/easy-deploy-with-docker</a><br>  <a target="_blank" rel="noopener" href="https://hiseon.me/linux/ubuntu/install-docker/">https://hiseon.me/linux/ubuntu/install-docker/</a><br>  <a target="_blank" rel="noopener" href="https://kscory.com/dev/nginx/install">https://kscory.com/dev/nginx/install</a><br>  <a target="_blank" rel="noopener" href="https://itholic.github.io/docker-enter-container/">https://itholic.github.io/docker-enter-container/</a></p>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-04-28T15:00:00.000Z" title="2021. 4. 29. 오전 12:00:00">2021-04-29</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.959Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/DevOps/">DevOps</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/04/29/2021-04-29-docker-install/">Docker Install</a></p><div class="content"><h2 id="Docker-Install"><a href="#Docker-Install" class="headerlink" title="Docker Install"></a>Docker Install</h2><p>Docker를 우분투에 설치하는 방법에 대해서 알아본다.</p>
-<h2 id="Docker-ce"><a href="#Docker-ce" class="headerlink" title="Docker-ce"></a>Docker-ce</h2><p>docker.com에서 직접 배포하는 도커는 docker-ce와 docker-ee가 있다. ce는 개인 혹은 작은 팀이 사용하는 버전이고, ee는 실제 운용하는 회사에서 사용하는 버전이다. 이번에는 ce설치에 대해 알아본다. docker.io 로도 도커를 설치가 가능한데, 데비안/우분투에서 직접 배포하는 버전으로 최신 도커 버전이 아닐 수 있다. docker.com에서 배포하는 것과 혼동을 방지하기 위해 이름을 다르게 하였다고 한다.</p>
-<h2 id="도커-설치하기"><a href="#도커-설치하기" class="headerlink" title="도커 설치하기"></a>도커 설치하기</h2><p>아래 명령어들을 차례로 입력한다.<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install apt-transport-https ca-certificates curl software-properties-common</span><br><span class="line">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line">sudo add-apt-repository &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&quot;</span><br><span class="line">sudo apt update</span><br><span class="line">apt-cache policy docker-ce</span><br><span class="line">sudo apt install docker-ce</span><br><span class="line">sudo systemctl status docker</span><br></pre></td></tr></table></figure><br>도커가 실행 중인 것을 확인 할 수 있다.<br>데이안에 설치하는 것도 거의 유사하다. ubuntu를 debian으로 바꾸어 준다.</p>
-<h2 id="도커-그룹에-사용자-추가"><a href="#도커-그룹에-사용자-추가" class="headerlink" title="도커 그룹에 사용자 추가"></a>도커 그룹에 사용자 추가</h2><p>도커는 기본 설정이 root 사용자만 실행 할 수 있다. 일반 유저를 추가하기 위해 다음과 같은 명령어를 입력한다.<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo usermod -aG docker $USER</span><br></pre></td></tr></table></figure><br>이 유저로 도커를 실행 할 때는 sudo 명령어를 추가한다.<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo su - $USER</span><br></pre></td></tr></table></figure><br>이렇게 실행 하면 sudo를 추가하지 않아도 된다.</p>
-<h2 id="Docker-Compose-설치"><a href="#Docker-Compose-설치" class="headerlink" title="Docker-Compose 설치"></a>Docker-Compose 설치</h2><p>도커 컴포즈는 컨테이너 여러개를 실행 할 수 있도록 해주는 툴이다. 설치는 간단하다<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo curl -L https://github.com/docker/compose/releases/download/1.25.0-rc2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose</span><br><span class="line">sudo chmod +x /usr/local/bin/docker-compose</span><br></pre></td></tr></table></figure><br>프로그램을 설치하고 권한 설정을 해준다.</p>
+<p>출처: <a target="_blank" rel="noopener" href="https://www.44bits.io/ko/post/easy-deploy-with-docker">https://www.44bits.io/ko/post/easy-deploy-with-docker</a><br>
+<a target="_blank" rel="noopener" href="https://hiseon.me/linux/ubuntu/install-docker/">https://hiseon.me/linux/ubuntu/install-docker/</a><br>
+<a target="_blank" rel="noopener" href="https://kscory.com/dev/nginx/install">https://kscory.com/dev/nginx/install</a><br>
+<a target="_blank" rel="noopener" href="https://itholic.github.io/docker-enter-container/">https://itholic.github.io/docker-enter-container/</a></p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-04-28T15:00:00.000Z" title="2021. 4. 29. 오전 12:00:00">2021-04-29</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.959Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/DevOps/">DevOps</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/04/29/2021-04-29-docker-install/">Docker Install</a></p><div class="content"><h2 id="Docker-Install">Docker Install</h2>
+<p>Docker를 우분투에 설치하는 방법에 대해서 알아본다.</p>
+<h2 id="Docker-ce">Docker-ce</h2>
+<p>docker.com에서 직접 배포하는 도커는 docker-ce와 docker-ee가 있다. ce는 개인 혹은 작은 팀이 사용하는 버전이고, ee는 실제 운용하는 회사에서 사용하는 버전이다. 이번에는 ce설치에 대해 알아본다. <a target="_blank" rel="noopener" href="http://docker.io">docker.io</a> 로도 도커를 설치가 가능한데, 데비안/우분투에서 직접 배포하는 버전으로 최신 도커 버전이 아닐 수 있다. docker.com에서 배포하는 것과 혼동을 방지하기 위해 이름을 다르게 하였다고 한다.</p>
+<h2 id="도커-설치하기">도커 설치하기</h2>
+<p>아래 명령어들을 차례로 입력한다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install apt-transport-https ca-certificates curl software-properties-common</span><br><span class="line">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line">sudo add-apt-repository &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&quot;</span><br><span class="line">sudo apt update</span><br><span class="line">apt-cache policy docker-ce</span><br><span class="line">sudo apt install docker-ce</span><br><span class="line">sudo systemctl status docker</span><br></pre></td></tr></table></figure>
+<p>도커가 실행 중인 것을 확인 할 수 있다.<br>
+데이안에 설치하는 것도 거의 유사하다. ubuntu를 debian으로 바꾸어 준다.</p>
+<h2 id="도커-그룹에-사용자-추가">도커 그룹에 사용자 추가</h2>
+<p>도커는 기본 설정이 root 사용자만 실행 할 수 있다. 일반 유저를 추가하기 위해 다음과 같은 명령어를 입력한다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo usermod -aG docker $USER</span><br></pre></td></tr></table></figure>
+<p>이 유저로 도커를 실행 할 때는 sudo 명령어를 추가한다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo su - $USER</span><br></pre></td></tr></table></figure>
+<p>이렇게 실행 하면 sudo를 추가하지 않아도 된다.</p>
+<h2 id="Docker-Compose-설치">Docker-Compose 설치</h2>
+<p>도커 컴포즈는 컨테이너 여러개를 실행 할 수 있도록 해주는 툴이다. 설치는 간단하다</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo curl -L https://github.com/docker/compose/releases/download/1.25.0-rc2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose</span><br><span class="line">sudo chmod +x /usr/local/bin/docker-compose</span><br></pre></td></tr></table></figure>
+<p>프로그램을 설치하고 권한 설정을 해준다.</p>
 <p>이제 시작이다.</p>
-<p>출처: <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/45023363/what-is-docker-io-in-relation-to-docker-ce-and-docker-ee">https://stackoverflow.com/questions/45023363/what-is-docker-io-in-relation-to-docker-ce-and-docker-ee</a><br>  <a target="_blank" rel="noopener" href="https://hiseon.me/linux/ubuntu/install-docker/">https://hiseon.me/linux/ubuntu/install-docker/</a></p>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-04-27T15:00:00.000Z" title="2021. 4. 28. 오전 12:00:00">2021-04-28</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.953Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/MQ/">MQ</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/04/28/2021-04-28-amqp-model/">RabbitMQ Basic Model</a></p><div class="content"><h2 id="AMQP-0-9-1-Model-Explain"><a href="#AMQP-0-9-1-Model-Explain" class="headerlink" title="AMQP 0-9-1 Model Explain"></a>AMQP 0-9-1 Model Explain</h2><p>RabbitMQ는 AMQP의 구현체로 본문은 AMQP 모델을 설명하고 있는 <a target="_blank" rel="noopener" href="https://www.rabbitmq.com/tutorials/amqp-concepts.html">https://www.rabbitmq.com/tutorials/amqp-concepts.html</a> 의 내용을 요약함</p>
-<h1 id="AMQP-0-9-1"><a href="#AMQP-0-9-1" class="headerlink" title="AMQP 0-9-1"></a>AMQP 0-9-1</h1><ul>
+<p>출처: <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/45023363/what-is-docker-io-in-relation-to-docker-ce-and-docker-ee">https://stackoverflow.com/questions/45023363/what-is-docker-io-in-relation-to-docker-ce-and-docker-ee</a><br>
+<a target="_blank" rel="noopener" href="https://hiseon.me/linux/ubuntu/install-docker/">https://hiseon.me/linux/ubuntu/install-docker/</a></p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-04-27T15:00:00.000Z" title="2021. 4. 28. 오전 12:00:00">2021-04-28</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.953Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/MQ/">MQ</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/04/28/2021-04-28-amqp-model/">RabbitMQ Basic Model</a></p><div class="content"><h2 id="AMQP-0-9-1-Model-Explain">AMQP 0-9-1 Model Explain</h2>
+<p>RabbitMQ는 AMQP의 구현체로 본문은 AMQP 모델을 설명하고 있는 <a target="_blank" rel="noopener" href="https://www.rabbitmq.com/tutorials/amqp-concepts.html">https://www.rabbitmq.com/tutorials/amqp-concepts.html</a> 의 내용을 요약함</p>
+<h1>AMQP 0-9-1</h1>
+<ul>
 <li>Advanced Message Queueing Protocol 의 준말(이후 AMQP)</li>
 <li>응용프로그램이 메시징 미들웨어 브로커와 통신하기 위해 정한 프로토콜</li>
 <li>브로커는 publisher로부터 메시지를 수신하여 subscriber에게 라우팅</li>
@@ -217,17 +352,20 @@
 <li>메시지를 받고 난 후 응답을 통해 큐 대기열의 메시지를 남기거나 제거하여 전달을 보장</li>
 <li>AMQP는 브로커 서버가 아닌 응용프로그램에서 exchange 정의나 routing 규칙등을 declare 하기 때문에 프로그래머블 한 프로토콜이라 함</li>
 </ul>
-<h1 id="Exchange"><a href="#Exchange" class="headerlink" title="Exchange"></a>Exchange</h1><ul>
+<h1>Exchange</h1>
+<ul>
 <li>Exchange는 AMQP의 한 구성 요소</li>
 <li>메시지를 받아 규칙에 따라 queue에 전달</li>
-<li>네가지 exchange type이 존재<ul>
+<li>네가지 exchange type이 존재
+<ul>
 <li>Direct exchange</li>
 <li>Fanout exchange</li>
 <li>Topic exchange</li>
 <li>Headers exchange</li>
 </ul>
 </li>
-<li>이 외에 exchange는 다음과 같은 속성을 가진다.<ul>
+<li>이 외에 exchange는 다음과 같은 속성을 가진다.
+<ul>
 <li>name</li>
 <li>Durability (exchange survive broker restart)</li>
 <li>Auto-delete (exchange is deleted when last queue is unbound from it)</li>
@@ -235,21 +373,25 @@
 </ul>
 </li>
 </ul>
-<h2 id="Default-Exchange"><a href="#Default-Exchange" class="headerlink" title="Default Exchange"></a>Default Exchange</h2><ul>
+<h2 id="Default-Exchange">Default Exchange</h2>
+<ul>
 <li>기본 exchange는 이름을 별도로 명하지 않고 브로커내에 이미 존재하는 exchange를 사용</li>
 <li>큐생성시 입력하는 이름으로 라우팅 키가 자동 설정 됨</li>
 <li>기본 exchange는 동일한 큐이름으로 메시지를 전달</li>
 </ul>
-<h2 id="Direct-Exchange"><a href="#Direct-Exchange" class="headerlink" title="Direct Exchange"></a>Direct Exchange</h2><ul>
+<h2 id="Direct-Exchange">Direct Exchange</h2>
+<ul>
 <li>라우팅 키를 기반으로 큐에 메시지 전달</li>
 <li>유니캐스트 라우팅에 적합</li>
 <li>라우팅 키를 보고 라우팅 키가 같은 큐에 메시지를 라우팅</li>
 </ul>
-<h2 id="Fanout-Exchange"><a href="#Fanout-Exchange" class="headerlink" title="Fanout Exchange"></a>Fanout Exchange</h2><ul>
+<h2 id="Fanout-Exchange">Fanout Exchange</h2>
+<ul>
 <li>바인딩 된 모든 큐로 메시지를 라우팅</li>
 <li>브로드 캐스트 라우팅에 이상적</li>
 </ul>
-<h2 id="Toplic-Exchange"><a href="#Toplic-Exchange" class="headerlink" title="Toplic Exchange"></a>Toplic Exchange</h2><ul>
+<h2 id="Toplic-Exchange">Toplic Exchange</h2>
+<ul>
 <li>라우팅 키의 패턴이 일치하는 하나 이상의 큐에 메시지를 전달</li>
 <li>Publish/Subscribe 패턴을 구현하는데 사용</li>
 <li>멀티 캐스트 라우팅에 사용</li>
@@ -257,16 +399,19 @@
 <li>Subscriber는 와일드카드 문자를 사용해 구독 가능 (예: aaa.bbb.* aaa.#)</li>
 <li>Publisher는 구체적 토픽만 발행 가능, 와일드카드 문자 사용 불가</li>
 </ul>
-<h2 id="Headers-Exchange"><a href="#Headers-Exchange" class="headerlink" title="Headers Exchange"></a>Headers Exchange</h2><ul>
+<h2 id="Headers-Exchange">Headers Exchange</h2>
+<ul>
 <li>라우팅 키보다 더 많은 규칙을 쉽게 적용할 수 있는 헤더 사용</li>
 <li>헤더에는 x-match 인자에 any, all 을 적용 가능</li>
 <li>또한 key와 value 값을 헤더에 추가하여 x-match의 규칙에 따라 라우팅 적용</li>
 <li>any는 key와 value 쌍 중에 하나만 일치해도 라우팅</li>
 <li>all은 모든 키와 value가 일치해야 메시지 라우팅</li>
 </ul>
-<h1 id="Queues"><a href="#Queues" class="headerlink" title="Queues"></a>Queues</h1><ul>
+<h1>Queues</h1>
+<ul>
 <li>AMQP에서 말하는 큐는 우리들이 익히 알고있는 그것</li>
-<li>그외에 아래와 같은 속성을 지님<ul>
+<li>그외에 아래와 같은 속성을 지님
+<ul>
 <li>Name</li>
 <li>Exclusive (used by only one connection and the queue will be deleted when that connection closes)</li>
 <li>Auto-delete (queue that has had at least one consumer is deleted when last consumer unsubscribes)</li>
@@ -275,38 +420,46 @@
 </li>
 <li>큐 사용은 declare를 통해 가능하며 큐가 없을 경우 생성됨</li>
 <li>이미 존재하는 큐와 다른 속성의 큐를 declare 할 경우 exception 발생</li>
-<li>Queue Name<ul>
+<li>Queue Name
+<ul>
 <li>UTF-8 문자로 255 bytes 이하</li>
 <li>Queue Name은 브로커 내에서 unique 함</li>
 </ul>
 </li>
-<li>Queue Durability<ul>
+<li>Queue Durability
+<ul>
 <li>durable queue의 경우 메타데이터가 디스크에 저장, transient queue 경우 메모리 저장</li>
 <li>꼭 전달해야할 중요 메시지의 경우 durable queue를 사용하고 publish mark를 persisted로 전달</li>
 </ul>
 </li>
 </ul>
-<h1 id="Bindings"><a href="#Bindings" class="headerlink" title="Bindings"></a>Bindings</h1><ul>
+<h1>Bindings</h1>
+<ul>
 <li>바인딩이란 exchange가 메시지 라우팅에 사용하는 규칙을 의미</li>
 <li>queue는 exchange에 biding되어야 메시지를 라우팅 받을 수 있음</li>
 <li>바인딩 할 때 routing key 가 추가 됨</li>
 <li>routing key는 exchange에 바인딩된 queue에 메시지를 라우팅 하기 위한 필터 역할</li>
 </ul>
-<h1 id="Consumers"><a href="#Consumers" class="headerlink" title="Consumers"></a>Consumers</h1><ul>
-<li>소비자가 메시지를 소비하는 두가지 방법<ul>
+<h1>Consumers</h1>
+<ul>
+<li>소비자가 메시지를 소비하는 두가지 방법
+<ul>
 <li>subscribe message (push API): recommended</li>
 <li>Polling (pull API): highly inefficient</li>
 </ul>
 </li>
-<li>큐 하나에 하나 이상의 소비자를 가짐 </li>
+<li>큐 하나에 하나 이상의 소비자를 가짐</li>
 </ul>
-<h1 id="Message-Acknowlgements"><a href="#Message-Acknowlgements" class="headerlink" title="Message Acknowlgements"></a>Message Acknowlgements</h1><ul>
+<h1>Message Acknowlgements</h1>
+<ul>
 <li>메시지를 받고 처리하는 도중 응용프로그램이 중단되거나 네트워크 문제가 발생할 수 있음</li>
 <li>브로커가 큐에서 메시지를 전달 후 제거하는 것을 자동 승인 모델, 어플리케이션 수행 로직 상에 제거 알림을 보낸 후 제거하는 것을 명시적 승인 모델</li>
 <li>큐에 메시지가 남아 있으면 브로커는 다른 소비자에게 재전송 하거나 다른 소비자가 큐에 등록 될 때까지 기다렸다가 재전송</li>
 </ul>
-<h1 id="Message-Atrributes-and-Payload"><a href="#Message-Atrributes-and-Payload" class="headerlink" title="Message Atrributes and Payload"></a>Message Atrributes and Payload</h1><ul>
-<li>AMQP 0-9-1 model 메시지에는 속성이 있음<ul>
+<h1>Message Atrributes and Payload</h1>
+<ul>
+<li>AMQP 0-9-1 model 메시지에는 속성이 있음
+<ul>
 <li>예) Content type, content encoding, routing key, delivery mode(persistent or not), message priority, message publishing timestamp, expiration period etc.</li>
 </ul>
 </li>
@@ -317,43 +470,66 @@
 <li>메시지는 페이로드가 없을 수 있음</li>
 <li>메시지 페이로드는 JSON, Thrift, Protocol Buffers, MessagePack 등 serialization format 구조화를 통해 보내는 것이 일반적임</li>
 </ul>
-<h1 id="Connections"><a href="#Connections" class="headerlink" title="Connections"></a>Connections</h1><ul>
+<h1>Connections</h1>
+<ul>
 <li>AMQP가 TCP를 사용하는 애플리케이션 수준 프로토콜</li>
 <li>클라이언트 어플리케이션과 브로커 서버 사이 연결</li>
 <li>인증을 통해 TLS사용 가능</li>
 </ul>
-<h1 id="Channels"><a href="#Channels" class="headerlink" title="Channels"></a>Channels</h1><ul>
-<li>브로커에 대한 다중 연결이 필요할 때 여러 TCP연결을 사용하지 않고 channel로 멀티플랙스 </li>
+<h1>Channels</h1>
+<ul>
+<li>브로커에 대한 다중 연결이 필요할 때 여러 TCP연결을 사용하지 않고 channel로 멀티플랙스</li>
 <li>각각의 채널은 독립적으로 분리되어 있고 채널아이디를 통해 구분</li>
 <li>어플리케이션에서 여러 스레드/프로세서를 사용하는 경우 각 스레드/프로세서에 하나의 channel이 연결되고 각 연결은 서로 독립적으로 동작하도록 쓰일 수 있음</li>
 <li>채널은 커낵션 상에 존재하며 커낵션이 닫히면 채널도 닫힘</li>
 </ul>
-<h1 id="Virtual-Hosts"><a href="#Virtual-Hosts" class="headerlink" title="Virtual Hosts"></a>Virtual Hosts</h1><ul>
+<h1>Virtual Hosts</h1>
+<ul>
 <li>하나의 브로커 내에 격리된 환경을 호스팅 할 수 있는 개념</li>
-<li>linux에서 namespace와 유사한 개념 </li>
+<li>linux에서 namespace와 유사한 개념</li>
 <li>AMQP 구성요소들(exchange, queue, user etc.)을 완전히 격리 된 환경을 제공</li>
 <li>클라이언트 연결 시 사용할 가상 호스트 지정</li>
 </ul>
-<p>출처: <a target="_blank" rel="noopener" href="https://www.rabbitmq.com/tutorials/amqp-concepts.html">https://www.rabbitmq.com/tutorials/amqp-concepts.html</a><br><a target="_blank" rel="noopener" href="https://sejoung.github.io/2020/05/2020-05-22-amqp_concepts">https://sejoung.github.io/2020/05/2020-05-22-amqp_concepts</a>  </p>
+<p>출처: <a target="_blank" rel="noopener" href="https://www.rabbitmq.com/tutorials/amqp-concepts.html">https://www.rabbitmq.com/tutorials/amqp-concepts.html</a><br>
+<a target="_blank" rel="noopener" href="https://sejoung.github.io/2020/05/2020-05-22-amqp_concepts">https://sejoung.github.io/2020/05/2020-05-22-amqp_concepts</a></p>
 </div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-04-20T15:00:00.000Z" title="2021. 4. 21. 오전 12:00:00">2021-04-21</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.952Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/MQ/">MQ</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/04/21/2021-04-21-rabbitmq-testcode/">RabbitMQ Routing, Topic</a></p><div class="content"><p>RabbitMQ Use Case Test Code 분석</p>
 <ul>
 <li>본문에서는 공식 문서에서 제공하는 튜토리얼을 기반으로 내용을 정리했으며, 자바로 짜여진 코드에 대해서만 다룬다.</li>
 </ul>
-<h2 id="RabbitMQ-Routing"><a href="#RabbitMQ-Routing" class="headerlink" title="RabbitMQ Routing"></a>RabbitMQ Routing</h2><p>RabbitMQ는 Exchange와 Queue를 가지고 있다. Exchange에 바인딩을 한 후 Queue에 직접 메시지를 전달하는 방법을 Routing이라고 부른다. 아래는 로그를 단계별로 나누어 queue에 보내는 방법을 sender와 reciever로 나누어 작성한 예제이다.</p>
+<h2 id="RabbitMQ-Routing">RabbitMQ Routing</h2>
+<p>RabbitMQ는 Exchange와 Queue를 가지고 있다. Exchange에 바인딩을 한 후 Queue에 직접 메시지를 전달하는 방법을 Routing이라고 부른다. 아래는 로그를 단계별로 나누어 queue에 보내는 방법을 sender와 reciever로 나누어 작성한 예제이다.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.rabbitmq.client.Channel;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.Connection;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.ConnectionFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">EmitLogDirect</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">EXCHANGE_NAME</span> <span class="operator">=</span> <span class="string">&quot;direct_logs&quot;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] argv)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    <span class="type">ConnectionFactory</span> <span class="variable">factory</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ConnectionFactory</span>();</span><br><span class="line">    factory.setHost(<span class="string">&quot;localhost&quot;</span>);</span><br><span class="line">    <span class="keyword">try</span> (<span class="type">Connection</span> <span class="variable">connection</span> <span class="operator">=</span> factory.newConnection();</span><br><span class="line">         <span class="type">Channel</span> <span class="variable">channel</span> <span class="operator">=</span> connection.createChannel()) &#123;</span><br><span class="line">        channel.exchangeDeclare(EXCHANGE_NAME, <span class="string">&quot;direct&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="type">String</span> <span class="variable">severity</span> <span class="operator">=</span> getSeverity(argv);</span><br><span class="line">        <span class="type">String</span> <span class="variable">message</span> <span class="operator">=</span> getMessage(argv);</span><br><span class="line"></span><br><span class="line">        channel.basicPublish(EXCHANGE_NAME, severity, <span class="literal">null</span>, message.getBytes(<span class="string">&quot;UTF-8&quot;</span>));</span><br><span class="line">        System.out.println(<span class="string">&quot; [x] Sent &#x27;&quot;</span> + severity + <span class="string">&quot;&#x27;:&#x27;&quot;</span> + message + <span class="string">&quot;&#x27;&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//출처: https://www.rabbitmq.com/tutorials/tutorial-four-java.html</span></span><br></pre></td></tr></table></figure>
-<p>로그를 보내는 쪽, 즉 Sender 혹은 Producer는 커낵션 팩토리를 이용해 커낵션을 맺는다. 위 예제에서는 setHost만 있지만 setPort, setUsername, setPassword를 추가해 연결 옵션을 줄 수 있다. 커낵션을 맺음으로 채널을 생성하고 exchange를 선언한다. exchange type을 “direct”로 선언함으로 routing key가 일치하는 queue에 메시지를 전달한다.</p>
+<p>로그를 보내는 쪽, 즉 Sender 혹은 Producer는 커낵션 팩토리를 이용해 커낵션을 맺는다. 위 예제에서는 setHost만 있지만 setPort, setUsername, setPassword를 추가해 연결 옵션을 줄 수 있다. 커낵션을 맺음으로 채널을 생성하고 exchange를 선언한다. exchange type을 &quot;direct&quot;로 선언함으로 routing key가 일치하는 queue에 메시지를 전달한다.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.rabbitmq.client.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ReceiveLogsDirect</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">EXCHANGE_NAME</span> <span class="operator">=</span> <span class="string">&quot;direct_logs&quot;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] argv)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    <span class="type">ConnectionFactory</span> <span class="variable">factory</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ConnectionFactory</span>();</span><br><span class="line">    factory.setHost(<span class="string">&quot;localhost&quot;</span>);</span><br><span class="line">    <span class="type">Connection</span> <span class="variable">connection</span> <span class="operator">=</span> factory.newConnection();</span><br><span class="line">    <span class="type">Channel</span> <span class="variable">channel</span> <span class="operator">=</span> connection.createChannel();</span><br><span class="line"></span><br><span class="line">    channel.exchangeDeclare(EXCHANGE_NAME, <span class="string">&quot;direct&quot;</span>);</span><br><span class="line">    <span class="type">String</span> <span class="variable">queueName</span> <span class="operator">=</span> channel.queueDeclare().getQueue();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (String severity : argv) &#123;</span><br><span class="line">        channel.queueBind(queueName, EXCHANGE_NAME, severity);</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(<span class="string">&quot; [*] Waiting for messages. To exit press CTRL+C&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="type">DeliverCallback</span> <span class="variable">deliverCallback</span> <span class="operator">=</span> (consumerTag, delivery) -&gt; &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">message</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">String</span>(delivery.getBody(), <span class="string">&quot;UTF-8&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot; [x] Received &#x27;&quot;</span> +</span><br><span class="line">            delivery.getEnvelope().getRoutingKey() + <span class="string">&quot;&#x27;:&#x27;&quot;</span> + message + <span class="string">&quot;&#x27;&quot;</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    channel.basicConsume(queueName, <span class="literal">true</span>, deliverCallback, consumerTag -&gt; &#123; &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//출처: https://www.rabbitmq.com/tutorials/tutorial-four-java.html</span></span><br></pre></td></tr></table></figure>
 <p>로그는 받는 쪽도 역시 rabbitmq와 연결을 맺고 exchangeDeclare를 이용해 어떤 exchange에 연결할 것인지 설정 한다. queueBind를 이용해 어떤 queue에 어떤 routing key로 bind 할 지 설정한 후 메시지를 기다린다.</p>
-<h2 id="RabbitMQ-Topic"><a href="#RabbitMQ-Topic" class="headerlink" title="RabbitMQ Topic"></a>RabbitMQ Topic</h2><p>메시지를 받는 쪽에서 토픽을 aaa.*.ccc 혹은 aaa.# 이런식으로 설정하면, 메세지를 보낼 때 aaa.bbb.ccc 혹은 aaa.ddd.ccc 라고 보낼때 메시지를 받는다. 토픽 설정하는 법을 반대로 알 고있었는데… 반대로 설정하는 법은 없는가? (2021년 4월 23일 수정 - 메시지 보낸는 쪽과 받는 쪽 routing key 설정방법을 반대로 알고 있던 덕분에 삽질을…) </p>
-<h2 id="기타"><a href="#기타" class="headerlink" title="기타"></a>기타</h2><p>다른 예제는 출처 사이트를 직접 가서 확인 해보자 차근차근 보다보면 어렵지 않게 사용할 수 있을 것이다.</p>
-<p>출처: <a target="_blank" rel="noopener" href="https://www.rabbitmq.com/tutorials/tutorial-four-java.html">https://www.rabbitmq.com/tutorials/tutorial-four-java.html</a>  </p>
+<h2 id="RabbitMQ-Topic">RabbitMQ Topic</h2>
+<p>메시지를 받는 쪽에서 토픽을 aaa.*.ccc 혹은 aaa.# 이런식으로 설정하면, 메세지를 보낼 때 aaa.bbb.ccc 혹은 aaa.ddd.ccc 라고 보낼때 메시지를 받는다. 토픽 설정하는 법을 반대로 알 고있었는데… 반대로 설정하는 법은 없는가? (2021년 4월 23일 수정 - 메시지 보낸는 쪽과 받는 쪽 routing key 설정방법을 반대로 알고 있던 덕분에 삽질을…)</p>
+<h2 id="기타">기타</h2>
+<p>다른 예제는 출처 사이트를 직접 가서 확인 해보자 차근차근 보다보면 어렵지 않게 사용할 수 있을 것이다.</p>
+<p>출처: <a target="_blank" rel="noopener" href="https://www.rabbitmq.com/tutorials/tutorial-four-java.html">https://www.rabbitmq.com/tutorials/tutorial-four-java.html</a></p>
 </div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-04-06T15:00:00.000Z" title="2021. 4. 7. 오전 12:00:00">2021-04-07</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.950Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/MQ/">MQ</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/04/07/2021-04-07-rabbitmq-start/">Starting RabbitMQ</a></p><div class="content"><p>RabbitMQ 시작하기</p>
-<h2 id="RabbitMQ"><a href="#RabbitMQ" class="headerlink" title="RabbitMQ"></a>RabbitMQ</h2><p>RabbitMQ는 오픈 소스 메시지 브로커 소프트웨어로 AMQP의 구현체이다. STOMP, MQTT등의 프로토콜도 지원을 하며 기능을 확장하고 있다. 메시지 생산자(producer)와 메시지를 수신하는 소비자(consumer) 사이에서 메세지 전달자(brocker) 역할을 한다.</p>
-<h2 id="AMQP"><a href="#AMQP" class="headerlink" title="AMQP"></a>AMQP</h2><p>AMQP는 Advanced Message Queuing Protocol의 약자로 메시지 지향 미들웨어(응용 소프트웨어 간의 데이터 통신을 위한 소프트웨어)를 위한 프로토콜이다. 와이어 레벨 프로토콜로서 바이트 스트림으로 네트워크를 경유하며 솔신되는 데이터의 형식을 기술하기 때문에 이런 형식을 따를는 메시지를 만들고 해석할 수 있으면 구현 언어와 관계없이 다른 시스템과 상호 운용이 가능하다.</p>
-<h2 id="MQTT"><a href="#MQTT" class="headerlink" title="MQTT"></a>MQTT</h2><p>MQTT는 Medssage Queuing Telemetry Transport의 약자로 pub-sub 기반 메시징 프로토콜이다. ISO 표준이며 TCP/IP 프로토콜 위에서 동작한다. 프로토콜의 페이로드 형식이나 동작을 보면 알 수 있듯이 아주 경량화된 프로토콜이다. 프로세싱 파워가 작은 기기에서 메시지 전달이 필요하거나, 네트워크 환경이 좋지 않더라도 운용이 가능하는 것이 이 프로토콜 설계 의도이다.</p>
-<h2 id="RabbitMQ-설치-및-환경-구성"><a href="#RabbitMQ-설치-및-환경-구성" class="headerlink" title="RabbitMQ 설치 및 환경 구성"></a>RabbitMQ 설치 및 환경 구성</h2><p>데비안에서 RabbitMQ를 설치해보자. 아래와 같이 명령어를 실행한다.<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install rabbitmq-server</span><br></pre></td></tr></table></figure><br>RabbitMQ를 설정하기 위해 아래 처럼 플러그인 하나를 활성화 하자<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo rabbitmq-plugins enable rabbitmq_management</span><br><span class="line">sudo systemctl restart rabbitmq-server</span><br></pre></td></tr></table></figure><br>rabbitmq를 재시작 해야 설정이 적용 된다.<br>관리자 계정을 추가해서 브라우저를 통해 RabbitMQ를 관리해보자<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo rabbitmqctl add_user &#123;id&#125; &#123;password&#125;</span><br><span class="line">sudo rabbitmqctl set_user_tags &#123;id&#125; administrator</span><br></pre></td></tr></table></figure><br>아이디를 만들어 관리자 권한을 주면 브라우저로 관리 페이지에 접근이 가능하다.<br><a href="http://ip:15672로">http://ip:15672로</a> 접속하고 좀전에 만든 아이디와 패스워드를 이용하자.<br>기본 포트는 5672 이다.</p>
-<p>  이제 시작이다.</p>
-<p>출처: <a target="_blank" rel="noopener" href="https://ko.wikipedia.org/wiki/AMQP">https://ko.wikipedia.org/wiki/AMQP</a><br><a target="_blank" rel="noopener" href="https://ko.wikipedia.org/wiki/MQTT">https://ko.wikipedia.org/wiki/MQTT</a><br><a target="_blank" rel="noopener" href="http://abh0518.net/tok/?p=384">http://abh0518.net/tok/?p=384</a><br><a target="_blank" rel="noopener" href="https://kamang-it.tistory.com/entry/AMQPRabbitMQRabbitMQ%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94-%EC%9D%B4%EC%9C%A0%EC%99%80-%EC%84%A4%EC%B9%98%EB%B0%A9%EB%B2%95-1">https://kamang-it.tistory.com/entry/AMQPRabbitMQRabbitMQ%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94-%EC%9D%B4%EC%9C%A0%EC%99%80-%EC%84%A4%EC%B9%98%EB%B0%A9%EB%B2%95-1</a>  </p>
+<h2 id="RabbitMQ">RabbitMQ</h2>
+<p>RabbitMQ는 오픈 소스 메시지 브로커 소프트웨어로 AMQP의 구현체이다. STOMP, MQTT등의 프로토콜도 지원을 하며 기능을 확장하고 있다. 메시지 생산자(producer)와 메시지를 수신하는 소비자(consumer) 사이에서 메세지 전달자(brocker) 역할을 한다.</p>
+<h2 id="AMQP">AMQP</h2>
+<p>AMQP는 Advanced Message Queuing Protocol의 약자로 메시지 지향 미들웨어(응용 소프트웨어 간의 데이터 통신을 위한 소프트웨어)를 위한 프로토콜이다. 와이어 레벨 프로토콜로서 바이트 스트림으로 네트워크를 경유하며 솔신되는 데이터의 형식을 기술하기 때문에 이런 형식을 따를는 메시지를 만들고 해석할 수 있으면 구현 언어와 관계없이 다른 시스템과 상호 운용이 가능하다.</p>
+<h2 id="MQTT">MQTT</h2>
+<p>MQTT는 Medssage Queuing Telemetry Transport의 약자로 pub-sub 기반 메시징 프로토콜이다. ISO 표준이며 TCP/IP 프로토콜 위에서 동작한다. 프로토콜의 페이로드 형식이나 동작을 보면 알 수 있듯이 아주 경량화된 프로토콜이다. 프로세싱 파워가 작은 기기에서 메시지 전달이 필요하거나, 네트워크 환경이 좋지 않더라도 운용이 가능하는 것이 이 프로토콜 설계 의도이다.</p>
+<h2 id="RabbitMQ-설치-및-환경-구성">RabbitMQ 설치 및 환경 구성</h2>
+<p>데비안에서 RabbitMQ를 설치해보자. 아래와 같이 명령어를 실행한다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install rabbitmq-server</span><br></pre></td></tr></table></figure>
+<p>RabbitMQ를 설정하기 위해 아래 처럼 플러그인 하나를 활성화 하자</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo rabbitmq-plugins enable rabbitmq_management</span><br><span class="line">sudo systemctl restart rabbitmq-server</span><br></pre></td></tr></table></figure>
+<p>rabbitmq를 재시작 해야 설정이 적용 된다.<br>
+관리자 계정을 추가해서 브라우저를 통해 RabbitMQ를 관리해보자</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo rabbitmqctl add_user &#123;id&#125; &#123;password&#125;</span><br><span class="line">sudo rabbitmqctl set_user_tags &#123;id&#125; administrator</span><br></pre></td></tr></table></figure>
+<p>아이디를 만들어 관리자 권한을 주면 브라우저로 관리 페이지에 접근이 가능하다.<br>
+http://ip:15672로 접속하고 좀전에 만든 아이디와 패스워드를 이용하자.<br>
+기본 포트는 5672 이다.</p>
+<p>이제 시작이다.</p>
+<p>출처: <a target="_blank" rel="noopener" href="https://ko.wikipedia.org/wiki/AMQP">https://ko.wikipedia.org/wiki/AMQP</a><br>
+<a target="_blank" rel="noopener" href="https://ko.wikipedia.org/wiki/MQTT">https://ko.wikipedia.org/wiki/MQTT</a><br>
+<a target="_blank" rel="noopener" href="http://abh0518.net/tok/?p=384">http://abh0518.net/tok/?p=384</a><br>
+<a target="_blank" rel="noopener" href="https://kamang-it.tistory.com/entry/AMQPRabbitMQRabbitMQ%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94-%EC%9D%B4%EC%9C%A0%EC%99%80-%EC%84%A4%EC%B9%98%EB%B0%A9%EB%B2%95-1">https://kamang-it.tistory.com/entry/AMQPRabbitMQRabbitMQ를-사용하는-이유와-설치방법-1</a></p>
 </div></article></div><nav class="pagination" role="navigation" aria-label="pagination"><div class="pagination-previous"><a href="/page/3/">이전</a></div><div class="pagination-next"><a href="/page/5/">다음</a></div><ul class="pagination-list is-hidden-mobile"><li><a class="pagination-link" href="/">1</a></li><li><a class="pagination-link" href="/page/2/">2</a></li><li><a class="pagination-link" href="/page/3/">3</a></li><li><a class="pagination-link is-current" href="/page/4/">4</a></li><li><a class="pagination-link" href="/page/5/">5</a></li><li><span class="pagination-ellipsis">&hellip;</span></li><li><a class="pagination-link" href="/page/9/">9</a></li></ul></nav></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/images/avatar.jpg" alt="우리람부탄"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">우리람부탄</p><p class="is-size-6 is-block">개발자</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">포스트</p><a href="/archives/"><p class="title">89</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">카테고리</p><a href="/categories/"><p class="title">14</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">태그</p><a href="/tags/"><p class="title">222</p></a></div></div></nav><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="GitHub" href="https://github.com/gabre8001"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Email" href="mailto:gabre8001@gmail.com"><i class="fas fa-envelope"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">카테고리</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Android/"><span class="level-start"><span class="level-item">Android</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/C-C/"><span class="level-start"><span class="level-item">C/C++</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile" href="/categories/CS/"><span class="level-start"><span class="level-item">CS</span></span><span class="level-end"><span class="level-item tag">16</span></span></a></li><li><a class="level is-mobile" href="/categories/Database/"><span class="level-start"><span class="level-item">Database</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/DevOps/"><span class="level-start"><span class="level-item">DevOps</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/Git/"><span class="level-start"><span class="level-item">Git</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/Java/"><span class="level-start"><span class="level-item">Java</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/JavaScript/"><span class="level-start"><span class="level-item">JavaScript</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile" href="/categories/Linux/"><span class="level-start"><span class="level-item">Linux</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile" href="/categories/MQ/"><span class="level-start"><span class="level-item">MQ</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/Math/"><span class="level-start"><span class="level-item">Math</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Network/"><span class="level-start"><span class="level-item">Network</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile" href="/categories/Python/"><span class="level-start"><span class="level-item">Python</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/ROS/"><span class="level-start"><span class="level-item">ROS</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li></ul></div></div></div><div class="column-right-shadow is-hidden-widescreen"></div></div><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3"><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">최근 글</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2026-05-02T11:57:05.994Z">2026-05-02</time></p><p class="title"><a href="/2026/05/02/hello-world/">Hello World</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2026-02-25T15:00:00.000Z">2026-02-26</time></p><p class="title"><a href="/2026/02/26/2026-02-26-%ED%9A%A8%EC%9C%A8%EC%A0%81%EC%9D%B8-RPU-%EC%A7%91%EA%B3%84%EB%A5%BC-%EC%9C%84%ED%95%9C-HyperLogLog/">효율적인 RPU 집계를 위한 HyperLogLog</a></p><p class="categories"><a href="/categories/CS/">CS</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-07-12T15:00:00.000Z">2025-07-13</time></p><p class="title"><a href="/2025/07/13/2025-07-13-Hazelcast-%EA%B8%B0%EB%B0%98-Reverb-%EC%84%9C%EB%B2%84-%EA%B5%AC%EC%B6%95/">Hazelcast 기반 Reverb 서버 구축</a></p><p class="categories"><a href="/categories/Java/">Java</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-05-07T15:00:00.000Z">2025-05-08</time></p><p class="title"><a href="/2025/05/08/2025-05-08-svelte-kit-RBAC/">SvelteKit RBAC</a></p><p class="categories"><a href="/categories/JavaScript/">JavaScript</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-06-11T15:00:00.000Z">2023-06-12</time></p><p class="title"><a href="/2023/06/12/2023-06-12-Spring-Cloud-Netty/">Spring Cloud Gateway vs Netty</a></p><p class="categories"><a href="/categories/Java/">Java</a></p></div></article></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">태그</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/CPU/"><span class="tag">CPU</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MongoDB/"><span class="tag">MongoDB</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Radix/"><span class="tag">Radix</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Rax/"><span class="tag">Rax</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/React/"><span class="tag">React</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Redis/"><span class="tag">Redis</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Seaborn/"><span class="tag">Seaborn</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Test/"><span class="tag">Test</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Tree/"><span class="tag">Tree</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/t/"><span class="tag">_t</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/tmain/"><span class="tag">_tmain</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/action/"><span class="tag">action</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/active/"><span class="tag">active</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/admin/"><span class="tag">admin</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/affinity/"><span class="tag">affinity</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ajax/"><span class="tag">ajax</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/algebra/"><span class="tag">algebra</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/algorithm/"><span class="tag">algorithm</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/amqp/"><span class="tag">amqp</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/android/"><span class="tag">android</span><span class="tag">1</span></a></div></div></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">우리람부탄</a><p class="is-size-7"><span>&copy; 2026 우리람부탄</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="GitHub" href="https://github.com/gabre8001"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ko");</script><script>var IcarusThemeSettings = {
             article: {
                 highlight: {

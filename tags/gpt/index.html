@@ -29,18 +29,21 @@
       switchTab();
       window.addEventListener('hashchange', switchTab, false);
   })();
-  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">우리람부탄</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="검색" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/tags/">태그</a></li><li class="is-active"><a href="#" aria-current="page">gpt</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-04-18T15:00:00.000Z" title="2019. 4. 19. 오전 12:00:00">2019-04-19</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.852Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/CS/">CS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/04/19/2019-04-19-mbr-gpt/">MBR, GPT</a></p><div class="content"><h2 id="MBR-GPT-차이"><a href="#MBR-GPT-차이" class="headerlink" title="MBR / GPT 차이"></a>MBR / GPT 차이</h2><ul>
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">우리람부탄</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="검색" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/tags/">태그</a></li><li class="is-active"><a href="#" aria-current="page">gpt</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-04-18T15:00:00.000Z" title="2019. 4. 19. 오전 12:00:00">2019-04-19</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.852Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/CS/">CS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/04/19/2019-04-19-mbr-gpt/">MBR, GPT</a></p><div class="content"><h2 id="MBR-GPT-차이">MBR / GPT 차이</h2>
+<ul>
 <li>MBR / GPT 는 파티션 스타일</li>
 <li>SSD/HDD 등의 디스크는 MBR 또는 GPT 로 파티션을 나누어 줘야 부팅 및 데이터 디스크로 사용가능</li>
 </ul>
-<h2 id="MBR"><a href="#MBR" class="headerlink" title="MBR"></a>MBR</h2><ul>
+<h2 id="MBR">MBR</h2>
+<ul>
 <li>Master Boot Record</li>
 <li>사용할 수 있는 디스크 용량의 제한이 2TB, 3TB의 하드디스크를 MBR 로 파티셔닝 하면 1TB는 사용 불가</li>
 <li>파티션은 주 4개 또는 주3개, 확장 1개 로 만들수 있음, 확장 파티션안에 여러 논리 파티션 가능</li>
 <li>부팅 파티션 하나만 지정 가능 확장 및 논리 파티션은 부팅 파티션으로 지정 불가</li>
 <li>BIOS, UEFI 메인보드 펌웨어 모두 대응 가능</li>
 </ul>
-<h2 id="GPT"><a href="#GPT" class="headerlink" title="GPT"></a>GPT</h2><ul>
+<h2 id="GPT">GPT</h2>
+<ul>
 <li>GUID Partition Table</li>
 <li>2TB 이상의 디스크 사용 가능, 최대 8ZB 까지 사용 가능</li>
 <li>최대 128개의 파티션 가능</li>

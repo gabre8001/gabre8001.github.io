@@ -30,24 +30,32 @@
       window.addEventListener('hashchange', switchTab, false);
   })();
   </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">우리람부탄</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="검색" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/tags/">태그</a></li><li class="is-active"><a href="#" aria-current="page">urdf</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-02-28T15:00:00.000Z" title="2022. 3. 1. 오전 12:00:00">2022-03-01</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:37.022Z" title="2026. 5. 2. 오후 10:27:37">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/ROS/">ROS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/03/01/2022-02-29-rviz-urdf/">RVIZ</a></p><div class="content"><p>RVIZ와 URDF에 대해 알아본다.</p>
-<h1 id="RVIZ"><a href="#RVIZ" class="headerlink" title="RVIZ"></a>RVIZ</h1><ul>
+<h1>RVIZ</h1>
+<ul>
 <li>ROS와 연동하여 사용하는 3D 시각화 툴.</li>
-<li>RVIZ 구동을 위해서는 아래와 같이 런치 파일 편집을 통해 ROS 실행을 하면 확인 가능하다.<ul>
+<li>RVIZ 구동을 위해서는 아래와 같이 런치 파일 편집을 통해 ROS 실행을 하면 확인 가능하다.
+<ul>
 <li>pkg를 rviz로, type도 rviz로 생성한 노드를 통해 RVIZ를 실행한다.</li>
 <li>3D 시각화를 위해 필요한 파일이 urdf 파일이다.</li>
 </ul>
 </li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;launch&gt;</span><br><span class="line">    &lt;param name=&quot;robot_description&quot; textfile=&quot;$(find rviz_xycar)/urdf/pan_tilt.urdf&quot;/&gt;</span><br><span class="line">    &lt;param name=&quot;use_gui&quot; value=&quot;true&quot;/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- rviz display --&gt;</span><br><span class="line">    &lt;node name=&quot;rviz_visualizer&quot; pkg=&quot;rviz&quot; type=&quot;rviz&quot; required=&quot;true&quot; </span><br><span class="line">                args=&quot;-d $(find rviz_xycar)/rviz/xycar_3d.rviz&quot;/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;node name=&quot;robot_state_publisher&quot; pkg=&quot;robot_state_publisher&quot; </span><br><span class="line">                type=&quot;state_publisher&quot;/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;node name= &quot;move_joint&quot; pkg=&quot;rviz_xycar&quot; type= &quot;move_joint.py&quot; /&gt; </span><br><span class="line"></span><br><span class="line">&lt;/launch&gt;</span><br></pre></td></tr></table></figure>
-<h1 id="URDF"><a href="#URDF" class="headerlink" title="URDF"></a>URDF</h1><ul>
-<li>Unified Robot Description Format</li>
-<li><p>로봇을 구현하는데 쓰이는 하나의 포맷으로 RVIZ에서 시각화를 통해 확인 할 수 있다.</p>
+<h1>URDF</h1>
+<ul>
+<li>
+<p>Unified Robot Description Format</p>
 </li>
-<li><p>좌표계</p>
+<li>
+<p>로봇을 구현하는데 쓰이는 하나의 포맷으로 RVIZ에서 시각화를 통해 확인 할 수 있다.</p>
+</li>
+<li>
+<p>좌표계</p>
 <ul>
 <li>위치나 크기를 표현하기 우해 데카르트 좌표계 x,y,z를 사용</li>
 <li>회전을 표현하기 위해 오일러 각도 roll, pitch, yaw를 사용</li>
-<li>사용 단위<ul>
+<li>사용 단위
+<ul>
 <li>길이: 미터 m</li>
 <li>각도: 라디안 radian</li>
 <li>질량: 킬로그램 kg</li>
@@ -57,48 +65,62 @@
 </li>
 </ul>
 </li>
-<li>형상 표현<ul>
+<li>
+<p>형상 표현</p>
+<ul>
 <li>cylinder: 원통</li>
 <li>box: 상자</li>
 <li>sphere: 공</li>
 </ul>
 </li>
-<li>색상 표현<ul>
+<li>
+<p>색상 표현</p>
+<ul>
 <li>RGB 3원색과 투과율 A를 0~1사이의 숫자로 정의함</li>
 </ul>
 </li>
-<li>기구의 표현<ul>
+<li>
+<p>기구의 표현</p>
+<ul>
 <li>base: 고정 부분(grounded)</li>
 <li>link: 관절에 연결되는 로봇 팔의 부분</li>
 <li>joint: 링크를 연결하는 부위로 보통 모터의 회전을 통해 움직임을 만듬</li>
 </ul>
 </li>
 </ul>
-<h3 id="좌표계"><a href="#좌표계" class="headerlink" title="좌표계"></a>좌표계</h3><ul>
+<h3 id="좌표계">좌표계</h3>
+<ul>
 <li>위치나 크기를 표현하기 우해 데카르트 좌표계 x,y,z를 사용</li>
 <li>회전을 표현하기 위해 오일러 각도 roll, pitch, yaw를 사용</li>
 </ul>
-<h3 id="단위"><a href="#단위" class="headerlink" title="단위"></a>단위</h3><ul>
+<h3 id="단위">단위</h3>
+<ul>
 <li>길이: 미터 m</li>
 <li>각도: 라디안 radian</li>
 <li>질량: 킬로그램 kg</li>
 <li>속도: m/s (병진/직진운동)</li>
 <li>각속도: radian/s (회전운동)</li>
 </ul>
-<h3 id="형상-표현"><a href="#형상-표현" class="headerlink" title="형상 표현"></a>형상 표현</h3><ul>
+<h3 id="형상-표현">형상 표현</h3>
+<ul>
 <li>cylinder: 원통</li>
 <li>box: 상자</li>
 <li>sphere: 공</li>
 </ul>
-<h3 id="색상-표현"><a href="#색상-표현" class="headerlink" title="색상 표현"></a>색상 표현</h3><ul>
+<h3 id="색상-표현">색상 표현</h3>
+<ul>
 <li>RGB 3원색과 투과율 A를 0~1사이의 숫자로 정의함</li>
 </ul>
-<h3 id="기구의-표현"><a href="#기구의-표현" class="headerlink" title="기구의 표현"></a>기구의 표현</h3><ul>
-<li><p>base: 고정 부분(grounded)</p>
-</li>
-<li><p>link: 관절에 연결되는 로봇 팔의 부분</p>
+<h3 id="기구의-표현">기구의 표현</h3>
 <ul>
-<li>visual: 시각화를 위해 형상과 위치를 정의<ul>
+<li>
+<p>base: 고정 부분(grounded)</p>
+</li>
+<li>
+<p>link: 관절에 연결되는 로봇 팔의 부분</p>
+<ul>
+<li>visual: 시각화를 위해 형상과 위치를 정의
+<ul>
 <li>geometry: 형상 정의 원동, 상자, 공</li>
 <li>origin: 고정축을 기준으로 link 형상의 roll, pitch, yaw 위치를 라디안으로 나타내고 x,y,z 좌표 위치를 미터 단위로 지정</li>
 <li>material: 현상의 컬러값 지정</li>
@@ -106,13 +128,15 @@
 </li>
 </ul>
 </li>
-<li><p>joint: 링크를 연결하는 부위로 보통 모터의 회전을 통해 움직임을 만듬</p>
+<li>
+<p>joint: 링크를 연결하는 부위로 보통 모터의 회전을 통해 움직임을 만듬</p>
 <ul>
 <li>parent: parent frame의 이름을 지정해서 child frame과 연결</li>
 <li>child: child frame의 이름을 지정해서 parent frame과 연결</li>
 <li>origin: 고정축을 기준으로 형상의 r,p,y 위치를 라디안으로 나타내고, x,y,z 좌표 위치를 미터 단위로 지정.</li>
 <li>joint는 parent의 origin, child는 joint의 origin을 고정축으로 정함</li>
-<li>limit: joint의 운동범위 제한값을 지정<ul>
+<li>limit: joint의 운동범위 제한값을 지정
+<ul>
 <li>lower: revolution type의 joint에서 최저 각을 지정</li>
 <li>upper: revolution type의 joint에서 최대 각을 지정</li>
 <li>effort: N 힘의 최대값을 지정</li>
@@ -122,12 +146,14 @@
 </ul>
 </li>
 </ul>
-<h3 id="joint의-동작-정의"><a href="#joint의-동작-정의" class="headerlink" title="joint의 동작 정의"></a>joint의 동작 정의</h3><ul>
+<h3 id="joint의-동작-정의">joint의 동작 정의</h3>
+<ul>
 <li>fixed: 고정</li>
 <li>revolution: 작동 범위 제한</li>
 <li>continuous: 연속 회전</li>
 </ul>
-<h3 id="툴로-확인"><a href="#툴로-확인" class="headerlink" title="툴로 확인"></a>툴로 확인</h3><ul>
+<h3 id="툴로-확인">툴로 확인</h3>
+<ul>
 <li>sudo apt install liburdfdom-tools 설치하고</li>
 <li>check_urdf pan_tilt.urdf 로 확인할 수 있음</li>
 <li>urdf_to_graphiz pan_tilt.urdf 다른 포멧으로 확인 가능</li>
@@ -136,10 +162,12 @@
 <li>rviz 구동하기 위한 launch 파일에 아래를 추가해준다.</li>
 </ul>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;joint_state_publisher&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;joint_state_publisher&quot;</span> <span class="attr">type</span>=<span class="string">&quot;joint_state_publisher&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="예제-파일"><a href="#예제-파일" class="headerlink" title="예제 파일"></a>예제 파일</h3><ul>
-<li>아래는 urdf 예제 파일내용이다.<ul>
+<h3 id="예제-파일">예제 파일</h3>
+<ul>
+<li>아래는 urdf 예제 파일내용이다.
+<ul>
 <li>기본적으로 xml 형식을 가진다.</li>
-<li>root 태그는 robot이다. </li>
+<li>root 태그는 robot이다.</li>
 <li>앞서 언급한 기구의 표현 부분을 확인하면서 차근차근 보면 감이 온다!</li>
 <li>간략하게 살펴보면 아래와 같다.</li>
 <li>base_link 라는 원판 모양 링크</li>

@@ -30,11 +30,24 @@
       window.addEventListener('hashchange', switchTab, false);
   })();
   </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">우리람부탄</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="검색" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/tags/">태그</a></li><li class="is-active"><a href="#" aria-current="page">cdecl</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2018-11-22T15:00:00.000Z" title="2018. 11. 23. 오전 12:00:00">2018-11-23</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:36.824Z" title="2026. 5. 2. 오후 10:27:36">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/C-C/">C/C++</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2018/11/23/2018-11-23-calling-convention/">calling convention</a></p><div class="content"><ul>
-<li><p>calling convention(호출 규약)<br>스택 프래임을 사용하는 함수들 간의 대화 방식<br>두개만 알아보자</p>
+<li>
+<p>calling convention(호출 규약)<br>
+스택 프래임을 사용하는 함수들 간의 대화 방식<br>
+두개만 알아보자</p>
 </li>
-<li><p>stdcall<br>windows 에서 사용하는 호출 규약<br>windows API들이 사용<br>함수가 return 하면서 인자를 정리하므로 별도의 명령과 절차가 필요 없음<br>callee가 스택을 정리<br>가변인자 사용 불가</p>
+<li>
+<p>stdcall<br>
+windows 에서 사용하는 호출 규약<br>
+windows API들이 사용<br>
+함수가 return 하면서 인자를 정리하므로 별도의 명령과 절차가 필요 없음<br>
+callee가 스택을 정리<br>
+가변인자 사용 불가</p>
 </li>
-<li><p>cdecl<br>c에서 에서 만든 호출 규약<br>caller가 스택을 정리<br>가변인자 사용 가능</p>
+<li>
+<p>cdecl<br>
+c에서 에서 만든 호출 규약<br>
+caller가 스택을 정리<br>
+가변인자 사용 가능</p>
 </li>
 </ul>
 <p>출처: 여기 저기</p>

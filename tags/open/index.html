@@ -33,7 +33,8 @@
 <ul>
 <li>코드의 상세 내용을 설명하고 가장 마지막에 전체 코드를 공개한다.</li>
 </ul>
-<h3 id="비디오-캡쳐"><a href="#비디오-캡쳐" class="headerlink" title="비디오 캡쳐"></a>비디오 캡쳐</h3><ul>
+<h3 id="비디오-캡쳐">비디오 캡쳐</h3>
+<ul>
 <li>이미지 저장은 Mat 클래스로 하지만, 영상을 불러올 때는 VideoCapture 클래스를 사용한다.</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">VideoCapture <span class="title">cap</span><span class="params">(<span class="string">&quot;./base_camera_dark.avi&quot;</span>)</span></span>;</span><br></pre></td></tr></table></figure>
@@ -67,12 +68,18 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;opencv2/opencv.hpp&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">VideoCapture <span class="title">cap</span><span class="params">(<span class="string">&quot;./base_camera_dark.avi&quot;</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (!cap.<span class="built_in">isOpened</span>()) &#123;</span><br><span class="line">		cerr &lt;&lt; <span class="string">&quot;Video open failed!&quot;</span> &lt;&lt; endl;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="type">int</span> w = <span class="built_in">cvRound</span>(cap.<span class="built_in">get</span>(CAP_PROP_FRAME_WIDTH));</span><br><span class="line">	<span class="type">int</span> h = <span class="built_in">cvRound</span>(cap.<span class="built_in">get</span>(CAP_PROP_FRAME_HEIGHT));</span><br><span class="line"></span><br><span class="line">	Mat mask = Mat::<span class="built_in">zeros</span>(h, w, CV_8UC1);</span><br><span class="line">	vector&lt;Point&gt;  pts = &#123;</span><br><span class="line">		<span class="built_in">Point</span>(<span class="number">240</span>, <span class="number">280</span>),</span><br><span class="line">		<span class="built_in">Point</span>(<span class="number">400</span>, <span class="number">280</span>),</span><br><span class="line">		<span class="built_in">Point</span>(<span class="number">620</span>, <span class="number">440</span>),</span><br><span class="line">		<span class="built_in">Point</span>(<span class="number">20</span>, <span class="number">440</span>)</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="built_in">fillPoly</span>(mask, &#123; pts &#125;, <span class="built_in">Scalar</span>(<span class="number">255</span>));</span><br><span class="line"></span><br><span class="line">	Mat frame;</span><br><span class="line">	Mat gray;</span><br><span class="line">	Mat dst;</span><br><span class="line">	<span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">		cap &gt;&gt; frame;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (frame.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">			cerr &lt;&lt; <span class="string">&quot;Empty frame!&quot;</span> &lt;&lt; endl;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">cvtColor</span>(frame, gray, COLOR_BGR2GRAY);</span><br><span class="line">		<span class="built_in">imshow</span>(<span class="string">&quot;gray&quot;</span>, gray);</span><br><span class="line">		Scalar m = <span class="built_in">mean</span>(gray, mask);</span><br><span class="line">		dst = gray + (<span class="built_in">Scalar</span>(<span class="number">128</span>) - m);</span><br><span class="line">		<span class="built_in">imshow</span>(<span class="string">&quot;dst&quot;</span>, dst);</span><br><span class="line"></span><br><span class="line">		<span class="built_in">line</span>(frame, <span class="built_in">Point</span>(<span class="number">240</span>, <span class="number">280</span>), <span class="built_in">Point</span>(<span class="number">400</span>, <span class="number">280</span>), <span class="built_in">Scalar</span>(<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>), <span class="number">2</span>);</span><br><span class="line">		<span class="built_in">line</span>(frame, <span class="built_in">Point</span>(<span class="number">400</span>, <span class="number">280</span>), <span class="built_in">Point</span>(<span class="number">620</span>, <span class="number">440</span>), <span class="built_in">Scalar</span>(<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>), <span class="number">2</span>);</span><br><span class="line">		<span class="built_in">line</span>(frame, <span class="built_in">Point</span>(<span class="number">620</span>, <span class="number">440</span>), <span class="built_in">Point</span>(<span class="number">20</span>, <span class="number">440</span>), <span class="built_in">Scalar</span>(<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>), <span class="number">2</span>);</span><br><span class="line">		<span class="built_in">line</span>(frame, <span class="built_in">Point</span>(<span class="number">20</span>, <span class="number">440</span>), <span class="built_in">Point</span>(<span class="number">240</span>, <span class="number">280</span>), <span class="built_in">Scalar</span>(<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>), <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">		<span class="type">int</span> pos = <span class="built_in">cvRound</span>(cap.<span class="built_in">get</span>(CAP_PROP_POS_FRAMES));</span><br><span class="line">		String text = format(<span class="string">&quot;frame number: %d&quot;</span>, pos);</span><br><span class="line">		<span class="built_in">putText</span>(frame, text, <span class="built_in">Point</span>(<span class="number">20</span>, <span class="number">50</span>), FONT_HERSHEY_SIMPLEX,</span><br><span class="line">			<span class="number">0.7</span>, <span class="built_in">Scalar</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>), <span class="number">1</span>, LINE_AA);</span><br><span class="line"></span><br><span class="line">		<span class="built_in">imshow</span>(<span class="string">&quot;frame&quot;</span>, frame);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">waitKey</span>(<span class="number">10</span>) == <span class="number">27</span>)</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	cap.<span class="built_in">release</span>();</span><br><span class="line">	<span class="built_in">destroyAllWindows</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-03-18T15:00:00.000Z" title="2022. 3. 19. 오전 12:00:00">2022-03-19</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:37.039Z" title="2026. 5. 2. 오후 10:27:37">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/ROS/">ROS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/03/19/2022-03-19-brtctl/">OpenCV 트랙바를 이용한 밝기 보정 프로그램</a></p><div class="content"><p>opencv에서 재공하는 API를 이용해 밝기 보정 프로그램을 만들어 본다.</p>
 <ul>
-<li>코드의 상세 내용을 설명하고 가장 마지막에 전체 코드를 공개한다.</li>
-</ul>
-<ul>
-<li>이미지 파일을 읽어오는 내용</li>
-<li>이미지를 그레이 스케일로 읽어들이고 그 내용을 img 라는 Mat 클래스에 저장</li>
-<li>img 파일이 비어있을 경우 프로그램 종료</li>
+<li>
+<p>코드의 상세 내용을 설명하고 가장 마지막에 전체 코드를 공개한다.</p>
+</li>
+<li>
+<p>이미지 파일을 읽어오는 내용</p>
+</li>
+<li>
+<p>이미지를 그레이 스케일로 읽어들이고 그 내용을 img 라는 Mat 클래스에 저장</p>
+</li>
+<li>
+<p>img 파일이 비어있을 경우 프로그램 종료</p>
+</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Mat img = <span class="built_in">imread</span>(<span class="string">&quot;lenna.bmp&quot;</span>, IMREAD_GRAYSCALE);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (img.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">  cerr &lt;&lt; <span class="string">&quot;Image load failed!&quot;</span> &lt;&lt; endl;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
@@ -95,10 +102,12 @@
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;opencv2/opencv.hpp&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">on_level_change</span><span class="params">(<span class="type">int</span> pos, <span class="type">void</span>* userdata)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Mat img = <span class="built_in">imread</span>(<span class="string">&quot;lenna.bmp&quot;</span>, IMREAD_GRAYSCALE);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (img.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">		cerr &lt;&lt; <span class="string">&quot;Image load failed!&quot;</span> &lt;&lt; endl;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">namedWindow</span>(<span class="string">&quot;image&quot;</span>);</span><br><span class="line">	<span class="built_in">createTrackbar</span>(<span class="string">&quot;level&quot;</span>, <span class="string">&quot;image&quot;</span>, <span class="number">0</span>, <span class="number">200</span>, on_level_change, (<span class="type">void</span>*)&amp;img);</span><br><span class="line">	<span class="built_in">setTrackbarPos</span>(<span class="string">&quot;level&quot;</span>, <span class="string">&quot;image&quot;</span>, <span class="number">100</span>);</span><br><span class="line">	<span class="built_in">imshow</span>(<span class="string">&quot;image&quot;</span>, img);</span><br><span class="line">	<span class="built_in">waitKey</span>();</span><br><span class="line">	<span class="built_in">destroyAllWindows</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">on_level_change</span><span class="params">(<span class="type">int</span> pos, <span class="type">void</span>* userdata)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Mat img = *(Mat*)userdata;</span><br><span class="line"></span><br><span class="line">	<span class="type">int</span> b = pos - <span class="number">100</span>;</span><br><span class="line">	Mat dst = img + b;</span><br><span class="line">	<span class="built_in">imshow</span>(<span class="string">&quot;image&quot;</span>, dst);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-03-17T15:00:00.000Z" title="2022. 3. 18. 오전 12:00:00">2022-03-18</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:37.036Z" title="2026. 5. 2. 오후 10:27:37">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/Python/">Python</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/03/18/2022-03-18-opencv-basic/">Open CV Basic</a></p><div class="content"><p>opencv 기초인 Mat 클래스와 imread, imshow에 대해 알아본다.</p>
-<h3 id="Mat"><a href="#Mat" class="headerlink" title="Mat"></a>Mat</h3><ul>
+<h3 id="Mat">Mat</h3>
+<ul>
 <li>opencv에서 사용되는 이미지를 담는 클래스</li>
 <li>어마무시하게 많이 사용되는 클래스</li>
-<li>opencv에서 컬러는 CV_8UC3 으로 나타내고, 흑백은 CV_8UC1로 나타낸다.<ul>
+<li>opencv에서 컬러는 CV_8UC3 으로 나타내고, 흑백은 CV_8UC1로 나타낸다.
+<ul>
 <li>8은 8비트 즉 0~255 값으로 색정보를 담는다.</li>
 <li>UC는 unsigned char를 나타내고,</li>
 <li>3 혹은 1은 8비트짜리가 3개 혹은 1개 있다는 것을 의미한다.</li>
@@ -109,47 +118,55 @@
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Mat img1; 	<span class="comment">// empty matrix</span></span><br><span class="line"></span><br><span class="line"><span class="function">Mat <span class="title">img2</span><span class="params">(<span class="number">480</span>, <span class="number">640</span>, CV_8UC1)</span></span>;		<span class="comment">// unsigned char, 1-channel</span></span><br><span class="line"><span class="function">Mat <span class="title">img3</span><span class="params">(<span class="number">480</span>, <span class="number">640</span>, CV_8UC3)</span></span>;		<span class="comment">// unsigned char, 3-channels</span></span><br><span class="line"><span class="function">Mat <span class="title">img4</span><span class="params">(Size(<span class="number">640</span>, <span class="number">480</span>), CV_8UC3)</span></span>;	<span class="comment">// Size(width, height)</span></span><br><span class="line"></span><br><span class="line"><span class="function">Mat <span class="title">img5</span><span class="params">(<span class="number">480</span>, <span class="number">640</span>, CV_8UC1, Scalar(<span class="number">128</span>))</span></span>;		<span class="comment">// initial values, 128</span></span><br><span class="line"><span class="function">Mat <span class="title">img6</span><span class="params">(<span class="number">480</span>, <span class="number">640</span>, CV_8UC3, Scalar(<span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>))</span></span>;	<span class="comment">// initial values, red</span></span><br><span class="line"></span><br><span class="line">Mat mat1 = Mat::<span class="built_in">zeros</span>(<span class="number">3</span>, <span class="number">3</span>, CV_32SC1);	<span class="comment">// 0&#x27;s matrix</span></span><br><span class="line">Mat mat2 = Mat::<span class="built_in">ones</span>(<span class="number">3</span>, <span class="number">3</span>, CV_32FC1);	<span class="comment">// 1&#x27;s matrix</span></span><br><span class="line">Mat mat3 = Mat::<span class="built_in">eye</span>(<span class="number">3</span>, <span class="number">3</span>, CV_32FC1);	<span class="comment">// identity matrix</span></span><br><span class="line"></span><br><span class="line"><span class="type">float</span> data[] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>&#125;;</span><br><span class="line"><span class="function">Mat <span class="title">mat4</span><span class="params">(<span class="number">2</span>, <span class="number">3</span>, CV_32FC1, data)</span></span>;</span><br><span class="line"></span><br><span class="line">Mat mat5 = (<span class="built_in">Mat_</span>&lt;<span class="type">float</span>&gt;(<span class="number">2</span>, <span class="number">3</span>) &lt;&lt; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>);</span><br><span class="line">Mat mat6 = <span class="built_in">Mat_</span>&lt;uchar&gt;(&#123;<span class="number">2</span>, <span class="number">3</span>&#125;, &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>&#125;);</span><br><span class="line"></span><br><span class="line">mat<span class="number">4.</span><span class="built_in">create</span>(<span class="number">256</span>, <span class="number">256</span>, CV_8UC3);	<span class="comment">// uchar, 3-channels</span></span><br><span class="line">mat<span class="number">5.</span><span class="built_in">create</span>(<span class="number">4</span>, <span class="number">4</span>, CV_32FC1);	<span class="comment">// float, 1-channel</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li>Mat 클래스 복사는 아래를 참고 한다.<ul>
+<li>Mat 클래스 복사는 아래를 참고 한다.
+<ul>
 <li>클래스 변수는 직접 할당할 경우 같은 인스턴스를 참조하기 때문에 오류를 방지하기 위해 clone 메소드를 사용한다.</li>
 </ul>
 </li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Mat img4 = img<span class="number">1.</span><span class="built_in">clone</span>();</span><br></pre></td></tr></table></figure>
 <ul>
-<li>Mat 클래스는 이미지를 담다보니 이차원 배열과 유사한 연산이 가능하다.<ul>
+<li>Mat 클래스는 이미지를 담다보니 이차원 배열과 유사한 연산이 가능하다.
+<ul>
 <li>마치 배열 혹은 벡터 연산과 유사한 연산을 할 수 있다.</li>
 <li>자세한 내용은 아래 코드를 참고한다.</li>
 </ul>
 </li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Mat mat1 = Mat::<span class="built_in">zeros</span>(<span class="number">3</span>, <span class="number">4</span>, CV_8UC1);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> y = <span class="number">0</span>; y &lt; mat<span class="number">1.</span>rows; y++) &#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> x = <span class="number">0</span>; x &lt; mat<span class="number">1.</span>cols; x++) &#123;</span><br><span class="line">    mat<span class="number">1.</span><span class="built_in">at</span>&lt;uchar&gt;(y, x)++;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> y = <span class="number">0</span>; y &lt; mat<span class="number">1.</span>rows; y++) &#123;</span><br><span class="line">  uchar* p = mat<span class="number">1.</span><span class="built_in">ptr</span>&lt;uchar&gt;(y);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> x = <span class="number">0</span>; x &lt; mat<span class="number">1.</span>cols; x++) &#123;</span><br><span class="line">    p[x]++;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (MatIterator_&lt;uchar&gt; it = mat<span class="number">1.</span><span class="built_in">begin</span>&lt;uchar&gt;(); it != mat<span class="number">1.</span><span class="built_in">end</span>&lt;uchar&gt;(); ++it) &#123;</span><br><span class="line">  (*it)++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="imread"><a href="#imread" class="headerlink" title="imread"></a>imread</h3><ul>
+<h3 id="imread">imread</h3>
+<ul>
 <li>이미지를 읽어오는 API</li>
 <li>첫번째 인자로 파일 이름을 넣고, 두번째 인자로 컬러로 읽을 지 흑백으로 읽을지를 정하는 인자를 넣어준다.</li>
 <li>그레이 스케일로 읽어 올 때는 IMREAD_GRAYSCALE 를 넣어주고, 컬러로 읽을 때는 IMREAD_COLOR를 넣어준다.</li>
 </ul>
-<h3 id="imshow"><a href="#imshow" class="headerlink" title="imshow"></a>imshow</h3><ul>
+<h3 id="imshow">imshow</h3>
+<ul>
 <li>이미지를 화면에 뿌려주는 API</li>
 <li>이미지 정보를 뿌려줄 창 이름이 첫 번째 인자</li>
 <li>이미지 정보를 담은 변수가 두 번째 인자</li>
 </ul>
 </div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-03-16T15:00:00.000Z" title="2022. 3. 17. 오전 12:00:00">2022-03-17</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:37.033Z" title="2026. 5. 2. 오후 10:27:37">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/Python/">Python</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/03/17/2022-03-17-opencv-start/">Open CV</a></p><div class="content"><p>open cv 설치에 대해 알아본다. 본문에서는 윈도우10과 비주얼 스투디오 2022를 사용하는 환경을 기준으로 한다.</p>
-<h3 id="설치"><a href="#설치" class="headerlink" title="설치"></a>설치</h3><ul>
-<li><p>설치 파일 다운로드</p>
+<h3 id="설치">설치</h3>
+<ul>
+<li>
+<p>설치 파일 다운로드</p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://opencv.org/releases">https://opencv.org/releases</a> 에서 파일 다운로드</li>
 <li>이 글에서는 opencv 버전 4.5.5를 기준으로 한다.</li>
 <li>opencv-4.5.5vc14_vc15.exe 파일 다운로드한다.</li>
 </ul>
 </li>
-<li><p>설치 실행 파일 이용</p>
+<li>
+<p>설치 실행 파일 이용</p>
 <ul>
 <li>opencv-4.5.5vc14_vc15.exe 파일을 실행하면 압축이 풀린다.</li>
 <li>압축을 풀 때 위치를 지정할 수 있다.</li>
 <li>설치는 압축을 푼것으로 완료.</li>
 </ul>
 </li>
-<li><p>opencv 파일 설명</p>
+<li>
+<p>opencv 파일 설명</p>
 <ul>
 <li>opencv/build/include/opencv2 경로에 헤더파일들이 위치한다.</li>
 <li>opencv/build/x64 아래 vc14 vc15 디렉토리가 있다.</li>
@@ -159,45 +176,55 @@
 <li>vc15/lib 경로 아래에는 lib 파일이 있다.</li>
 </ul>
 </li>
-<li><p>환경변수 등록</p>
+<li>
+<p>환경변수 등록</p>
 <ul>
-<li>설치한 opencv 를 사용하기 위해 환경 변수 등록을 해준다.<ul>
+<li>설치한 opencv 를 사용하기 위해 환경 변수 등록을 해준다.
+<ul>
 <li>변수 이름 OPENCV_DIR</li>
 <li>변수 값 opencv/build</li>
 </ul>
 </li>
-<li>path 항목 편집<ul>
-<li>\%OPENCV_DIR\%/x64/vc15/bin 항목 추가</li>
+<li>path 항목 편집
+<ul>
+<li>%OPENCV_DIR%/x64/vc15/bin 항목 추가</li>
 </ul>
 </li>
-<li>cmd 에서 설치 확인<ul>
+<li>cmd 에서 설치 확인
+<ul>
 <li>opencv_version 명령어를 입력하여 버전 정보를 확인 할 수 있으면 설치 완료</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<h3 id="Visual-Studio-2022-프로젝트-만들기"><a href="#Visual-Studio-2022-프로젝트-만들기" class="headerlink" title="Visual Studio 2022 프로젝트 만들기"></a>Visual Studio 2022 프로젝트 만들기</h3><ul>
-<li><p>opencv 새 프로젝트 만들기</p>
+<h3 id="Visual-Studio-2022-프로젝트-만들기">Visual Studio 2022 프로젝트 만들기</h3>
+<ul>
+<li>
+<p>opencv 새 프로젝트 만들기</p>
 <ul>
 <li>새 프로젝트 만들기</li>
 <li>빈 프로젝트 선택</li>
 <li>솔루션 및 프로젝트를 같은 디렉토리에 배치</li>
 </ul>
 </li>
-<li><p>opencv 속성 추가</p>
+<li>
+<p>opencv 속성 추가</p>
 <ul>
-<li>헤더파일 위치 지정<ul>
+<li>헤더파일 위치 지정
+<ul>
 <li>구성 속성 -&gt; C/C++ -&gt; 일반</li>
 <li>추가 포함 디렉터리 항목에 $(OPENCV_DIR)\include 입력</li>
 </ul>
 </li>
-<li>lib 폴더 위치 지정<ul>
+<li>lib 폴더 위치 지정
+<ul>
 <li>구성 속성 -&gt; 링커 -&gt; 일반</li>
 <li>추가 라이브러리 디렉터리 항목에 $(OPENCV_DIR)\x64\vc15\lib 입력</li>
 </ul>
 </li>
-<li>lib 파일 이름 지정<ul>
+<li>lib 파일 이름 지정
+<ul>
 <li>구성 속성 -&gt; 링커 -&gt; 입력</li>
 <li>추가 종속성 항목에 opencv_world455d.dll 추가 (Release 모드는 opencv_world455.lib 추가)</li>
 </ul>

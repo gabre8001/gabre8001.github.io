@@ -35,26 +35,30 @@
 <li>일단 눈으로 보기에 8자와 유사하게 움직이는 것을 해보는데 주안점을 두었다.</li>
 <li>더 정확한 구현은 오도메트리에 대한 설명과 함께 나중에 다루도록 한다.</li>
 </ul>
-<h2 id="패키지-준비하기"><a href="#패키지-준비하기" class="headerlink" title="패키지 준비하기"></a>패키지 준비하기</h2><ul>
+<h2 id="패키지-준비하기">패키지 준비하기</h2>
+<ul>
 <li>자동차 움직여 보기를 위한 ROS 패키지를 작성한다.</li>
 <li>ros 워크 스페이스 내 src 위치에 가서 아래와 같이 명령어를 실행한다.</li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">catkin_create_pkg rviz_xycar geometry_msgs rospy rviz tf urdf xacro std_msgs message_generation</span><br></pre></td></tr></table></figure>
 <ul>
 <li>rviz_xycar라는 디렉토리가 생성되면서 이후 나열된 패키지들이 의존성에 추가된다.</li>
-<li>가장 마지막에 있는 message_generation은 사용자가 직접 만든 메시지를 사용하기 위해 필요한 의존성으로 이에 대한 상세한 방법은 아래 링크를 참조하도록 한다. <ul>
+<li>가장 마지막에 있는 message_generation은 사용자가 직접 만든 메시지를 사용하기 위해 필요한 의존성으로 이에 대한 상세한 방법은 아래 링크를 참조하도록 한다.
+<ul>
 <li><a target="_blank" rel="noopener" href="http://wiki.ros.org/ROS/Tutorials/CreatingMsgAndSrv">http://wiki.ros.org/ROS/Tutorials/CreatingMsgAndSrv</a></li>
 <li>이 과정에서 메시지 빌드에 실패할 경우 {워크스페이스}/devel/setup.bash 를 실행해주거나 정 안되면 재부팅을 해준다.</li>
 </ul>
 </li>
 </ul>
-<h2 id="자동차-준비하기"><a href="#자동차-준비하기" class="headerlink" title="자동차 준비하기"></a>자동차 준비하기</h2><ul>
+<h2 id="자동차-준비하기">자동차 준비하기</h2>
+<ul>
 <li>3D 로 구현된 자동차를 확인하기 위해 URDF 포멧으로 작성된 자동차를 준비하는 과정이다.</li>
 <li>rviz_xycar 경로 아래 urdf 디렉토리를 생성하고 그 안에 자동차 3D 정보를 담고있는 xycar_3d.urdf 파일을 생성한다.</li>
 <li>아래는 파일 내용이다. urdf의 설명은 이전 포스트를 참고하도록 한다.</li>
 </ul>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> ?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">robot</span> <span class="attr">name</span>=<span class="string">&quot;xycar&quot;</span> <span class="attr">xmlns:xacro</span>=<span class="string">&quot;http://www.ros.org/wiki/xacro&quot;</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">&quot;base_link&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">&quot;baseplate&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">visual</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;acrylic&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;0 0 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">box</span> <span class="attr">size</span>=<span class="string">&quot;0.5 0.2 0.07&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">visual</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;base_link_to_baseplate&quot;</span> <span class="attr">type</span>=<span class="string">&quot;fixed&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span> <span class="attr">link</span>=<span class="string">&quot;base_link&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">child</span> <span class="attr">link</span>=<span class="string">&quot;baseplate&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;0 0 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">&quot;front_mount&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">visual</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;blue&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;0 0.0 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;-0.105 0 0&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">box</span> <span class="attr">size</span>=<span class="string">&quot;0.50 0.12 0.01&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">visual</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;baseplate_to_front_mount&quot;</span> <span class="attr">type</span>=<span class="string">&quot;fixed&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span> <span class="attr">link</span>=<span class="string">&quot;baseplate&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">child</span> <span class="attr">link</span>=<span class="string">&quot;front_mount&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;0 0 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0.105 0 -0.059&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">&quot;front_shaft&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">visual</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;black&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;1.57 0 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">cylinder</span> <span class="attr">length</span>=<span class="string">&quot;0.285&quot;</span> <span class="attr">radius</span>=<span class="string">&quot;0.018&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">visual</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;front_mount_to_front_shaft&quot;</span> <span class="attr">type</span>=<span class="string">&quot;fixed&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span> <span class="attr">link</span>=<span class="string">&quot;front_mount&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">child</span> <span class="attr">link</span>=<span class="string">&quot;front_shaft&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;0 0 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0.105 0 -0.059&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">&quot;rear_shaft&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">visual</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;black&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;1.57 0 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">cylinder</span> <span class="attr">length</span>=<span class="string">&quot;0.285&quot;</span> <span class="attr">radius</span>=<span class="string">&quot;0.018&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">visual</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;rear_mount_to_rear_shaft&quot;</span> <span class="attr">type</span>=<span class="string">&quot;fixed&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span> <span class="attr">link</span>=<span class="string">&quot;front_mount&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">child</span> <span class="attr">link</span>=<span class="string">&quot;rear_shaft&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;0 0 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;-0.305 0 -0.059&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">&quot;front_right_hinge&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">visual</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;white&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;0 0 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">sphere</span> <span class="attr">radius</span>=<span class="string">&quot;0.015&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">visual</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;front_right_hinge_joint&quot;</span> <span class="attr">type</span>=<span class="string">&quot;revolute&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span> <span class="attr">link</span>=<span class="string">&quot;front_shaft&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">child</span> <span class="attr">link</span>=<span class="string">&quot;front_right_hinge&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;0 0 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0 -0.1425 0&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">axis</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 1&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">limit</span> <span class="attr">effort</span>=<span class="string">&quot;10&quot;</span> <span class="attr">lower</span>=<span class="string">&quot;-0.34&quot;</span> </span></span><br><span class="line"><span class="tag">                       <span class="attr">upper</span>=<span class="string">&quot;0.34&quot;</span> <span class="attr">velocity</span>=<span class="string">&quot;100&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">&quot;front_left_hinge&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">visual</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;white&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;0 0 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">sphere</span> <span class="attr">radius</span>=<span class="string">&quot;0.015&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">visual</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;front_left_hinge_joint&quot;</span> <span class="attr">type</span>=<span class="string">&quot;revolute&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span> <span class="attr">link</span>=<span class="string">&quot;front_shaft&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">child</span> <span class="attr">link</span>=<span class="string">&quot;front_left_hinge&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;0 0 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0.1425 0&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">axis</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 1&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">limit</span> <span class="attr">effort</span>=<span class="string">&quot;10&quot;</span> <span class="attr">lower</span>=<span class="string">&quot;-0.34&quot;</span> <span class="attr">upper</span>=<span class="string">&quot;0.34&quot;</span> <span class="attr">velocity</span>=<span class="string">&quot;100&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">&quot;front_right_wheel&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">visual</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;black&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;1.57 0 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">cylinder</span> <span class="attr">length</span>=<span class="string">&quot;0.064&quot;</span> <span class="attr">radius</span>=<span class="string">&quot;0.07&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">visual</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;front_right_wheel_joint&quot;</span> <span class="attr">type</span>=<span class="string">&quot;continuous&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span> <span class="attr">link</span>=<span class="string">&quot;front_right_hinge&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">child</span> <span class="attr">link</span>=<span class="string">&quot;front_right_wheel&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;0 0 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">axis</span> <span class="attr">xyz</span>=<span class="string">&quot;0 1 0&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">limit</span> <span class="attr">effort</span>=<span class="string">&quot;10&quot;</span> <span class="attr">velocity</span>=<span class="string">&quot;100&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">&quot;front_left_wheel&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">visual</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;black&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;1.57 0 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">cylinder</span> <span class="attr">length</span>=<span class="string">&quot;0.064&quot;</span> <span class="attr">radius</span>=<span class="string">&quot;0.07&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">visual</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;front_left_wheel_joint&quot;</span> <span class="attr">type</span>=<span class="string">&quot;continuous&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span> <span class="attr">link</span>=<span class="string">&quot;front_left_hinge&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">child</span> <span class="attr">link</span>=<span class="string">&quot;front_left_wheel&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;0 0 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">axis</span> <span class="attr">xyz</span>=<span class="string">&quot;0 1 0&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">limit</span> <span class="attr">effort</span>=<span class="string">&quot;10&quot;</span> <span class="attr">velocity</span>=<span class="string">&quot;100&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">&quot;rear_right_wheel&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">visual</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;black&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;1.57 0 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">cylinder</span> <span class="attr">length</span>=<span class="string">&quot;0.064&quot;</span> <span class="attr">radius</span>=<span class="string">&quot;0.07&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">visual</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;rear_right_wheel_joint&quot;</span> <span class="attr">type</span>=<span class="string">&quot;continuous&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span> <span class="attr">link</span>=<span class="string">&quot;rear_shaft&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">child</span> <span class="attr">link</span>=<span class="string">&quot;rear_right_wheel&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;0 0 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0 -0.14 0&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">axis</span> <span class="attr">xyz</span>=<span class="string">&quot;0 1 0&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">limit</span> <span class="attr">effort</span>=<span class="string">&quot;10&quot;</span> <span class="attr">velocity</span>=<span class="string">&quot;100&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">&quot;rear_left_wheel&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">visual</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;black&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;1.57 0 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">cylinder</span> <span class="attr">length</span>=<span class="string">&quot;0.064&quot;</span> <span class="attr">radius</span>=<span class="string">&quot;0.07&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">visual</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;rear_left_wheel_joint&quot;</span> <span class="attr">type</span>=<span class="string">&quot;continuous&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span> <span class="attr">link</span>=<span class="string">&quot;rear_shaft&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">child</span> <span class="attr">link</span>=<span class="string">&quot;rear_left_wheel&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;0 0 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0.14 0&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">axis</span> <span class="attr">xyz</span>=<span class="string">&quot;0 1 0&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">limit</span> <span class="attr">effort</span>=<span class="string">&quot;10&quot;</span> <span class="attr">velocity</span>=<span class="string">&quot;100&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;black&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">color</span> <span class="attr">rgba</span>=<span class="string">&quot;0.0 0.0 0.0 1.0&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">material</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;blue&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">color</span> <span class="attr">rgba</span>=<span class="string">&quot;0.0 0.0 0.8 1.0&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">material</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;green&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">color</span> <span class="attr">rgba</span>=<span class="string">&quot;0.0 0.8 0.0 1.0&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">material</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;grey&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">color</span> <span class="attr">rgba</span>=<span class="string">&quot;0.2 0.2 0.2 1.0&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">material</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;orange&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">color</span> <span class="attr">rgba</span>=<span class="string">&quot;1.0 0.423529411765 0.0392156862745 1.0&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">material</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;brown&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">color</span> <span class="attr">rgba</span>=<span class="string">&quot;0.870588235294 0.811764705882 0.764705882353 1.0&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">material</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;red&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">color</span> <span class="attr">rgba</span>=<span class="string">&quot;0.8 0.0 0.0 1.0&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">material</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;white&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">color</span> <span class="attr">rgba</span>=<span class="string">&quot;1.0 1.0 1.0 1.0&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">material</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;acrylic&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">color</span> <span class="attr">rgba</span>=<span class="string">&quot;1.0 1.0 1.0 0.4&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">material</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">robot</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="자동차-구동을-위한-코드"><a href="#자동차-구동을-위한-코드" class="headerlink" title="자동차 구동을 위한 코드"></a>자동차 구동을 위한 코드</h2><ul>
+<h2 id="자동차-구동을-위한-코드">자동차 구동을 위한 코드</h2>
+<ul>
 <li>실제 자동차 구동을 위한 정보를 생성하고 rviz에 전달하는 코드를 작성할 것이다.</li>
 <li>.py 파일로 작성하며 rviz_xycar/src 경로에 생성한다.</li>
 <li>이때 전달 되는 메시지의 종류는 xycar_motor, JointState, Odometry 순서로 생성되어 rviz로 전달된다.</li>
@@ -75,7 +79,8 @@
 <li>Odometry 정보는 차체의 위치 정보를 담고 있다.</li>
 <li>시간이 지남에 따라 자동차의 위치가 변하기위한 정보를 담고 있다.</li>
 <li>아래 코드에서는 정확한 자동차 역학 정보를 계산하여 담고 있지 않았음을 주의하자.</li>
-<li>다만 8자로 움직이는 것 같이 보이는 것을 구현하는데 초점을 두었다.<ul>
+<li>다만 8자로 움직이는 것 같이 보이는 것을 구현하는데 초점을 두었다.
+<ul>
 <li>기본적으로 vx 즉 직선 운동을 위해 필요한 정보를 고정하고</li>
 <li>vth 값만을 변화시키면서 자동차 위치를 변환하였다.</li>
 <li>실제로는 진행과 조향에 따른 vx, vy 값을 구하고 그에 따른 delta_x, delta_y를 구해야 정확한 구현이 가능할 것이다.</li>
@@ -83,7 +88,8 @@
 </li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#rviz_odom.py</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"><span class="keyword">from</span> math <span class="keyword">import</span> sin, cos, pi</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> rospy</span><br><span class="line"><span class="keyword">import</span> tf</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sensor_msgs.msg <span class="keyword">import</span> JointState</span><br><span class="line"><span class="keyword">from</span> nav_msgs.msg <span class="keyword">import</span> Odometry</span><br><span class="line"><span class="keyword">from</span> geometry_msgs.msg <span class="keyword">import</span> Point, Pose, Quaternion, Twist, Vector3</span><br><span class="line"></span><br><span class="line">rospy.init_node(<span class="string">&#x27;rviz_odom&#x27;</span>, anonymous=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">last_time = rospy.Time.now()</span><br><span class="line">odom_broadcaster = tf.TransformBroadcaster()</span><br><span class="line"></span><br><span class="line">x = <span class="number">0.0</span></span><br><span class="line">y = <span class="number">0.0</span></span><br><span class="line">th = <span class="number">0.0</span></span><br><span class="line"></span><br><span class="line">vx = <span class="number">0.2</span></span><br><span class="line">vy = <span class="number">0</span></span><br><span class="line">vth = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">callback</span>(<span class="params">msg</span>):</span><br><span class="line">    <span class="keyword">global</span> last_time, x, y, th, vx, vy, vth</span><br><span class="line"></span><br><span class="line">    <span class="comment"># set hinge joint angle</span></span><br><span class="line">    vth = msg.position[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    current_time = rospy.Time.now()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># compute odometry in a typical way given the velocities of the robot</span></span><br><span class="line">    dt = (current_time - last_time).to_sec()</span><br><span class="line">    delta_x = (vx * cos(th) - vy * sin(th)) * dt</span><br><span class="line">    delta_y = (vx * sin(th) + vy * cos(th)) * dt</span><br><span class="line">    delta_th = vth * dt</span><br><span class="line"></span><br><span class="line">    x += delta_x</span><br><span class="line">    y += delta_y</span><br><span class="line">    th += delta_th</span><br><span class="line"></span><br><span class="line">    <span class="comment"># since all odometry is 6DOF we&#x27;ll need a quaternion created from yaw</span></span><br><span class="line">    odom_quat = tf.transformations.quaternion_from_euler(<span class="number">0</span>, <span class="number">0</span>, th)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># first, we&#x27;ll publish the transform over tf</span></span><br><span class="line">    <span class="keyword">global</span> odom_broadcaster</span><br><span class="line">    odom_broadcaster.sendTransform(</span><br><span class="line">        (x, y, <span class="number">0.</span>),</span><br><span class="line">        odom_quat,</span><br><span class="line">        current_time,</span><br><span class="line">        <span class="string">&quot;base_link&quot;</span>,</span><br><span class="line">        <span class="string">&quot;odom&quot;</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="comment"># next, we&#x27;ll publish the odometry message over ROS</span></span><br><span class="line">    odom = Odometry()</span><br><span class="line">    odom.header.stamp = current_time</span><br><span class="line">    odom.header.frame_id = <span class="string">&quot;odom&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># set the position</span></span><br><span class="line">    odom.pose.pose = Pose(Point(x, y, <span class="number">0.</span>), Quaternion(*odom_quat))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># set the velocity</span></span><br><span class="line">    odom.child_frame_id = <span class="string">&quot;base_link&quot;</span></span><br><span class="line">    <span class="comment"># odom.twist.twist = Twist(Vector3(vx, vy, 0), Vector3(0, 0, vth))</span></span><br><span class="line"></span><br><span class="line">    last_time = current_time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pub = rospy.Publisher(<span class="string">&#x27;odom&#x27;</span>, Odometry, queue_size=<span class="number">50</span>)</span><br><span class="line">sub = rospy.Subscriber(<span class="string">&#x27;joint_states&#x27;</span>, JointState, callback)</span><br><span class="line"></span><br><span class="line">rospy.spin()</span><br></pre></td></tr></table></figure>
-<h2 id="코드-구동을-위한-launch-파일-작성"><a href="#코드-구동을-위한-launch-파일-작성" class="headerlink" title="코드 구동을 위한 launch 파일 작성"></a>코드 구동을 위한 launch 파일 작성</h2><ul>
+<h2 id="코드-구동을-위한-launch-파일-작성">코드 구동을 위한 launch 파일 작성</h2>
+<ul>
 <li>지금까지 작성한 파일들을 구동하기 위해 아래와 같이 런치 파일을 작성한다.</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;launch&gt;</span><br><span class="line">    &lt;param name=<span class="string">&quot;robot_description&quot;</span> textfile=<span class="string">&quot;$(find rviz_xycar)/urdf/xycar_3d.urdf&quot;</span>/&gt;</span><br><span class="line">    &lt;param name=<span class="string">&quot;use_gui&quot;</span> value=<span class="string">&quot;true&quot;</span>/&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;!-- rviz display --&gt;</span><br><span class="line">    &lt;node name=<span class="string">&quot;rviz_visualizer&quot;</span> pkg=<span class="string">&quot;rviz&quot;</span> <span class="built_in">type</span>=<span class="string">&quot;rviz&quot;</span> required=<span class="string">&quot;true&quot;</span> </span><br><span class="line">                args=<span class="string">&quot;-d $(find rviz_xycar)/rviz/rviz_odom.rviz&quot;</span>/&gt;</span><br><span class="line">    &lt;node name=<span class="string">&quot;robot_state_publisher&quot;</span> pkg=<span class="string">&quot;robot_state_publisher&quot;</span> </span><br><span class="line">                <span class="built_in">type</span>=<span class="string">&quot;state_publisher&quot;</span>/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;node name=<span class="string">&quot;driver&quot;</span> pkg=<span class="string">&quot;rviz_xycar&quot;</span> <span class="built_in">type</span>=<span class="string">&quot;odom_8_drive.py&quot;</span> /&gt; </span><br><span class="line">    &lt;node name=<span class="string">&quot;odom&quot;</span> pkg=<span class="string">&quot;rviz_xycar&quot;</span> <span class="built_in">type</span>=<span class="string">&quot;rviz_odom.py&quot;</span> /&gt;</span><br><span class="line">    &lt;node name=<span class="string">&quot;converter&quot;</span> pkg=<span class="string">&quot;rviz_xycar&quot;</span> <span class="built_in">type</span>=<span class="string">&quot;converter.py&quot;</span> /&gt;</span><br><span class="line">/launch&gt;</span><br></pre></td></tr></table></figure>
@@ -92,19 +98,27 @@
 <li>런치 파일 실행 명령어는 아래와 같다.</li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/xycar_ws &amp;&amp; catkin_make</span><br><span class="line">roslaunch rviz_odom.launch</span><br></pre></td></tr></table></figure>
-<h2 id="RIVZ-설정"><a href="#RIVZ-설정" class="headerlink" title="RIVZ 설정"></a>RIVZ 설정</h2><ul>
+<h2 id="RIVZ-설정">RIVZ 설정</h2>
+<ul>
 <li>처음에 RVIZ가 실행되면 정상적으로 실행되었다고 보기 어려운 화면을 볼 수 있다.</li>
 <li>가장 먼저 Global Option에 Fixed Frame 에 odom을 적어 준다.</li>
 <li>화면 하단에 add 버튼을 눌러 RobotModel과 tf를 추가한다.</li>
 <li>화면에 움직이는 자동차를 볼 수 있다!</li>
 </ul>
 </div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-03-01T15:00:00.000Z" title="2022. 3. 2. 오전 12:00:00">2022-03-02</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:37.025Z" title="2026. 5. 2. 오후 10:27:37">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/ROS/">ROS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/03/02/2022-02-30-ros-network/">ROS 원격 노드 통신</a></p><div class="content"><p>ROS 원격 노드 통신에 대해 알아본다.</p>
-<h3 id="ROS-통신"><a href="#ROS-통신" class="headerlink" title="ROS 통신"></a>ROS 통신</h3><ul>
-<li>메시지 발행 노드는 자신의 접속 관련 정보를 마스터에게 전달한다.</li>
-<li>메시지 구독 노드는 자신의 구독 정보를 마스터에게 알리고 접속할 노드의 정보를 마스터로부터 받는다.</li>
-<li><p>구독 노드와 발행 노드는 직접 연결을 하고 토픽을 주고 받는다.</p>
+<h3 id="ROS-통신">ROS 통신</h3>
+<ul>
+<li>
+<p>메시지 발행 노드는 자신의 접속 관련 정보를 마스터에게 전달한다.</p>
 </li>
-<li><p>ROS 사용 통신 프로토콜(TCP/IP)</p>
+<li>
+<p>메시지 구독 노드는 자신의 구독 정보를 마스터에게 알리고 접속할 노드의 정보를 마스터로부터 받는다.</p>
+</li>
+<li>
+<p>구독 노드와 발행 노드는 직접 연결을 하고 토픽을 주고 받는다.</p>
+</li>
+<li>
+<p>ROS 사용 통신 프로토콜(TCP/IP)</p>
 <ul>
 <li>XMLRPC: 노드들이 마스터와 통신할 때 이용</li>
 <li>TCPROS: 각 노드간 통신할 때 이용</li>
@@ -112,24 +126,32 @@
 </li>
 </ul>
 </div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-02-28T15:00:00.000Z" title="2022. 3. 1. 오전 12:00:00">2022-03-01</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:37.022Z" title="2026. 5. 2. 오후 10:27:37">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/ROS/">ROS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/03/01/2022-02-29-rviz-urdf/">RVIZ</a></p><div class="content"><p>RVIZ와 URDF에 대해 알아본다.</p>
-<h1 id="RVIZ"><a href="#RVIZ" class="headerlink" title="RVIZ"></a>RVIZ</h1><ul>
+<h1>RVIZ</h1>
+<ul>
 <li>ROS와 연동하여 사용하는 3D 시각화 툴.</li>
-<li>RVIZ 구동을 위해서는 아래와 같이 런치 파일 편집을 통해 ROS 실행을 하면 확인 가능하다.<ul>
+<li>RVIZ 구동을 위해서는 아래와 같이 런치 파일 편집을 통해 ROS 실행을 하면 확인 가능하다.
+<ul>
 <li>pkg를 rviz로, type도 rviz로 생성한 노드를 통해 RVIZ를 실행한다.</li>
 <li>3D 시각화를 위해 필요한 파일이 urdf 파일이다.</li>
 </ul>
 </li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;launch&gt;</span><br><span class="line">    &lt;param name=&quot;robot_description&quot; textfile=&quot;$(find rviz_xycar)/urdf/pan_tilt.urdf&quot;/&gt;</span><br><span class="line">    &lt;param name=&quot;use_gui&quot; value=&quot;true&quot;/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- rviz display --&gt;</span><br><span class="line">    &lt;node name=&quot;rviz_visualizer&quot; pkg=&quot;rviz&quot; type=&quot;rviz&quot; required=&quot;true&quot; </span><br><span class="line">                args=&quot;-d $(find rviz_xycar)/rviz/xycar_3d.rviz&quot;/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;node name=&quot;robot_state_publisher&quot; pkg=&quot;robot_state_publisher&quot; </span><br><span class="line">                type=&quot;state_publisher&quot;/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;node name= &quot;move_joint&quot; pkg=&quot;rviz_xycar&quot; type= &quot;move_joint.py&quot; /&gt; </span><br><span class="line"></span><br><span class="line">&lt;/launch&gt;</span><br></pre></td></tr></table></figure>
-<h1 id="URDF"><a href="#URDF" class="headerlink" title="URDF"></a>URDF</h1><ul>
-<li>Unified Robot Description Format</li>
-<li><p>로봇을 구현하는데 쓰이는 하나의 포맷으로 RVIZ에서 시각화를 통해 확인 할 수 있다.</p>
+<h1>URDF</h1>
+<ul>
+<li>
+<p>Unified Robot Description Format</p>
 </li>
-<li><p>좌표계</p>
+<li>
+<p>로봇을 구현하는데 쓰이는 하나의 포맷으로 RVIZ에서 시각화를 통해 확인 할 수 있다.</p>
+</li>
+<li>
+<p>좌표계</p>
 <ul>
 <li>위치나 크기를 표현하기 우해 데카르트 좌표계 x,y,z를 사용</li>
 <li>회전을 표현하기 위해 오일러 각도 roll, pitch, yaw를 사용</li>
-<li>사용 단위<ul>
+<li>사용 단위
+<ul>
 <li>길이: 미터 m</li>
 <li>각도: 라디안 radian</li>
 <li>질량: 킬로그램 kg</li>
@@ -139,48 +161,62 @@
 </li>
 </ul>
 </li>
-<li>형상 표현<ul>
+<li>
+<p>형상 표현</p>
+<ul>
 <li>cylinder: 원통</li>
 <li>box: 상자</li>
 <li>sphere: 공</li>
 </ul>
 </li>
-<li>색상 표현<ul>
+<li>
+<p>색상 표현</p>
+<ul>
 <li>RGB 3원색과 투과율 A를 0~1사이의 숫자로 정의함</li>
 </ul>
 </li>
-<li>기구의 표현<ul>
+<li>
+<p>기구의 표현</p>
+<ul>
 <li>base: 고정 부분(grounded)</li>
 <li>link: 관절에 연결되는 로봇 팔의 부분</li>
 <li>joint: 링크를 연결하는 부위로 보통 모터의 회전을 통해 움직임을 만듬</li>
 </ul>
 </li>
 </ul>
-<h3 id="좌표계"><a href="#좌표계" class="headerlink" title="좌표계"></a>좌표계</h3><ul>
+<h3 id="좌표계">좌표계</h3>
+<ul>
 <li>위치나 크기를 표현하기 우해 데카르트 좌표계 x,y,z를 사용</li>
 <li>회전을 표현하기 위해 오일러 각도 roll, pitch, yaw를 사용</li>
 </ul>
-<h3 id="단위"><a href="#단위" class="headerlink" title="단위"></a>단위</h3><ul>
+<h3 id="단위">단위</h3>
+<ul>
 <li>길이: 미터 m</li>
 <li>각도: 라디안 radian</li>
 <li>질량: 킬로그램 kg</li>
 <li>속도: m/s (병진/직진운동)</li>
 <li>각속도: radian/s (회전운동)</li>
 </ul>
-<h3 id="형상-표현"><a href="#형상-표현" class="headerlink" title="형상 표현"></a>형상 표현</h3><ul>
+<h3 id="형상-표현">형상 표현</h3>
+<ul>
 <li>cylinder: 원통</li>
 <li>box: 상자</li>
 <li>sphere: 공</li>
 </ul>
-<h3 id="색상-표현"><a href="#색상-표현" class="headerlink" title="색상 표현"></a>색상 표현</h3><ul>
+<h3 id="색상-표현">색상 표현</h3>
+<ul>
 <li>RGB 3원색과 투과율 A를 0~1사이의 숫자로 정의함</li>
 </ul>
-<h3 id="기구의-표현"><a href="#기구의-표현" class="headerlink" title="기구의 표현"></a>기구의 표현</h3><ul>
-<li><p>base: 고정 부분(grounded)</p>
-</li>
-<li><p>link: 관절에 연결되는 로봇 팔의 부분</p>
+<h3 id="기구의-표현">기구의 표현</h3>
 <ul>
-<li>visual: 시각화를 위해 형상과 위치를 정의<ul>
+<li>
+<p>base: 고정 부분(grounded)</p>
+</li>
+<li>
+<p>link: 관절에 연결되는 로봇 팔의 부분</p>
+<ul>
+<li>visual: 시각화를 위해 형상과 위치를 정의
+<ul>
 <li>geometry: 형상 정의 원동, 상자, 공</li>
 <li>origin: 고정축을 기준으로 link 형상의 roll, pitch, yaw 위치를 라디안으로 나타내고 x,y,z 좌표 위치를 미터 단위로 지정</li>
 <li>material: 현상의 컬러값 지정</li>
@@ -188,13 +224,15 @@
 </li>
 </ul>
 </li>
-<li><p>joint: 링크를 연결하는 부위로 보통 모터의 회전을 통해 움직임을 만듬</p>
+<li>
+<p>joint: 링크를 연결하는 부위로 보통 모터의 회전을 통해 움직임을 만듬</p>
 <ul>
 <li>parent: parent frame의 이름을 지정해서 child frame과 연결</li>
 <li>child: child frame의 이름을 지정해서 parent frame과 연결</li>
 <li>origin: 고정축을 기준으로 형상의 r,p,y 위치를 라디안으로 나타내고, x,y,z 좌표 위치를 미터 단위로 지정.</li>
 <li>joint는 parent의 origin, child는 joint의 origin을 고정축으로 정함</li>
-<li>limit: joint의 운동범위 제한값을 지정<ul>
+<li>limit: joint의 운동범위 제한값을 지정
+<ul>
 <li>lower: revolution type의 joint에서 최저 각을 지정</li>
 <li>upper: revolution type의 joint에서 최대 각을 지정</li>
 <li>effort: N 힘의 최대값을 지정</li>
@@ -204,12 +242,14 @@
 </ul>
 </li>
 </ul>
-<h3 id="joint의-동작-정의"><a href="#joint의-동작-정의" class="headerlink" title="joint의 동작 정의"></a>joint의 동작 정의</h3><ul>
+<h3 id="joint의-동작-정의">joint의 동작 정의</h3>
+<ul>
 <li>fixed: 고정</li>
 <li>revolution: 작동 범위 제한</li>
 <li>continuous: 연속 회전</li>
 </ul>
-<h3 id="툴로-확인"><a href="#툴로-확인" class="headerlink" title="툴로 확인"></a>툴로 확인</h3><ul>
+<h3 id="툴로-확인">툴로 확인</h3>
+<ul>
 <li>sudo apt install liburdfdom-tools 설치하고</li>
 <li>check_urdf pan_tilt.urdf 로 확인할 수 있음</li>
 <li>urdf_to_graphiz pan_tilt.urdf 다른 포멧으로 확인 가능</li>
@@ -218,10 +258,12 @@
 <li>rviz 구동하기 위한 launch 파일에 아래를 추가해준다.</li>
 </ul>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;joint_state_publisher&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;joint_state_publisher&quot;</span> <span class="attr">type</span>=<span class="string">&quot;joint_state_publisher&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="예제-파일"><a href="#예제-파일" class="headerlink" title="예제 파일"></a>예제 파일</h3><ul>
-<li>아래는 urdf 예제 파일내용이다.<ul>
+<h3 id="예제-파일">예제 파일</h3>
+<ul>
+<li>아래는 urdf 예제 파일내용이다.
+<ul>
 <li>기본적으로 xml 형식을 가진다.</li>
-<li>root 태그는 robot이다. </li>
+<li>root 태그는 robot이다.</li>
 <li>앞서 언급한 기구의 표현 부분을 확인하면서 차근차근 보면 감이 온다!</li>
 <li>간략하게 살펴보면 아래와 같다.</li>
 <li>base_link 라는 원판 모양 링크</li>
@@ -234,96 +276,133 @@
 </ul>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">robot</span> <span class="attr">name</span>=<span class="string">&quot;ex_urdf_pan_tilt&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">&quot;base_link&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">visual</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">cylinder</span> <span class="attr">length</span>=<span class="string">&quot;0.01&quot;</span> <span class="attr">radius</span>=<span class="string">&quot;0.2&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;0 0 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;yellow&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">color</span> <span class="attr">rgba</span>=<span class="string">&quot;1 1 0 1&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">material</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">visual</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">collision</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">cylinder</span> <span class="attr">length</span>=<span class="string">&quot;0.03&quot;</span> <span class="attr">radius</span>=<span class="string">&quot;0.2&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;0 0 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">collision</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">inertial</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">mass</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">inertia</span> <span class="attr">ixx</span>=<span class="string">&quot;1.0&quot;</span> <span class="attr">ixy</span>=<span class="string">&quot;0.0&quot;</span> <span class="attr">ixz</span>=<span class="string">&quot;0.0&quot;</span> <span class="attr">iyy</span>=<span class="string">&quot;1.0&quot;</span> <span class="attr">iyz</span>=<span class="string">&quot;0.0&quot;</span> <span class="attr">izz</span>=<span class="string">&quot;1.0&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">inertial</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;pan_joint&quot;</span> <span class="attr">type</span>=<span class="string">&quot;revolute&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">parent</span> <span class="attr">link</span>=<span class="string">&quot;base_link&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">child</span> <span class="attr">link</span>=<span class="string">&quot;pan_link&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">origin</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0.1&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">axis</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 1&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">limit</span> <span class="attr">effort</span>=<span class="string">&quot;300&quot;</span> <span class="attr">velocity</span>=<span class="string">&quot;0.1&quot;</span> <span class="attr">lower</span>=<span class="string">&quot;-3.14&quot;</span> <span class="attr">upper</span>=<span class="string">&quot;3.14&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dynamics</span> <span class="attr">damping</span>=<span class="string">&quot;50&quot;</span> <span class="attr">friction</span>=<span class="string">&quot;1&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">&quot;pan_link&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">visual</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">cylinder</span> <span class="attr">length</span>=<span class="string">&quot;0.4&quot;</span> <span class="attr">radius</span>=<span class="string">&quot;0.04&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;0 0 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0.09&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;red&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">color</span> <span class="attr">rgba</span>=<span class="string">&quot;0 0 1 1&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">material</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">visual</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">collision</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">cylinder</span> <span class="attr">length</span>=<span class="string">&quot;0.4&quot;</span> <span class="attr">radius</span>=<span class="string">&quot;0.06&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;0 0 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0.09&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">collision</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">inertial</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">mass</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">inertia</span> <span class="attr">ixx</span>=<span class="string">&quot;1.0&quot;</span> <span class="attr">ixy</span>=<span class="string">&quot;0.0&quot;</span> <span class="attr">ixz</span>=<span class="string">&quot;0.0&quot;</span> <span class="attr">iyy</span>=<span class="string">&quot;1.0&quot;</span> <span class="attr">iyz</span>=<span class="string">&quot;0.0&quot;</span> <span class="attr">izz</span>=<span class="string">&quot;1.0&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">inertial</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;tilt_joint&quot;</span> <span class="attr">type</span>=<span class="string">&quot;revolute&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">parent</span> <span class="attr">link</span>=<span class="string">&quot;pan_link&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">child</span> <span class="attr">link</span>=<span class="string">&quot;tilt_link&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">origin</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0.2&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">axis</span> <span class="attr">xyz</span>=<span class="string">&quot;0 1 0&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">limit</span> <span class="attr">effort</span>=<span class="string">&quot;300&quot;</span> <span class="attr">velocity</span>=<span class="string">&quot;0.1&quot;</span> <span class="attr">lower</span>=<span class="string">&quot;-4.71239&quot;</span> <span class="attr">upper</span>=<span class="string">&quot;-1.570796&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dynamics</span> <span class="attr">damping</span>=<span class="string">&quot;50&quot;</span> <span class="attr">friction</span>=<span class="string">&quot;1&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">&quot;tilt_link&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">visual</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">cylinder</span> <span class="attr">length</span>=<span class="string">&quot;0.4&quot;</span> <span class="attr">radius</span>=<span class="string">&quot;0.04&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;0 1.570796 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;green&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">color</span> <span class="attr">rgba</span>=<span class="string">&quot;1 0 0 1&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">material</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">visual</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">collision</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">cylinder</span> <span class="attr">length</span>=<span class="string">&quot;0.4&quot;</span> <span class="attr">radius</span>=<span class="string">&quot;0.06&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;0 1.570796 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">collision</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">inertial</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">mass</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">inertia</span> <span class="attr">ixx</span>=<span class="string">&quot;1.0&quot;</span> <span class="attr">ixy</span>=<span class="string">&quot;0.0&quot;</span> <span class="attr">ixz</span>=<span class="string">&quot;0.0&quot;</span> <span class="attr">iyy</span>=<span class="string">&quot;1.0&quot;</span> <span class="attr">iyz</span>=<span class="string">&quot;0.0&quot;</span> <span class="attr">izz</span>=<span class="string">&quot;1.0&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">inertial</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">robot</span>&gt;</span></span><br></pre></td></tr></table></figure>
 </div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-02-27T15:00:00.000Z" title="2022. 2. 28. 오전 12:00:00">2022-02-28</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2026-05-02T13:27:37.019Z" title="2026. 5. 2. 오후 10:27:37">2026-05-02</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/ROS/">ROS</a></span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/02/28/2022-02-28-ros-start/">ROS 기본</a></p><div class="content"><p>ROS 대해 알아본다.</p>
-<h3 id="ROS"><a href="#ROS" class="headerlink" title="ROS"></a>ROS</h3><ul>
-<li>Robot Operating System<ul>
+<h3 id="ROS">ROS</h3>
+<ul>
+<li>
+<p>Robot Operating System</p>
+<ul>
 <li>오픈소스 로보 운영체제</li>
 <li>소스 공개. 개방형 구조. 활발한 커뮤니티 활동</li>
 </ul>
 </li>
-<li>로봇 소프트웨어르 개발하는 데 필요한 소프트웨어의 집합체<ul>
+<li>
+<p>로봇 소프트웨어르 개발하는 데 필요한 소프트웨어의 집합체</p>
+<ul>
 <li>소프트웨어 프레임워크</li>
 </ul>
 </li>
-<li>메타 운영제체(Meta OS), 미들웨어(Middleware)<ul>
+<li>
+<p>메타 운영제체(Meta OS), 미들웨어(Middleware)</p>
+<ul>
 <li>소프트웨어 모듈 + 라이브러리 집합 + 도구 집합</li>
 </ul>
 </li>
-<li>각종 센서와 모터를 프로그래머가 편하게 사용할 수 있도록 지원</li>
-<li>프로토타이핑 작업에 적합</li>
-<li>실제 상용 제품에 사용되는 것은 의견이 나뉨</li>
-<li>다양하 프로로그래미 언어를 지원 C++ Python</li>
-<li>표준화된 ROS 인터페이스를 따르는 HW, SW를 편하게 엮을 수 있음</li>
-<li>하드웨어 부품과 소프트웨어 부품으 조립하여 여러 응용 구성 가능</li>
-<li>대규모 실행 시스템 및 프로세스에도 적용 가능</li>
-<li>다양한 도구 제공<ul>
+<li>
+<p>각종 센서와 모터를 프로그래머가 편하게 사용할 수 있도록 지원</p>
+</li>
+<li>
+<p>프로토타이핑 작업에 적합</p>
+</li>
+<li>
+<p>실제 상용 제품에 사용되는 것은 의견이 나뉨</p>
+</li>
+<li>
+<p>다양하 프로로그래미 언어를 지원 C++ Python</p>
+</li>
+<li>
+<p>표준화된 ROS 인터페이스를 따르는 HW, SW를 편하게 엮을 수 있음</p>
+</li>
+<li>
+<p>하드웨어 부품과 소프트웨어 부품으 조립하여 여러 응용 구성 가능</p>
+</li>
+<li>
+<p>대규모 실행 시스템 및 프로세스에도 적용 가능</p>
+</li>
+<li>
+<p>다양한 도구 제공</p>
+<ul>
 <li>RVIZ, RQT, Gazebo, …</li>
 <li>RVIZ 시각화 도구. 센서데이터를 비롯한 주변환경 변화르 시각화</li>
 <li>RQT Qt 기반의 GUI 응용 개발 도구. 노드연결 정보를 그래프로 표현. 사용자 상호작용을 UI를 갖춘 응용 개발에 이용</li>
 <li>GAZEBO 물리 엔진 기반의 3차원 시뮬레이터. 시뮬레이터 제작 및 모델링에 이용</li>
 </ul>
 </li>
-<li>다양한 OS 환경에서 통일된 방법으로 상호작용을 구현하는 것이 가능<ul>
+<li>
+<p>다양한 OS 환경에서 통일된 방법으로 상호작용을 구현하는 것이 가능</p>
+<ul>
 <li>Linux, OS X, Windows, Rasbian, QNX, RTOS, Android, IOS 등</li>
 <li>표준화된 통신 프로토콜으 따르는 이기종간의 메시지 교환이 가능</li>
 </ul>
 </li>
-<li>ROS 버전<ul>
+<li>
+<p>ROS 버전</p>
+<ul>
 <li>ROS Melodic Morenia 2018</li>
 <li>ROS Linar Loggerhead 2017</li>
 <li>ROS Kinetic Kame 2016</li>
 <li>ROS Indigo Igloo 2014</li>
 </ul>
 </li>
-<li><p>ROS 통신</p>
+<li>
+<p>ROS 통신</p>
 <ul>
 <li>토픽의 발행/구동 (publish &amp; subscribe) 기반의 메시지 교환</li>
 <li>이기종간의 메시지 교환 가능</li>
 </ul>
 </li>
-<li><p>ROS 핵심 기능</p>
+<li>
+<p>ROS 핵심 기능</p>
 <ul>
 <li>노드간 통신을 기반으로 전체 시스템을 구동시킴</li>
 <li>하드웨어 부품 또는 소프트웨어 모듈에 노드가 하나씩 할당됨</li>
 <li>네트워크를 통한 원격 연동도 가능</li>
 </ul>
 </li>
-<li><p>ROS 기본 용어</p>
+<li>
+<p>ROS 기본 용어</p>
 <ul>
-<li>마스터<ul>
+<li>마스터
+<ul>
 <li>서로 다른 노드들 사이의 통신을 총괄 관리</li>
-<li>ROS Core 라고 부름 </li>
+<li>ROS Core 라고 부름</li>
 </ul>
 </li>
-<li>노드 Node<ul>
+<li>노드 Node
+<ul>
 <li>실행가능한 최소 단위. 프로세스로 이해 가능</li>
 <li>ROS에서 발생하는 통신의 주체</li>
 <li>HW장치에 대해 하나씩의 노드, SW 모듈에 대해 하나씩의 노드</li>
 </ul>
 </li>
-<li>토픽 Topic<ul>
+<li>토픽 Topic
+<ul>
 <li>노드들이 관심을 가지고 있는 이야깃거리</li>
 <li>그 안에 들어있는 실제 데이터를 메시지라 부름</li>
-<li>센서데이터, 카메라 이미지, 액츄에이터 제어 명령 등… </li>
+<li>센서데이터, 카메라 이미지, 액츄에이터 제어 명령 등…</li>
 </ul>
 </li>
-<li>발행자 Publishers<ul>
+<li>발행자 Publishers
+<ul>
 <li>특정 토픽에 메시지를 담아 외부로 송신하는 노드</li>
 <li>센서, 카메라, 모터제어 알고리즘</li>
 </ul>
 </li>
-<li>구독자 Subscribers<ul>
+<li>구독자 Subscribers
+<ul>
 <li>특정 토픽에 담겨진 메시지를 수신하는 노드</li>
 <li>엑츄에이터 제어기, 데이터 시각화 도구</li>
 </ul>
 </li>
-<li>패키지 Packages<ul>
+<li>패키지 Packages
+<ul>
 <li>하나 이상의 노드와 노드의 실행을 위한 정보 등을 묶어 놓은 단위</li>
 <li>노드, 라이브러리, 데이터, 파라미터 등을 포함</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p>ROS 노드간 통신 기본 과정</p>
+<li>
+<p>ROS 노드간 통신 기본 과정</p>
 <ul>
 <li>통신이 이루어지기 전에 통신을 원하는 노드는 마스터에 의뢰</li>
 <li>연결해야 하는 노드의 정보(주소)를 얻어오고, 서로 접속 정보를 교환</li>
@@ -331,21 +410,25 @@
 <li>노드간 통신은 마스터를 거치지 않고 직접 이루어짐</li>
 </ul>
 </li>
-<li><p>ROS 노드간 통신의 두 가지 방식</p>
+<li>
+<p>ROS 노드간 통신의 두 가지 방식</p>
 <ul>
-<li>토픽 방식의 통신<ul>
+<li>토픽 방식의 통신
+<ul>
 <li>일방적이고 지속적인 메시지 전송</li>
 <li>1:1 및 1:N, N:N 통신도 가능</li>
 </ul>
 </li>
-<li>서비스 방식의 통신<ul>
+<li>서비스 방식의 통신
+<ul>
 <li>서버가 제공하는 서비스에 클라이언트가 요청을 보내고 응답을 받는 방식</li>
 <li>양방향 통신, 일회성 메시지 송수신</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p>ROS 노드간 통신 시나리오</p>
+<li>
+<p>ROS 노드간 통신 시나리오</p>
 <ul>
 <li>마스터 시동 - 통신이 이루어지려면 ROS core가 실행되고 있어야 함. 마스터의 정보는 모든 노드가 알 수 있음</li>
 <li>구독자 노드 구동 - 특정 토픽에 발행 되는 메시지를 수신하기를 요청. 자신의 모든 정보를 마스터에게 알림</li>
@@ -359,62 +442,90 @@
 </ul>
 </li>
 </ul>
-<h3 id="ROS-명령어"><a href="#ROS-명령어" class="headerlink" title="ROS 명령어"></a>ROS 명령어</h3><ul>
+<h3 id="ROS-명령어">ROS 명령어</h3>
+<ul>
 <li>셸 명령어</li>
 </ul>
-<p>roscd | 지정한 ros 패키지 폴더로 이동<br>rosls | ros 패키지 파일 목록 확인<br>rosed | ros 패키지 파일 편집<br>roscp | ros 패키지 파일 복사</p>
+<p>roscd | 지정한 ros 패키지 폴더로 이동<br>
+rosls | ros 패키지 파일 목록 확인<br>
+rosed | ros 패키지 파일 편집<br>
+roscp | ros 패키지 파일 복사</p>
 <ul>
 <li>실행 명령어</li>
 </ul>
-<p>roscore | master + rosout + parameter server<br>rosrun  | 패키지 노드 실행 rosrun [package name][node_name]<br>roslaunch | 패키지 노드를 여러 개 실행 rosluanch [package_name][file.launch]<br>rosclean  | ros 로그파일 검사 및 삭제</p>
+<p>roscore | master + rosout + parameter server<br>
+rosrun  | 패키지 노드 실행 rosrun [package name][node_name]<br>
+roslaunch | 패키지 노드를 여러 개 실행 rosluanch [package_name][file.launch]<br>
+rosclean  | ros 로그파일 검사 및 삭제</p>
 <ul>
 <li>ROS 정보 명령어</li>
 </ul>
-<p>rostopic  | 토픽 정보 확인 rostopic info /imu<br>rosnode   | 노드 정보 확인 rosnode info node_name<br>rosparam  | 파라미터 정보 확인, 수정<br>rosbag    | 메세지 기록, 재생<br>rosmsg    | 메세지 정보 확인<br>rosversion| 패키지 및 배포 버전정보 확인<br>roswtf    | ros 시스템 검사</p>
+<p>rostopic  | 토픽 정보 확인 rostopic info /imu<br>
+rosnode   | 노드 정보 확인 rosnode info node_name<br>
+rosparam  | 파라미터 정보 확인, 수정<br>
+rosbag    | 메세지 기록, 재생<br>
+rosmsg    | 메세지 정보 확인<br>
+rosversion| 패키지 및 배포 버전정보 확인<br>
+roswtf    | ros 시스템 검사</p>
 <ul>
 <li>ROS catkin 명령어</li>
 </ul>
-<p>catkin_create_pkg      | catkin 빌드 시스템으로 패키지 생성<br>catkin_make            | catkin 빌드 시스템으로 빌드<br>catkin_eclipse         | 패키지를 eclipse에서 사용할 수 있게 변경<br>catkin_prepare_release | changelog 정리 및 버전 태깅<br>catkin_init_workspace  | catkin 빌드 시스템의 작업 폴더 초기화<br>catkin_find            | 검색</p>
+<p>catkin_create_pkg      | catkin 빌드 시스템으로 패키지 생성<br>
+catkin_make            | catkin 빌드 시스템으로 빌드<br>
+catkin_eclipse         | 패키지를 eclipse에서 사용할 수 있게 변경<br>
+catkin_prepare_release | changelog 정리 및 버전 태깅<br>
+catkin_init_workspace  | catkin 빌드 시스템의 작업 폴더 초기화<br>
+catkin_find            | 검색</p>
 <ul>
 <li>ROS package 명령어</li>
 </ul>
-<p>rospack        | 패키지와 관련된 정보 보기<br>rosinstall     | 추가 패키지 설치<br>rosdep         | 해당 패키지의 의존성 파일 설치<br>roslocate      | 패키지 정보 관련 명령어<br>rosmake        | 패키지 빌드(구 시스템에서 사용)<br>roscreate-pkg  | 패키지 자동 생성(구 시스템에서 사용)</p>
+<p>rospack        | 패키지와 관련된 정보 보기<br>
+rosinstall     | 추가 패키지 설치<br>
+rosdep         | 해당 패키지의 의존성 파일 설치<br>
+roslocate      | 패키지 정보 관련 명령어<br>
+rosmake        | 패키지 빌드(구 시스템에서 사용)<br>
+roscreate-pkg  | 패키지 자동 생성(구 시스템에서 사용)</p>
 <ul>
-<li>ROS에서 제공하는 쓸만한 도구<ul>
+<li>ROS에서 제공하는 쓸만한 도구
+<ul>
 <li>rqt_graph 노드와 토픽의 관계 정보를 그래프로 출력</li>
 <li>RVIZ ROS의 3차원 시각화 도구, 각종 데이터를 보기 좋게 인포그래픽 스타일로 표시</li>
 </ul>
 </li>
 </ul>
-<h3 id="ROS-설치"><a href="#ROS-설치" class="headerlink" title="ROS 설치"></a>ROS 설치</h3><p>링크 참조 <a target="_blank" rel="noopener" href="http://wiki.ros.org/melodic/Installation/Ubuntu">http://wiki.ros.org/melodic/Installation/Ubuntu</a></p>
+<h3 id="ROS-설치">ROS 설치</h3>
+<p>링크 참조 <a target="_blank" rel="noopener" href="http://wiki.ros.org/melodic/Installation/Ubuntu">http://wiki.ros.org/melodic/Installation/Ubuntu</a></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ sudo sh -c &#x27;echo &quot;deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main&quot; &gt; /etc/apt/sources.list.d/ros-latest.list&#x27;</span><br><span class="line"></span><br><span class="line">$ cat /etc/apt/sources.list.d/ros-latest.list</span><br><span class="line"></span><br><span class="line">$ curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -</span><br><span class="line"></span><br><span class="line">$ sudo apt update</span><br><span class="line"></span><br><span class="line">$ sudo apt install ros-melodic-desktop-full</span><br><span class="line"></span><br><span class="line">$ echo &quot;source /opt/ros/melodic/setup.bash&quot; &gt;&gt; ~/.bashrc</span><br><span class="line">$ source ~/.bashrc</span><br><span class="line"></span><br><span class="line">$ sudo apt install python-rosdep python-rosinstall python-rosinstall-generator python-wstool build-essential</span><br><span class="line"></span><br><span class="line">$ roscore</span><br><span class="line"></span><br><span class="line">$ rosnode list</span><br></pre></td></tr></table></figure>
 <p>roscore 명령어를 통해 ros가 실행되는 것을 확인한다면 기본적인 설치는 완료~!</p>
-<h3 id="ROS-환경-설정"><a href="#ROS-환경-설정" class="headerlink" title="ROS 환경 설정"></a>ROS 환경 설정</h3><ul>
+<h3 id="ROS-환경-설정">ROS 환경 설정</h3>
+<ul>
 <li>워크스페이스 생성</li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ cd</span><br><span class="line">$ mkdir -p ~/xycar_ws/src</span><br><span class="line">$ cd xycar_ws</span><br><span class="line">$ catkin_make</span><br></pre></td></tr></table></figure>
 <ul>
-<li><p>catkin_make 명령을 통해 빌드 작업을 진행</p>
+<li>
+<p>catkin_make 명령을 통해 빌드 작업을 진행</p>
 </li>
-<li><p>환경변수 설정</p>
-<ul>
-<li>.bashrc 파일 수정</li>
-</ul>
+<li>
+<p>환경변수 설정</p>
+</li>
+<li>
+<p>.bashrc 파일 수정</p>
 </li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">alias cm=&#x27;cd ~/xycar_ws &amp;&amp; catkin_make&#x27;</span><br><span class="line">alias cs=&#x27;cd ~/xycar_ws/src&#x27;</span><br><span class="line">source /opt/ros/melodic/setup.bash</span><br><span class="line">source ~/xycar_ws/devel/setup.bash</span><br><span class="line">export ROS_MASTER=http://localhost:11311</span><br><span class="line">export ROS_HOSTNAME=localhost</span><br></pre></td></tr></table></figure>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ printenv | grep ROS</span><br></pre></td></tr></table></figure>
-<h3 id="ROS-예제-프로그램-실행"><a href="#ROS-예제-프로그램-실행" class="headerlink" title="ROS 예제 프로그램 실행"></a>ROS 예제 프로그램 실행</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ roscore</span><br><span class="line"></span><br><span class="line">//다른 터미널에서</span><br><span class="line">$ rosrun turtlesim turtlesim_node</span><br><span class="line"></span><br><span class="line">//다른 터미널에서</span><br><span class="line">$ rosnode list</span><br><span class="line">$ rosrun turtlesim turtle_teleop_key</span><br><span class="line"></span><br><span class="line">//토픽 확인</span><br><span class="line">$ rostopic list</span><br><span class="line">$ rostopic echo /turtle1/cmd_vel</span><br><span class="line">$ rqt_graph</span><br><span class="line"></span><br><span class="line">$ rostopic list -v</span><br><span class="line">//토픽 메시지 타입</span><br><span class="line">$ rostopic type /turtle1/cmd_vel</span><br><span class="line">//메시지 구성 확인</span><br><span class="line">$ rosmsg show geometry_msgs/Twist</span><br></pre></td></tr></table></figure>
+<h3 id="ROS-예제-프로그램-실행">ROS 예제 프로그램 실행</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ roscore</span><br><span class="line"></span><br><span class="line">//다른 터미널에서</span><br><span class="line">$ rosrun turtlesim turtlesim_node</span><br><span class="line"></span><br><span class="line">//다른 터미널에서</span><br><span class="line">$ rosnode list</span><br><span class="line">$ rosrun turtlesim turtle_teleop_key</span><br><span class="line"></span><br><span class="line">//토픽 확인</span><br><span class="line">$ rostopic list</span><br><span class="line">$ rostopic echo /turtle1/cmd_vel</span><br><span class="line">$ rqt_graph</span><br><span class="line"></span><br><span class="line">$ rostopic list -v</span><br><span class="line">//토픽 메시지 타입</span><br><span class="line">$ rostopic type /turtle1/cmd_vel</span><br><span class="line">//메시지 구성 확인</span><br><span class="line">$ rosmsg show geometry_msgs/Twist</span><br></pre></td></tr></table></figure>
 <p><a target="_blank" rel="noopener" href="https://wiki.ros.org/">https://wiki.ros.org/</a> 에서 Twist 검색</p>
 <ul>
 <li>토픽 발행</li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ rostopic pub -1 /turtle1/cmd_vel geometry_msgs/Twist -r 1 -- &#x27;[2.0, 0.0, 0.0]&#x27; &#x27;[0.0, 0.0, 1.8]&#x27;</span><br><span class="line"></span><br><span class="line">$ rostopic pub /turtle1/cmd_vel geometry_msgs/Twist -r 1 -- &#x27;[2.0, 0.0, 0.0]&#x27; &#x27;[0.0, 0.0, 1.8]&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="ROS-프로그래밍-기초"><a href="#ROS-프로그래밍-기초" class="headerlink" title="ROS 프로그래밍 기초"></a>ROS 프로그래밍 기초</h3><ul>
-<li>패키지 담을 디렉토리로 이동<ul>
+<h3 id="ROS-프로그래밍-기초">ROS 프로그래밍 기초</h3>
+<ul>
+<li>패키지 담을 디렉토리로 이동</li>
 <li>cd ~/xycar_ws/src</li>
-</ul>
-</li>
 <li>패키지 새로 만들기</li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ catkin_create_pkg 패키지이름 패키지의존성나열</span><br><span class="line">$ catkin_create_pkg my_pkg1 std_msgs rospy</span><br><span class="line">$ cm</span><br></pre></td></tr></table></figure>
@@ -427,7 +538,8 @@
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ rostopic list</span><br><span class="line">$ rostopic type /turtle1/pose</span><br><span class="line">$ rosmsg show turtlesim/Pose</span><br><span class="line">$ rostopic echo /turtle1/pose</span><br></pre></td></tr></table></figure>
 <ul>
-<li>roslaunch<ul>
+<li>roslaunch
+<ul>
 <li>roslaunch my_pkg1 aaa.launch</li>
 <li>파일들은 패키지 안에 있어야 한다.</li>
 <li>include 파일은 다른 launch 파일 불러올 때</li>

@@ -47,28 +47,36 @@
 <li>가장 긴 0 길이가 나올 확률로 전체 개수를 추정</li>
 </ol>
 <p>랜덤 해시에서<br>앞에 0이 k개 나올 확률은:</p>
-<script type="math/tex; mode=display">1 / 2^k</script><p>→ 만약 20개 연속 0이 나왔다면<br>→ 데이터가 대략 2^20 ≈ 100만 개 정도 있다고 추정 가능</p>
+<div class="math block">$$1 / 2^k$$</div>
+<p>→ 만약 20개 연속 0이 나왔다면<br>→ 데이터가 대략 2^20 ≈ 100만 개 정도 있다고 추정 가능</p>
 <h1 id="수식-포함한-수학적-유도-과정"><a href="#수식-포함한-수학적-유도-과정" class="headerlink" title="수식 포함한 수학적 유도 과정"></a>수식 포함한 수학적 유도 과정</h1><p><strong>HyperLogLog의 수학적 유도 과정</strong><br>(핵심 직관 → 확률 모델 → 기대값 → 추정식 도출 순서)</p>
 <hr>
 <h1 id="1️⃣-확률-모델-설정"><a href="#1️⃣-확률-모델-설정" class="headerlink" title="1️⃣ 확률 모델 설정"></a>1️⃣ 확률 모델 설정</h1><p>서로 다른 원소가 ( n )개 있다고 가정합니다.<br>각 원소에 대해 <strong>균등한 무작위 해시 함수</strong> ( h(x) )를 적용합니다.</p>
 <p>해시값은:</p>
-<script type="math/tex; mode=display">h(x) \sim \text{Uniform}(0,1)</script><p>이를 이진수로 표현하면:</p>
-<script type="math/tex; mode=display">0.b_1 b_2 b_3 \dots</script><hr>
+<div class="math block">$$h(x) \sim \text{Uniform}(0,1)$$</div>
+<p>이를 이진수로 표현하면:</p>
+<div class="math block">$$0.b_1 b_2 b_3 \dots$$</div>
+<hr>
 <h1 id="2️⃣-Leading-Zero의-확률"><a href="#2️⃣-Leading-Zero의-확률" class="headerlink" title="2️⃣ Leading Zero의 확률"></a>2️⃣ Leading Zero의 확률</h1><p>앞에서부터 연속된 0의 개수를:</p>
-<script type="math/tex; mode=display">\rho(x)</script><p>라고 정의합니다.</p>
+<div class="math block">$$\rho(x)$$</div>
+<p>라고 정의합니다.</p>
 <p>예:<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0.000101...</span><br></pre></td></tr></table></figure></p>
 <p>→ $( \rho(x) = 3 )$</p>
 <p>랜덤 비트열에서:</p>
-<script type="math/tex; mode=display">P(\rho = k) = 2^{-(k+1)}</script><p>왜냐하면:</p>
+<div class="math block">$$P(\rho = k) = 2^{-(k+1)}$$</div>
+<p>왜냐하면:</p>
 <ul>
 <li>앞에 k개가 0일 확률: (2^{-k})</li>
 <li>그 다음 비트가 1일 확률: (1/2)</li>
 </ul>
 <p>따라서:</p>
-<script type="math/tex; mode=display">P(\rho \ge k) = 2^{-k}</script><hr>
+<div class="math block">$$P(\rho \ge k) = 2^{-k}$$</div>
+<hr>
 <h1 id="3️⃣-최대값의-분포"><a href="#3️⃣-최대값의-분포" class="headerlink" title="3️⃣ 최대값의 분포"></a>3️⃣ 최대값의 분포</h1><p>이제 n개의 독립 샘플이 있다고 하면:</p>
-<script type="math/tex; mode=display">R = \max(\rho_1, \rho_2, ..., \rho_n)</script><p>그럼:</p>
-<script type="math/tex; mode=display">P(R < k) = (1 - 2^{-k})^n</script><p>왜냐하면:</p>
+<div class="math block">$$R = \max(\rho_1, \rho_2, ..., \rho_n)$$</div>
+<p>그럼:</p>
+<div class="math block">$$P(R < k) = (1 - 2^{-k})^n$$</div>
+<p>왜냐하면:</p>
 <ul>
 <li>각 원소가 ( \rho \ge k )일 확률 = (2^{-k})</li>
 <li>모두가 그보다 작을 확률 = ((1 - 2^{-k})^n)</li>
@@ -76,13 +84,18 @@
 <hr>
 <h1 id="4️⃣-기대값-근사"><a href="#4️⃣-기대값-근사" class="headerlink" title="4️⃣ 기대값 근사"></a>4️⃣ 기대값 근사</h1><p>이제 ( R )의 기대값을 근사해보겠습니다.</p>
 <p>( R )이 k보다 작을 확률이 1/2이 되는 지점을 찾습니다:</p>
-<script type="math/tex; mode=display">(1 - 2^{-k})^n \approx 1/2</script><p>로그 취하면:</p>
-<script type="math/tex; mode=display">n \cdot 2^{-k} \approx \ln 2</script><p>따라서:</p>
-<script type="math/tex; mode=display">2^k \approx \frac{n}{\ln 2}</script><p>즉,</p>
-<script type="math/tex; mode=display">k \approx \log_2 n</script><p>👉 <strong>leading zero 최대값은 log₂(n)에 비례</strong></p>
+<div class="math block">$$(1 - 2^{-k})^n \approx 1/2$$</div>
+<p>로그 취하면:</p>
+<div class="math block">$$n \cdot 2^{-k} \approx \ln 2$$</div>
+<p>따라서:</p>
+<div class="math block">$$2^k \approx \frac{n}{\ln 2}$$</div>
+<p>즉,</p>
+<div class="math block">$$k \approx \log_2 n$$</div>
+<p>👉 <strong>leading zero 최대값은 log₂(n)에 비례</strong></p>
 <hr>
 <h1 id="5️⃣-단순-추정량"><a href="#5️⃣-단순-추정량" class="headerlink" title="5️⃣ 단순 추정량"></a>5️⃣ 단순 추정량</h1><p>그래서 매우 단순하게는:</p>
-<script type="math/tex; mode=display">\hat{n} \approx 2^R</script><p>하지만 이 방식은 분산이 매우 큽니다.</p>
+<div class="math block">$$\hat{n} \approx 2^R$$</div>
+<p>하지만 이 방식은 분산이 매우 큽니다.</p>
 <hr>
 <h1 id="6️⃣-여러-버킷-사용-분산-감소"><a href="#6️⃣-여러-버킷-사용-분산-감소" class="headerlink" title="6️⃣ 여러 버킷 사용 (분산 감소)"></a>6️⃣ 여러 버킷 사용 (분산 감소)</h1><p>해시값을 두 부분으로 나눕니다:</p>
 <ul>
@@ -90,35 +103,46 @@
 <li>나머지 비트 → zero 계산</li>
 </ul>
 <p>버킷 수:</p>
-<script type="math/tex; mode=display">m = 2^p</script><p>각 버킷은 약:</p>
-<script type="math/tex; mode=display">n/m</script><p>개의 원소를 받습니다.</p>
+<div class="math block">$$m = 2^p$$</div>
+<p>각 버킷은 약:</p>
+<div class="math block">$$n/m$$</div>
+<p>개의 원소를 받습니다.</p>
 <p>각 버킷 i에서:</p>
-<script type="math/tex; mode=display">R_i = \max \rho</script><hr>
+<div class="math block">$$R_i = \max \rho$$</div>
+<hr>
 <h1 id="7️⃣-왜-조화-평균을-쓰는가"><a href="#7️⃣-왜-조화-평균을-쓰는가" class="headerlink" title="7️⃣ 왜 조화 평균을 쓰는가?"></a>7️⃣ 왜 조화 평균을 쓰는가?</h1><p>각 버킷에서:</p>
-<script type="math/tex; mode=display">E[2^{R_i}] \propto \frac{n}{m}</script><p>따라서:</p>
-<script type="math/tex; mode=display">n \propto m \cdot \text{average}(2^{R_i})</script><p>하지만 산술 평균은 큰 값에 민감합니다.</p>
+<div class="math block">$$E[2^{R_i}] \propto \frac{n}{m}$$</div>
+<p>따라서:</p>
+<div class="math block">$$n \propto m \cdot \text{average}(2^{R_i})$$</div>
+<p>하지만 산술 평균은 큰 값에 민감합니다.</p>
 <p>그래서 <strong>조화 평균(harmonic mean)</strong> 을 사용합니다:</p>
-<script type="math/tex; mode=display">Z = \left( \sum_{i=1}^{m} 2^{-R_i} \right)^{-1}</script><p>최종 추정량:</p>
-<script type="math/tex; mode=display">\hat{n} = \alpha_m \cdot m^2 \cdot Z</script><p>즉,</p>
-<script type="math/tex; mode=display">\hat{n} = \alpha_m \cdot m^2 \left( \sum_{i=1}^{m} 2^{-R_i} \right)^{-1}</script><hr>
+<div class="math block">$$Z = \left( \sum_{i=1}^{m} 2^{-R_i} \right)^{-1}$$</div>
+<p>최종 추정량:</p>
+<div class="math block">$$\hat{n} = \alpha_m \cdot m^2 \cdot Z$$</div>
+<p>즉,</p>
+<div class="math block">$$\hat{n} = \alpha_m \cdot m^2 \left( \sum_{i=1}^{m} 2^{-R_i} \right)^{-1}$$</div>
+<hr>
 <h1 id="8️⃣-보정-상수-alpha-m"><a href="#8️⃣-보정-상수-alpha-m" class="headerlink" title="8️⃣ 보정 상수 ( \alpha_m )"></a>8️⃣ 보정 상수 ( \alpha_m )</h1><p>이 상수는 편향(bias)을 줄이기 위해 존재합니다.</p>
-<script type="math/tex; mode=display">\alpha_m \approx \frac{0.7213}{1 + 1.079/m}</script><p>(큰 m일 때 근사값)</p>
+<div class="math block">$$\alpha_m \approx \frac{0.7213}{1 + 1.079/m}$$</div>
+<p>(큰 m일 때 근사값)</p>
 <hr>
 <h1 id="9️⃣-오차율"><a href="#9️⃣-오차율" class="headerlink" title="9️⃣ 오차율"></a>9️⃣ 오차율</h1><p>분산 분석 결과:</p>
-<script type="math/tex; mode=display">\text{Standard Error} \approx \frac{1.04}{\sqrt{m}}</script><p>예:</p>
+<div class="math block">$$\text{Standard Error} \approx \frac{1.04}{\sqrt{m}}$$</div>
+<p>예:</p>
 <ul>
 <li>m = 16384 → 오차 약 0.8%</li>
 </ul>
 <hr>
 <h1 id="🔎-전체-정리"><a href="#🔎-전체-정리" class="headerlink" title="🔎 전체 정리"></a>🔎 전체 정리</h1><p>HyperLogLog 추정 공식:</p>
-<script type="math/tex; mode=display">
+<div class="math block">$$
 \boxed{  
 \hat{n} =  
 \alpha_m m^2  
 \left(  
 \sum_{i=1}^{m} 2^{-R_i}  
 \right)^{-1}  
-}</script><hr>
+}$$</div>
+<hr>
 <h1 id="📌-수학적-핵심-요약"><a href="#📌-수학적-핵심-요약" class="headerlink" title="📌 수학적 핵심 요약"></a>📌 수학적 핵심 요약</h1><ol>
 <li>Leading zero 확률은 기하분포</li>
 <li>최대값은 log(n)에 비례</li>
@@ -186,7 +210,8 @@
 <hr>
 <h1 id="🔥-Prioritized-Experience-Replay-구현"><a href="#🔥-Prioritized-Experience-Replay-구현" class="headerlink" title="🔥 Prioritized Experience Replay 구현"></a>🔥 Prioritized Experience Replay 구현</h1><h3 id="1-priorityMap-에-모든-우선순위-저장"><a href="#1-priorityMap-에-모든-우선순위-저장" class="headerlink" title="1) priorityMap 에 모든 우선순위 저장"></a>1) priorityMap 에 모든 우선순위 저장</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IMap&lt;Long, Float&gt; priorityMap = hz.getMap(<span class="string">&quot;priority&quot;</span>);</span><br></pre></td></tr></table></figure>
 <h3 id="2-샘플링"><a href="#2-샘플링" class="headerlink" title="2) 샘플링"></a>2) 샘플링</h3><p>샘플링 확률 </p>
-<script type="math/tex; mode=display">P(i) = p_i^\alpha / \sum_k p_k^\alpha</script><p>구현 방법 2가지:</p>
+<div class="math block">$$P(i) = p_i^\alpha / \sum_k p_k^\alpha$$</div>
+<p>구현 방법 2가지:</p>
 <hr>
 <h3 id="✔-방법-A-Hazelcast-ExecutorService-partition-local-reduction"><a href="#✔-방법-A-Hazelcast-ExecutorService-partition-local-reduction" class="headerlink" title="✔ 방법 A: Hazelcast ExecutorService + partition local reduction"></a>✔ 방법 A: Hazelcast ExecutorService + partition local reduction</h3><p>각 파티션에서 priority sum을 계산 → 합산<br>그 후 확률 기반으로 key 선택</p>
 <hr>
